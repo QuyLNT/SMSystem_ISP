@@ -22,6 +22,14 @@ public class ProductImageDTO {
         this.isAvatar = false;
     }
 
+    public ProductImageDTO(int productId, String imagePath, boolean isAvatar) {
+        this.imageId =0;
+        this.productId = productId;
+        this.imagePath = imagePath;
+        this.isAvatar = isAvatar;
+    }
+
+    
     public ProductImageDTO(int imageId, int productId, String imagePath, boolean isAvatar) {
         this.imageId = imageId;
         this.productId = productId;
