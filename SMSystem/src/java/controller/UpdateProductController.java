@@ -108,9 +108,9 @@ public class UpdateProductController extends HttpServlet {
             
             Map<Integer,ProductDTO> listProduct= (Map<Integer,ProductDTO>) request.getAttribute("LIST_PRODUCT");
             
-            boolean checkUpdate = productDao.updateProduct(updatedProduct);
-            checkUpdate = imageDAO.updateAvatar(avatarImage);
-            if(checkUpdate){
+            boolean checkProduct = productDao.updateProduct(updatedProduct);
+            boolean checkAvatar = imageDAO.updateAvatar(avatarImage);
+            if(checkProduct&&checkAvatar){
                 listProduct.put(updatedProduct.getProductId(), updatedProduct);
                 request.setAttribute("LIST_PRODUCT", listProduct);
                 request.setAttribute("MESSAGE", "Update successfully");

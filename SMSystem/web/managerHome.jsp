@@ -108,8 +108,7 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <%
-                                                        ProductDAO productDao = new ProductDAO();
-                                                    
+                                                        
                                                     %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Accounts</h5>

@@ -16,6 +16,14 @@
         <servlet-name>UpdateProductController</servlet-name>
         <servlet-class>controller.UpdateProductController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadProductController</servlet-name>
+        <servlet-class>controller.LoadProductController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadAdminDataController</servlet-name>
+        <servlet-class>controller.LoadProductDataController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>UpdateProductController</servlet-name>
         <url-pattern>/UpdateProductController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadProductController</servlet-name>
+        <url-pattern>/LoadProductController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadAdminDataController</servlet-name>
+        <url-pattern>/LoadAdminDataController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

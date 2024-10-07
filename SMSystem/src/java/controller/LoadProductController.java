@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author LENOVO
  */
-public class MainController extends HttpServlet {
+public class LoadProductController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -27,40 +27,20 @@ public class MainController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final static String WELLCOME_PAGE="login.jsp";
-    private final static String LOGIN="Sign In" ;
-    private final static String LOGIN_CONTROLLER="LoginController" ;
-    private final static String UPDATE_PRODUCT="Update Product" ;
-    private final static String UPDATE_PRODUCT_CONTROLLER="UpdateProductController";
-    private final static String LOAD_DATA="LoadProductData" ;
-    private final static String LOAD_PRODUCT_DATA_CONTROLLER="LoadProductDataController";
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url=WELLCOME_PAGE;
-        try{
-            String action = request.getParameter("action");
-            if(LOGIN.equals(action)){
-                url=LOGIN_CONTROLLER;
-            }else if(UPDATE_PRODUCT.equals(action)){
-                url=UPDATE_PRODUCT_CONTROLLER;
-            }else if(LOAD_DATA.equals(action)){
-                url=LOAD_PRODUCT_DATA_CONTROLLER;
-            }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        }catch(Exception e){
-           log("Error at MainController" + e.toString());
-        }finally{           
-            request.getRequestDispatcher(url).forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet LoadProductController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet LoadProductController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

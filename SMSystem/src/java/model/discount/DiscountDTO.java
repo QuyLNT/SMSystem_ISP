@@ -12,7 +12,7 @@ import java.util.Date;
  * @author LENOVO
  */
 public class DiscountDTO {
-    private String discountId;
+    private int discountId;
     private String discountCode;
     private String detail;
     private float discountAmount;
@@ -22,7 +22,7 @@ public class DiscountDTO {
     private boolean discountStatus;
 
     public DiscountDTO() {
-        discountId = "";
+        discountId = 0;
         discountCode = "";
         discountAmount = 0;
         detail="";
@@ -32,7 +32,7 @@ public class DiscountDTO {
         discountStatus = false;
     }
 
-    public DiscountDTO(String discountId, String discountCode, String detail, float discountAmount, Date startDay, Date endDay, int usageLimit, boolean discountStatus) {
+    public DiscountDTO(int discountId, String discountCode, String detail, float discountAmount, Date startDay, Date endDay, int usageLimit, boolean discountStatus) {
         this.discountId = discountId;
         this.discountCode = discountCode;
         this.detail = detail;
@@ -43,13 +43,15 @@ public class DiscountDTO {
         this.discountStatus = discountStatus;
     }
 
-    public String getDiscountId() {
+    public int getDiscountId() {
         return discountId;
     }
 
-    public void setDiscountId(String discountId) {
+    public void setDiscountId(int discountId) {
         this.discountId = discountId;
     }
+
+
 
     public String getDiscountCode() {
         return discountCode;

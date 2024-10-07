@@ -4,7 +4,7 @@
     Author     : DELL
 --%>
 
-<%@page import="admin.sample.home.AdminHomeDAO"%>
+<%@page import="model.product.ProductDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,7 +19,6 @@
             />
         <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-
     </head>
     <body>
         <main class="main-wrap">
@@ -35,7 +34,7 @@
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
-                                    <a href="adminHome.jsp" class="nav-link">
+                                    <a href="MainController?action=LoadProductData" class="nav-link">
                                         <i class="fa-solid fa-house"></i>
                                         <span class="link-text">Home</span>
                                     </a>
@@ -52,7 +51,6 @@
                                         <span class="link-text">Categories</span>
                                     </a>
                                 </li>
-
                                 <li class="nav-list-item">
                                     <a href="productList.jsp" class="nav-link">
                                         <i class="fa-solid fa-capsules"></i>
@@ -110,13 +108,12 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <%
-                                                        AdminHomeDAO d = new AdminHomeDAO();
-                                                        int a = d.getTheNumberOfAccounts();
-
+                                                        ProductDAO productDao = new ProductDAO();
+                                                    
                                                     %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Accounts</h5>
-                                                        <p class="card-text"><%=a%></p>
+                                                        <p class="card-text"><%=999%></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -128,11 +125,10 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <%
-                                                        float r = d.getRevenue();
                                                     %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Revenue</h5>
-                                                        <p class="card-text"><%=r%>$</p>
+                                                        <p class="card-text"><%=999.9%>$</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -144,12 +140,12 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <%
-                                                        int i = d.getTotalQuantityOfProducts();
+                                                       
 
                                                     %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Products</h5>
-                                                        <p class="card-text"><%=i%></p>
+                                                        <p class="card-text"><%=999%></p>
 
                                                     </div>
                                                 </div>
@@ -170,14 +166,10 @@
                                                 <div class="col-md-8">
                                                     <%
 
-                                                        int o = d.getTheNumberOfOrders();
-                                                        int oc = d.getTheNumberOfOrders_Completed();
-                                                        int onc = o - oc;
-
                                                     %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Order</h5>
-                                                        <p class="card-text"><%=o%></p>
+                                                        <p class="card-text"><%=999%></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -193,7 +185,7 @@
                                                     %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Order completed</h5>
-                                                        <p class="card-text"><%=oc%></p>
+                                                        <p class="card-text"><%=999%></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -210,7 +202,7 @@
                                                     %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Order not completed</h5>
-                                                        <p class="card-text"><%=onc%></p>
+                                                        <p class="card-text"><%=999%></p>
 
                                                     </div>
                                                 </div>
