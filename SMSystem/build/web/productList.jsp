@@ -4,6 +4,7 @@
     Author     : DELL
 --%>
 
+<%@page import="java.util.Map"%>
 <%@page import="model.product.ProductDAO"%>
 <%@page import="model.product.ProductDTO"%>
 <%@page import="model.category.UserObjectDAO"%>
@@ -106,10 +107,10 @@
                             <%
 
                                 ProductDAO productDao = new ProductDAO();
-                                List<ProductDTO> productList = null;
+                                Map<Integer,ProductDTO> productList = null;
                                 String noResults = (String) request.getAttribute("NO_RESULTS");
 
-                                productList = (List<ProductDTO>) request.getAttribute("PRODUCT_LIST");
+                                productList = (Map<Integer,ProductDTO>) request.getAttribute("PRODUCT");
                                 if (productList == null) {
                                     productList = productDao.getAllProduct();
                                 }
@@ -262,7 +263,7 @@
                                 <tbody>
                                     <%
                                         if (productList != null) {
-                                            for (ProductDTO product : productList) {
+                                            for (ProductDTO product : productList.values()) {
                                                 UserObjectDTO userObject = categoriesDao.getUserObjectById(product.getUserOjectId());
                                                 BrandDTO brandShow = brandDao.getBrandById(product.getBrandId());
                                     %>
