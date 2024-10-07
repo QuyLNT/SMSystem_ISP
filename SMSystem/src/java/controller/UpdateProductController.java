@@ -8,9 +8,10 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,10 +22,9 @@ import model.product.ProductDTO;
  *
  * @author LENOVO
  */
-@WebServlet(name = "UpdateProductController", urlPatterns = {"/UpdateProductController"})
 public class UpdateProductController extends HttpServlet {
 
-    /**
+   /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -36,7 +36,7 @@ public class UpdateProductController extends HttpServlet {
     private static final String ERROR="productList.jsp";
     private static final String SUCCESS="productList.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
          try{
@@ -107,11 +107,13 @@ public class UpdateProductController extends HttpServlet {
             ProductDTO updatedProduct = new ProductDTO();
             
             
-        }catch(ClassNotFoundException | SQLException | NamingException e){
+        }catch(SQLException e){
            log("Error at CreateProductController: " +e.toString());
         }finally{           
             request.getRequestDispatcher(url).forward(request, response);
         }
+
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -126,7 +128,11 @@ public class UpdateProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UpdateProductController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -140,7 +146,11 @@ public class UpdateProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UpdateProductController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
