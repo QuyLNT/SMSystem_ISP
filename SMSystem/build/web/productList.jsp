@@ -376,14 +376,6 @@
                                                                     <input name="color" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= product.getColor()%>">
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Size</span>
-                                                                    <input name="size" type="number" step="0.01" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= "Cái này ở trang productDetail"%>">
-                                                                </div>
-                                                                <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Stock</span>
-                                                                    <input name="stock" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= "cái này cũng rứa"%>">
-                                                                </div>
-                                                                <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Sale</span>
                                                                     <input name="sale" type="number" step="0.01" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= product.getSale()%>">
                                                                 </div>

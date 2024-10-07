@@ -21,10 +21,14 @@ import utils.DBUtils;
  * @author LENOVO
  */
 public class ProductDAO {
-    private static final String UPDATE_PRODUCT =    "SELECT productId,brandId,userObjectId,detail,hot,"
+    private static final String GET_PRODUCT =    "SELECT productId,brandId,userObjectId,detail,hot,"
             + "                                      name,color,price,sale,warrantPeriod,productStatus \n" +
                                                     "FROM products\n" +
                                                     "WHERE productId=?";
+    
+    private static final String UPDATE_PRODUCT= "UPDATE products\n" +
+                                                "SET brandId=?, userObjectId=?, detail=?, name=?, price=?, color=?, sale=?, warrantPeriod =?\n" +
+                                                "WHERE ProductID=?";
     
     
     public List<ProductDTO> getAllProduct(){
@@ -40,31 +44,59 @@ public class ProductDAO {
         try{
             conn = DBUtils.getConnection();
             if(conn!=null){
-                ptm = conn.prepareStatement(UPDATE_PRODUCT);
+                ptm = conn.prepareStatement(GET_PRODUCT);
                 ptm.setInt(1, productId);
                 rs = ptm.executeQuery();
                 if(rs.next()){
                     int brandId = rs.getInt("brandId");
-                    String userObjectId = rs.getString("userObjectId");
+                    int userObjectId = rs.getInt("userObjectId");
                     String detail = rs.getString("detail");
                     boolean hot = rs.getBoolean("hot");
                     String name = rs.getString("name");
                     String color = rs.getString("color");
-                    double price = rs.getDouble("price");
-                    double sale = rs.getDouble("sale");
+                    float price = rs.getFloat("price");
+                    float sale = rs.getFloat("sale");
                     int warrantPeriod = rs.getInt("warrantPeriod");
-                    String productStatus = rs.getString("productStatus");
+                    boolean productStatus = rs.getBoolean("productStatus");
 
-                    // Create a new ProductDTO object using the fetched data
-                    product = new ProductDTO(productId, brandId, productId, detail, hot, name, color, brandId, brandId, warrantPeriod, hot);
+                    product = new ProductDTO(productId, brandId, userObjectId, detail, hot, name, color, price , sale, warrantPeriod, productStatus);
                 }
             }
         }finally{
             if(rs!=null) rs.close();
             if(ptm!=null) ptm.close();
-            if(conn!=null) rs.close();
+            if(conn!=null) conn.close();
         }
         
         return product;
     }
+    
+    public boolean updateProduct(ProductDTO product) throws ClassNotFoundException, SQLException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        boolean result = false;
+        try{
+            conn = DBUtils.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(UPDATE_PRODUCT);
+                ptm.setInt(1, product.getBrandId());
+                ptm.setInt(2,product.getUserOjectId());
+                ptm.setString(3, product.getDetail());
+                ptm.setString(4, product.getName());
+                ptm.setFloat(5, product.getPrice());
+                ptm.setFloat(6, product.getSale());
+                ptm.setInt(7, product.getWarrantyPeriod());
+                ptm.setInt(8,product.getProductId());
+                result = ptm.executeUpdate()>0;
+                
+            }
+        }finally{
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
+        
+        return result;
+    }
+    
+    
 }

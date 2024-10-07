@@ -8,6 +8,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
+import model.product.ProductImageDAO;
+import model.product.ProductImageDTO;
 
 /**
  *
@@ -42,6 +45,7 @@ public class UpdateProductController extends HttpServlet {
          try{
             int productId = Integer.parseInt(request.getParameter("productId"));
             ProductDAO productDao = new ProductDAO();
+            ProductImageDAO imageDAO = new ProductImageDAO();
             ProductDTO currentProduct = productDao.getProductById(productId);
 
             String name = request.getParameter("name");
@@ -91,24 +95,32 @@ public class UpdateProductController extends HttpServlet {
                 color = currentProduct.getColor();
             }
 
-            int stock;
-            String stockStr = request.getParameter("stock");
-            if (stockStr == null || stockStr.isEmpty()) {
-                stock = currentProduct.getStock();
-            } else {
-                stock = Integer.parseInt(stockStr);
-            }
-
             String detail = request.getParameter("detail");
             if (detail == null || detail.isEmpty()) {
                 detail = currentProduct.getDetail();
             }
 
-            ProductDTO updatedProduct = new ProductDTO();
+            boolean hot = currentProduct.isHot();
+            boolean status = currentProduct.isProductStatus();
+            ProductDTO updatedProduct = new ProductDTO(productId, brandID, userObjectID, detail, hot, name, color, sale, sale, brandID, status);
             
+            ProductImageDTO avatarImage = new ProductImageDTO(productId, avatar, true);
+            
+            Map<Integer,ProductDTO> listProduct= (Map<Integer,ProductDTO>) request.getAttribute("LIST_PRODUCT");
+            
+            boolean checkUpdate = productDao.updateProduct(updatedProduct);
+            checkUpdate = imageDAO.updateAvatar(avatarImage);
+            if(checkUpdate){
+                listProduct.put(updatedProduct.getProductId(), updatedProduct);
+                request.setAttribute("LIST_PRODUCT", listProduct);
+                request.setAttribute("MESSAGE", "Update successfully");
+                url = SUCCESS;
+            }else{
+                request.setAttribute("MESSAGE", "Update failed");
+            }
             
         }catch(SQLException e){
-           log("Error at CreateProductController: " +e.toString());
+           log("Error at UpdateProductController: " +e.toString());
         }finally{           
             request.getRequestDispatcher(url).forward(request, response);
         }
