@@ -12,7 +12,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import model.user.UserDTO;
 import utils.DBUtils;
 
@@ -30,9 +32,46 @@ public class ProductDAO {
                                                 "SET brandId=?, userObjectId=?, detail=?, name=?, price=?, color=?, sale=?, warrantPeriod =?\n" +
                                                 "WHERE ProductID=?";
     
-    
-    public List<ProductDTO> getAllProduct(){
-        List<ProductDTO> listProduct = new ArrayList();
+     private static final String GET_ALL_PRODUCT= "SELECT productId,brandId,userObjectId,detail,hot,"
+            + "                                      name,color,price,sale,warrantPeriod,productStatus \n" +
+                                                    "FROM products";
+
+    public Map<Integer,ProductDTO> getAllProduct() throws ClassNotFoundException, SQLException{
+        Map<Integer,ProductDTO> listProduct = new HashMap<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try{
+            conn = DBUtils.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(GET_ALL_PRODUCT);
+                rs = ptm.executeQuery();
+
+                while (rs.next()) {
+                    int productId = rs.getInt("productId");
+                    int brandId = rs.getInt("brandId");
+                    int userObjectId = rs.getInt("userObjectId");
+                    String detail = rs.getString("detail");
+                    boolean hot = rs.getBoolean("hot");
+                    String name = rs.getString("name");
+                    float price = rs.getFloat("price");
+                    String color = rs.getString("color");
+                    float sale = rs.getFloat("sale");
+                    int warrantPeriod = rs.getInt("warrantPeriod");
+                    boolean productStatus = rs.getBoolean("productStatus");
+                    
+                    ProductDTO product = new ProductDTO(productId, brandId, userObjectId, detail, hot, name, color, price, sale, warrantPeriod, productStatus);
+                    listProduct.put(product.getProductId(), product);
+                    
+                }
+                
+            }
+        }finally{
+            if(rs!=null) rs.close();
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
+        
         return listProduct;
     }
     
