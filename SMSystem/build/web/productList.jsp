@@ -107,13 +107,13 @@
                             <%
 
                                 ProductDAO productDao = new ProductDAO();
-                                Map<Integer,ProductDTO> productList = productDao.getAllProduct();
+                                Map<Integer,ProductDTO> productList = null;
                                 String noResults = (String) request.getAttribute("NO_RESULTS");
 
-                                //productList = (Map<Integer,ProductDTO>) request.getAttribute("PRODUCT");
-                                //if (productList == null) {
-                                //    productList = productDao.getAllProduct();
-                                //}
+                                productList = (Map<Integer,ProductDTO>) request.getAttribute("PRODUCT");
+                                if (productList == null) {
+                                    productList = productDao.getAllProduct();
+                                }
 
                                 String ms = "";
                                 String err = "";
