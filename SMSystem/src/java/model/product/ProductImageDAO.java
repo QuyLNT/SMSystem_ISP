@@ -54,7 +54,7 @@ public class ProductImageDAO {
         return listImage;
     }
     
-    public boolean updateAvatar(int productId, String avatarPath) throws ClassNotFoundException, SQLException{
+    public boolean updateAvatar(ProductImageDTO avatar) throws ClassNotFoundException, SQLException{
         Connection conn = null;
         PreparedStatement ptm = null;
         boolean result = false;
@@ -62,8 +62,8 @@ public class ProductImageDAO {
             conn = DBUtils.getConnection();
             if(conn!=null){
                 ptm = conn.prepareStatement(UPDATE_AVATAR);
-                ptm.setString(1, avatarPath);
-                ptm.setInt(2, productId);
+                ptm.setString(1, avatar.getImagePath());
+                ptm.setInt(2, avatar.getImageId());
                 result = ptm.executeUpdate()>0;
             }
         }finally{
