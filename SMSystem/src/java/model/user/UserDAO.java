@@ -10,6 +10,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.naming.NamingException;
 import utils.DBUtils;
 
@@ -21,7 +25,8 @@ public class UserDAO {
     private static final String LOGIN = "SELECT userName,fullName,userId,phoneNumber,sex,email,isActive,roleId,createdAt\n" +
 "FROM users\n" +
 "WHERE (userName =? OR email=?) AND password = ?";
-
+     private static final String GET_ALL_USER = "SELECT userId,userName, fullName, roleId FROM users WHERE fullName LIKE ? ";
+    private static final String UPDATE = "UPDATE users set fullName= ?, userName=?, password=?, phoneNumber=?, sex=?, email=?,roleId=? where userName=?";
 
     
     public UserDTO checkLogin(String userIndentify, String password) throws SQLException, ClassNotFoundException, NamingException {
@@ -59,4 +64,70 @@ public class UserDAO {
         
         return user;
     }
+    
+    public List<UserDTO> getAllUser() throws ClassNotFoundException, SQLException {
+        List<UserDTO> userList = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(GET_ALL_USER);
+            rs = stmt.executeQuery();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_ALL_USER);
+                rs = ptm.executeQuery();
+            }
+            while (rs.next()) {
+                int userId = rs.getInt("userID");
+                String fullName = rs.getString("fullName");
+                String userName = rs.getString("userName");
+                String userPass = rs.getString("password");
+                String phoneNumber = rs.getString("phoneNumber");
+                String Sex = rs.getString("sex");
+                String email = rs.getString("email");
+                boolean isActive = rs.getBoolean("isActive");
+                String roleId = rs.getString("roleId");
+                java.sql.Date createdAt = rs.getDate("createdAt");
+                UserDTO user = new UserDTO(userId, fullName, userName, userPass, phoneNumber, Sex, email, isActive, roleId, createdAt);
+                userList.add(user);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } 
+        return userList;
+    }
+    
+    public boolean userAfterUpdate(UserDTO user) {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(UPDATE);
+                ptm.setString(1, user.getFullName());
+                ptm.setString(2, user.getUserName());
+                ptm.setString(3, user.getPassword());
+                ptm.setString(4, user.getPhoneNumber());
+                ptm.setString(5, user.getSex());
+                ptm.setString(6, user.getEmail());
+                check = ptm.executeUpdate() >0 ?true:false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return check;
+    }
+   
 }

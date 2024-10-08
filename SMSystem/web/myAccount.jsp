@@ -4,13 +4,13 @@
     Author     : Luu Minh Quan
 --%>
 
-<%@page import="model.ProductDAO"%>
+<%@page import="model.product.ProductDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.ProductDTO"%>
-<%@page import="model.UserDTO"%>
-<%@page import="model.ItemDTO"%>
+<%@page import="model.product.ProductDTO"%>
+<%@page import="model.user.UserDTO"%>
+<%@page import="model.cart.CartItems"%>
 <%@page import="java.util.List"%>
-<%@page import="model.CartDTO"%>
+<%@page import="model.cart.CartDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -64,7 +64,7 @@
                     </div>
                     <div class="ht-right">
                         <%
-                            UserDTO user = (UserDTO) session.getAttribute("user");
+                            UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
                             if(user.getFullName()!=null){
                         %>
                         <div class="login-panel" id="user-btn">
@@ -80,9 +80,7 @@
                                 <div class="content">
                                     <div><a href="myAccount.jsp">My account</a></div>
                                     <div><a href="myOrder.jsp">Order Status</a></div>
-                                    <div><a href="LogoutController">Logout</a></div>
-
-                                    </ul>
+                                    <div><a href="LogoutController">Logout</a></div>                                    
                                 </div>
                         </section>
                         <div class="lan-selector">
@@ -101,14 +99,13 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="container">
                 <div class="inner-header">
                     <div class="row">
                         <div class="col-lg-2 col-md-2">
                             <div class="logo">
-                                <a href="index.jsp">
+                                <a href="homePage.jsp">
                                     <img src="favicon_io/android-chrome-192x192.png" height="65px" alt="">
                                 </a>
                             </div>
@@ -157,7 +154,7 @@
                     </div>
                     <nav class="nav-menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="index.jsp">Home</a></li>
+                            <li class="active"><a href="homePage.jsp">Home</a></li>
                             <li><a href="shop.jsp">Shop</a></li>
                             
                             <li><a href="contact.jsp">Contact</a></li>
@@ -183,7 +180,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb-text">
-                            <a href="index.jsp"><i class="fa fa-home"></i> Home</a>
+                            <a href="homePage.jsp"><i class="fa fa-home"></i> Home</a>
                             <span>My Account</span>
                         </div>
                     </div>
@@ -197,7 +194,7 @@
         <!-- Shopping Cart Section Begin -->
         <div class="checkout-section spad">
     <div class="container">
-        <form action="UpdateUserServlet" class="checkout-form">
+        <form action="UpdateUserController" class="checkout-form">
             <div class="row setting-center">
                 <div class="col-lg-6">
                     <div class="row">
@@ -215,11 +212,11 @@
                         </div>
                          <div class="col-lg-12">
                             <label for="password">password <span>*</span></label>
-                            <% if(user.getPass()==null){ %>
+                            <% if(user.getPassword()==null){ %>
                             <input type="text" id="pass" name="pass">
                             <% }else{ %>
                             
-                            <input type="text" id="password-exist" name="pass" value="<%=user.getPass()%>" readonly>
+                            <input type="text" id="password-exist" name="pass" value="<%=user.getPassword()%>" readonly>
                             <button type="button" id="edit-btn-pass">
                                 <i class="fa fa-pencil-square-o"></i>
                             </button>
@@ -238,44 +235,11 @@
                         </div>
                         <div class="col-lg-12">
                             <label for="phone">Phone <span>*</span></label>
-                            <% if(user.getPhone()==null){ %>
+                            <% if(user.getPhoneNumber()==null){ %>
                             <input type="text" id="phone" name="phone" >
                             <% }else{ %>
-                            <input type="text" id="phone-exist" name="phone" value="<%=user.getPhone()%>" readonly>
+                            <input type="text" id="phone-exist" name="phone" value="<%=user.getPhoneNumber()%>" readonly>
                             <button type="button" id="edit-btn-phone">
-                                <i class="fa fa-pencil-square-o"></i>
-                            </button>
-                            <% } %>
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="street">Street <span>*</span></label>
-                            <% if(user.getStreet()==null){ %>
-                            <input type="text" id="street" name="street" >
-                            <% }else{ %>
-                            <input type="text" id="street-exist" name="street" value="<%=user.getStreet()%>" readonly>
-                            <button type="button" id="edit-btn-street">
-                                <i class="fa fa-pencil-square-o"></i>
-                            </button>
-                            <% } %>
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="district">District <span>*</span></label>
-                             <% if(user.getDistrict()==null){ %>
-                           <input type="text" id="district" name="district">
-                            <% }else{ %>
-                            <input type="text" id="district-exist" name="district" value="<%=user.getDistrict()%>" readonly>
-                            <button type="button" id="edit-btn-district">
-                                <i class="fa fa-pencil-square-o"></i>
-                            </button>
-                            <% } %>
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="city">City <span>*</span></label>
-                            <% if(user.getCity()==null){ %>
-                           <input type="text" id="city" name="city" >
-                            <% }else{ %>
-                            <input type="text" id="city-exist" name="city" value="<%=user.getCity()%>" readonly>
-                            <button type="button" id="edit-btn-city">
                                 <i class="fa fa-pencil-square-o"></i>
                             </button>
                             <% } %>
@@ -291,17 +255,6 @@
                             <% }else{ %>
                             <input type="text" id="sex-exist" name="sex" value="<%=user.getSex()%>" readonly>
                             <button type="button" id="edit-btn-sex">
-                                <i class="fa fa-pencil-square-o"></i>
-                            </button>
-                            <% } %>
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="birth">Birth Date <span>*</span></label>
-                            <% if(user.getBirth()==null){ %>
-                           <input type="date" id="birth" name="birth">
-                            <% }else{ %>
-                            <input type="date" id="birth-exist" name="birth" value="<%=user.getBirth()%>" readonly>
-                            <button type="button" id="edit-btn-birth">
                                 <i class="fa fa-pencil-square-o"></i>
                             </button>
                             <% } %>
@@ -380,7 +333,7 @@
                     <div class="col-lg-3">
                         <div class="footer-left">
                             <div class="footer-logo">
-                                <a href="index.jsp">
+                                <a href="homePage.jsp">
                                     <img src="favicon_io/android-chrome-192x192.png" alt="">
                                 </a>
                             </div>

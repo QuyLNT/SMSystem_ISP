@@ -50,10 +50,26 @@ public class UserDTO {
         this.createdAt = createdAt;
     }
 
+    public UserDTO(int userId, String fullName, String userName, String pass, String phone, String Sex, String email) {
+         this.userId = userId;
+        this.fullName = fullName;
+        this.userName = userName;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.sex = sex;
+        this.email = email;
+    }
+
 
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    public int getUserId() {
+        return userId;
+    }
+    
+    
 
     public String getFullName() {
         return fullName;
