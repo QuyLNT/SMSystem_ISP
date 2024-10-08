@@ -37,7 +37,7 @@ public class LoginController extends HttpServlet {
     private static final String ERROR="login.jsp";
     private static final String HOME_PAGE="homePage.jsp";
     private static final String ADMIN_PAGE = "adminHome.jsp";
-    private static final String MANAGER_PAGE = "managerHome.jsp";
+    private static final String MANAGER_PAGE = "LoadProductController";
     private static final String SHIPPER_PAGE = "shipperHome.jsp";
     private static final String ERROR_MESSAGE = "";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

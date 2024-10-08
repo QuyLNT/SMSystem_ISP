@@ -4,8 +4,7 @@
     Author     : DELL
 --%>
 
-<%@page import="admin.sample.categories.CategoriesDTO"%>
-<%@page import="admin.sample.categories.CategoriesDAO"%>
+<%@page import="model.category.UserObjectDTO"%>
 <%@page import="java.util.List"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -26,27 +25,21 @@
     </head>
     <body>
         <main class="main-wrap">
-            <header class="main-head">
+                        <header class="main-head">
                 <div class="main-nav">
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="favicon_io/favicon-32x32.png" alt="anh chu cho" />
+                                    <img src="img/logoweb.png" alt="" width="100%" height="100%"/>
                                     <span class="title-text">Nice</span>
                                 </h3>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
-                                    <a href="adminHome.jsp" class="nav-link">
+                                    <a href="MainController?action=LoadProductData" class="nav-link">
                                         <i class="fa-solid fa-house"></i>
                                         <span class="link-text">Home</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
-                                    <a href="userList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-user"></i>
-                                        <span class="link-text">Accounts</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -55,7 +48,6 @@
                                         <span class="link-text">Categories</span>
                                     </a>
                                 </li>
-
                                 <li class="nav-list-item">
                                     <a href="productList.jsp" class="nav-link">
                                         <i class="fa-solid fa-capsules"></i>
@@ -72,6 +64,12 @@
                                     <a href="orderList.jsp" class="nav-link">
                                         <i class="fa-solid fa-file-invoice"></i>
                                         <span class="link-text">Order</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="LogoutController" class="nav-link">
+                                        <i class="fa-solid fa-tag"></i>
+                                        <span class="link-text">Brand</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -95,66 +93,10 @@
                     <div class="content">
                         <div class="welcome">
 
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
-                                <i class="fa-solid fa-plus"></i> Add new Category
-                            </button>
-                            <%
-                                String ms = "";
-                                String err = "";
-                                if (request.getAttribute("ms") != null) {
-                                    ms = (String) request.getAttribute("ms");
-                                }
-                                if (request.getAttribute("err") != null) {
-                                    err = (String) request.getAttribute("err");
-                                }
-                                if (ms != null || err != null) {
-
-
-                            %>
-                            <div class="mes-suc">
-                                <%=ms%> <%=err%>
-                            </div>                          
-                            <%}%>
-                            <!-- Modal Add -->
-
-                            <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="addModalLabel">Create new category </h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <form action="CreateCategoryController" method="POST">
-                                            <div class="modal-body">
-
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">CategoryName</span>
-                                                    <input name="userObjectName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
-                                                </div>
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">CategoryDetail</span>
-                                                    <input name="detail" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <input type="submit" name="action" value="Create Category" class="btn btn-primary"/>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="welcome" >
                             <%
-                                CategoriesDAO categoriesDAO = new CategoriesDAO();
-                                List<CategoriesDTO> categoriesList = null;
-                                try {
-                                    categoriesList = categoriesDAO.getAllCategories();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                                List<UserObjectDTO> categoriesList =(List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
+                                if(categoriesList != null){
                             %>
                             <div class="table-tilte">Categories Table</div>
                             <table class="table table-hover">
@@ -164,56 +106,20 @@
                                         <th>CategoryName</th>
                                         <th>CategoryDetail</th>
                                         <th>Total products</th>
-                                        <th>Action</th>
+                                        
                                         <th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <%
-                                        if (categoriesList != null) {
-                                            int stt = 1;
-                                            for (CategoriesDTO category : categoriesList) {
+                                            for (UserObjectDTO category : categoriesList) {
                                     %>
                                     <tr>
-                                        <td><%= stt++%></td>
+                                        <td><%= category.getUserObjectId()%></td>
                                         <td><%= category.getUserObjectName()%></td>
                                         <td><%= category.getDetail()%></td>
                                         <td><%= category.getProductCount()%></td>
-                                        <td>
-                                            <input type="hidden" name="userObjectID"  value="<%=category.getUserObjectID()%>" />
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal<%=category.getUserObjectID()%>">
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                            </button>
-
-                                            <!-- Modal Update -->
-                                            <div class="modal fade" id="updateModal<%=category.getUserObjectID()%>" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="updateModalLabel">Update category '<%=category.getUserObjectName()%>' information</h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <form action="UpdateCategoryController" method="POST">
-                                                            <div class="modal-body">
-                                                                <input type="hidden" name="userObjectID"  value="<%=category.getUserObjectID()%>" />
-                                                                <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Category Name</span>
-                                                                    <input name="userObjectName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= category.getUserObjectName()%>">
-                                                                </div>
-                                                                <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Category Detail</span>
-                                                                    <input name="detail" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= category.getDetail()%>">
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <input type="submit" name="action" value="Update Category" class="btn btn-primary"/>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        
                                     </tr>
                                     <%
                                             }

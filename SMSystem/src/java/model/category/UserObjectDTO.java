@@ -13,21 +13,32 @@ public class UserObjectDTO {
     private int userObjectId;
     private String userObjectName;
     private String detail;
+    private int productCount;
 
     public UserObjectDTO() {
         userObjectId = 0;
         userObjectName = "";
         detail = "";
+        productCount = 0;
     }
 
-    public UserObjectDTO(int userObjectId, String userObjetctName, String detail) {
+    public UserObjectDTO(int userObjectId, String userObjetctName, String detail, int productCount) {
         this.userObjectId = userObjectId;
         this.userObjectName = userObjetctName;
         this.detail = detail;
+        this.productCount = productCount;
     }
 
     public int getUserObjectId() {
         return userObjectId;
+    }
+
+    public int getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
     }
 
     public void setUserObjectId(int userObjectId) {
@@ -48,8 +59,5 @@ public class UserObjectDTO {
 
     public void setDetail(String detail) {
         this.detail = detail;
-    }
-    
-    
-    
+    }    
 }

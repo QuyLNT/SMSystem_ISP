@@ -7,10 +7,24 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.category.BrandDAO;
+import model.category.BrandDTO;
+import model.category.UserObjectDAO;
+import model.category.UserObjectDTO;
+import model.discount.DiscountDAO;
+import model.discount.DiscountDTO;
+import model.product.ProductDAO;
+import model.product.ProductDTO;
+import model.product.ProductVariantDAO;
+import model.product.ProductVariantDTO;
 
 /**
  *
@@ -27,20 +41,58 @@ public class LoadProductController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private static final String ERROR="managerHome.jsp";
+    private static final String SUCCESS="managerHome.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoadProductController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoadProductController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String url = ERROR;
+        try{
+            ProductDAO productDao = new ProductDAO();
+            DiscountDAO discountDao = new DiscountDAO();
+            BrandDAO brandDao = new BrandDAO();
+            UserObjectDAO uObDao= new UserObjectDAO();
+            ProductVariantDAO variantDao = new ProductVariantDAO();
+            ProductVariantDTO variant = new ProductVariantDTO();
+            Map<Integer,ProductDTO> productList;
+            List<DiscountDTO> discountList;
+            List<BrandDTO> brandList;
+            List<UserObjectDTO> uObList;
+            List<ProductVariantDTO> listVarriant;
+            
+            productList = productDao.getAllProduct();
+            discountList = discountDao.getALlDiscount();
+            brandList = brandDao.getAllBrand();
+            uObList = uObDao.getAllUserObject();
+            listVarriant = variantDao.getAllVariant();
+            
+            
+            
+            int allStock = 0;
+            for(ProductVariantDTO p : listVarriant){
+                allStock += p.getStock();
+            }
+            
+            
+            if(productList !=null && discountList!=null && brandList!=null && uObList!=null && listVarriant !=null){
+                HttpSession session = request.getSession();
+                session.setAttribute("PRODUCT_LIST", productList);
+                session.setAttribute("ALL_QUANTITY", allStock);
+                
+                session.setAttribute("DISCOUNT_LIST", discountList);
+                session.setAttribute("USER_OBJECT_LIST", uObList);
+                session.setAttribute("BRAND_LIST", brandList);
+                session.setAttribute("ALL_VARIANT", listVarriant);
+                
+                url = SUCCESS;
+
+            }
+            
+            
+        }catch(ClassNotFoundException | SQLException e){
+           log("Error at LoadProductController: " +e.toString());
+        }finally{           
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

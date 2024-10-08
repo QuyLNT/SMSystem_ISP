@@ -20,11 +20,16 @@ import utils.DBUtils;
  */
 public class UserObjectDAO {
     
-     private static final String GET_UO_BY_ID= "SELECT userObjectId,userObjectName,detail\n" +
+    private static final String GET_UO_BY_ID= "SELECT userObjectId,userObjectName,detail\n" +
                                                 "FROM userObjects\n" +
                                                 "WHERE userObjectId=?";
-     private static final String GET_ALL= "SELECT *" +
+    private static final String GET_ALL= "SELECT *" +
                                                 "FROM userObjects";
+    
+    private static final String GET_NUMBER_OF_PRODUCT = "SELECT COUNT(productId) AS NUMBER_OF_PRODUCT\n" +
+                                                        "FROM products\n" +
+                                                        "WHERE userObjectId = ?\n" +
+                                                        "GROUP BY userObjectId";
     
     public List<UserObjectDTO> getAllUserObject() throws ClassNotFoundException, SQLException{
         List<UserObjectDTO> listUO = new ArrayList();
@@ -37,7 +42,11 @@ public class UserObjectDAO {
                 ptm = conn.prepareStatement(GET_ALL);
                 rs = ptm.executeQuery();
                 while(rs.next()){
-                    UserObjectDTO uOb = new UserObjectDTO(rs.getInt("userObjectId"), rs.getString("userObjectName"), rs.getString("detail"));
+                    int productCount = getNumberOfProductByUserObjectId(rs.getInt("userObjectId"));
+                    UserObjectDTO uOb = new UserObjectDTO(rs.getInt("userObjectId"), 
+                            rs.getString("userObjectName"), 
+                            rs.getString("detail"),
+                            productCount);
                     listUO.add(uOb);
                 }
             }
@@ -48,6 +57,31 @@ public class UserObjectDAO {
         }
         return listUO;
     }
+    
+        public int getNumberOfProductByUserObjectId(int userObjectId) throws ClassNotFoundException, SQLException{
+        int number = 0;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try{
+            conn = DBUtils.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(GET_NUMBER_OF_PRODUCT);
+                ptm.setInt(1, userObjectId);
+                rs = ptm.executeQuery();
+                if(rs.next()){
+                    number = rs.getInt("NUMBER_OF_PRODUCT");
+                }
+            }
+        }finally{
+            if(rs!=null) rs.close();
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
+        return number;
+    }
+    
+    
     
     public UserObjectDTO getUserObjectById(int userObjectId) throws ClassNotFoundException, SQLException{
         UserObjectDTO uOb = new UserObjectDTO();
@@ -61,7 +95,11 @@ public class UserObjectDAO {
                 ptm.setInt(1, userObjectId);
                 rs = ptm.executeQuery();
                 if(rs.next()){
-                    uOb = new UserObjectDTO(rs.getInt("userObjectId"), rs.getString("userObjectName"), rs.getString("detail"));
+                    int productCount = getNumberOfProductByUserObjectId(rs.getInt("userObjectId"));
+                    uOb = new UserObjectDTO(rs.getInt("userObjectId"), 
+                            rs.getString("userObjectName"), 
+                            rs.getString("detail"),
+                            productCount);
                 }
             }
         }finally{

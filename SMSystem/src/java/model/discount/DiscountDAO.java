@@ -19,8 +19,8 @@ import utils.DBUtils;
  * @author LENOVO
  */
 public class DiscountDAO {
-    private static final String GET_ALL= "SELECT discountId,brandName\n" +
-                                          "FROM discounts";
+    private static final String GET_ALL= "SELECT discountId,discountCode,detail,discountAmount,startDay,endDay,usageLimit,discountStatus\n" +
+"                                          FROM discountCodes";
     
     public List<DiscountDTO> getALlDiscount() throws SQLException, ClassNotFoundException{
         List<DiscountDTO> discountList = new ArrayList<>();

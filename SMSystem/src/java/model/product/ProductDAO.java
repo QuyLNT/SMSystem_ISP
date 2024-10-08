@@ -35,7 +35,8 @@ public class ProductDAO {
      private static final String GET_ALL_PRODUCT= "SELECT productId,brandId,userObjectId,detail,hot,"
             + "                                      name,color,price,sale,warrantPeriod,productStatus \n" +
                                                     "FROM products";
-
+ 
+    
     public Map<Integer,ProductDTO> getAllProduct() throws ClassNotFoundException, SQLException{
         Map<Integer,ProductDTO> listProduct = new HashMap<>();
         Connection conn = null;
@@ -136,6 +137,7 @@ public class ProductDAO {
         
         return result;
     }
+    
     
     
 }

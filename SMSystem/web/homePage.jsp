@@ -101,7 +101,7 @@
                     <div class="row">
                         <div class="col-lg-2 col-md-2">
                             <div class="logo">
-                                <a href="index.jsp">
+                                <a href="homePage.jsp">
                                     <img src="img/logoweb.png" height="100%" width="100%">
                                 </a>
                             </div>
@@ -181,7 +181,7 @@
                                                             </div>
                                                         </td>
                                                         <td class="si-close">
-                                                            <a href="RemoveServlet?pId=<%= count%>&url=index.jsp" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
+                                                            <a href="RemoveServlet?pId=<%= count%>&url=homePage.jsp" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
                                                                 <i class="ti-close"></i>
                                                             </a>
                                                         </td>
@@ -228,7 +228,7 @@
                     </div>
                     <nav class="nav-menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="index.jsp">Home</a></li>
+                            <li class="active"><a href="homePage.jsp">Home</a></li>
                             <li><a href="shop.jsp">Shop</a></li>
                             <li><a href="contact.jsp">Contact</a></li>
                             <li><a href="">Pages</a>
@@ -358,7 +358,7 @@
                                     <div class="icon">
                                        <button id="btn-icon" type="submit">
                                         <input type="hidden" name="id" value="<%= ele.getProductId() %>">
-                                        <input type="hidden" name="url" value="index.jsp">
+                                        <input type="hidden" name="url" value="homePage.jsp">
                                         <i class="icon_heart_alt"></i>
                                         </button>
                                     </div>
@@ -367,7 +367,7 @@
                                     <ul>
                                         <form action="MainController" method="post">
                                             <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
-                                            <!--<li class="w-icon active"><a href="AddToCart?pId=<%=ele.getProductId()%>&qnt=1&url=index.jsp"><i class="icon_bag_alt"></i></a></li>-->
+                                            <!--<li class="w-icon active"><a href="AddToCart?pId=<%=ele.getProductId()%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>-->
                                             <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: #ffffff;
                                                                                                 font-weight: bold;
                                                                                                 border: none;" name="action" value="View"></a></li>
@@ -438,7 +438,7 @@
                                     <div class="icon">
                                        <button id="btn-icon" type="submit">
                                         <input type="hidden" name="id" value="<%= ob.getProductId() %>">
-                                        <input type="hidden" name="url" value="index.jsp">
+                                        <input type="hidden" name="url" value="homePage.jsp">
                                         <i class="icon_heart_alt"></i>
                                         </button>
                                     </div>
@@ -447,7 +447,7 @@
                                     <ul>
                                         <form action="MainController" method="post">
                                             <input type="hidden" name="productId" value="<%=ob.getProductId()%>">
-                                            <!--<li class="w-icon active"><a href="AddToCart?pId=<%=ob.getProductId()%>&qnt=1&url=index.jsp"><i class="icon_bag_alt"></i></a></li>-->
+                                            <!--<li class="w-icon active"><a href="AddToCart?pId=<%=ob.getProductId()%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>-->
                                             <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: white;
                                                                                                 font-weight: bold;
                                                                                                 border: none;" name="action" value="View"></a></li>
@@ -536,7 +536,7 @@
                                     <div class="icon">
                                        <button id="btn-icon" type="submit">
                                         <input type="hidden" name="id" value="<%= ele.getProductId() %>">
-                                        <input type="hidden" name="url" value="index.jsp">
+                                        <input type="hidden" name="url" value="homePage.jsp">
                                         <i class="icon_heart_alt"></i>
                                         </button>
                                     </div>
@@ -545,7 +545,7 @@
                                     <ul>
                                         <form action="MainController" method="post">
                                             <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
-                                            <!--<li class="w-icon active"><a href="AddToCart?pId=<%=ele.getProductId()%>&qnt=1&url=index.jsp"><i class="icon_bag_alt"></i></a></li>-->
+                                            <!--<li class="w-icon active"><a href="AddToCart?pId=<%=ele.getProductId()%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>-->
                                             <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: #ffffff;
                                                                                                 font-weight: bold;
                                                                                                 border: none;" name="action" value="View"></a></li>
@@ -789,7 +789,7 @@
                     <div class="col-lg-3">
                         <div class="footer-left">
                             <div class="footer-logo">
-                                <a href="index.jsp">
+                                <a href="homePage.jsp">
                                     <img src="img/logoweb.png" alt="">
                                 </a>
                             </div>

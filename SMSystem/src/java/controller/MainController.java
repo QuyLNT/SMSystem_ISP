@@ -33,7 +33,7 @@ public class MainController extends HttpServlet {
     private final static String UPDATE_PRODUCT="Update Product" ;
     private final static String UPDATE_PRODUCT_CONTROLLER="UpdateProductController";
     private final static String LOAD_DATA="LoadProductData" ;
-    private final static String LOAD_PRODUCT_DATA_CONTROLLER="LoadProductDataController";
+    private final static String LOAD_PRODUCT_DATA_CONTROLLER="LoadProductController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
