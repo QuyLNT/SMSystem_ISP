@@ -6,6 +6,7 @@
 package model.product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -15,7 +16,7 @@ public class ProductDTO {
     private int productId;
     private int brandId;
     private int userOjectId;
-    ArrayList<ProductImageDTO> listImages;
+    List<ProductImageDTO> listImages;
     private String detail;
     private boolean hot;
     private String name;
@@ -25,6 +26,8 @@ public class ProductDTO {
     private int warrantyPeriod;
     private boolean productStatus;
 
+    private  int totalStock;
+    
     public ProductDTO() {
         this.productId = 0;
         this.brandId = 0;
@@ -38,6 +41,12 @@ public class ProductDTO {
         this.sale = 0.0f;
         this.warrantyPeriod = 0;
         this.productStatus = false;
+        this.totalStock = 0;
+    }
+
+    public ProductDTO(int productId, int totalStock) {
+        this.productId = productId;
+        this.totalStock = totalStock;
     }
 
     public ProductDTO(int productId, int brandId, int userOjectId, String detail, boolean hot, String name, String color, float price, float sale, int warrantyPeriod, boolean productStatus) {
@@ -69,6 +78,14 @@ public class ProductDTO {
         this.productStatus = productStaus;
     }
 
+    public int getTotalStock() {
+        return totalStock;
+    }
+
+    public void setTotalStock(int totalStock) {
+        this.totalStock = totalStock;
+    }
+
     public int getBrandId() {
         return brandId;
     }
@@ -77,11 +94,11 @@ public class ProductDTO {
         this.brandId = brandId;
     }
 
-    public ArrayList<ProductImageDTO> getListImages() {
+    public List<ProductImageDTO> getListImages() {
         return listImages;
     }
 
-    public void setListImages(ArrayList<ProductImageDTO> listImages) {
+    public void setListImages(List<ProductImageDTO> listImages) {
         this.listImages = listImages;
     }
 
@@ -167,7 +184,7 @@ public class ProductDTO {
     }
          
     public String getAvatarPath(){
-        String avatarPath = null;
+        String avatarPath = "";
         for(ProductImageDTO ele: this.listImages){
             if(ele.getIsAvatar() == true){
                 avatarPath = ele.getImagePath();
@@ -176,10 +193,5 @@ public class ProductDTO {
         return avatarPath;
     }
     
-    
-    // CÁI NÀY CHƯA LÀM NÈ, LÀM ĐEEEEEEE
-    public int getStock(){
-        return 9999;
-    }
  
 }

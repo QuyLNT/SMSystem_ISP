@@ -32,6 +32,18 @@
         <servlet-name>CreateProductController</servlet-name>
         <servlet-class>controller.CreateProductController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ToggleFlashSaleController</servlet-name>
+        <servlet-class>controller.ToggleFlashSaleController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ToggleProductStatusController</servlet-name>
+        <servlet-class>controller.ToggleProductStatusController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchProductByNameController</servlet-name>
+        <servlet-class>controller.SearchProductByNameController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -63,6 +75,18 @@
     <servlet-mapping>
         <servlet-name>CreateProductController</servlet-name>
         <url-pattern>/CreateProductController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToggleFlashSaleController</servlet-name>
+        <url-pattern>/ToggleFlashSaleController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToggleProductStatusController</servlet-name>
+        <url-pattern>/ToggleProductStatusController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchProductByNameController</servlet-name>
+        <url-pattern>/SearchProductByNameController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -66,7 +66,7 @@ public class ProductImageDAO {
             if(conn!=null){
                 ptm = conn.prepareStatement(UPDATE_AVATAR);
                 ptm.setString(1, avatar.getImagePath());
-                ptm.setInt(2, avatar.getImageId());
+                ptm.setInt(2, avatar.getProductId());
                 result = ptm.executeUpdate()>0;
             }
         }finally{

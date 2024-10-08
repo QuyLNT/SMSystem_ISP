@@ -23,6 +23,11 @@ public class ProductVariantDTO {
         this.stock = stock;
     }
 
+    public ProductVariantDTO(int productId, int stock) {
+        this.productId = productId;
+        this.stock = stock;
+    }
+
     // Default constructor
     public ProductVariantDTO() {
         this.variantId = 0;

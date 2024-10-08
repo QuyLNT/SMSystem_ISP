@@ -8,6 +8,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
 import model.product.ProductImageDAO;
@@ -102,21 +104,24 @@ public class UpdateProductController extends HttpServlet {
 
             boolean hot = currentProduct.isHot();
             boolean status = currentProduct.isProductStatus();
+            
             ProductDTO updatedProduct = new ProductDTO(productId, brandID, userObjectID, detail, hot, name, color, sale, sale, brandID, status);
-            
             ProductImageDTO avatarImage = new ProductImageDTO(productId, avatar, true);
-            
-            Map<Integer,ProductDTO> listProduct= (Map<Integer,ProductDTO>) request.getAttribute("LIST_PRODUCT");
+              
+            HttpSession session = request.getSession();
+            List<ProductDTO> productList = (List<ProductDTO>) session.getAttribute("PRODUCT_LIST");
             
             boolean checkProduct = productDao.updateProduct(updatedProduct);
             boolean checkAvatar = imageDAO.updateAvatar(avatarImage);
             if(checkProduct&&checkAvatar){
-                listProduct.put(updatedProduct.getProductId(), updatedProduct);
-                request.setAttribute("LIST_PRODUCT", listProduct);
-                request.setAttribute("MESSAGE", "Update successfully");
+                productList.stream().filter((p) -> (p.getProductId()==updatedProduct.getProductId())).forEachOrdered((p) -> {
+                    p = updatedProduct;
+                });
+                request.setAttribute("LIST_PRODUCT", productList);
+                request.setAttribute("ms", "Update successfully");
                 url = SUCCESS;
             }else{
-                request.setAttribute("MESSAGE", "Update failed");
+                request.setAttribute("err", "Update failed");
             }
             
         }catch(SQLException e){
