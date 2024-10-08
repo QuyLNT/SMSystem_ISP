@@ -1,7 +1,7 @@
 <%-- 
     Document   : wishlist
-    Created on : Jun 13, 2024, 11:09:49 PM
-    Author     : Luu Minh Quan
+    Created on : Otc 8, 2024, 11:09:49 PM
+    Author     : LENOVO
 --%>
 
 <%@page import="model.product.ProductDAO"%>
@@ -68,7 +68,7 @@
                             if(user.getFullName()!=null){
                         %>
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user"><%=user.getFullName()%></i>
+                            <i class="fa fa-user"><%=loginUser.getFullName()%></i>
                         </div>
                         <% }else { %>
                         <div class="login-panel" id="user-btn">
@@ -200,11 +200,11 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <label for="userName">userName <span>*</span></label>
-                            <% if(user.getUserName()==null){ %>
+                            <% if(loginUser.getUserName()==null){ %>
                             <input type="text" id="userName" name="userName">
                             <% }else{ %>
                             
-                            <input type="text" id="userName-exist" name="userName" value="<%=user.getUserName()%>" readonly>
+                            <input type="text" id="userName-exist" name="userName" value="<%=loginUser.getUserName()%>" readonly>
                             <button type="button" id="edit-btn-userName">
                                 <i class="fa fa-pencil-square-o"></i>
                             </button>
@@ -224,10 +224,10 @@
                         </div>
                         <div class="col-lg-12">
                             <label for="fullName">Full Name <span>*</span></label>
-                            <% if(user.getFullName()==null){ %>
+                            <% if(loginUser.getFullName()==null){ %>
                             <input type="text" id="fullName" name="fullName">
                             <% }else{ %>
-                            <input type="text" id="fullName-exist" name="fullName" value="<%=user.getFullName()%>" readonly>
+                            <input type="text" id="fullName-exist" name="fullName" value="<%=loginUser.getFullName()%>" readonly>
                             <button type="button" id="edit-btn-fullName">
                                 <i class="fa fa-pencil-square-o"></i>
                             </button>
@@ -246,14 +246,14 @@
                         </div>
                         <div class="col-lg-12">
                             <label for="sex">Sex <span>*</span></label>
-                            <% if(user.getSex()==null){ %>
+                            <% if(loginUser.getSex()==null){ %>
                             <select id="sex" name="sex">
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="other">Other</option>
                             </select>
                             <% }else{ %>
-                            <input type="text" id="sex-exist" name="sex" value="<%=user.getSex()%>" readonly>
+                            <input type="text" id="sex-exist" name="sex" value="<%=loginUser.getSex()%>" readonly>
                             <button type="button" id="edit-btn-sex">
                                 <i class="fa fa-pencil-square-o"></i>
                             </button>
@@ -261,11 +261,11 @@
                         </div>
                         <div class="col-lg-12">
                             <label for="email">Email Address <span>*</span></label>
-                            <% if(user.getEmail()==null){ %>
+                            <% if(loginUser.getEmail()==null){ %>
                             <input type="email" id="email" name="email">
                             <% }else{ %>
                             
-                            <input type="email" id="email-exist" name="email" value="<%=user.getEmail() %>" readonly>
+                            <input type="email" id="email-exist" name="email" value="<%=loginUser.getEmail() %>" readonly>
                             <button type="button" id="edit-btn-email">
                                 <i class="fa fa-pencil-square-o"></i>
                             </button>
