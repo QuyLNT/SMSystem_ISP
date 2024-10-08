@@ -34,6 +34,9 @@ public class MainController extends HttpServlet {
     private final static String UPDATE_PRODUCT_CONTROLLER="UpdateProductController";
     private final static String LOAD_DATA="LoadProductData" ;
     private final static String LOAD_PRODUCT_DATA_CONTROLLER="LoadProductController";
+    
+    private final static String CREATE_PRODUCT = "Create Product" ;
+    private final static String CREATE_PRODUCT_CONTROLLER = "CreateProductController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -47,6 +50,8 @@ public class MainController extends HttpServlet {
                 url=UPDATE_PRODUCT_CONTROLLER;
             }else if(LOAD_DATA.equals(action)){
                 url=LOAD_PRODUCT_DATA_CONTROLLER;
+            }else if(CREATE_PRODUCT.equals(action)){
+                url=CREATE_PRODUCT_CONTROLLER;
             }
             
             
