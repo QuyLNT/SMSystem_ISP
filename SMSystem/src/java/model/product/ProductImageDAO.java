@@ -25,6 +25,9 @@ public class ProductImageDAO {
     private static final String UPDATE_AVATAR = "UPDATE productImages "
                                                 + "SET imagePath=? "
                                                 + "WHERE productId=? AND isAvatar =1" ;
+    
+    private static final String INSERT_IMAGE = "INSERT INTO productImages(productId,imagePath,isAvatar) VALUES (?, ?, ?)";
+
     public List<ProductImageDTO> getAllImage(int productId) throws ClassNotFoundException, SQLException{
         List<ProductImageDTO> listImage = new ArrayList();
         ProductDTO product = null;
@@ -71,6 +74,26 @@ public class ProductImageDAO {
             if(conn!=null) conn.close();
         }
         
+        return result;
+    }
+
+    public boolean addProductImage(int productId, String imageUrl, boolean isAvatar) throws ClassNotFoundException, SQLException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        boolean result = false;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(INSERT_IMAGE);
+                ptm.setInt(1, productId);
+                ptm.setString(2, imageUrl);
+                ptm.setBoolean(3, isAvatar);
+                result = ptm.executeUpdate() > 0;
+            }
+        } finally {
+            if (ptm != null) ptm.close();
+            if (conn != null) conn.close();
+        }
         return result;
     }
 }

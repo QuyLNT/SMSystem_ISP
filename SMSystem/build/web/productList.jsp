@@ -162,8 +162,7 @@
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Brand</span>
                                                     <select name="brandID" class="form-control" required>
                                                         <%
-                                                            BrandDAO brandDao = new BrandDAO();
-                                                            List<BrandDTO> brandList = brandDao.getAllBrand();
+                                                            List<BrandDTO> brandList = (List<BrandDTO>) session.getAttribute("BRAND_LIST");
                                                             for (BrandDTO brand : brandList) {
                                                         %>
                                                         <option value="<%= brand.getBrandId()%>"><%= brand.getBrandName()%></option>
