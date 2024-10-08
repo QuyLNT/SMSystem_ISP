@@ -7,63 +7,58 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.user.UserDAO;
+import model.user.UserDTO;
 
 /**
  *
- * @author LENOVO
+ * @author CHAU DUYEN
  */
-public class MainController extends HttpServlet {
+public class UpdateUserController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    private final static String WELLCOME_PAGE="login.jsp";
-    private final static String LOGIN="Sign In" ;
-    private final static String LOGIN_CONTROLLER="LoginController" ;
-    private final static String UPDATE_PRODUCT="Update Product" ;
-    private final static String UPDATE_PRODUCT_CONTROLLER="UpdateProductController";
-    private final static String LOAD_DATA="LoadProductData" ;
-    private final static String LOAD_PRODUCT_DATA_CONTROLLER="LoadProductController";
-    private final static String UPDATE_USER="Update" ;
-    private final static String UPDATE_USER_CONTROLLER="UpdateUserController";
+    private static final String ERROR = "myAccount.jsp";
+    private static final String SUCCESS = "myAcccount.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url=WELLCOME_PAGE;
-        try{
-            String action = request.getParameter("action");
-            if(LOGIN.equals(action)){
-                url=LOGIN_CONTROLLER;
-            }else if(UPDATE_PRODUCT.equals(action)){
-                url=UPDATE_PRODUCT_CONTROLLER;
-            }else if(LOAD_DATA.equals(action)){
-                url=LOAD_PRODUCT_DATA_CONTROLLER;
-            }else if(UPDATE_USER.equals(action)){
-                url=UPDATE_USER_CONTROLLER;
+        String url = "ERROR";
+        try {
+            HttpSession session = request.getSession();
+            UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
+            String fullName = request.getParameter("fullName");
+            String userName = request.getParameter("userName");
+            String pass = request.getParameter("userPass");
+            String phone = request.getParameter("phone");
+            String Sex = request.getParameter("Sex");
+            String email = request.getParameter("email");
+            UserDTO userInput = new UserDTO(user.getUserId(), fullName, userName, pass, phone, Sex, email);
+
+            UserDAO dao = new UserDAO();
+            boolean check = dao.userAfterUpdate(user);
+            if (check) {
+                request.setAttribute("MESSAGE", "Update Fail");
+            } else {
+                boolean checkUserAfter = dao.userAfterUpdate(user);
+                if (checkUserAfter) {
+                    url = SUCCESS;
+                    request.setAttribute("MESSAGE", "Update Successfully");
+
+                } else {
+
+                    request.setAttribute("MESSAGE", "Update Fail");
+                    url = ERROR;
+                }
             }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        }catch(Exception e){
-           log("Error at MainController" + e.toString());
-        }finally{           
+        } catch (Exception e) {
+            log("Error at MainController: " + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
@@ -106,5 +101,4 @@ public class MainController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

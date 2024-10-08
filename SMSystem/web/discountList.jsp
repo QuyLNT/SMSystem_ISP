@@ -5,8 +5,8 @@
 --%>
 
 <%@page import="java.util.ArrayList"%>
-<%@page import="admin.sample.discount.AdminDiscountDAO"%>
-<%@page import="admin.sample.discount.AdminDiscountDTO"%>
+<%@page import="model.discount.DiscountDAO"%>
+<%@page import="model.discount.DiscountDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -163,8 +163,8 @@
                         </div>
                         <div class="welcome">
                             <%
-                                AdminDiscountDAO d = new AdminDiscountDAO();
-                                ArrayList<AdminDiscountDTO> list = (ArrayList<AdminDiscountDTO>) d.getList();
+                               DiscountDAO d = new DiscountDAO();
+                                ArrayList<DiscountDTO> list = (ArrayList<DiscountDTO>) d.getList();
                                 if (session.getAttribute("list") != null) {
                                     list = (ArrayList<AdminDiscountDTO>) session.getAttribute("list");
                                 }
@@ -191,7 +191,7 @@
                                     </thead>
                                     <tbody>
                                         <%                                            int count = 0;
-                                            for (AdminDiscountDTO a : list) {
+                                            for (DiscountDTO a : list) {
                                                 count++;
 
                                         %>

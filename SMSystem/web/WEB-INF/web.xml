@@ -24,6 +24,10 @@
         <servlet-name>LoadAdminDataController</servlet-name>
         <servlet-class>controller.LoadProductDataController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateUserController</servlet-name>
+        <servlet-class>controller.UpdateUserController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>LoadAdminDataController</servlet-name>
         <url-pattern>/LoadAdminDataController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateUserController</servlet-name>
+        <url-pattern>/UpdateUserController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
