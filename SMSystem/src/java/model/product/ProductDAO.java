@@ -33,14 +33,14 @@ public class ProductDAO {
  
     private static final String ADD_PRODUCT = "INSERT INTO Product (brandId, userOjectId, detail, hot, name, color, price, sale, warrantyPeriod, productStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private static final String UPDATE_HOT = "UPDATE products"
-                                            + "SET hot=?"
-                                            + "WHERE productId=?";
-    private static final String UPDATE_PRODUCT_STATUS = "UPDATE products"
-                                                        + "SET productStatus=?"
-                                                        + "WHERE productId=?";
+    private static final String UPDATE_HOT = "UPDATE products\n" +
+                                            "SET hot=?\n" +
+                                            "WHERE productId=?";
+    private static final String UPDATE_PRODUCT_STATUS = "UPDATE products\n" +
+                                                        "SET productStatus=?\n" +
+                                                        "WHERE productId=?";
     
-        private static final String SEARCH_PRODUCT_BY_NAME = "SELECT productId,brandId,userObjectId,detail,hot,"
+    private static final String SEARCH_PRODUCT_BY_NAME = "SELECT productId,brandId,userObjectId,detail,hot,"
             + "                                      name,color,price,sale,warrantPeriod,productStatus \n" +
                                                     "FROM products\n" +
                                                     "WHERE name LIKE ?";
@@ -156,18 +156,17 @@ public class ProductDAO {
         try {
             conn = DBUtils.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(ADD_PRODUCT, PreparedStatement.RETURN_GENERATED_KEYS);
-                ptm.setInt(1, product.getProductId());
-                ptm.setInt(2, product.getBrandId());
-                ptm.setInt(3, product.getUserOjectId());
-                ptm.setString(4, product.getDetail());
-                ptm.setBoolean(5, product.isHot());
-                ptm.setString(6, product.getName());
-                ptm.setString(7, product.getColor());
-                ptm.setFloat(8, product.getPrice());
-                ptm.setFloat(9, product.getSale());
-                ptm.setInt(10, product.getWarrantyPeriod());
-                ptm.setBoolean(11, product.isProductStatus());
+                ptm = conn.prepareStatement(ADD_PRODUCT);
+                ptm.setInt(1, product.getBrandId());
+                ptm.setInt(2, product.getUserOjectId());
+                ptm.setString(3, product.getDetail());
+                ptm.setBoolean(4, product.isHot());
+                ptm.setString(5, product.getName());
+                ptm.setString(6, product.getColor());
+                ptm.setFloat(7, product.getPrice());
+                ptm.setFloat(8, product.getSale());
+                ptm.setInt(9, product.getWarrantyPeriod());
+                ptm.setBoolean(10, product.isProductStatus());
 
                 // Thực thi câu lệnh SQL
                 int rowsInserted = ptm.executeUpdate();
