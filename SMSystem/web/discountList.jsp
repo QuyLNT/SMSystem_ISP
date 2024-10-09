@@ -190,7 +190,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%                                            int count = 0;
+                                        <%  int count = 0;
                                             for (DiscountDTO a : list) {
                                                 count++;
 

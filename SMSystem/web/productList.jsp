@@ -25,7 +25,7 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
-        <link rel="icon" href="img/logoweb.png" type="img/x-icon" />
+        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
     </head>
@@ -99,15 +99,11 @@
                                 <i class="fa-solid fa-plus"></i> Add new Product
                             </button>
                             <%
-
                                 ProductDAO productDao = new ProductDAO();
-                                Map<Integer,ProductDTO> productList = null;
-                                String noResults = (String) request.getAttribute("NO_RESULTS");
+                                List<ProductDTO> productList = null;
+                                String noResults = (String) session.getAttribute("NO_RESULTS");
 
-                                productList = (Map<Integer,ProductDTO>) request.getAttribute("PRODUCT_LIST");
-                                if (productList == null) {
-                                    productList = productDao.getAllProduct();
-                                }
+                                productList = (List<ProductDTO>) session.getAttribute("PRODUCT_LIST");
 
                                 String ms = "";
                                 String err = "";
@@ -133,7 +129,7 @@
                                             <h1 class="modal-title fs-5" id="addModalLabel">Create new product </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form action="CreateProductController" method="POST">
+                                        <form action="MainController" method="POST">
                                             <div class="modal-body">
 
                                                 <div class="input-group input-group-sm mb-3">
@@ -144,8 +140,8 @@
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Category</span>
                                                     <select name="userObjectID" class="form-control" required>
                                                         <%
-                                                            UserObjectDAO categoriesDao = new UserObjectDAO();
-                                                            List<UserObjectDTO> userObjectList = categoriesDao.getAllUserObject();
+                                                            
+                                                            List<UserObjectDTO> userObjectList =(List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
                                                             for (UserObjectDTO uo : userObjectList) {
                                                         %>
                                                         <option value="<%= uo.getUserObjectId()%>"><%= uo.getUserObjectName()%></option>
@@ -156,8 +152,7 @@
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Brand</span>
                                                     <select name="brandID" class="form-control" required>
                                                         <%
-                                                            BrandDAO brandDao = new BrandDAO();
-                                                            List<BrandDTO> brandList = brandDao.getAllBrand();
+                                                            List<BrandDTO> brandList = (List<BrandDTO>) session.getAttribute("BRAND_LIST");
                                                             for (BrandDTO brand : brandList) {
                                                         %>
                                                         <option value="<%= brand.getBrandId()%>"><%= brand.getBrandName()%></option>
@@ -181,12 +176,8 @@
                                                     <input name="color" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Size</span>
-                                                    <input name="size" type="number" step="0.01" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
-                                                </div>
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Stock</span>
-                                                    <input name="stock" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Warrant Period (Month)</span>
+                                                    <input name="warrantPeriod" type="number" step="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Detail</span>
@@ -208,6 +199,10 @@
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 4 (URL)</span>
                                                     <input name="productImage4" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
                                                 </div>
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 5 (URL)</span>
+                                                    <input name="productImage5" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
+                                            </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -224,9 +219,9 @@
                                 }
                             %>
                             <div class="search-form">
-                                <form action="SearchProductByNameController" method="POST">
+                                <form action="MainController" method="POST">
                                     Search Product: <input type="text" name="searchProductName" placeholder="Enter product name" value="<%= searchProductName%>"/>
-                                    <button type="submit" value="SearchProductName">Search</button>
+                                    <button type="submit" name="action" value="SearchProductName">Search</button>
                                 </form>
                             </div>
                         </div>
@@ -248,8 +243,9 @@
                                         <th>Price</th>
                                         <th>Sale</th>
                                         <th>Sale Price</th>
-                                        <th>Flash Sale</th>
+                                        <th>Hot</th>
                                         <th>Stock</th>
+                                        <th>Warranty Period</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
@@ -257,15 +253,32 @@
                                 <tbody>
                                     <%
                                         if (productList != null) {
-                                            for (ProductDTO product : productList.values()) {
-                                                UserObjectDTO userObject = categoriesDao.getUserObjectById(product.getUserOjectId());
-                                                BrandDTO brandShow = brandDao.getBrandById(product.getBrandId());
+                                            for (ProductDTO product : productList) {
                                     %>
                                     <tr>
                                         <td><img src="<%= product.getAvatarPath()%>" alt="<%= product.getName()%>" style="width: 70px; height: 70px;"></td>
                                         <td><%= product.getName()%></td>
-                                        <td><%= userObject.getUserObjectName()%></td> 
-                                        <td><%= brandShow.getBrandName()%></td>
+                                        <td><%
+                                                String userObjectName="";
+                                                for(UserObjectDTO u : userObjectList){
+                                                    if(u.getUserObjectId() == product.getUserOjectId()){
+                                                        userObjectName = u.getUserObjectName();
+                                                    }
+                                                }
+                                            %>
+                                            <%= userObjectName %>
+                                        </td> 
+                                        <td>
+                                            <%
+                                                String brandName="";
+                                                for(BrandDTO b : brandList){
+                                                    if(b.getBrandId()==product.getBrandId()){
+                                                        brandName = b.getBrandName();
+                                                    }
+                                                }
+                                            %>
+                                            <%= brandName%>
+                                        </td>
                                         <td><%= product.getPrice()%>$</td>
                                         <td>
                                             <%
@@ -278,8 +291,8 @@
                                         <td>
                                             <%= String.format("%.2f", salePrice)%>$
                                         </td>
-                                        <td> <%= "132123"%>
-                                            <form action="ToggleFlashSaleController" method="POST">
+                                        <td>
+                                            <form action="MainController" method="POST">
                                                 <input type="hidden" name="productId" value="<%= product.getProductId()%>"/>
                                                 <input type="hidden" name="action" value="toggleFlashSale"/>
                                                 <select name="Hot" onchange="this.form.submit()">
@@ -289,12 +302,25 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <%= "Cái này in ra stock mà tao chưa làm_Kí tên: Quý"
+                                            <%
+                                                int stock = 0;
+                                                List<ProductDTO> stockByProduct =(List<ProductDTO>) session.getAttribute("STOCK_OF_PRODUCT");
+                                                if(stockByProduct!=null){
+                                                    for(ProductDTO p : stockByProduct){
+                                                        if(p.getProductId()==product.getProductId()){
+                                                            stock = p.getTotalStock();
+                                                        }
+                                                    }
+                                                }
                                             
                                             %>
+                                            <%=stock%>
                                         </td>
-                                        <td><%= "132123"%>
-                                            <form action="ToggleProductStatusController" method="POST">
+                                        <td>
+                                            <%= product.getWarrantyPeriod()%> Months
+                                        </td>
+                                        <td>
+                                            <form action="MainController" method="POST">
                                                 <input type="hidden" name="productId" value="<%= product.getProductId()%>"/>
                                                 <input type="hidden" name="action" value="toggleProductStatus"/>
                                                 <select name="Product_Status" onchange="this.form.submit()">
@@ -317,7 +343,7 @@
                                                             <h1 class="modal-title fs-5" id="updateModalLabel">Update product '<%=product.getName()%>' information</h1>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-                                                        <form action="UpdateProductController" method="POST">
+                                                        <form action="MainController" method="POST">
                                                             <div class="modal-body">
                                                                 <input type="hidden" name="productId"  value="<%=product.getProductId()%>" />
                                                                 <div class="input-group input-group-sm mb-3">
@@ -374,6 +400,11 @@
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Sale</span>
                                                                     <input name="sale" type="number" step="0.01" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= product.getSale()%>">
                                                                 </div>
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Warranty Period</span>
+                                                                    <input name="warranty" type="number" step="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= product.getWarrantyPeriod()%>">
+                                                                </div>
+
 
                                                             </div>
                                                             <div class="modal-footer">
