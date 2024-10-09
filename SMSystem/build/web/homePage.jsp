@@ -14,7 +14,7 @@
         <meta name="keywords" content="codelean, unica, creative, html">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Home page</title>
+        <title>Home page - SMSystem</title>
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -838,7 +838,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="copyright-text">
-                                Copyright ©2024 All reserved | MinQan
+                                Copyright ©2024 All reserved | SMSystem
                             </div>
                             <div class="payment-pic">
                                 <img src="img/payment-method.png" alt="">

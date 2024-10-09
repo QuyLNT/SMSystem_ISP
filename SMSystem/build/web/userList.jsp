@@ -32,8 +32,8 @@
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="favicon_io/favicon-32x32.png" alt="anh chu cho" />
-                                    <span class="title-text">Nice</span>
+                                    <img src="img/logoweb.png" alt="" width="32px" height="32px"/>
+                                    <span class="title-text">SM System</span>
                                 </h3>
                             </div>
                             <ul class="nav-list">
@@ -47,31 +47,6 @@
                                     <a href="userList.jsp" class="nav-link">
                                         <i class="fa-solid fa-user"></i>
                                         <span class="link-text">Accounts</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
-                                    <a href="categoriesList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-list"></i>
-                                        <span class="link-text">Categories</span>
-                                    </a>
-                                </li>
-
-                                <li class="nav-list-item">
-                                    <a href="productList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-capsules"></i>
-                                        <span class="link-text">Products</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
-                                    <a href="discountList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-percent"></i>
-                                        <span class="link-text">Discount</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
-                                    <a href="orderList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-file-invoice"></i>
-                                        <span class="link-text">Order</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">

@@ -31,7 +31,7 @@
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="img/logoweb.png" alt="" width="100%" height="100%"/>
+                                    <img src="img/logoweb.png" alt="" width="32px" height="32px"/>
                                     <span class="title-text">Nice</span>
                                 </h3>
                             </div>

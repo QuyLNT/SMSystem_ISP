@@ -32,8 +32,8 @@
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="favicon_io/favicon-32x32.png" alt="anh giay nike" />
-                                    <span class="title-text">Nice</span>
+                                    <img src="img/logoweb.png" width="32px" height="32px" alt="" />
+                                    <span class="title-text">SM System</span>
                                 </h3>
                             </div>
                             <ul class="nav-list">
@@ -41,12 +41,6 @@
                                     <a href="adminHome.jsp" class="nav-link">
                                         <i class="fa-solid fa-house"></i>
                                         <span class="link-text">Home</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
-                                    <a href="userList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-user"></i>
-                                        <span class="link-text">User</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
