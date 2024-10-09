@@ -59,10 +59,7 @@ public class CreateProductController extends HttpServlet {
                 productError.setPriceError("Price must be a positive number");
                 checkValidation = false;
             }
-            if (sale < 0 || sale > price) {
-                productError.setSaleError("Sale must be a positive number and not greater than the price");
-                checkValidation = false;
-            }
+
 
             if (checkValidation) {
                 // Create ProductDTO object (default hot and productStatus as false)

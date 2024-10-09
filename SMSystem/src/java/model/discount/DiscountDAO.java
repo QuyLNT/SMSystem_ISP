@@ -19,9 +19,11 @@ import utils.DBUtils;
  * @author LENOVO
  */
 public class DiscountDAO {
-    private static final String GET_ALL= "SELECT discountId,discountCode,detail,discountAmount,startDay,endDay,usageLimit,discountStatus\n" +
+    private static final String GET_ALL= "SELECT discountId,discountCode,detail,discountAmount,startDay,endDay,usageLimit,usage,discountStatus\n" +
 "                                          FROM discountCodes";
-    
+    private static final String UPDATE_STATUS = "UPDATE discountCodes\n" +
+                                        "SET discountStatus=?\n" +
+                                        "WHERE discountId=?";
     public List<DiscountDTO> getALlDiscount() throws SQLException, ClassNotFoundException{
         List<DiscountDTO> discountList = new ArrayList<>();
         Connection conn = null;
@@ -40,8 +42,9 @@ public class DiscountDAO {
                             rs.getFloat("discountAmount"), 
                             rs.getDate("startDay"), 
                             rs.getDate("endDay"), 
-                            rs.getInt("usageLimit"), 
-                            rs.getBoolean("discountStatus"));
+                            rs.getInt("usageLimit"),
+                            rs.getInt("usage"),
+                            rs.getString("discountStatus"));
                     
                     discountList.add(discount);
                 }
@@ -52,5 +55,26 @@ public class DiscountDAO {
             if(conn!=null) conn.close();
         }
         return discountList;
+    }
+
+    public boolean updateStatus(int discountId, String status) throws ClassNotFoundException, SQLException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        boolean result = false;
+        try{
+            conn = DBUtils.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(UPDATE_STATUS);
+                ptm.setString(1, status);
+                ptm.setInt(2,discountId);
+                result = ptm.executeUpdate()>0;         
+            }
+        }finally{
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
+        
+        return result;
+
     }
 }
