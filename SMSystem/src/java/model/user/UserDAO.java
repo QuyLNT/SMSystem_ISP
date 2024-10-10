@@ -26,13 +26,16 @@ public class UserDAO {
     private static final String LOGIN = "SELECT userName,fullName,userId,phoneNumber,sex,email,isActive,roleId,createdAt\n"
             + "FROM users\n"
             + "WHERE (userName =? OR email=?) AND password = ?";
-    private static final String GET_ALL_USER = "SELECT userId,userName, fullName,phoneNumber,sex,email,isActive, roleId,createdAt FROM users WHERE userName=? ";
+    private static final String GET_ALL_USER = "SELECT userId,userName, fullName,phoneNumber,sex,email,isActive, roleId,createdAt FROM users WHERE userName LIKE ? ";
     private static final String UPDATE = "UPDATE users SET  password=?,fullName= ?, phoneNumber=?, sex=?, email=? where userName=?";
     private static final String GET_TOTAL_ACCOUNT = "SELECT COUNT(userId) AS numberOfAccount\n" +
                                                     "FROM users";     
     private static final String GET_NUMBER_OF_ACCOUNT = "SELECT COUNT(userId) AS numberOfAccount\n" +
                                                         "FROM users"
                                                          + "WHERE roleId LIKE ?";
+    private static final String SET_ROLE_ID = "UPDATE users\n" +
+                                                "SET roleId = ?\n" +
+                                                "WHERE userId = ?";
     public UserDTO checkLogin(String userIndentify, String password) throws SQLException, ClassNotFoundException, NamingException {
         UserDTO user = null;
         Connection conn = null;
@@ -88,7 +91,7 @@ public class UserDAO {
                 rs = ptm.executeQuery();
             }
             while (rs.next()) {
-                int userId = rs.getInt("userID");
+                int userId = rs.getInt("userId");
                 String fullName = rs.getString("fullName");
                 String userName = rs.getString("userName");
                 String userPass = "***";
@@ -195,6 +198,29 @@ public class UserDAO {
             if(rs != null){
                 rs.close();
             }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return  result;
+    }
+
+    public boolean setRoleId(int userId, String roleId) throws ClassNotFoundException, SQLException {
+        boolean result = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(SET_ROLE_ID);
+                ptm.setString(1, roleId);
+                ptm.setInt(2, userId);
+                result = ptm.executeUpdate()>0;
+            }
+        } finally {
             if (ptm != null) {
                 ptm.close();
             }
