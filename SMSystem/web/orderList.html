@@ -112,6 +112,7 @@
                                         <th>Customer</th>
                                         <th>Date Time</th>
                                         <th>Status</th>
+                                        <th>Shipper</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -122,10 +123,19 @@
 
                                     <tr>
                                 <form action="MainOrderController" method="POST">
-
                                     <td><%=a.getOrderID()%></td>                                       
                                     <td><%=a.getFullName()%></td>
                                     <td><%=a.getCreateAt()%></td>
+                                    <td>
+                                        <select name="status" class="form-select" aria-label="Default select example">
+                                            <option selected><%=a.getStatus()%></option>
+                                            <option value="Accepted,waiting for Delivering">Accepted,waiting for Delivering</option>
+                                            <option value="Delivering">Delivering</option>
+                                            <option value="Delivered">Delivered</option>
+                                            <option value="Completed">Completed</option>
+                                            <option value="Not Completed">Not Completed</option>
+                                        </select>
+                                    </td>
                                     <td>
                                         <select name="status" class="form-select" aria-label="Default select example">
                                             <option selected><%=a.getStatus()%></option>
@@ -144,7 +154,6 @@
                                         <button type="submit" class="btn btn-primary" name="action" value="View">
                                             <i class="fa-solid fa-eye"></i>
                                         </button>         
-                                      
                                     </td>
                                 </form>
                                 </tr> 
