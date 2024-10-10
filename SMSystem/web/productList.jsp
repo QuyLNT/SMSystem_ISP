@@ -168,7 +168,7 @@
                                                     <select name="userObjectID" class="form-control" required>
                                                         <%
 
-                                                            List<UserObjectDTO> userObjectList = (List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
+                                                            List<UserObjectDTO> userObjectList =(List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
                                                             for (UserObjectDTO uo : userObjectList) {
                                                         %>
                                                         <option value="<%= uo.getUserObjectId()%>"><%= uo.getUserObjectName()%></option>
