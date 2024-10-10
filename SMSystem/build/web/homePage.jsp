@@ -600,7 +600,7 @@
             <div class="insta-item set-bg" data-setbg="img/insta-4.jpg">
                 <div class="inside-text">
                     <i class="ti-instagram"></i>
-                    <h5><a href="#">MinQan_Collection</a></h5>
+                    <h5><a href="#">SMSystem_Collection</a></h5>
                 </div>
             </div>
             <div class="insta-item set-bg" data-setbg="img/insta-5.jpg">
