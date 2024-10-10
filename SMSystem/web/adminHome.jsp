@@ -34,13 +34,13 @@
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
-                                    <a href="MainController?action=LoadProductData" class="nav-link">
+                                    <a href="MainController?action=LoadAdminHome" class="nav-link">
                                         <i class="fa-solid fa-house"></i>
                                         <span class="link-text">Home</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="userList.jsp" class="nav-link">
+                                    <a href="MainController?action=LoadUserList" class="nav-link">
                                         <i class="fa-solid fa-user"></i>
                                         <span class="link-text">Accounts</span>
                                     </a>

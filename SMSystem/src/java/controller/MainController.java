@@ -58,6 +58,10 @@ public class MainController extends HttpServlet {
     private final static String SEARCH_BRANCH_CONTROLLER = "SearchBrandController";
     private final static String LOAD_BRAND_LIST="LoadBrandList" ;
     private final static String LOAD_BRAND_LIST_CONTROLLER="LoadBrandListController";
+    private final static String LOAD_ADMIN_HOME="LoadAdminHome" ;
+    private final static String LOAD_ADMIN_HOME_CONTROLLER="LoadAdminHomeDataController";
+    private final static String LOAD_USER_LIST="LoadUserList" ;
+    private final static String LOAD_USER_LIST_CONTROLLER="LoadUserListController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -94,6 +98,10 @@ public class MainController extends HttpServlet {
                 url=SEARCH_BRANCH_CONTROLLER;
             }else if(LOAD_BRAND_LIST.equals(action)){
                 url=LOAD_BRAND_LIST_CONTROLLER;
+            }else if(LOAD_ADMIN_HOME.equals(action)){
+                url=LOAD_ADMIN_HOME_CONTROLLER;
+            }else if(LOAD_USER_LIST.equals(action)){
+                url=LOAD_USER_LIST_CONTROLLER;
             }
 
         } catch (Exception e) {

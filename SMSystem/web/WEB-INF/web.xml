@@ -72,6 +72,14 @@
         <servlet-name>LoadBrandListController</servlet-name>
         <servlet-class>controller.LoadBrandListController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadAdminHomeDataController</servlet-name>
+        <servlet-class>controller.LoadAdminHomeDataController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadUserListController</servlet-name>
+        <servlet-class>controller.LoadUserListController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -143,6 +151,14 @@
     <servlet-mapping>
         <servlet-name>LoadBrandListController</servlet-name>
         <url-pattern>/LoadBrandListController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadAdminHomeDataController</servlet-name>
+        <url-pattern>/LoadAdminHomeDataController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadUserListController</servlet-name>
+        <url-pattern>/LoadUserListController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
