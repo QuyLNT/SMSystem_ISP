@@ -323,8 +323,8 @@
                                                 <input type="hidden" name="productId" value="<%= product.getProductId()%>"/>
                                                 <input type="hidden" name="action" value="toggleFlashSale"/>
                                                 <select name="Hot" onchange="this.form.submit()">
-                                                    <option value="1" <%= product.isHot() ? "selected" : ""%>>On</option>
-                                                    <option value="0" <%= !product.isHot() ? "selected" : ""%>>Off</option>
+                                                    <option value="1" <%= product.isHot() ? "selected" : ""%>>Active</option>
+                                                    <option value="0" <%= !product.isHot() ? "selected" : ""%>>Inactive</option>
                                                 </select>
                                             </form>
                                         </td>

@@ -71,86 +71,10 @@
                         <div class="welcome" >
 
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
-                                <i class="fa-solid fa-plus"></i> Add new User
-                            </button>
-                            <%
-                                String ms = "";
-                                String err = "";
-                                if (request.getAttribute("ms") != null) {
-                                    ms = (String) request.getAttribute("ms");
-                                }
-                                if (request.getAttribute("err") != null) {
-                                    err = (String) request.getAttribute("err");
-                                }
-                                if (ms != null || err != null) {
-                            %>
-                            <div class="mes-suc">
-                                <%=ms%> <%=err%>
-                            </div>                          
-                            <%}%>
+                            
                             <!-- Modal Add -->
 
-                            <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="addModalLabel">Create new user </h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <form action="MainController" method="POST">
-                                            <div class="modal-body">
-
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">UserName</span>
-                                                    <input name="userName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
-                                                </div>
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">FullName</span>
-                                                    <input name="fullName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
-                                                </div>
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
-                                                    <input name="email" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
-                                                </div>
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Password</span>
-                                                    <input name="userPass" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
-                                                </div>
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Confirm Password</span>
-                                                    <input name="confirm" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
-                                                </div>
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Sex</span>
-                                                    <select name="Sex" class="form-control">
-                                                        <option value="Male">Male</option>
-                                                        <option value="Female">Female</option>
-                                                        <option value="Others">Others</option>
-                                                    </select>
-                                                </div>
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Phone Number</span>
-                                                    <input name="phoneNumber" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
-                                                </div>
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Role</span>
-                                                    <select name="userRole" class="form-control">
-                                                        <option value="AD"  >Admin</option>
-                                                        <option value="CUS" >Customer</option>
-                                                        <option value="MN"  >Manager</option>
-                                                        <option value="SP"  >Shipper</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <input type="submit" name="action" value="Create User" class="btn btn-primary"/>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                            
                                                                                 <%
                                 String searchUserName = request.getParameter("searchUserName");
                                 if (searchUserName == null) {
