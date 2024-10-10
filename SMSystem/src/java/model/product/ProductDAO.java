@@ -33,14 +33,14 @@ public class ProductDAO {
  
     private static final String ADD_PRODUCT = "INSERT INTO products (brandId, userObjectId, detail, hot, name, color, price, sale, warrantPeriod, productStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private static final String UPDATE_HOT = "UPDATE products"
-                                            + "SET hot=?"
-                                            + "WHERE productId=?";
-    private static final String UPDATE_PRODUCT_STATUS = "UPDATE products"
-                                                        + "SET productStatus=?"
-                                                        + "WHERE productId=?";
+    private static final String UPDATE_HOT = "UPDATE products\n" +
+                                            "SET hot=?\n" +
+                                            "WHERE productId=?";
+    private static final String UPDATE_PRODUCT_STATUS = "UPDATE products\n" +
+                                                        "SET productStatus=?\n" +
+                                                        "WHERE productId=?";
     
-        private static final String SEARCH_PRODUCT_BY_NAME = "SELECT productId,brandId,userObjectId,detail,hot,"
+    private static final String SEARCH_PRODUCT_BY_NAME = "SELECT productId,brandId,userObjectId,detail,hot,"
             + "                                      name,color,price,sale,warrantPeriod,productStatus \n" +
                                                     "FROM products\n" +
                                                     "WHERE name LIKE ?";

@@ -28,7 +28,7 @@ public class ProductImageDAO {
     
     private static final String INSERT_IMAGE = "INSERT INTO productImages(productId,imagePath,isAvatar) VALUES (?, ?, ?)";
 
-    public List<ProductImageDTO> getAllImage(int productId) throws ClassNotFoundException, SQLException{
+    public List<ProductImageDTO> getImageByProduct(int productId) throws ClassNotFoundException, SQLException{
         List<ProductImageDTO> listImage = new ArrayList();
         ProductDTO product = null;
         Connection conn = null;

@@ -12,14 +12,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Categories</title>
+        <title>Brand</title>
         <title>Kẻ kiểm soát thông tin</title>
         <link rel="stylesheet" href="css/user1.css" />
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
-        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
+        
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
     </head>
@@ -92,40 +92,39 @@
                     </div>
                     <div class="content">
                         <div class="welcome">
-
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+                                <i class="fa-solid fa-plus"></i> Add new Brand
+                            </button>
+                            <div class="search-form">
+                                <form action="MainController" method="POST">
+                                    Search Brand: <input type="text" name="searchProductName" placeholder="Enter product name" value="<%= searchProductName%>"/>
+                                    <button type="submit" name="action" value="SearchProductName">Search</button>
+                                </form>
+                            </div>
+                        </div>
                         <div class="welcome" >
                             <%
                                 List<UserObjectDTO> categoriesList =(List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
                                 if(categoriesList != null){
                             %>
-                            <div class="table-tilte">Categories Table</div>
+                            <div class="table-tilte">Brand Table</div>
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>CategoryName</th>
-                                        <th>CategoryDetail</th>
+                                        <th>BrandName</th>
                                         <th>Total products</th>
                                         
                                         <th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <%
-                                        int count=0;
-                                        for (UserObjectDTO category : categoriesList) {
-                                    %>
+                                    
                                     <tr>
-                                        <td><%= count++%></td>
-                                        <td><%= category.getUserObjectName()%></td>
-                                        <td><%= category.getDetail()%></td>
-                                        <td><%= category.getProductCount()%></td>
+                                        
                                         
                                     </tr>
-                                    <%
-                                            }
-                                        }
-                                    %>
+                                    
                                 </tbody>
                             </table>
                         </div>

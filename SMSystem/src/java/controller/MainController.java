@@ -27,54 +27,80 @@ public class MainController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final static String WELLCOME_PAGE="login.jsp";
-    private final static String LOGIN="Sign In" ;
-    private final static String LOGIN_CONTROLLER="LoginController" ;
-    private final static String UPDATE_PRODUCT="Update Product" ;
-    private final static String UPDATE_PRODUCT_CONTROLLER="UpdateProductController";
-    private final static String LOAD_DATA="LoadProductData" ;
-    private final static String LOAD_PRODUCT_DATA_CONTROLLER="LoadProductController";
-    private final static String UPDATE_USER="Update" ;
-    private final static String UPDATE_USER_CONTROLLER="UpdateUserController";
-    
+    private final static String WELLCOME_PAGE = "login.jsp";
+    private final static String LOGIN = "Sign In";
+    private final static String LOGIN_CONTROLLER = "LoginController";
+    private final static String UPDATE_PRODUCT = "Update Product";
+    private final static String UPDATE_PRODUCT_CONTROLLER = "UpdateProductController";
+    private final static String LOAD_DATA = "LoadProductData";
+    private final static String LOAD_PRODUCT_DATA_CONTROLLER = "LoadProductController";
+    private final static String UPDATE_USER = "Update";
+    private final static String UPDATE_USER_CONTROLLER = "UpdateUserController";
+    private final static String LOAD_MANAGER_HOME_DATA="LoadManagerHomeData" ;
+    private final static String LOAD_MANAGER_HOME_CONTROLLER="LoadManagerHomeDataController";
+    private final static String LOAD_PRODUCT_LIST="LoadProductList" ;
+    private final static String LOAD_PRODUCT_LIST_CONTROLLER="LoadProductListController";
+    private final static String LOAD_DISCOUNT_LIST="LoadDiscountList" ;
+    private final static String LOAD_DISCOUNT_LIST_CONTROLLER="LoadDiscountListController";
     private final static String CREATE_PRODUCT = "Create Product" ;
     private final static String CREATE_PRODUCT_CONTROLLER = "CreateProductController";
-    private final static String SEARCH_PRODUCT = "SearchProductName" ;
+    private final static String SEARCH_PRODUCT = "SearchProductName";
     private final static String SEARCH_PRODUCT_CONTROLLER = "SearchProductByNameController";
-
-    private final static String TOGGLE_FLASH_SALE = "toggleFlashSale" ;
+    private final static String TOGGLE_FLASH_SALE = "toggleFlashSale";
     private final static String TOGGLE_FLASH_SALE_CONTROLLER = "ToggleFlashSaleController";
-    private final static String TOGGLE_PRODUCT_STATUS = "toggleProductStatus" ;
+    private final static String TOGGLE_PRODUCT_STATUS = "toggleProductStatus";
     private final static String TOGGLE_PRODUCT_STATUS_CONTROLLER = "ToggleProductStatusController";
-    
+    private final static String SEARCH_USER = "SearchUser";
+    private final static String SEARCH_USER_CONTROLLER = "SearchUserByUserNameController";
+    private final static String TOGGLE_DISCOUNT_STATUS = "toggleDiscountStatus" ;
+    private final static String TOGGLE_DISCOUNT_STATUS_CONTROLLER = "ToggleDiscountStatusController";
+    private final static String SEARCH_BRANCH = "SearchBrandName";
+    private final static String SEARCH_BRANCH_CONTROLLER = "SearchBrandController";
+    private final static String LOAD_BRAND_LIST="LoadBrandList" ;
+    private final static String LOAD_BRAND_LIST_CONTROLLER="LoadBrandListController";
     private final static String DELETE_PRODUCT = "Delete Product" ;
     private final static String DELETE_PRODUCT_CONTROLLER = "DeleteProductController";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url=WELLCOME_PAGE;
-        try{
+        String url = WELLCOME_PAGE;
+        try {
             String action = request.getParameter("action");
-            if(LOGIN.equals(action)){
-                url=LOGIN_CONTROLLER;
-            }else if(UPDATE_PRODUCT.equals(action)){
-                url=UPDATE_PRODUCT_CONTROLLER;
-            }else if(LOAD_DATA.equals(action)){
-                url=LOAD_PRODUCT_DATA_CONTROLLER;
-            }else if(UPDATE_USER.equals(action)){
-                url=UPDATE_USER_CONTROLLER;
-            }else if(CREATE_PRODUCT.equals(action)){
-                url=CREATE_PRODUCT_CONTROLLER;
-            }else if(TOGGLE_FLASH_SALE.equals(action)){
-                url=TOGGLE_FLASH_SALE_CONTROLLER;
-            }else if(TOGGLE_PRODUCT_STATUS.equals(action)){
-                url=TOGGLE_PRODUCT_STATUS_CONTROLLER;
-            }else if(SEARCH_PRODUCT.equals(action)){
-                url=SEARCH_PRODUCT_CONTROLLER;  
+            if (LOGIN.equals(action)) {
+                url = LOGIN_CONTROLLER;
+            } else if (UPDATE_PRODUCT.equals(action)) {
+                url = UPDATE_PRODUCT_CONTROLLER;
+            } else if (LOAD_DATA.equals(action)) {
+                url = LOAD_PRODUCT_DATA_CONTROLLER;
+            } else if (UPDATE_USER.equals(action)) {
+                url = UPDATE_USER_CONTROLLER;
+            } else if (CREATE_PRODUCT.equals(action)) {
+                url = CREATE_PRODUCT_CONTROLLER;
+            } else if (TOGGLE_FLASH_SALE.equals(action)) {
+                url = TOGGLE_FLASH_SALE_CONTROLLER;
+            } else if (TOGGLE_PRODUCT_STATUS.equals(action)) {
+                url = TOGGLE_PRODUCT_STATUS_CONTROLLER;
+            } else if (SEARCH_PRODUCT.equals(action)) {
+                url = SEARCH_PRODUCT_CONTROLLER;
+            }else if (SEARCH_USER.equals(action)) {
+                url = SEARCH_USER_CONTROLLER;
+            }else if(LOAD_MANAGER_HOME_DATA.equals(action)){
+                url=LOAD_MANAGER_HOME_CONTROLLER;
+            }else if(LOAD_PRODUCT_LIST.equals(action)){
+                url=LOAD_PRODUCT_LIST_CONTROLLER;
+            }else if(LOAD_DISCOUNT_LIST.equals(action)){
+                url=LOAD_DISCOUNT_LIST_CONTROLLER;
+            }else if(TOGGLE_DISCOUNT_STATUS.equals(action)){
+                url=TOGGLE_DISCOUNT_STATUS_CONTROLLER;  
+            }else if(SEARCH_BRANCH.equals(action)){
+                url=SEARCH_BRANCH_CONTROLLER;
+            }else if(LOAD_BRAND_LIST.equals(action)){
+                url=LOAD_BRAND_LIST_CONTROLLER;
             }else if(DELETE_PRODUCT.equals(action)){
                 url=DELETE_PRODUCT_CONTROLLER;  
             }
+            
             
             
             

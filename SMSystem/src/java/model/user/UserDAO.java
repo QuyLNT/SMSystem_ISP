@@ -22,27 +22,27 @@ import utils.DBUtils;
  * @author LENOVO
  */
 public class UserDAO {
-    private static final String LOGIN = "SELECT userName,fullName,userId,phoneNumber,sex,email,isActive,roleId,createdAt\n" +
-"FROM users\n" +
-"WHERE (userName =? OR email=?) AND password = ?";
-     private static final String GET_ALL_USER = "SELECT userId,userName, fullName, roleId FROM users WHERE fullName LIKE ? ";
-    private static final String UPDATE = "UPDATE users set fullName= ?, userName=?, password=?, phoneNumber=?, sex=?, email=?,roleId=? where userName=?";
 
-    
+    private static final String LOGIN = "SELECT userName,fullName,userId,phoneNumber,sex,email,isActive,roleId,createdAt\n"
+            + "FROM users\n"
+            + "WHERE (userName =? OR email=?) AND password = ?";
+    private static final String GET_ALL_USER = "SELECT userId,userName, fullName,phoneNumber,sex,email,isActive, roleId,createdAt FROM users WHERE userName=? ";
+    private static final String UPDATE = "UPDATE users SET  password=?,fullName= ?, phoneNumber=?, sex=?, email=? where userName=?";
+
     public UserDTO checkLogin(String userIndentify, String password) throws SQLException, ClassNotFoundException, NamingException {
         UserDTO user = null;
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
-        try{
+        try {
             conn = DBUtils.getConnection();
-            if(conn!=null){
+            if (conn != null) {
                 ptm = conn.prepareStatement(LOGIN);
                 ptm.setString(1, userIndentify);
                 ptm.setString(2, userIndentify);
                 ptm.setString(3, password);
                 rs = ptm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     int userId = rs.getInt("userId");
                     String userName = rs.getString("userName");
                     String fullName = rs.getString("fullName");
@@ -56,33 +56,38 @@ public class UserDAO {
                     user = new UserDTO(userId, fullName, userName, password, phoneNumber, sex, email, isActive, roleId, createdAt);
                 }
             }
-        }finally{
-            if(rs!=null) rs.close();
-            if(ptm!=null) ptm.close();
-            if(conn!=null) rs.close();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                rs.close();
+            }
         }
-        
+
         return user;
     }
-    
-    public List<UserDTO> getAllUser() throws ClassNotFoundException, SQLException {
+
+    public List<UserDTO> getAllUser(String searchUser) throws ClassNotFoundException, SQLException {
         List<UserDTO> userList = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
         try {
             conn = DBUtils.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(GET_ALL_USER);
-            rs = stmt.executeQuery();
             if (conn != null) {
                 ptm = conn.prepareStatement(GET_ALL_USER);
+                ptm.setString(1, "%" + searchUser + "%");
                 rs = ptm.executeQuery();
             }
             while (rs.next()) {
                 int userId = rs.getInt("userID");
                 String fullName = rs.getString("fullName");
                 String userName = rs.getString("userName");
-                String userPass = rs.getString("password");
+                String userPass = "***";
                 String phoneNumber = rs.getString("phoneNumber");
                 String Sex = rs.getString("sex");
                 String email = rs.getString("email");
@@ -102,11 +107,11 @@ public class UserDAO {
             if (conn != null) {
                 conn.close();
             }
-        } 
+        }
         return userList;
     }
-    
-    public boolean userAfterUpdate(UserDTO user) {
+
+    public boolean userAfterUpdate(UserDTO user) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -116,18 +121,26 @@ public class UserDAO {
             conn = DBUtils.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(UPDATE);
-                ptm.setString(1, user.getFullName());
-                ptm.setString(2, user.getUserName());
-                ptm.setString(3, user.getPassword());
-                ptm.setString(4, user.getPhoneNumber());
-                ptm.setString(5, user.getSex());
-                ptm.setString(6, user.getEmail());
-                check = ptm.executeUpdate() >0 ?true:false;
+                ptm.setString(1, user.getPassword());
+                ptm.setString(2, user.getFullName());
+                ptm.setString(3, user.getPhoneNumber());
+                ptm.setString(4, user.getSex());
+                ptm.setString(5, user.getEmail());
+                ptm.setString(6, user.getUserName());
+                check = ptm.executeUpdate() > 0 ? true : false;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            return check;
         }
-        return check;
+
     }
-   
 }
