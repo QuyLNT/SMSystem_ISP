@@ -44,8 +44,12 @@ public class MainController extends HttpServlet {
 
     private final static String TOGGLE_FLASH_SALE = "toggleFlashSale" ;
     private final static String TOGGLE_FLASH_SALE_CONTROLLER = "ToggleFlashSaleController";
-        private final static String TOGGLE_PRODUCT_STATUS = "toggleProductStatus" ;
+    private final static String TOGGLE_PRODUCT_STATUS = "toggleProductStatus" ;
     private final static String TOGGLE_PRODUCT_STATUS_CONTROLLER = "ToggleProductStatusController";
+    
+    private final static String DELETE_PRODUCT = "Delete Product" ;
+    private final static String DELETE_PRODUCT_CONTROLLER = "DeleteProductController";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -68,8 +72,9 @@ public class MainController extends HttpServlet {
                 url=TOGGLE_PRODUCT_STATUS_CONTROLLER;
             }else if(SEARCH_PRODUCT.equals(action)){
                 url=SEARCH_PRODUCT_CONTROLLER;  
+            }else if(DELETE_PRODUCT.equals(action)){
+                url=DELETE_PRODUCT_CONTROLLER;  
             }
-            
             
             
             

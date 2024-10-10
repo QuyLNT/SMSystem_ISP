@@ -8,11 +8,14 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
 import model.product.ProductError;
@@ -35,8 +38,8 @@ public class CreateProductController extends HttpServlet {
         ProductError productError = new ProductError();
         boolean checkValidation = true;
         ProductDAO productDAO = new ProductDAO();
+
         try {
-            boolean checkInsert = false;
             int brandId = Integer.parseInt(request.getParameter("brandID"));
             int userObjectId = Integer.parseInt(request.getParameter("userObjectID"));
             String detail = request.getParameter("detail");
@@ -44,7 +47,7 @@ public class CreateProductController extends HttpServlet {
             String color = request.getParameter("color");
             float price = Float.parseFloat(request.getParameter("price"));
             float sale = Float.parseFloat(request.getParameter("sale"));
-            int warrantyPeriod = Integer.parseInt(request.getParameter("warrantyPeriod"));
+            int warrantyPeriod = Integer.parseInt(request.getParameter("warrantPeriod"));
 
             // Validation checks
             if (name.length() < 3 || name.length() > 100) {
@@ -65,17 +68,16 @@ public class CreateProductController extends HttpServlet {
             }
 
             if (checkValidation) {
-                // Create ProductDTO object (default hot and productStatus as false)
-                ProductDTO product = new ProductDTO(0, brandId, userObjectId, detail, false, name, color, price, sale, warrantyPeriod, false);
+                ProductDTO product = new ProductDTO(0, brandId, userObjectId, detail, false, name, color, price, sale, warrantyPeriod, true);
+                product = productDAO.addProduct(product);
 
-                // Insert product
-                int createdProductId = productDAO.addProduct(product);
-
-                if (createdProductId > 0) {
-                    // Success: Insert images if present
+                if (product!=null) {
+                    int createdProductId = product.getProductId();
                     ProductImageDAO imageDAO = new ProductImageDAO();
                     String avatar = request.getParameter("avatar");
-                    
+                    boolean avatarInserted = imageDAO.addProductImage(createdProductId, avatar, true);
+
+                    int successfulImageCount = 0;
                     String[] imageUrls = new String[5];
                     imageUrls[0] = request.getParameter("productImage1");
                     imageUrls[1] = request.getParameter("productImage2");
@@ -85,21 +87,32 @@ public class CreateProductController extends HttpServlet {
 
                     for (String imageUrl : imageUrls) {
                         if (imageUrl != null && !imageUrl.isEmpty()) {
-                            checkInsert = imageDAO.addProductImage(userObjectId, imageUrl, false);
+                            boolean imageInserted = imageDAO.addProductImage(createdProductId, imageUrl, false);
+                            if (imageInserted) {
+                                successfulImageCount++;
+                            }
                         }
                     }
-                    request.setAttribute("ms", "New product created successfully!");
-                    url = SUCCESS;  
+                    ProductImageDAO imageDao = new ProductImageDAO();
+                    product.setListImages(imageDAO.getAllImage(product.getProductId()));
+                    List<ProductDTO> productList = new ArrayList<>();
+                    HttpSession session = request.getSession();
+                    productList = (List<ProductDTO>) session.getAttribute("PRODUCT_LIST");
+                    productList.add(product);
+                    request.setAttribute("PRODUCT_LIST", productList);
+                    request.setAttribute("ms", "New product created successfully! " + successfulImageCount + " images were added.");
+                    url = SUCCESS; 
                 } else {
                     productError.setErrorMessage("Failed to create product due to an unknown error.");
+                    request.setAttribute("PRODUCT_ERROR", productError);
                 }
             } else {
-                // Validation failed, set error messages to be displayed on the form
                 request.setAttribute("PRODUCT_ERROR", productError);
             }
 
         } catch (SQLException | ClassNotFoundException | NumberFormatException e) {
             log("Error at CreateProductController: " + e.toString());
+            e.printStackTrace();
             if (e.toString().contains("duplicate")) {
                 productError.setNameError("Product name already exists.");
                 request.setAttribute("PRODUCT_ERROR", productError);

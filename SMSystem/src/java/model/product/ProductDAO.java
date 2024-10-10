@@ -31,7 +31,7 @@ public class ProductDAO {
             + "                                      name,color,price,sale,warrantPeriod,productStatus \n" +
                                                     "FROM products";
  
-    private static final String ADD_PRODUCT = "INSERT INTO Product (brandId, userOjectId, detail, hot, name, color, price, sale, warrantyPeriod, productStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String ADD_PRODUCT = "INSERT INTO products (brandId, userObjectId, detail, hot, name, color, price, sale, warrantPeriod, productStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String UPDATE_HOT = "UPDATE products"
                                             + "SET hot=?"
@@ -147,47 +147,45 @@ public class ProductDAO {
         return result;
     }
     
-    public int addProduct(ProductDTO product) throws SQLException, ClassNotFoundException {
-        int productId = -1;
-        Connection conn = null;
-        PreparedStatement ptm = null;
-        ResultSet generatedKeys = null;
-        
-        try {
-            conn = DBUtils.getConnection();
-            if (conn != null) {
-                ptm = conn.prepareStatement(ADD_PRODUCT, PreparedStatement.RETURN_GENERATED_KEYS);
-                ptm.setInt(1, product.getProductId());
-                ptm.setInt(2, product.getBrandId());
-                ptm.setInt(3, product.getUserOjectId());
-                ptm.setString(4, product.getDetail());
-                ptm.setBoolean(5, product.isHot());
-                ptm.setString(6, product.getName());
-                ptm.setString(7, product.getColor());
-                ptm.setFloat(8, product.getPrice());
-                ptm.setFloat(9, product.getSale());
-                ptm.setInt(10, product.getWarrantyPeriod());
-                ptm.setBoolean(11, product.isProductStatus());
+    public ProductDTO addProduct(ProductDTO product) throws SQLException, ClassNotFoundException {
+    boolean check = false;
+    Connection conn = null;
+    PreparedStatement ptm = null;
+    ResultSet generatedKeys = null;
 
-                // Thực thi câu lệnh SQL
-                int rowsInserted = ptm.executeUpdate();
+    try {
+        conn = DBUtils.getConnection();
+        if (conn != null) {
+            ptm = conn.prepareStatement(ADD_PRODUCT, PreparedStatement.RETURN_GENERATED_KEYS);
+            ptm.setInt(1, product.getBrandId());
+            ptm.setInt(2, product.getUserOjectId());
+            ptm.setString(3, product.getDetail());
+            ptm.setBoolean(4, product.isHot());
+            ptm.setString(5, product.getName());
+            ptm.setString(6, product.getColor());
+            ptm.setFloat(7, product.getPrice());
+            ptm.setFloat(8, product.getSale());
+            ptm.setInt(9, product.getWarrantyPeriod());
+            ptm.setBoolean(10, product.isProductStatus());
 
-                // Kiểm tra nếu có hàng được chèn
-                if (rowsInserted > 0) {
-                    // Lấy ID tự động tạo ra từ kết quả
-                    generatedKeys = ptm.getGeneratedKeys();
-                    if (generatedKeys.next()) {
-                        productId = generatedKeys.getInt(1);  // Lấy productId được tạo
-                    }
+            int rowsInserted = ptm.executeUpdate();
+
+            if (rowsInserted > 0) {
+                generatedKeys = ptm.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int productId = generatedKeys.getInt(1);  
+                    product.setProductId(productId); 
+                    check = true;  
                 }
             }
-        } finally {
-            if (generatedKeys != null) generatedKeys.close();
-            if (ptm != null) ptm.close();
-            if (conn != null) conn.close();
         }
-        return productId;
+    } finally {
+        if (generatedKeys != null) generatedKeys.close();
+        if (ptm != null) ptm.close();
+        if (conn != null) conn.close();
     }
+    return product;
+}
 
     public boolean updateHot(int productId, boolean hot) throws SQLException, ClassNotFoundException {
         Connection conn = null;
@@ -274,4 +272,28 @@ Connection conn = null;
         return products;
     }
     
+    private static final String DELETE_PRODUCT = "DELETE FROM products WHERE productId = ?";
+
+    public boolean deleteProduct(int productId) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        boolean result = false;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(DELETE_PRODUCT);
+                ptm.setInt(1, productId);
+                result = ptm.executeUpdate() > 0 ? true : false;
+            }
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return result;
+    }
 }
