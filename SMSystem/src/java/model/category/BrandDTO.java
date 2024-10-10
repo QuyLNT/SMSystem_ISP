@@ -12,12 +12,23 @@ package model.category;
 public class BrandDTO {
     private int brandId;
     private String brandName;
+    private int productCount;
 
     public BrandDTO() {
         brandId = 0;
         brandName = "";
+        productCount=0;
     }
 
+    public int getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
+    }
+    
+    
     public BrandDTO(int brandId, String brandName) {
         this.brandId = brandId;
         this.brandName = brandName;

@@ -191,12 +191,12 @@
                                     </thead>
                                     <tbody>
                                         <%
+                                            int count=0 ;
                                             for (DiscountDTO discount : discountList) {
                                         %>
 
                                         <tr>
-                                    <form action="MainController" method="POST">
-                                        <td><%=discount.getDiscountId()%></td>
+                                        <td><%=count++%></td>
                                         <td><%=discount.getDiscountCode()%></td>
                                         <td><%=discount.getDetail()%></td>                                       
                                         <td><%
@@ -221,15 +221,15 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <input type="hidden" name="code"  value="<%=discount.getDiscountCode()%>" />
-                                        
-                                            <button type="submit" class="btn btn-primary" name="action" value="Remove">
-                                                <i class="fa-solid fa-delete-left"></i>     
-                                            </button>
-                                          
+                                            <form action="MainController" method="POST">
+                                                <input type="hidden" name="code"  value="<%=discount.getDiscountCode()%>" />
+
+                                                <button type="submit" class="btn btn-primary" name="action" value="Remove">
+                                                    <i class="fa-solid fa-delete-left"></i>     
+                                                </button>
+                                            </form>
                                         
                                         </td>
-                                    </form>
                                     </tr> 
                                     <%}%>
                                     </tbody>

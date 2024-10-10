@@ -64,6 +64,14 @@
         <servlet-name>ToggleDiscountStatusController</servlet-name>
         <servlet-class>controller.ToggleDiscountStatusController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchBrandController</servlet-name>
+        <servlet-class>controller.SearchBrandController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadBrandListController</servlet-name>
+        <servlet-class>controller.LoadBrandListController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -127,6 +135,14 @@
     <servlet-mapping>
         <servlet-name>ToggleDiscountStatusController</servlet-name>
         <url-pattern>/ToggleDiscountStatusController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchBrandController</servlet-name>
+        <url-pattern>/SearchBrandController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadBrandListController</servlet-name>
+        <url-pattern>/LoadBrandListController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
