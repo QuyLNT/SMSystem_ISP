@@ -12,6 +12,7 @@ import java.util.Date;
  * @author LENOVO
  */
 public class UserDTO {
+
     private int userId;
     private String fullName;
     private String userName;
@@ -25,16 +26,16 @@ public class UserDTO {
 
     // Constructors
     public UserDTO() {
-        userId =0;
-        fullName="";
-        userName="";
-        password="";
-        phoneNumber="";
-        sex="";
-        email="";
-        isActive= false;
-        roleId="";
-        createdAt=new Date();    
+        userId = 0;
+        fullName = "";
+        userName = "";
+        password = "";
+        phoneNumber = "";
+        sex = "";
+        email = "";
+        isActive = false;
+        roleId = "";
+        createdAt = new Date();
     }
 
     public UserDTO(int userId, String fullName, String userName, String password, String phoneNumber, String sex, String email, boolean isActive, String role, Date createdAt) {
@@ -50,16 +51,14 @@ public class UserDTO {
         this.createdAt = createdAt;
     }
 
-    public UserDTO(int userId, String fullName, String userName, String pass, String phone, String Sex, String email) {
-         this.userId = userId;
-        this.fullName = fullName;
+    public UserDTO(String userName, String fullName, String pass, String phone, String sex, String email) {
         this.userName = userName;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
+        this.fullName = fullName;
+        this.password = pass;
+        this.phoneNumber = phone;
         this.sex = sex;
         this.email = email;
     }
-
 
     public void setUserId(int userId) {
         this.userId = userId;
@@ -68,8 +67,6 @@ public class UserDTO {
     public int getUserId() {
         return userId;
     }
-    
-    
 
     public String getFullName() {
         return fullName;
@@ -127,7 +124,6 @@ public class UserDTO {
         isActive = active;
     }
 
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -156,6 +152,5 @@ public class UserDTO {
     public String toString() {
         return "UserDTO{" + "userId=" + userId + ", fullName=" + fullName + ", userName=" + userName + ", password=" + password + ", phoneNumber=" + phoneNumber + ", sex=" + sex + ", email=" + email + ", isActive=" + isActive + ", roleId=" + roleId + ", createdAt=" + createdAt + '}';
     }
-
 
 }

@@ -23,39 +23,38 @@ import model.user.UserDTO;
 public class UpdateUserController extends HttpServlet {
 
     private static final String ERROR = "myAccount.jsp";
-    private static final String SUCCESS = "myAcccount.jsp";
+    private static final String SUCCESS = "myAccount.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = "ERROR";
         try {
+            String fullName = request.getParameter("fullName");
+            String pass = request.getParameter("pass");
+            String phone = request.getParameter("phone");
+            String sex = request.getParameter("sex");
+            String email = request.getParameter("email");
             HttpSession session = request.getSession();
             UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
-            String fullName = request.getParameter("fullName");
-            String userName = request.getParameter("userName");
-            String pass = request.getParameter("userPass");
-            String phone = request.getParameter("phone");
-            String Sex = request.getParameter("Sex");
-            String email = request.getParameter("email");
-            UserDTO userInput = new UserDTO(user.getUserId(), fullName, userName, pass, phone, Sex, email);
-
+            String userName = user.getUserName();
             UserDAO dao = new UserDAO();
-            boolean check = dao.userAfterUpdate(user);
-            if (check) {
-                request.setAttribute("MESSAGE", "Update Fail");
+            UserDTO userInput = new UserDTO(userName, fullName, pass, phone, sex, email);
+            boolean checkUserAfter = dao.userAfterUpdate(userInput);
+            if (checkUserAfter) {
+                url = SUCCESS;
+                request.setAttribute("MESSAGE", "Update Successfully");
+                user.setFullName(fullName);
+                user.setPassword(pass);
+                user.setPhoneNumber(phone);
+                user.setSex(sex);
+                user.setEmail(email);
+
             } else {
-                boolean checkUserAfter = dao.userAfterUpdate(user);
-                if (checkUserAfter) {
-                    url = SUCCESS;
-                    request.setAttribute("MESSAGE", "Update Successfully");
-
-                } else {
-
-                    request.setAttribute("MESSAGE", "Update Fail");
-                    url = ERROR;
-                }
+                url = ERROR;
+                request.setAttribute("MESSAGE", "Update Fail");
             }
+
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
         } finally {

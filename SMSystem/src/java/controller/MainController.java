@@ -27,59 +27,57 @@ public class MainController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final static String WELLCOME_PAGE="login.jsp";
-    private final static String LOGIN="Sign In" ;
-    private final static String LOGIN_CONTROLLER="LoginController" ;
-    private final static String UPDATE_PRODUCT="Update Product" ;
-    private final static String UPDATE_PRODUCT_CONTROLLER="UpdateProductController";
-    private final static String LOAD_DATA="LoadProductData" ;
-    private final static String LOAD_PRODUCT_DATA_CONTROLLER="LoadProductController";
-    private final static String UPDATE_USER="Update" ;
-    private final static String UPDATE_USER_CONTROLLER="UpdateUserController";
-    
-    private final static String CREATE_PRODUCT = "Create Product" ;
+    private final static String WELLCOME_PAGE = "login.jsp";
+    private final static String LOGIN = "Sign In";
+    private final static String LOGIN_CONTROLLER = "LoginController";
+    private final static String UPDATE_PRODUCT = "Update Product";
+    private final static String UPDATE_PRODUCT_CONTROLLER = "UpdateProductController";
+    private final static String LOAD_DATA = "LoadProductData";
+    private final static String LOAD_PRODUCT_DATA_CONTROLLER = "LoadProductController";
+    private final static String UPDATE_USER = "Update";
+    private final static String UPDATE_USER_CONTROLLER = "UpdateUserController";
+
+    private final static String CREATE_PRODUCT = "Create Product";
     private final static String CREATE_PRODUCT_CONTROLLER = "CreateProductController";
-    private final static String SEARCH_PRODUCT = "SearchProductName" ;
+    private final static String SEARCH_PRODUCT = "SearchProductName";
     private final static String SEARCH_PRODUCT_CONTROLLER = "SearchProductByNameController";
 
-    private final static String TOGGLE_FLASH_SALE = "toggleFlashSale" ;
+    private final static String TOGGLE_FLASH_SALE = "toggleFlashSale";
     private final static String TOGGLE_FLASH_SALE_CONTROLLER = "ToggleFlashSaleController";
-        private final static String TOGGLE_PRODUCT_STATUS = "toggleProductStatus" ;
+    private final static String TOGGLE_PRODUCT_STATUS = "toggleProductStatus";
     private final static String TOGGLE_PRODUCT_STATUS_CONTROLLER = "ToggleProductStatusController";
+    private final static String SEARCH_USER = "SearchUser";
+    private final static String SEARCH_USER_CONTROLLER = "SearchUserByUserNameController";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url=WELLCOME_PAGE;
-        try{
+        String url = WELLCOME_PAGE;
+        try {
             String action = request.getParameter("action");
-            if(LOGIN.equals(action)){
-                url=LOGIN_CONTROLLER;
-            }else if(UPDATE_PRODUCT.equals(action)){
-                url=UPDATE_PRODUCT_CONTROLLER;
-            }else if(LOAD_DATA.equals(action)){
-                url=LOAD_PRODUCT_DATA_CONTROLLER;
-            }else if(UPDATE_USER.equals(action)){
-                url=UPDATE_USER_CONTROLLER;
-            }else if(CREATE_PRODUCT.equals(action)){
-                url=CREATE_PRODUCT_CONTROLLER;
-            }else if(TOGGLE_FLASH_SALE.equals(action)){
-                url=TOGGLE_FLASH_SALE_CONTROLLER;
-            }else if(TOGGLE_PRODUCT_STATUS.equals(action)){
-                url=TOGGLE_PRODUCT_STATUS_CONTROLLER;
-            }else if(SEARCH_PRODUCT.equals(action)){
-                url=SEARCH_PRODUCT_CONTROLLER;  
+            if (LOGIN.equals(action)) {
+                url = LOGIN_CONTROLLER;
+            } else if (UPDATE_PRODUCT.equals(action)) {
+                url = UPDATE_PRODUCT_CONTROLLER;
+            } else if (LOAD_DATA.equals(action)) {
+                url = LOAD_PRODUCT_DATA_CONTROLLER;
+            } else if (UPDATE_USER.equals(action)) {
+                url = UPDATE_USER_CONTROLLER;
+            } else if (CREATE_PRODUCT.equals(action)) {
+                url = CREATE_PRODUCT_CONTROLLER;
+            } else if (TOGGLE_FLASH_SALE.equals(action)) {
+                url = TOGGLE_FLASH_SALE_CONTROLLER;
+            } else if (TOGGLE_PRODUCT_STATUS.equals(action)) {
+                url = TOGGLE_PRODUCT_STATUS_CONTROLLER;
+            } else if (SEARCH_PRODUCT.equals(action)) {
+                url = SEARCH_PRODUCT_CONTROLLER;
+            }else if (SEARCH_USER.equals(action)) {
+                url = SEARCH_USER_CONTROLLER;
             }
-            
-            
-            
-            
-            
-            
-            
-            
-        }catch(Exception e){
-           log("Error at MainController" + e.toString());
-        }finally{           
+
+        } catch (Exception e) {
+            log("Error at MainController" + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
