@@ -183,7 +183,7 @@
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Warrant Period (Month)</span>
-                                                    <input name="warrantPeriod" type="number" step="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
+                                                    <input name="warrantyPeriod" type="number" step="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Detail</span>
@@ -330,7 +330,7 @@
                                                 <input type="hidden" name="productId" value="<%= product.getProductId()%>"/>
                                                 <input type="hidden" name="action" value="toggleProductStatus"/>
                                                 <select name="Product_Status" onchange="this.form.submit()">
-                                                    <option value="1" <%= product.isProductStatus()? "selected" : ""%>>Active</option>
+                                                    <option value="1" <%= product.isProductStatus() ? "selected" : ""%>>Active</option>
                                                     <option value="0" <%= !product.isProductStatus() ? "selected" : ""%>>Inactive</option>
                                                 </select>
                                             </form>

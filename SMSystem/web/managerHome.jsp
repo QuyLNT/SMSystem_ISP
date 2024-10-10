@@ -36,7 +36,7 @@
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
-                                    <a href="MainController?action=LoadProductData" class="nav-link">
+                                    <a href="MainController?action=LoadManagerHomeData" class="nav-link">
                                         <i class="fa-solid fa-house"></i>
                                         <span class="link-text">Home</span>
                                     </a>
@@ -48,13 +48,13 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="productList.jsp" class="nav-link">
+                                    <a href="MainController?action=LoadProductList" class="nav-link">
                                         <i class="fa-solid fa-capsules"></i>
                                         <span class="link-text">Products</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="discountList.jsp" class="nav-link">
+                                    <a href="MainController?action=LoadDiscountList" class="nav-link">
                                         <i class="fa-solid fa-percent"></i>
                                         <span class="link-text">Discount</span>
                                     </a>

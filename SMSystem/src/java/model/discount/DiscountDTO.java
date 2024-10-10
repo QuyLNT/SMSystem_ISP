@@ -19,7 +19,8 @@ public class DiscountDTO {
     private Date startDay;
     private Date endDay;
     private int usageLimit;
-    private boolean discountStatus;
+    private int used;
+    private String status;
 
     public DiscountDTO() {
         discountId = 0;
@@ -29,10 +30,10 @@ public class DiscountDTO {
         startDay = new Date();
         endDay = new Date();
         usageLimit = 0;
-        discountStatus = false;
+        used=0;
     }
 
-    public DiscountDTO(int discountId, String discountCode, String detail, float discountAmount, Date startDay, Date endDay, int usageLimit, boolean discountStatus) {
+    public DiscountDTO(int discountId, String discountCode, String detail, float discountAmount, Date startDay, Date endDay, int usageLimit, int usage, String status) {
         this.discountId = discountId;
         this.discountCode = discountCode;
         this.detail = detail;
@@ -40,7 +41,16 @@ public class DiscountDTO {
         this.startDay = startDay;
         this.endDay = endDay;
         this.usageLimit = usageLimit;
-        this.discountStatus = discountStatus;
+        this.used = usage;
+        this.status= status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getDiscountId() {
@@ -101,16 +111,14 @@ public class DiscountDTO {
         this.usageLimit = usageLimit;
     }
 
-    public boolean isDiscountStatus() {
-        return discountStatus;
+    public int getUsed() {
+        return used;
     }
 
-    
-    public void setDiscountStatus(boolean discountStatus) {
-        this.discountStatus = discountStatus;
+    public void setUsed(int used) {
+        this.used = used;
     }
-    
-    
-    
+
+     
 }
     

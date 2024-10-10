@@ -71,12 +71,12 @@ public class UpdateProductController extends HttpServlet {
                 brandID = Integer.parseInt(brandIDStr);
             }
 
-            double price;
+            float price;
             String priceStr = request.getParameter("price");
             if (priceStr == null || priceStr.isEmpty()) {
                 price = currentProduct.getPrice();
             } else {
-                price = Double.parseDouble(priceStr);
+                price = Float.parseFloat(priceStr);
             }
 
             float sale;
@@ -101,11 +101,20 @@ public class UpdateProductController extends HttpServlet {
             if (detail == null || detail.isEmpty()) {
                 detail = currentProduct.getDetail();
             }
+            
+            int warrantyPeriod;
+            String warrantyPeriodStr = request.getParameter("warranty");
+            if(warrantyPeriodStr == null || warrantyPeriodStr.isEmpty()){
+                warrantyPeriod = currentProduct.getWarrantyPeriod();
+            }else{
+                warrantyPeriod = Integer.parseInt(warrantyPeriodStr);
+            }
+            
 
             boolean hot = currentProduct.isHot();
             boolean status = currentProduct.isProductStatus();
             
-            ProductDTO updatedProduct = new ProductDTO(productId, brandID, userObjectID, detail, hot, name, color, sale, sale, brandID, status);
+            ProductDTO updatedProduct = new ProductDTO(productId, brandID, userObjectID, detail, hot, name, color, price, sale, warrantyPeriod, status);
             ProductImageDTO avatarImage = new ProductImageDTO(productId, avatar, true);
               
             HttpSession session = request.getSession();
@@ -114,9 +123,23 @@ public class UpdateProductController extends HttpServlet {
             boolean checkProduct = productDao.updateProduct(updatedProduct);
             boolean checkAvatar = imageDAO.updateAvatar(avatarImage);
             if(checkProduct&&checkAvatar){
-                productList.stream().filter((p) -> (p.getProductId()==updatedProduct.getProductId())).forEachOrdered((p) -> {
-                    p = updatedProduct;
-                });
+                for(ProductDTO p: productList){
+                    if(p.getProductId() == updatedProduct.getProductId()){
+                        p.setName(updatedProduct.getName());
+                        p.setColor(updatedProduct.getColor());
+                        p.setHot(updatedProduct.isHot());
+                        p.setUserOjectId(updatedProduct.getUserOjectId());
+                        p.setBrandId(updatedProduct.getBrandId());
+                        p.setDetail(updatedProduct.getDetail());
+                        p.setPrice(updatedProduct.getPrice());
+                        p.setProductStatus(updatedProduct.isProductStatus());
+                        p.setSale(updatedProduct.getSale());
+                        p.setWarrantyPeriod(updatedProduct.getWarrantyPeriod());
+                        p.setAvatarPath(avatarImage.getImagePath());
+                    }
+                }
+                
+                
                 request.setAttribute("LIST_PRODUCT", productList);
                 request.setAttribute("ms", "Update successfully");
                 url = SUCCESS;
