@@ -4,8 +4,8 @@
     Author     : DELL
 --%>
 
-<%@page import="admin.sample.user.UserDTO"%>
-<%@page import="admin.sample.user.UserDAO"%>
+<%@page import="model.user.UserDTO"%>
+<%@page import="model.user.UserDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 
@@ -98,7 +98,7 @@
                                             <h1 class="modal-title fs-5" id="addModalLabel">Create new user </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form action="CreateUserController" method="POST">
+                                        <form action="MainController" method="POST">
                                             <div class="modal-body">
 
                                                 <div class="input-group input-group-sm mb-3">
@@ -130,30 +130,16 @@
                                                     </select>
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Birth (YYYY-MM-DD)</span>
-                                                    <input name="birth" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
-                                                </div>
-                                                <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Phone Number</span>
                                                     <input name="phoneNumber" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Street</span>
-                                                    <input name="Street" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
-                                                </div>
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">District</span>
-                                                    <input name="District" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
-                                                </div>
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">City</span>
-                                                    <input name="City" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
-                                                </div>
-                                                <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Role</span>
                                                     <select name="userRole" class="form-control">
-                                                        <option value="0">User</option>
-                                                        <option value="1">Admin</option>
+                                                        <option value="AD"  >Admin</option>
+                                                        <option value="CUS" >Customer</option>
+                                                        <option value="MN"  >Manager</option>
+                                                        <option value="SP"  >Shipper</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -165,22 +151,35 @@
                                     </div>
                                 </div>
                             </div>
+                                                                                <%
+                                String searchUserName = request.getParameter("searchUserName");
+                                if (searchUserName == null) {
+                                    searchUserName = "";
+                                }
+                            %>
+                            <div class="search-form">
+                                <form action="MainController" method="POST">
+                                    Search User: <input type="text" name="searchUserName" placeholder="Enter user name" value="<%= searchUserName%>"/>
+                                    <button type="submit" name="action" value="SearchUserName">Search</button>
+                                </form>
+                            </div>
                         </div>
+
                         <div class="welcome">
                             <%
-                                List<UserDTO> userList = (List<UserDTO>) request.getAttribute("USER_LIST");   
+                                List<UserDTO> userList = (List<UserDTO>) session.getAttribute("USER_LIST");   
                             %>
                             <div class="table-tilte">User Table</div>
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
+                                        <th>No</th>
                                         <th>User Name</th>
                                         <th>Full Name</th>
                                         <th>Email</th>
-                                        <th>Created Date</th>
-                                        <th>Status</th>
+                                        <th>Phone Number</th>                                        
                                         <th>Role</th>
+                                        <th>Created Date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -195,27 +194,30 @@
                                         <td><%= user.getUserName()%></td>
                                         <td><%= user.getFullName()%></td>
                                         <td><%= user.getEmail()%></td>
+                                        <td>
+<!--                                            <form action="MainController" method="POST">
+                                                <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
+                                                <input type="hidden" name="action" value="toggleUserStatus"/>
+                                                <select name="isActive" onchange="this.form.submit()">
+                                                    <option value="1" <%= user.isIsActive() ? "selected" : ""%>>Active</option>
+                                                    <option value="0" <%= !user.isIsActive() ? "selected" : ""%>>Inactive</option>
+                                                </select>
+                                            </form>-->
+                                            <%= user.getPhoneNumber()%>
+                                        </td>
+                                        <td>
+                                             <form action="MainController" method="POST">
+                                                <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
+                                                <input type="hidden" name="action" value="toggleUserRole"/>
+                                                <select name="roleId" onchange="this.form.submit()">
+                                                    <option value="AD" <%= user.getRoleId().equalsIgnoreCase("AD") ? "selected" : ""%>>Admin</option>
+                                                    <option value="CUS" <%= user.getRoleId().equalsIgnoreCase("CUS") ? "selected" : ""%>>Customer</option>
+                                                    <option value="MN" <%= user.getRoleId().equalsIgnoreCase("MN") ? "selected" : ""%>>Manager</option>
+                                                    <option value="SP" <%= user.getRoleId().equalsIgnoreCase("SP") ? "selected" : ""%>>Shipper</option>
+                                                </select>
+                                            </form>
+                                        </td>
                                         <td><%= user.getCreatedAt()%></td>
-                                        <td>
-                                            <form action="MainContrller" method="POST">
-                                                <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
-                                                <input type="hidden" name="action" value="toggleUserStatus"/>
-                                                <select name="isActive" onchange="this.form.submit()">
-                                                    <option value="1" <%= user.isIsActive() ? "selected" : ""%>>Active</option>
-                                                    <option value="0" <%= !user.isIsActive() ? "selected" : ""%>>Inactive</option>
-                                                </select>
-                                            </form>
-                                        </td>
-                                        <td>
-                                             <form action="ToggleUserStatusController" method="POST">
-                                                <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
-                                                <input type="hidden" name="action" value="toggleUserStatus"/>
-                                                <select name="isActive" onchange="this.form.submit()">
-                                                    <option value="1" <%= user.isIsActive() ? "selected" : ""%>>Active</option>
-                                                    <option value="0" <%= !user.isIsActive() ? "selected" : ""%>>Inactive</option>
-                                                </select>
-                                            </form>
-                                        </td>
                                         <td>
                                             <input type="hidden" name="userId"  value="<%=user.getUserId()%>" />
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal<%=user.getUserId()%>">
@@ -243,7 +245,7 @@
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Password</span>
-                                                                    <input name="userPass" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getUserPass()%>">
+                                                                    <input name="userPass" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getPassword()%>">
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Phone Number</span>
@@ -261,28 +263,14 @@
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
                                                                     <input name="email" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getEmail()%>">
-                                                                </div>
-                                                                <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Birth (YYYY-MM-DD)</span>
-                                                                    <input name="birth" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getBirth()%>">
-                                                                </div>
-                                                                <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Street</span>
-                                                                    <input name="Street" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getStreet()%>">
-                                                                </div>
-                                                                <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">District</span>
-                                                                    <input name="District" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getDistrict()%>">
-                                                                </div>
-                                                                <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">City</span>
-                                                                    <input name="City" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getCity()%>">
-                                                                </div>  
+                                                                </div> 
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Role</span>
                                                                     <select name="userRole" class="form-control">
-                                                                        <option value="1" <%= user.isUserRole() ? "selected" : ""%>>Admin</option>
-                                                                        <option value="0" <%= user.isUserRole() ? "selected" : ""%>>User</option>
+                                                                        <option value="AD" <%= user.getRoleId().equalsIgnoreCase("AD") ? "selected" : ""%>>Admin</option>
+                                                                        <option value="CUS" <%= user.getRoleId().equalsIgnoreCase("CUS") ? "selected" : ""%>>Customer</option>
+                                                                        <option value="MN" <%= user.getRoleId().equalsIgnoreCase("MN") ? "selected" : ""%>>Manager</option>
+                                                                        <option value="SP" <%= user.getRoleId().equalsIgnoreCase("SP") ? "selected" : ""%>>Shipper</option>
                                                                     </select>
                                                                 </div>
                                                             </div>

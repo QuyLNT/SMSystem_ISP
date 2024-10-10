@@ -65,6 +65,8 @@ public class MainController extends HttpServlet {
     private final static String LOAD_ADMIN_HOME_CONTROLLER="LoadAdminHomeDataController";
     private final static String LOAD_USER_LIST="LoadUserList" ;
     private final static String LOAD_USER_LIST_CONTROLLER="LoadUserListController";
+    private final static String TOGGLE_USER_ROLE="toggleUserRole" ;
+    private final static String TOGGLE_USER_ROLE_CONTROLLER="ToggleUserRoleController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -107,6 +109,8 @@ public class MainController extends HttpServlet {
                 url=LOAD_ADMIN_HOME_CONTROLLER;
             }else if(LOAD_USER_LIST.equals(action)){
                 url=LOAD_USER_LIST_CONTROLLER;
+            }else if(TOGGLE_USER_ROLE.equals(action)){
+                url=TOGGLE_USER_ROLE_CONTROLLER;
             }
             
             

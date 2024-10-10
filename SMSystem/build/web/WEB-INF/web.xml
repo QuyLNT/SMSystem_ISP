@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-<servlet>
+    <servlet>
         <servlet-name>MainController</servlet-name>
         <servlet-class>controller.MainController</servlet-class>
     </servlet>
@@ -79,6 +79,10 @@
     <servlet>
         <servlet-name>LoadUserListController</servlet-name>
         <servlet-class>controller.LoadUserListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ToggleUserRoleController</servlet-name>
+        <servlet-class>controller.ToggleUserRoleController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
@@ -159,6 +163,10 @@
     <servlet-mapping>
         <servlet-name>LoadUserListController</servlet-name>
         <url-pattern>/LoadUserListController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToggleUserRoleController</servlet-name>
+        <url-pattern>/ToggleUserRoleController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
