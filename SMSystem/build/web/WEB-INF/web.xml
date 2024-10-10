@@ -48,6 +48,7 @@
         <servlet-name>DeleteProductController</servlet-name>
         <servlet-class>controller.DeleteProductController</servlet-class>
     </servlet>
+    <servlet>
         <servlet-name>LoadProductListController</servlet-name>
         <servlet-class>controller.LoadProductListController</servlet-class>
     </servlet>

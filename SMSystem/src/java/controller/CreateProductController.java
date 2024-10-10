@@ -91,7 +91,7 @@ public class CreateProductController extends HttpServlet {
                         }
                     }
                     ProductImageDAO imageDao = new ProductImageDAO();
-                    product.setListImages(imageDAO.getAllImage(product.getProductId()));
+                    product.setListImages(imageDAO.getImageByProduct(product.getProductId()));
                     List<ProductDTO> productList = new ArrayList<>();
                     HttpSession session = request.getSession();
                     productList = (List<ProductDTO>) session.getAttribute("PRODUCT_LIST");
