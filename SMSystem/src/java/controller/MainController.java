@@ -58,6 +58,9 @@ public class MainController extends HttpServlet {
     private final static String SEARCH_BRANCH_CONTROLLER = "SearchBrandController";
     private final static String LOAD_BRAND_LIST="LoadBrandList" ;
     private final static String LOAD_BRAND_LIST_CONTROLLER="LoadBrandListController";
+    private final static String DELETE_PRODUCT = "Delete Product" ;
+    private final static String DELETE_PRODUCT_CONTROLLER = "DeleteProductController";
+    
     private final static String LOAD_ADMIN_HOME="LoadAdminHome" ;
     private final static String LOAD_ADMIN_HOME_CONTROLLER="LoadAdminHomeDataController";
     private final static String LOAD_USER_LIST="LoadUserList" ;
@@ -98,15 +101,24 @@ public class MainController extends HttpServlet {
                 url=SEARCH_BRANCH_CONTROLLER;
             }else if(LOAD_BRAND_LIST.equals(action)){
                 url=LOAD_BRAND_LIST_CONTROLLER;
+            }else if(DELETE_PRODUCT.equals(action)){
+                url=DELETE_PRODUCT_CONTROLLER;  
             }else if(LOAD_ADMIN_HOME.equals(action)){
                 url=LOAD_ADMIN_HOME_CONTROLLER;
             }else if(LOAD_USER_LIST.equals(action)){
                 url=LOAD_USER_LIST_CONTROLLER;
             }
-
-        } catch (Exception e) {
-            log("Error at MainController" + e.toString());
-        } finally {
+            
+            
+            
+            
+            
+            
+            
+            
+        }catch(Exception e){
+           log("Error at MainController" + e.toString());
+        }finally{           
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
