@@ -45,6 +45,9 @@
         <servlet-class>controller.SearchProductByNameController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>DeleteProductController</servlet-name>
+        <servlet-class>controller.DeleteProductController</servlet-class>
+    </servlet>
         <servlet-name>LoadProductListController</servlet-name>
         <servlet-class>controller.LoadProductListController</servlet-class>
     </servlet>
@@ -75,10 +78,6 @@
     <servlet>
         <servlet-name>LoadUserListController</servlet-name>
         <servlet-class>controller.LoadUserListController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>DeleteProductController</servlet-name>
-        <servlet-class>controller.DeleteProductController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
