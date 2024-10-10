@@ -54,6 +54,10 @@ public class MainController extends HttpServlet {
     private final static String SEARCH_USER_CONTROLLER = "SearchUserByUserNameController";
     private final static String TOGGLE_DISCOUNT_STATUS = "toggleDiscountStatus" ;
     private final static String TOGGLE_DISCOUNT_STATUS_CONTROLLER = "ToggleDiscountStatusController";
+    private final static String SEARCH_BRANCH = "SearchBrandName";
+    private final static String SEARCH_BRANCH_CONTROLLER = "SearchBrandController";
+    private final static String LOAD_BRAND_LIST="LoadBrandList" ;
+    private final static String LOAD_BRAND_LIST_CONTROLLER="LoadBrandListController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -86,6 +90,10 @@ public class MainController extends HttpServlet {
                 url=LOAD_DISCOUNT_LIST_CONTROLLER;
             }else if(TOGGLE_DISCOUNT_STATUS.equals(action)){
                 url=TOGGLE_DISCOUNT_STATUS_CONTROLLER;  
+            }else if(SEARCH_BRANCH.equals(action)){
+                url=SEARCH_BRANCH_CONTROLLER;
+            }else if(LOAD_BRAND_LIST.equals(action)){
+                url=LOAD_BRAND_LIST_CONTROLLER;
             }
 
         } catch (Exception e) {
