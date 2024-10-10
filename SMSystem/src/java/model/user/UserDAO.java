@@ -28,7 +28,11 @@ public class UserDAO {
             + "WHERE (userName =? OR email=?) AND password = ?";
     private static final String GET_ALL_USER = "SELECT userId,userName, fullName,phoneNumber,sex,email,isActive, roleId,createdAt FROM users WHERE userName=? ";
     private static final String UPDATE = "UPDATE users SET  password=?,fullName= ?, phoneNumber=?, sex=?, email=? where userName=?";
-
+    private static final String GET_TOTAL_ACCOUNT = "SELECT COUNT(userId) AS numberOfAccount\n" +
+                                                    "FROM users";     
+    private static final String GET_NUMBER_OF_ACCOUNT = "SELECT COUNT(userId) AS numberOfAccount\n" +
+                                                        "FROM users"
+                                                         + "WHERE roleId LIKE ?";
     public UserDTO checkLogin(String userIndentify, String password) throws SQLException, ClassNotFoundException, NamingException {
         UserDTO user = null;
         Connection conn = null;
@@ -142,5 +146,62 @@ public class UserDAO {
             return check;
         }
 
+    }
+
+    public int getTotalAccount() throws SQLException, ClassNotFoundException {
+        int result=0;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_TOTAL_ACCOUNT);
+                rs = ptm.executeQuery();
+                if(rs.next()){
+                    result = rs.getInt("numberOfAccount");
+                }
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return  result;
+    }
+    
+
+    public int getNumberOf(String roleId) throws SQLException,ClassNotFoundException {
+        int result=0;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_TOTAL_ACCOUNT);
+                rs = ptm.executeQuery();
+                if(rs.next()){
+                    result = rs.getInt("numberOfAccount");
+                }
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return  result;
     }
 }

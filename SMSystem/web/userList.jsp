@@ -84,8 +84,6 @@
                                     err = (String) request.getAttribute("err");
                                 }
                                 if (ms != null || err != null) {
-
-
                             %>
                             <div class="mes-suc">
                                 <%=ms%> <%=err%>
@@ -170,22 +168,17 @@
                         </div>
                         <div class="welcome">
                             <%
-                                UserDAO userDao = new UserDAO();
-                                List<UserDTO> userList = null;
-                                try {
-                                    userList = userDao.getAllUser();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                                List<UserDTO> userList = (List<UserDTO>) request.getAttribute("USER_LIST");   
                             %>
                             <div class="table-tilte">User Table</div>
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>UserName</th>
+                                        <th>User Name</th>
+                                        <th>Full Name</th>
                                         <th>Email</th>
-                                        <th>CreatedDate</th>
+                                        <th>Created Date</th>
                                         <th>Status</th>
                                         <th>Role</th>
                                         <th>Action</th>
@@ -200,10 +193,11 @@
                                     <tr>
                                         <td><%= stt++%></td>
                                         <td><%= user.getUserName()%></td>
+                                        <td><%= user.getFullName()%></td>
                                         <td><%= user.getEmail()%></td>
                                         <td><%= user.getCreatedAt()%></td>
                                         <td>
-                                            <form action="ToggleUserStatusController" method="POST">
+                                            <form action="MainContrller" method="POST">
                                                 <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
                                                 <input type="hidden" name="action" value="toggleUserStatus"/>
                                                 <select name="isActive" onchange="this.form.submit()">
@@ -212,7 +206,16 @@
                                                 </select>
                                             </form>
                                         </td>
-                                        <td><%= user.isUserRole() ? "Admin" : "User"%></td>
+                                        <td>
+                                             <form action="ToggleUserStatusController" method="POST">
+                                                <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
+                                                <input type="hidden" name="action" value="toggleUserStatus"/>
+                                                <select name="isActive" onchange="this.form.submit()">
+                                                    <option value="1" <%= user.isIsActive() ? "selected" : ""%>>Active</option>
+                                                    <option value="0" <%= !user.isIsActive() ? "selected" : ""%>>Inactive</option>
+                                                </select>
+                                            </form>
+                                        </td>
                                         <td>
                                             <input type="hidden" name="userId"  value="<%=user.getUserId()%>" />
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal<%=user.getUserId()%>">
