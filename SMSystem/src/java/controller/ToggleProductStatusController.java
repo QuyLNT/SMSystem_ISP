@@ -6,13 +6,15 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.product.ProductDAO;
+import model.product.ProductDTO;
 
 /**
  *
@@ -43,10 +45,21 @@ public class ToggleProductStatusController extends HttpServlet {
                 int productId = Integer.parseInt(productIdStr);
                 ProductDAO productDAO = new ProductDAO();
                 boolean checkUpdate = productDAO.updateProductStatus(productId,productStatus);
+                
+                HttpSession session = request.getSession();
+                List<ProductDTO> productList = (List<ProductDTO>) session.getAttribute("PRODUCT_LIST");
                 if(checkUpdate){
+                    for(ProductDTO p: productList){
+                        if(p.getProductId()==productId){
+                            p.setProductStatus(productStatus);
+                        }
+                    }
+                    session.setAttribute("PRODUCT_LIST", productList);
                     url=SUCCES;
+                    request.setAttribute("ms", "Set product status successfully");
+
                 }else{
-                    request.setAttribute("ERROR", "Set hot failed");
+                    request.setAttribute("err", "Set product status failed");
                 }
             }
         } catch (ClassNotFoundException | NumberFormatException | SQLException e) {

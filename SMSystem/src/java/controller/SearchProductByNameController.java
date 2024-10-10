@@ -46,7 +46,7 @@ public class SearchProductByNameController extends HttpServlet {
             ProductImageDAO imageDao = new ProductImageDAO();
             List<ProductDTO> products = productDao.searchProductsByName(searchTerm);
             for(ProductDTO p: products){
-                p.setListImages(imageDao.getAllImage(p.getProductId()));
+                p.setListImages(imageDao.getImageByProduct(p.getProductId()));
             }
             if (products.isEmpty()) {
                 request.setAttribute("NO_RESULTS", "No search results");

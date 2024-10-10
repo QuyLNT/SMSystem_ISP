@@ -48,6 +48,22 @@
         <servlet-name>SearchUserByUserNameController</servlet-name>
         <servlet-class>controller.SearchUserByUserNameController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadProductListController</servlet-name>
+        <servlet-class>controller.LoadProductListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadManagerHomeDataController</servlet-name>
+        <servlet-class>controller.LoadManagerHomeDataController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadDiscountListController</servlet-name>
+        <servlet-class>controller.LoadDiscountListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ToggleDiscountStatusController</servlet-name>
+        <servlet-class>controller.ToggleDiscountStatusController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -95,6 +111,22 @@
     <servlet-mapping>
         <servlet-name>SearchUserByUserNameController</servlet-name>
         <url-pattern>/SearchUserByUserNameController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadProductListController</servlet-name>
+        <url-pattern>/LoadProductListController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadManagerHomeDataController</servlet-name>
+        <url-pattern>/LoadManagerHomeDataController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadDiscountListController</servlet-name>
+        <url-pattern>/LoadDiscountListController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToggleDiscountStatusController</servlet-name>
+        <url-pattern>/ToggleDiscountStatusController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
