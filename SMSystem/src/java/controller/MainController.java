@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -69,6 +68,8 @@ public class MainController extends HttpServlet {
     private final static String LOAD_USER_LIST_CONTROLLER="LoadUserListController";
     private final static String TOGGLE_USER_ROLE="toggleUserRole" ;
     private final static String TOGGLE_USER_ROLE_CONTROLLER="ToggleUserRoleController";
+    private final static String DELETE_USER = "Delete User" ;
+    private final static String DELETE_USER_CONTROLLER = "DeleteUserController";   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -115,15 +116,9 @@ public class MainController extends HttpServlet {
                 url=TOGGLE_USER_ROLE_CONTROLLER;
             }else if(CREATE_USER.equals(action)){
                 url=CREATE_USER_CONTROLLER;
+            }else if(DELETE_USER.equals(action)){
+                url=DELETE_USER_CONTROLLER;
             }
-            
-            
-            
-            
-            
-            
-            
-            
         }catch(Exception e){
            log("Error at MainController" + e.toString());
         }finally{           
