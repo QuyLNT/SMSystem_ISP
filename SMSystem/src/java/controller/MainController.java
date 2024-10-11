@@ -46,6 +46,9 @@ public class MainController extends HttpServlet {
     private final static String TOGGLE_FLASH_SALE_CONTROLLER = "ToggleFlashSaleController";
         private final static String TOGGLE_PRODUCT_STATUS = "toggleProductStatus" ;
     private final static String TOGGLE_PRODUCT_STATUS_CONTROLLER = "ToggleProductStatusController";
+    
+    private final static String CREATE_USER = "Sign Up" ;
+    private final static String CREATE_USER_CONTROLLER = "CreateUserController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -68,6 +71,9 @@ public class MainController extends HttpServlet {
                 url=TOGGLE_PRODUCT_STATUS_CONTROLLER;
             }else if(SEARCH_PRODUCT.equals(action)){
                 url=SEARCH_PRODUCT_CONTROLLER;  
+            }else if(CREATE_USER.equals(action)){
+                url=CREATE_USER_CONTROLLER;
+            
             }
             
             
