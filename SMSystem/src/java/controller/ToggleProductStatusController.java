@@ -40,9 +40,13 @@ public class ToggleProductStatusController extends HttpServlet {
         String url = ERROR;
         try {
             String productIdStr = request.getParameter("productId");
-            boolean productStatus = Boolean.parseBoolean(request.getParameter("Product_Status"));
+            int productStatusInt = Integer.parseInt(request.getParameter("Product_Status"));
+            boolean productStatus = false;
             if(productIdStr!=null && !productIdStr.isEmpty()){
                 int productId = Integer.parseInt(productIdStr);
+                if(productStatusInt == 1){
+                    productStatus=true;
+                }
                 ProductDAO productDAO = new ProductDAO();
                 boolean checkUpdate = productDAO.updateProductStatus(productId,productStatus);
                 

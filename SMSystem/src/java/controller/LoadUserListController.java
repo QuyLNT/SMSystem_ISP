@@ -43,8 +43,7 @@ public class LoadUserListController extends HttpServlet {
             List<UserDTO> userList = userDao.getAllUser("");
             
             if(userList!=null){
-                HttpSession session = request.getSession();
-                session.setAttribute("USER_LIST", userList);
+                request.setAttribute("USER_LIST", userList);
                 url = SUCCESS;
             }
         }catch(ClassNotFoundException | SQLException e){

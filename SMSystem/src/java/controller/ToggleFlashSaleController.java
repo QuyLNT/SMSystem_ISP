@@ -8,11 +8,14 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.product.ProductDAO;
+import model.product.ProductDTO;
 
 /**
  *
@@ -38,14 +41,28 @@ public class ToggleFlashSaleController extends HttpServlet {
         String url = ERROR;
         try {
             String productIdStr = request.getParameter("productId");
-            boolean isHot = Boolean.parseBoolean(request.getParameter("Hot"));
+            int isHotInt = Integer.parseInt(request.getParameter("Hot"));
+            boolean isHot = false;
             if(productIdStr!=null && !productIdStr.isEmpty()){
                 int productId = Integer.parseInt(productIdStr);
+                if(isHotInt == 1){
+                    isHot=true;
+                }
                 ProductDAO productDAO = new ProductDAO();
                 boolean checkUpdate = productDAO.updateHot(productId,isHot);
+                
+                
+                HttpSession session = request.getSession();
+                List<ProductDTO> productList = (List<ProductDTO>) session.getAttribute("PRODUCT_LIST");
                 if(checkUpdate){
-                    url=SUCCES;
+                    for(ProductDTO p: productList){
+                        if(p.getProductId()==productId){
+                            p.setHot(isHot);
+                        }
+                    }
+                    session.setAttribute("PRODUCT_LIST", productList);
                     request.setAttribute("ms", "Set hot successfully");
+                    url=SUCCES;
                 }else{
                     request.setAttribute("err", "Set hot failed");
                 }
