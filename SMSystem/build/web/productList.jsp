@@ -322,8 +322,8 @@
                                                 <input type="hidden" name="productId" value="<%= product.getProductId()%>"/>
                                                 <input type="hidden" name="action" value="toggleFlashSale"/>
                                                 <select name="Hot" onchange="this.form.submit()">
-                                                    <option value="1" <%= product.isHot() ? "selected" : ""%>>Active</option>
-                                                    <option value="0" <%= !product.isHot() ? "selected" : ""%>>Inactive</option>
+                                                    <option value="1" <%= product.isHot()==true ? "selected" : ""%>>Active</option>
+                                                    <option value="0" <%= product.isHot()==false ? "selected" : ""%>>Inactive</option>
                                                 </select>
                                             </form>
                                         </td>
@@ -350,8 +350,8 @@
                                                 <input type="hidden" name="productId" value="<%= product.getProductId()%>"/>
                                                 <input type="hidden" name="action" value="toggleProductStatus"/>
                                                 <select name="Product_Status" onchange="this.form.submit()">
-                                                    <option value="1" <%= product.isProductStatus() ? "selected" : ""%>>Active</option>
-                                                    <option value="0" <%= !product.isProductStatus() ? "selected" : ""%>>Inactive</option>
+                                                    <option value="1" <%= product.isProductStatus()==true ? "selected" : ""%>>Active</option>
+                                                    <option value="0" <%= product.isProductStatus()==false ? "selected" : ""%>>Inactive</option>
                                                 </select>
                                             </form>
                                         </td>

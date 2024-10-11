@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,14 +33,14 @@ public class DeleteUserController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     
-    private static final String ERROR = "userList.jsp";
-    private static final String SUCCESS = "userList.jsp";
+    private static final String ERROR = "LoadUserListController";
+    private static final String SUCCESS = "LoadUserListController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
          String url = ERROR;
         try{
-            String userID= request.getParameter("userID");
+            String userID= request.getParameter("userId");
             HttpSession session = request.getSession();
             UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
             if(userID.equals(loginUser.getUserId())){
@@ -48,6 +49,7 @@ public class DeleteUserController extends HttpServlet {
                 UserDAO dao = new UserDAO();
                 boolean checkDelete = dao.delete(userID);
                 if(checkDelete){
+                    request.setAttribute("ms", "Delete user successfully");
                     url=SUCCESS;
                 }
             }

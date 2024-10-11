@@ -34,8 +34,8 @@ public class ToggleUserRoleController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "userList.jsp";
-    private static final String SUCCES = "userList.jsp";
+    private static final String ERROR = "LoadUserListController";
+    private static final String SUCCES = "LoadUserListController";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
