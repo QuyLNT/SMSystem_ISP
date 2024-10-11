@@ -50,7 +50,10 @@ public class MainController extends HttpServlet {
     private final static String TOGGLE_FLASH_SALE_CONTROLLER = "ToggleFlashSaleController";
     private final static String TOGGLE_PRODUCT_STATUS = "toggleProductStatus";
     private final static String TOGGLE_PRODUCT_STATUS_CONTROLLER = "ToggleProductStatusController";
-    private final static String SEARCH_USER = "SearchUserName";
+    
+    private final static String CREATE_USER = "Sign Up" ;
+    private final static String CREATE_USER_CONTROLLER = "CreateUserController";
+    private final static String SEARCH_USER = "SearchUser";
     private final static String SEARCH_USER_CONTROLLER = "SearchUserByUserNameController";
     private final static String TOGGLE_DISCOUNT_STATUS = "toggleDiscountStatus" ;
     private final static String TOGGLE_DISCOUNT_STATUS_CONTROLLER = "ToggleDiscountStatusController";
@@ -59,8 +62,7 @@ public class MainController extends HttpServlet {
     private final static String LOAD_BRAND_LIST="LoadBrandList" ;
     private final static String LOAD_BRAND_LIST_CONTROLLER="LoadBrandListController";
     private final static String DELETE_PRODUCT = "Delete Product" ;
-    private final static String DELETE_PRODUCT_CONTROLLER = "DeleteProductController";
-    
+    private final static String DELETE_PRODUCT_CONTROLLER = "DeleteProductController";   
     private final static String LOAD_ADMIN_HOME="LoadAdminHome" ;
     private final static String LOAD_ADMIN_HOME_CONTROLLER="LoadAdminHomeDataController";
     private final static String LOAD_USER_LIST="LoadUserList" ;
@@ -111,6 +113,8 @@ public class MainController extends HttpServlet {
                 url=LOAD_USER_LIST_CONTROLLER;
             }else if(TOGGLE_USER_ROLE.equals(action)){
                 url=TOGGLE_USER_ROLE_CONTROLLER;
+            }else if(CREATE_USER.equals(action)){
+                url=CREATE_USER_CONTROLLER;
             }
             
             

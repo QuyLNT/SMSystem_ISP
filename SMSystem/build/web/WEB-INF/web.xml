@@ -45,6 +45,10 @@
         <servlet-class>controller.SearchProductByNameController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CreateUserController</servlet-name>
+        <servlet-class>controller.CreateUserController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>DeleteProductController</servlet-name>
         <servlet-class>controller.DeleteProductController</servlet-class>
     </servlet>
@@ -131,6 +135,10 @@
     <servlet-mapping>
         <servlet-name>SearchProductByNameController</servlet-name>
         <url-pattern>/SearchProductByNameController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateUserController</servlet-name>
+        <url-pattern>/CreateUserController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeleteProductController</servlet-name>
