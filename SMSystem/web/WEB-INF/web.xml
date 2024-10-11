@@ -92,6 +92,10 @@
         <servlet-name>SearchUserByUserNameController</servlet-name>
         <servlet-class>controller.SearchUserByUserNameController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteUserController</servlet-name>
+        <servlet-class>controller.DeleteUserController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -183,6 +187,10 @@
     <servlet-mapping>
         <servlet-name>SearchUserByUserNameController</servlet-name>
         <url-pattern>/SearchUserByUserNameController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteUserController</servlet-name>
+        <url-pattern>/DeleteUserController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
