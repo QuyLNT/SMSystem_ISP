@@ -62,13 +62,13 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="orderList.jsp" class="nav-link">
+                                    <a href="MainController?action=LoadBrandList" class="nav-link">
                                         <i class="fa-solid fa-file-invoice"></i>
                                         <span class="link-text">Order</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="LogoutController" class="nav-link">
+                                    <a href="MainController?action=LoadBrandList" class="nav-link">
                                         <i class="fa-solid fa-tag"></i>
                                         <span class="link-text">Brand</span>
                                     </a>
