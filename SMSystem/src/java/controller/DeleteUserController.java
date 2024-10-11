@@ -6,11 +6,15 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.user.UserDAO;
+import model.user.UserDTO;
+
 
 /**
  *
@@ -27,20 +31,30 @@ public class DeleteUserController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    private static final String ERROR = "userList.jsp";
+    private static final String SUCCESS = "userList.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DeleteUserController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DeleteUserController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+         String url = ERROR;
+        try{
+            String userID= request.getParameter("userID");
+            HttpSession session = request.getSession();
+            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+            if(userID.equals(loginUser.getUserId())){
+                request.setAttribute("err", "Can not delete");     
+            }else{
+                UserDAO dao = new UserDAO();
+                boolean checkDelete = dao.delete(userID);
+                if(checkDelete){
+                    url=SUCCESS;
+                }
+            }
+        }catch(ClassNotFoundException | SQLException e ){
+           log("Error at LoadUserListController: " +e.toString());
+        }finally{
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

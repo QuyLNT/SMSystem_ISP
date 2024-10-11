@@ -39,6 +39,8 @@ public class UserDAO {
     private static final String SET_ROLE_ID = "UPDATE users\n" +
                                                 "SET roleId = ?\n" +
                                                 "WHERE userId = ?";
+    private static final String DELETE = "DELETE users WHERE userId = ?";
+
     public UserDTO checkLogin(String userIndentify, String password) throws SQLException, ClassNotFoundException, NamingException {
         UserDTO user = null;
         Connection conn = null;
@@ -323,6 +325,29 @@ public class UserDAO {
                 if(conn!=null) conn.close();
             }
             return check;
+    }
+
+    public boolean delete(String userID) throws ClassNotFoundException, SQLException {
+        boolean checkDelete = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(DELETE);
+                ptm.setString(1, userID);
+                checkDelete = ptm.executeUpdate() > 0;
+            }
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+
+        }
+        return checkDelete;
     }
         
 }
