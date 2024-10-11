@@ -113,6 +113,8 @@ public class MainController extends HttpServlet {
                 url=LOAD_USER_LIST_CONTROLLER;
             }else if(TOGGLE_USER_ROLE.equals(action)){
                 url=TOGGLE_USER_ROLE_CONTROLLER;
+            }else if(CREATE_USER.equals(action)){
+                url=CREATE_USER_CONTROLLER;
             }
             
             
