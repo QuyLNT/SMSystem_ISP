@@ -29,7 +29,9 @@ public class UpdateUserController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = "ERROR";
+        boolean hasError = false;
         try {
+
             String fullName = request.getParameter("fullName");
             String pass = request.getParameter("pass");
             String phone = request.getParameter("phone");
@@ -40,19 +42,46 @@ public class UpdateUserController extends HttpServlet {
             String userName = user.getUserName();
             UserDAO dao = new UserDAO();
             UserDTO userInput = new UserDTO(userName, fullName, pass, phone, sex, email);
-            boolean checkUserAfter = dao.userAfterUpdate(userInput);
-            if (checkUserAfter) {
-                url = SUCCESS;
-                request.setAttribute("MESSAGE", "Update Successfully");
-                user.setFullName(fullName);
-                user.setPassword(pass);
-                user.setPhoneNumber(phone);
-                user.setSex(sex);
-                user.setEmail(email);
+            if (fullName == null || fullName.isEmpty()) {
+                request.setAttribute("FULLNAME_ERROR", "Can't be blank!");
+                hasError = true;
+            }
+            if (pass == null || pass.isEmpty()) {
+                request.setAttribute("PASS_ERROR", "Can't be blank!");
+                hasError = true;
 
-            } else {
+            }
+            if (phone == null || phone.isEmpty()) {
+                request.setAttribute("PHONE_ERROR", "Can't be blank!");
+                hasError = true;
+
+            }
+            if (sex == null || sex.isEmpty()) {
+                request.setAttribute("SEX_ERROR", "Can't be blank!");
+                hasError = true;
+
+            }
+            if (email == null || email.isEmpty()) {
+                request.setAttribute("EMAIL_ERROR", "Can't be blank!");
+                hasError = true;
+
+            }
+            if (!hasError) {
+                boolean checkUserAfter = dao.userAfterUpdate(userInput);
+                if (checkUserAfter) {
+                    url = SUCCESS;
+                    request.setAttribute("MESSAGE", "Update Successfully");
+                    user.setFullName(fullName);
+                    user.setPassword(pass);
+                    user.setPhoneNumber(phone);
+                    user.setSex(sex);
+                    user.setEmail(email);
+                } else {
+                    url = ERROR;
+                    request.setAttribute("MESSAGE", "Update Fail");
+                }
+            }else{
                 url = ERROR;
-                request.setAttribute("MESSAGE", "Update Fail");
             }
 
         } catch (Exception e) {

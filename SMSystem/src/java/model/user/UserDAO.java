@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.naming.NamingException;
@@ -127,7 +128,7 @@ public class UserDAO {
                 ptm.setString(4, user.getSex());
                 ptm.setString(5, user.getEmail());
                 ptm.setString(6, user.getUserName());
-                check = ptm.executeUpdate() > 0 ? true : false;
+                check = ptm.executeUpdate() > 0;
             }
         } finally {
             if (rs != null) {
@@ -142,5 +143,45 @@ public class UserDAO {
             return check;
         }
 
+    }
+    public int beforeUpdate(UserDTO user, UserDTO userInput, List<UserDTO> allUser,Map<String, String> errorMessages){
+        int check = 0;
+        // Kiểm tra trường userName
+    if (userInput.getUserName() == null || userInput.getUserName().isEmpty()) {
+        errorMessages.put("userName", "Username can't be blank!");
+        check = 0; // Đánh dấu là không hợp lệ
+    }
+
+    // Kiểm tra trường fullName
+    if (userInput.getFullName() == null || userInput.getFullName().isEmpty()) {
+        errorMessages.put("fullName", "Full Name can't be blank!");
+        check = 0;
+    }
+
+    // Kiểm tra trường password
+    if (userInput.getPassword()== null || userInput.getPassword().isEmpty()) {
+        errorMessages.put("pass", "Password can't be blank!");
+        check = 0;
+    }
+
+    // Kiểm tra trường phone
+    if (userInput.getPhoneNumber()== null || userInput.getPhoneNumber().isEmpty()) {
+        errorMessages.put("phone", "Phone can't be blank!");
+        check = 0;
+    }
+
+    // Kiểm tra trường sex
+    if (userInput.getSex() == null || userInput.getSex().isEmpty()) {
+        errorMessages.put("sex", "Sex can't be blank!");
+        check = 0;
+    }
+
+    // Kiểm tra trường email
+    if (userInput.getEmail() == null || userInput.getEmail().isEmpty()) {
+        errorMessages.put("email", "Email can't be blank!");
+        check = 0;
+    }
+        
+        return check;
     }
 }
