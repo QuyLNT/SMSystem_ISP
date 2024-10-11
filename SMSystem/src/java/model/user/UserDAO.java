@@ -23,7 +23,7 @@ import utils.DBUtils;
  * @author LENOVO
  */
 public class UserDAO {
-    private static final String CHECK_USERNAME_EXISTS = "SELECT COUNT(*) FROM users WHERE userName = ?";
+    private static final String CHECK_USERNAME_EXISTS = "SELECT COUNT(userId) FROM users WHERE userName = ?";
     private static final String INSERT_USER = " INSERT INTO users (userName, fullName, password, phoneNumber, sex, email, isActive, roleId, createdAt) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String LOGIN = "SELECT userName,fullName,userId,phoneNumber,sex,email,isActive,roleId,createdAt\n"
@@ -273,4 +273,56 @@ public class UserDAO {
         }
         return  result;
     }
+    
+        public boolean isUserNameExists(String userName) throws ClassNotFoundException, SQLException{
+            boolean checkExits = true;
+            Connection conn = null;
+            PreparedStatement ptm = null;
+            
+            try{
+                conn = DBUtils.getConnection();
+                ptm = conn.prepareStatement(CHECK_USERNAME_EXISTS);
+                ptm.setString(1, userName);
+                if(ptm.executeUpdate()>0){
+                    checkExits = false;
+                }
+                    
+            }finally{
+                if(ptm!=null){
+                    conn.close();
+                }
+                if(conn != null){
+                    conn.close();
+                }
+            }
+            return checkExits;
+        }
+        
+    public boolean createUser(UserDTO user) throws SQLException, ClassNotFoundException {
+        boolean check = false;
+            Connection conn = null;
+            PreparedStatement ptm = null;
+            try {
+    //userName,fullName,password,phoneNumber,sex,email,isActive,roleId,createdAt)
+                conn = DBUtils.getConnection();
+                if (conn != null) {
+                    ptm = conn.prepareStatement(INSERT_USER);
+                    ptm.setString(1, user.getUserName());
+                    ptm.setString(2, user.getFullName());
+                    ptm.setString(3, user.getPassword());
+                    ptm.setString(4, user.getPhoneNumber());
+                    ptm.setString(5, user.getSex());
+                    ptm.setString(6, user.getEmail());
+                    ptm.setBoolean(7, user.isActive());
+                    ptm.setString(8, user.getRoleId());
+                    ptm.setDate(9, (Date) user.getCreatedAt());
+                    check = ptm.executeUpdate() > 0;
+                }
+            }finally{
+                if(ptm!=null) ptm.close();
+                if(conn!=null) conn.close();
+            }
+            return check;
+    }
+        
 }
