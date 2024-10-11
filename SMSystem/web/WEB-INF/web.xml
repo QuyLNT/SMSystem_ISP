@@ -84,6 +84,10 @@
         <servlet-name>ToggleUserRoleController</servlet-name>
         <servlet-class>controller.ToggleUserRoleController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchUserByUserNameController</servlet-name>
+        <servlet-class>controller.SearchUserByUserNameController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -167,6 +171,10 @@
     <servlet-mapping>
         <servlet-name>ToggleUserRoleController</servlet-name>
         <url-pattern>/ToggleUserRoleController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchUserByUserNameController</servlet-name>
+        <url-pattern>/SearchUserByUserNameController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
