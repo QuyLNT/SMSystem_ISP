@@ -32,19 +32,19 @@
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="img/logoweb.png" alt="" width="32px" height="32px"/>
-                                    <span class="title-text">SM System</span>
+                                    <img src="img/logoweb.png" alt="" width="100%" height="100%"/>
+                                    <span class="title-text">SMS</span>
                                 </h3>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
-                                    <a href="adminHome.jsp" class="nav-link">
+                                    <a href="MainController?action=LoadAdminHome" class="nav-link">
                                         <i class="fa-solid fa-house"></i>
                                         <span class="link-text">Home</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="userList.jsp" class="nav-link">
+                                    <a href="MainController?action=LoadUserList" class="nav-link">
                                         <i class="fa-solid fa-user"></i>
                                         <span class="link-text">Accounts</span>
                                     </a>
