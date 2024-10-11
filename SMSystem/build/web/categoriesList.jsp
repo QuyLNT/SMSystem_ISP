@@ -31,7 +31,7 @@
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="img/logoweb.png" alt="" width="100%" height="100%"/>
+                                    <img src="img/logoweb.png" alt="" width="32px" height="32px"/>
                                     <span class="title-text">Nice</span>
                                 </h3>
                             </div>
@@ -112,10 +112,11 @@
                                 </thead>
                                 <tbody>
                                     <%
-                                            for (UserObjectDTO category : categoriesList) {
+                                        int count=0;
+                                        for (UserObjectDTO category : categoriesList) {
                                     %>
                                     <tr>
-                                        <td><%= category.getUserObjectId()%></td>
+                                        <td><%= count++%></td>
                                         <td><%= category.getUserObjectName()%></td>
                                         <td><%= category.getDetail()%></td>
                                         <td><%= category.getProductCount()%></td>

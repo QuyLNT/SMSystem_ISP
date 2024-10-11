@@ -31,8 +31,8 @@
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="favicon_io/favicon-32x32.png" alt="anh giay nike" />
-                                    <span class="title-text">Nice</span>
+                                    <img src="img/logoweb.png" width="32px" height="32px" alt="" />
+                                    <span class="title-text">SM System</span>
                                 </h3>
                             </div>
                             <ul class="nav-list">
@@ -40,12 +40,6 @@
                                     <a href="adminHome.jsp" class="nav-link">
                                         <i class="fa-solid fa-house"></i>
                                         <span class="link-text">Home</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
-                                    <a href="userList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-user"></i>
-                                        <span class="link-text">Accounts</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -118,6 +112,7 @@
                                         <th>Customer</th>
                                         <th>Date Time</th>
                                         <th>Status</th>
+                                        <th>Shipper</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -128,10 +123,19 @@
 
                                     <tr>
                                 <form action="MainOrderController" method="POST">
-
                                     <td><%=a.getOrderID()%></td>                                       
                                     <td><%=a.getFullName()%></td>
                                     <td><%=a.getCreateAt()%></td>
+                                    <td>
+                                        <select name="status" class="form-select" aria-label="Default select example">
+                                            <option selected><%=a.getStatus()%></option>
+                                            <option value="Accepted,waiting for Delivering">Accepted,waiting for Delivering</option>
+                                            <option value="Delivering">Delivering</option>
+                                            <option value="Delivered">Delivered</option>
+                                            <option value="Completed">Completed</option>
+                                            <option value="Not Completed">Not Completed</option>
+                                        </select>
+                                    </td>
                                     <td>
                                         <select name="status" class="form-select" aria-label="Default select example">
                                             <option selected><%=a.getStatus()%></option>
@@ -150,7 +154,6 @@
                                         <button type="submit" class="btn btn-primary" name="action" value="View">
                                             <i class="fa-solid fa-eye"></i>
                                         </button>         
-                                      
                                     </td>
                                 </form>
                                 </tr> 

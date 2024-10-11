@@ -72,10 +72,7 @@
 
                             <!-- Button trigger modal -->
                             
-                            <!-- Modal Add -->
-
-                            
-                                                                                <%
+                            <!-- Modal Add -->                                                                              <%
                                 String searchUserName = request.getParameter("searchUserName");
                                 if (searchUserName == null) {
                                     searchUserName = "";
@@ -83,7 +80,7 @@
                             %>
                             <div class="search-form">
                                 <form action="MainController" method="POST">
-                                    Search User: <input type="text" name="searchUserName" placeholder="Enter user name" value="<%= searchUserName%>"/>
+                                    Search order: <input type="text" name="searchUserName" placeholder="Enter user name" value="<%= searchUserName%>"/>
                                     <button type="submit" name="action" value="SearchUserName">Search</button>
                                 </form>
                             </div>
@@ -93,17 +90,18 @@
                             <%
                                 List<UserDTO> userList = (List<UserDTO>) session.getAttribute("USER_LIST");   
                             %>
-                            <div class="table-tilte">User Table</div>
+                            <div class="table-tilte">Ship Table</div>
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>User Name</th>
-                                        <th>Full Name</th>
-                                        <th>Email</th>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Order Item</th>
                                         <th>Phone Number</th>                                        
-                                        <th>Role</th>
-                                        <th>Created Date</th>
+                                        <th>Address</th>
+                                        <th>Shipping method</th>
+                                        <th>Delivery Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -130,18 +128,24 @@
                                             <%= user.getPhoneNumber()%>
                                         </td>
                                         <td>
-                                             <form action="MainController" method="POST">
-                                                <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
-                                                <input type="hidden" name="action" value="toggleUserRole"/>
-                                                <select name="roleId" onchange="this.form.submit()">
-                                                    <option value="AD" <%= user.getRoleId().equalsIgnoreCase("AD") ? "selected" : ""%>>Admin</option>
-                                                    <option value="CUS" <%= user.getRoleId().equalsIgnoreCase("CUS") ? "selected" : ""%>>Customer</option>
-                                                    <option value="MN" <%= user.getRoleId().equalsIgnoreCase("MN") ? "selected" : ""%>>Manager</option>
-                                                    <option value="SP" <%= user.getRoleId().equalsIgnoreCase("SP") ? "selected" : ""%>>Shipper</option>
-                                                </select>
-                                            </form>
+
                                         </td>
-                                        <td><%= user.getCreatedAt()%></td>
+
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            <form action="MainController" method="POST">
+                                               <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
+                                               <input type="hidden" name="action" value="toggleUserRole"/>
+                                               <select name="roleId" onchange="this.form.submit()">
+                                                   <option value="AD" <%= user.getRoleId().equalsIgnoreCase("AD") ? "selected" : ""%>>Admin</option>
+                                                   <option value="CUS" <%= user.getRoleId().equalsIgnoreCase("CUS") ? "selected" : ""%>>Customer</option>
+                                                   <option value="MN" <%= user.getRoleId().equalsIgnoreCase("MN") ? "selected" : ""%>>Manager</option>
+                                                   <option value="SP" <%= user.getRoleId().equalsIgnoreCase("SP") ? "selected" : ""%>>Shipper</option>
+                                               </select>
+                                           </form>
+                                       </td>
                                         <td>
                                             <input type="hidden" name="userId"  value="<%=user.getUserId()%>" />
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal<%=user.getUserId()%>">
@@ -160,43 +164,34 @@
                                                             <div class="modal-body">
                                                                 <input type="hidden" name="userId"  value="<%=user.getUserId()%>" />
                                                                 <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">User Name</span>
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">No</span>
                                                                     <input name="userName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getUserName()%>">
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Full Name</span>
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Order ID</span>
                                                                     <input name="fullName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getFullName()%>">
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Password</span>
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Customer</span>
                                                                     <input name="userPass" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getPassword()%>">
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Phone Number</span>
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Order item</span>
                                                                     <input name="phoneNumber" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getPhoneNumber()%>">
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Sex</span>
-                                                                    <select name="Sex" class="form-control">
-                                                                        <option value="Male" <%= "Male".equals(user.getSex()) ? "selected" : ""%>>Male</option>
-                                                                        <option value="Female" <%= "Female".equals(user.getSex()) ? "selected" : ""%>>Female</option>
-                                                                        <option value="Others" <%= "Others".equals(user.getSex()) ? "selected" : ""%>>Others</option>
-                                                                    </select>
-
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Phone number</span>
+                                                                    <input name="phoneNumber" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getPhoneNumber()%>">
                                                                 </div>
+                                                                
                                                                 <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Address</span>
                                                                     <input name="email" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getEmail()%>">
                                                                 </div> 
                                                                 <div class="input-group input-group-sm mb-3">
-                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Role</span>
-                                                                    <select name="userRole" class="form-control">
-                                                                        <option value="AD" <%= user.getRoleId().equalsIgnoreCase("AD") ? "selected" : ""%>>Admin</option>
-                                                                        <option value="CUS" <%= user.getRoleId().equalsIgnoreCase("CUS") ? "selected" : ""%>>Customer</option>
-                                                                        <option value="MN" <%= user.getRoleId().equalsIgnoreCase("MN") ? "selected" : ""%>>Manager</option>
-                                                                        <option value="SP" <%= user.getRoleId().equalsIgnoreCase("SP") ? "selected" : ""%>>Shipper</option>
-                                                                    </select>
-                                                                </div>
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Delivery status</span>
+                                                                    <input name="email" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getEmail()%>">
+                                                                </div> 
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

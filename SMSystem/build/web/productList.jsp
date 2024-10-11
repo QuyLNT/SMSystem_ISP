@@ -4,7 +4,7 @@
     Author     : DELL
 --%>
 
-<%@page import="model.product.ProductVariantDTO"%>
+<%@page import="model.product.ProductError"%>
 <%@page import="java.util.Map"%>
 <%@page import="model.product.ProductDAO"%>
 <%@page import="model.product.ProductDTO"%>
@@ -19,40 +19,34 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Products</title>
-        <title>Kẻ kiểm soát thông tin</title>
+        <title>ProductsList</title>
+        <title>SMSystem</title>
         <link rel="stylesheet" href="css/user1.css" />
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
-        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
+<!--        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
     </head>
     <body>
         <main class="main-wrap">
-            <header class="main-head">
+            <header class="main-head"> 
                 <div class="main-nav">
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="favicon_io/favicon-32x32.png" alt="anh chu cho" />
-                                    <span class="title-text">Nice</span>
+                                    <img src="img/logoweb.png" alt="" width="32px" height="32px" />
+                                    <span class="title-text">SMS</span>
                                 </h3>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
-                                    <a href="adminHome.jsp" class="nav-link">
+                                    <a href="managerHome.jsp" class="nav-link">
                                         <i class="fa-solid fa-house"></i>
                                         <span class="link-text">Home</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
-                                    <a href="userList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-user"></i>
-                                        <span class="link-text">Accounts</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -78,6 +72,12 @@
                                     <a href="orderList.jsp" class="nav-link">
                                         <i class="fa-solid fa-file-invoice"></i>
                                         <span class="link-text">Order</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="LogoutController" class="nav-link">
+                                        <i class="fa-solid fa-tag"></i>
+                                        <span class="link-text">Brand</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -108,7 +108,7 @@
                             <%
                                 ProductDAO productDao = new ProductDAO();
                                 List<ProductDTO> productList = null;
-                                String noResults = (String) request.getAttribute("NO_RESULTS");
+                                String noResults = (String) session.getAttribute("NO_RESULTS");
 
                                 productList = (List<ProductDTO>) session.getAttribute("PRODUCT_LIST");
 
@@ -138,7 +138,27 @@
                                         </div>
                                         <form action="MainController" method="POST">
                                             <div class="modal-body">
-
+                                                <% if (request.getAttribute("PRODUCT_ERROR") != null) {
+                                                        ProductError productError = (ProductError) request.getAttribute("PRODUCT_ERROR");
+                                                %>
+                                                <div class="alert alert-danger">
+                                                    <% if (productError.getNameError() != null) {%>
+                                                    <p><%= productError.getNameError()%></p>
+                                                    <% } %>
+                                                    <% if (productError.getDetailError() != null) {%>
+                                                    <p><%= productError.getDetailError()%></p>
+                                                    <% } %>
+                                                    <% if (productError.getPriceError() != null) {%>
+                                                    <p><%= productError.getPriceError()%></p>
+                                                    <% } %>
+                                                    <% if (productError.getSaleError() != null) {%>
+                                                    <p><%= productError.getSaleError()%></p>
+                                                    <% } %>
+                                                    <% if (productError.getErrorMessage() != null) {%>
+                                                    <p><%= productError.getErrorMessage()%></p>
+                                                    <% } %>
+                                                </div>
+                                                <% } %>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Name</span>
                                                     <input name="Name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
@@ -147,7 +167,7 @@
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Category</span>
                                                     <select name="userObjectID" class="form-control" required>
                                                         <%
-                                                            
+
                                                             List<UserObjectDTO> userObjectList =(List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
                                                             for (UserObjectDTO uo : userObjectList) {
                                                         %>
@@ -184,7 +204,7 @@
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Warrant Period (Month)</span>
-                                                    <input name="warrantPeriod" type="number" step="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
+                                                    <input name="warrantyPeriod" type="number" step="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Detail</span>
@@ -266,20 +286,20 @@
                                         <td><img src="<%= product.getAvatarPath()%>" alt="<%= product.getName()%>" style="width: 70px; height: 70px;"></td>
                                         <td><%= product.getName()%></td>
                                         <td><%
-                                                String userObjectName="";
-                                                for(UserObjectDTO u : userObjectList){
-                                                    if(u.getUserObjectId() == product.getUserOjectId()){
-                                                        userObjectName = u.getUserObjectName();
-                                                    }
+                                            String userObjectName = "";
+                                            for (UserObjectDTO u : userObjectList) {
+                                                if (u.getUserObjectId() == product.getUserOjectId()) {
+                                                    userObjectName = u.getUserObjectName();
                                                 }
+                                            }
                                             %>
-                                            <%= userObjectName %>
+                                            <%= userObjectName%>
                                         </td> 
                                         <td>
                                             <%
-                                                String brandName="";
-                                                for(BrandDTO b : brandList){
-                                                    if(b.getBrandId()==product.getBrandId()){
+                                                String brandName = "";
+                                                for (BrandDTO b : brandList) {
+                                                    if (b.getBrandId() == product.getBrandId()) {
                                                         brandName = b.getBrandName();
                                                     }
                                                 }
@@ -303,23 +323,23 @@
                                                 <input type="hidden" name="productId" value="<%= product.getProductId()%>"/>
                                                 <input type="hidden" name="action" value="toggleFlashSale"/>
                                                 <select name="Hot" onchange="this.form.submit()">
-                                                    <option value="1" <%= product.isHot() ? "selected" : ""%>>On</option>
-                                                    <option value="0" <%= !product.isHot() ? "selected" : ""%>>Off</option>
+                                                    <option value="1" <%= product.isHot() ? "selected" : ""%>>Active</option>
+                                                    <option value="0" <%= !product.isHot() ? "selected" : ""%>>Inactive</option>
                                                 </select>
                                             </form>
                                         </td>
                                         <td>
                                             <%
                                                 int stock = 0;
-                                                List<ProductDTO> stockByProduct =(List<ProductDTO>) session.getAttribute("STOCK_OF_PRODUCT");
-                                                if(stockByProduct!=null){
-                                                    for(ProductDTO p : stockByProduct){
-                                                        if(p.getProductId()==product.getProductId()){
+                                                List<ProductDTO> stockByProduct = (List<ProductDTO>) session.getAttribute("STOCK_OF_PRODUCT");
+                                                if (stockByProduct != null) {
+                                                    for (ProductDTO p : stockByProduct) {
+                                                        if (p.getProductId() == product.getProductId()) {
                                                             stock = p.getTotalStock();
                                                         }
                                                     }
                                                 }
-                                            
+
                                             %>
                                             <%=stock%>
                                         </td>
@@ -331,7 +351,7 @@
                                                 <input type="hidden" name="productId" value="<%= product.getProductId()%>"/>
                                                 <input type="hidden" name="action" value="toggleProductStatus"/>
                                                 <select name="Product_Status" onchange="this.form.submit()">
-                                                    <option value="1" <%= product.isProductStatus()? "selected" : ""%>>Active</option>
+                                                    <option value="1" <%= product.isProductStatus() ? "selected" : ""%>>Active</option>
                                                     <option value="0" <%= !product.isProductStatus() ? "selected" : ""%>>Inactive</option>
                                                 </select>
                                             </form>
@@ -389,7 +409,7 @@
                                                                     <select name="userObjectID" class="form-control">
                                                                         <%
                                                                             for (UserObjectDTO uOb : userObjectList) {
-                                                                                String selected = (uOb.getUserObjectId()== selectedCategoryID) ? "selected" : "";
+                                                                                String selected = (uOb.getUserObjectId() == selectedCategoryID) ? "selected" : "";
                                                                         %>
                                                                         <option value="<%= uOb.getUserObjectId()%>" <%= selected%>><%= uOb.getUserObjectName()%></option>
                                                                         <% }%>
@@ -411,12 +431,44 @@
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Warranty Period</span>
                                                                     <input name="warranty" type="number" step="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= product.getWarrantyPeriod()%>">
                                                                 </div>
-
-
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                 <input type="submit" name="action" value="Update Product" class="btn btn-primary"/>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+
+
+                                            <!-- Nút Xóa -->
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= product.getProductId()%>">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+
+                                            <!-- Modal Xóa -->
+                                            <div class="modal fade" id="deleteModal<%= product.getProductId()%>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="deleteModalLabel">Confirm product deletion</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form action="DeleteProductController" method="POST">
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="productId" value="<%= product.getProductId()%>" />
+                                                                Are you sure you want to delete the product '<%= product.getName()%>' and all related images?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                                                <input type="hidden" name="productId" value="<%= product.getProductId()%>" />
+                                                                <input type="hidden" name="action" value="DeleteProduct" />
+                                                                <button type="submit" class="btn btn-danger">Delete</button>
+
                                                             </div>
                                                         </form>
                                                     </div>

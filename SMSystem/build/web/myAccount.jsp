@@ -53,12 +53,12 @@
                     <div class="ht-left">
                         <div class="mail-service">
                             <i class="fa fa-envelope">
-                                minhquan141104@gmail.com
+                                smsystem@gmail.com
                             </i>
                         </div>
                         <div class="phone-service">
                             <i class="fa fa-phone">
-                                +84 78 566 3033
+                                +84 123456789
                             </i>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                             if(user.getFullName()!=null){
                         %>
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user"><%=loginUser.getFullName()%></i>
+                            <i class="fa fa-user"><%=user.getFullName()%></i>
                         </div>
                         <% }else { %>
                         <div class="login-panel" id="user-btn">
@@ -106,7 +106,7 @@
                         <div class="col-lg-2 col-md-2">
                             <div class="logo">
                                 <a href="homePage.jsp">
-                                    <img src="favicon_io/android-chrome-192x192.png" height="65px" alt="">
+                                    <img src="img/logoweb.png" height="65px" alt="">
                                 </a>
                             </div>
                         </div>
@@ -200,11 +200,11 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <label for="userName">userName <span>*</span></label>
-                            <% if(loginUser.getUserName()==null){ %>
+                            <% if(user.getUserName()==null){ %>
                             <input type="text" id="userName" name="userName">
                             <% }else{ %>
                             
-                            <input type="text" id="userName-exist" name="userName" value="<%=loginUser.getUserName()%>" readonly>
+                            <input type="text" id="userName-exist" name="userName" value="<%=user.getUserName()%>" readonly>
                             <button type="button" id="edit-btn-userName">
                                 <i class="fa fa-pencil-square-o"></i>
                             </button>
@@ -224,10 +224,10 @@
                         </div>
                         <div class="col-lg-12">
                             <label for="fullName">Full Name <span>*</span></label>
-                            <% if(loginUser.getFullName()==null){ %>
+                            <% if(user.getFullName()==null){ %>
                             <input type="text" id="fullName" name="fullName">
                             <% }else{ %>
-                            <input type="text" id="fullName-exist" name="fullName" value="<%=loginUser.getFullName()%>" readonly>
+                            <input type="text" id="fullName-exist" name="fullName" value="<%=user.getFullName()%>" readonly>
                             <button type="button" id="edit-btn-fullName">
                                 <i class="fa fa-pencil-square-o"></i>
                             </button>
@@ -246,14 +246,14 @@
                         </div>
                         <div class="col-lg-12">
                             <label for="sex">Sex <span>*</span></label>
-                            <% if(loginUser.getSex()==null){ %>
+                            <% if(user.getSex()==null){ %>
                             <select id="sex" name="sex">
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="other">Other</option>
                             </select>
                             <% }else{ %>
-                            <input type="text" id="sex-exist" name="sex" value="<%=loginUser.getSex()%>" readonly>
+                            <input type="text" id="sex-exist" name="sex" value="<%=user.getSex()%>" readonly>
                             <button type="button" id="edit-btn-sex">
                                 <i class="fa fa-pencil-square-o"></i>
                             </button>
@@ -261,11 +261,11 @@
                         </div>
                         <div class="col-lg-12">
                             <label for="email">Email Address <span>*</span></label>
-                            <% if(loginUser.getEmail()==null){ %>
+                            <% if(user.getEmail()==null){ %>
                             <input type="email" id="email" name="email">
                             <% }else{ %>
                             
-                            <input type="email" id="email-exist" name="email" value="<%=loginUser.getEmail() %>" readonly>
+                            <input type="email" id="email-exist" name="email" value="<%=user.getEmail() %>" readonly>
                             <button type="button" id="edit-btn-email">
                                 <i class="fa fa-pencil-square-o"></i>
                             </button>
@@ -293,37 +293,38 @@
                 <div class="logo-carousel owl-carousel">
                     <div class="logo-item">
                         <div class="tablecell-inner">
-                            <img src="img/logo-carousel/logo-1.png">
+                            <img src="img/nike.png" width="150" height="150">
                         </div>
                     </div>
                     <div class="logo-item">
                         <div class="tablecell-inner">
-                            <img src="img/logo-carousel/logo-2.png">
+                            <img src="img/adidas.png" width="150" height="150">
                         </div>
                     </div>
                     <div class="logo-item">
                         <div class="tablecell-inner">
-                            <img src="img/logo-carousel/logo-3.png">
+                            <img src="img/puma.png" width="150" height="150">
                         </div>
                     </div>
                     <div class="logo-item">
                         <div class="tablecell-inner">
-                            <img src="img/logo-carousel/logo-4.png">
+                            <img src="img/asics.png" width="150" height="150">
                         </div>
                     </div>
                     <div class="logo-item">
                         <div class="tablecell-inner">
-                            <img src="img/logo-carousel/logo-5.png">
+                            <img src="img/vans.png" width="150" height="150">
                         </div>
                     </div>
                     <div class="logo-item">
                         <div class="tablecell-inner">
-                            <img src="img/logo-carousel/logo-1.png">
+                            <img src="img/newbalance.png" width="150" height="150">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- Partner Logo Section End -->
 
         <!-- Footer Section Begin -->
@@ -334,13 +335,13 @@
                         <div class="footer-left">
                             <div class="footer-logo">
                                 <a href="homePage.jsp">
-                                    <img src="favicon_io/android-chrome-192x192.png" alt="">
+                                    <img src="img/logoweb.png" alt="">
                                 </a>
                             </div>
                             <ul>
-                                <li>1A Yet Kieu . Ha Noi</li>
-                                <li>Phone: +84 78 566 3033</li>
-                                <li>Email: minhquan141104@gmail.com</li>
+                                <li>Lô E2a-7, Đường D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh 700000</li>
+                                <li>Phone: +84 123456789</li>
+                                <li>Email: smsystem@gmail.com</li>
                             </ul>
                             <div class="footer-social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
@@ -389,7 +390,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="copyright-text">
-                                Copyright ©2024 All reserved | MinQan
+                                Copyright ©2024 All reserved | SMSystem
                             </div>
                             <div class="payment-pic">
                                 <img src="img/payment-method.png" alt="">

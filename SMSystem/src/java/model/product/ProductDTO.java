@@ -193,5 +193,13 @@ public class ProductDTO {
         return avatarPath;
     }
     
+    public void setAvatarPath(String path){
+        for(ProductImageDTO ele: this.listImages){
+            if(ele.getIsAvatar() == true){
+                ele.setImagePath(path);
+            }
+        }
+    }
+    
  
 }

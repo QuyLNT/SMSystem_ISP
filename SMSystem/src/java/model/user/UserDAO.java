@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.naming.NamingException;
@@ -22,15 +23,22 @@ import utils.DBUtils;
  * @author LENOVO
  */
 public class UserDAO {
+    private static final String CHECK_USERNAME_EXISTS = "SELECT COUNT(*) FROM users WHERE userName = ?";
+    private static final String INSERT_USER = " INSERT INTO users (userName, fullName, password, phoneNumber, sex, email, isActive, roleId, createdAt) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String LOGIN = "SELECT userName,fullName,userId,phoneNumber,sex,email,isActive,roleId,createdAt\n"
             + "FROM users\n"
             + "WHERE (userName =? OR email=?) AND password = ?";
-    private static final String GET_ALL_USER = "SELECT userId,userName, fullName, roleId FROM users WHERE fullName LIKE ? ";
-    private static final String UPDATE = "UPDATE users set fullName= ?, userName=?, password=?, phoneNumber=?, sex=?, email=?,roleId=? where userName=?";
-    private static final String CHECK_USERNAME_EXISTS = "SELECT COUNT(*) FROM users WHERE userName = ?";
-    private static final String INSERT_USER = " INSERT INTO users (userName, fullName, password, phoneNumber, sex, email, isActive, roleId, createdAt) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+    private static final String GET_ALL_USER = "SELECT userId,userName, fullName,phoneNumber,sex,email,isActive, roleId,createdAt FROM users WHERE userName LIKE ? ";
+    private static final String UPDATE = "UPDATE users SET  password=?,fullName= ?, phoneNumber=?, sex=?, email=? where userName=?";
+    private static final String GET_TOTAL_ACCOUNT = "SELECT COUNT(userId) AS numberOfAccount\n" +
+                                                    "FROM users";     
+    private static final String GET_NUMBER_OF_ACCOUNT = "SELECT COUNT(userId) AS numberOfAccount\n" +
+                                                        "FROM users"
+                                                         + "WHERE roleId LIKE ?";
+    private static final String SET_ROLE_ID = "UPDATE users\n" +
+                                                "SET roleId = ?\n" +
+                                                "WHERE userId = ?";
     public UserDTO checkLogin(String userIndentify, String password) throws SQLException, ClassNotFoundException, NamingException {
         UserDTO user = null;
         Connection conn = null;
@@ -73,24 +81,23 @@ public class UserDAO {
         return user;
     }
 
-    public List<UserDTO> getAllUser() throws ClassNotFoundException, SQLException {
+    public List<UserDTO> getAllUser(String searchUser) throws ClassNotFoundException, SQLException {
         List<UserDTO> userList = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
         try {
             conn = DBUtils.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(GET_ALL_USER);
-            rs = stmt.executeQuery();
             if (conn != null) {
                 ptm = conn.prepareStatement(GET_ALL_USER);
+                ptm.setString(1, "%" + searchUser + "%");
                 rs = ptm.executeQuery();
             }
             while (rs.next()) {
-                int userId = rs.getInt("userID");
+                int userId = rs.getInt("userId");
                 String fullName = rs.getString("fullName");
                 String userName = rs.getString("userName");
-                String userPass = rs.getString("password");
+                String userPass = "***";
                 String phoneNumber = rs.getString("phoneNumber");
                 String Sex = rs.getString("sex");
                 String email = rs.getString("email");
@@ -114,7 +121,7 @@ public class UserDAO {
         return userList;
     }
 
-    public boolean userAfterUpdate(UserDTO user) {
+    public boolean userAfterUpdate(UserDTO user) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -123,56 +130,139 @@ public class UserDAO {
         try {
             conn = DBUtils.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(INSERT_USER);
-                ptm.setString(1, user.getFullName());
-                ptm.setString(2, user.getUserName());
-                ptm.setString(3, user.getPassword());
-                ptm.setString(4, user.getEmail());
-                check = ptm.executeUpdate() > 0 ? true : false;
+                ptm = conn.prepareStatement(UPDATE);
+                ptm.setString(1, user.getPassword());
+                ptm.setString(2, user.getFullName());
+                ptm.setString(3, user.getPhoneNumber());
+                ptm.setString(4, user.getSex());
+                ptm.setString(5, user.getEmail());
+                ptm.setString(6, user.getUserName());
+                check = ptm.executeUpdate() > 0;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            return check;
         }
+
+    }
+    public int beforeUpdate(UserDTO user, UserDTO userInput, List<UserDTO> allUser,Map<String, String> errorMessages){
+        int check = 0;
+        // Kiểm tra trường userName
+    if (userInput.getUserName() == null || userInput.getUserName().isEmpty()) {
+        errorMessages.put("userName", "Username can't be blank!");
+        check = 0; // Đánh dấu là không hợp lệ
+    }
+
+    // Kiểm tra trường fullName
+    if (userInput.getFullName() == null || userInput.getFullName().isEmpty()) {
+        errorMessages.put("fullName", "Full Name can't be blank!");
+        check = 0;
+    }
+
+    // Kiểm tra trường password
+    if (userInput.getPassword()== null || userInput.getPassword().isEmpty()) {
+        errorMessages.put("pass", "Password can't be blank!");
+        check = 0;
+    }
+
+    // Kiểm tra trường phone
+    if (userInput.getPhoneNumber()== null || userInput.getPhoneNumber().isEmpty()) {
+        errorMessages.put("phone", "Phone can't be blank!");
+        check = 0;
+    }
+
+    // Kiểm tra trường sex
+    if (userInput.getSex() == null || userInput.getSex().isEmpty()) {
+        errorMessages.put("sex", "Sex can't be blank!");
+        check = 0;
+    }
+
+    // Kiểm tra trường email
+    if (userInput.getEmail() == null || userInput.getEmail().isEmpty()) {
+        errorMessages.put("email", "Email can't be blank!");
+        check = 0;
+    }
+        
         return check;
     }
 
-    public boolean isUserNameExists(String userName) throws SQLException, ClassNotFoundException {
-        try (Connection conn = DBUtils.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(CHECK_USERNAME_EXISTS)) {
-            stmt.setString(1, userName);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    int count = rs.getInt(1);
-                    return count > 0;
+    public int getTotalAccount() throws SQLException, ClassNotFoundException {
+        int result=0;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_TOTAL_ACCOUNT);
+                rs = ptm.executeQuery();
+                if(rs.next()){
+                    result = rs.getInt("numberOfAccount");
                 }
             }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
-        return false;
+        return  result;
     }
-   
+    
 
-    public boolean createUser(UserDTO user) throws SQLException, ClassNotFoundException {
-        boolean check = false;
+    public int getNumberOf(String roleId) throws SQLException,ClassNotFoundException {
+        int result=0;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_TOTAL_ACCOUNT);
+                rs = ptm.executeQuery();
+                if(rs.next()){
+                    result = rs.getInt("numberOfAccount");
+                }
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return  result;
+    }
+
+    public boolean setRoleId(int userId, String roleId) throws ClassNotFoundException, SQLException {
+        boolean result = false;
         Connection conn = null;
         PreparedStatement ptm = null;
         try {
-//userName,fullName,password,phoneNumber,sex,email,isActive,roleId,createdAt)
             conn = DBUtils.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(INSERT_USER);
-                ptm.setString(1, user.getUserName());
-                ptm.setString(2, user.getFullName());
-                ptm.setString(3, user.getPassword());
-                ptm.setString(4, user.getPhoneNumber());
-                ptm.setString(5, user.getSex());
-                ptm.setString(6, user.getEmail());
-                ptm.setBoolean(7, user.isActive());
-                ptm.setString(8, user.getRoleId());
-                ptm.setDate(9, (Date) user.getCreatedAt());
-                check = ptm.executeUpdate() > 0;
+                ptm = conn.prepareStatement(SET_ROLE_ID);
+                ptm.setString(1, roleId);
+                ptm.setInt(2, userId);
+                result = ptm.executeUpdate()>0;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             if (ptm != null) {
                 ptm.close();
@@ -180,9 +270,7 @@ public class UserDAO {
             if (conn != null) {
                 conn.close();
             }
-
         }
-        return check;
+        return  result;
     }
-
 }

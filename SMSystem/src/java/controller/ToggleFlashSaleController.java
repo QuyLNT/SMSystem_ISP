@@ -45,8 +45,9 @@ public class ToggleFlashSaleController extends HttpServlet {
                 boolean checkUpdate = productDAO.updateHot(productId,isHot);
                 if(checkUpdate){
                     url=SUCCES;
+                    request.setAttribute("ms", "Set hot successfully");
                 }else{
-                    request.setAttribute("ERROR", "Set hot failed");
+                    request.setAttribute("err", "Set hot failed");
                 }
             }
         } catch (ClassNotFoundException | NumberFormatException | SQLException e) {

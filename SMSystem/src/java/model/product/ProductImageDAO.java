@@ -28,7 +28,7 @@ public class ProductImageDAO {
     
     private static final String INSERT_IMAGE = "INSERT INTO productImages(productId,imagePath,isAvatar) VALUES (?, ?, ?)";
 
-    public List<ProductImageDTO> getAllImage(int productId) throws ClassNotFoundException, SQLException{
+    public List<ProductImageDTO> getImageByProduct(int productId) throws ClassNotFoundException, SQLException{
         List<ProductImageDTO> listImage = new ArrayList();
         ProductDTO product = null;
         Connection conn = null;
@@ -96,4 +96,26 @@ public class ProductImageDAO {
         }
         return result;
     }
+    
+    private static final String DELETE_PRODUCT_IMAGES = "DELETE FROM productImages WHERE productId = ?";
+    
+    public boolean deleteProductImages(int productId) throws SQLException, ClassNotFoundException {
+    Connection conn = null;
+    PreparedStatement ptm = null;
+    boolean result = false;
+
+    try {
+        conn = DBUtils.getConnection();
+        if (conn != null) {
+            ptm = conn.prepareStatement(DELETE_PRODUCT_IMAGES);
+            ptm.setInt(1, productId);
+            result = ptm.executeUpdate() > 0 ? true : false;
+        }
+    } finally {
+        if (ptm != null) ptm.close();
+        if (conn != null) conn.close();
+    }
+    return result;
+}
+
 }

@@ -1,25 +1,26 @@
 <%-- 
-    Document   : index
-    Created on : Jun 18, 2024, 10:17:29 PM
-    Author     : DELL
+    Document   : brandList
+    Created on : Oct 10, 2024, 10:12:46 AM
+    Author     : LENOVO
 --%>
-
-<%@page import="model.category.UserObjectDTO"%>
-<%@page import="java.util.List"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@page import="model.category.BrandDTO"%>
+<%@page import="model.category.UserObjectDTO"%>
+<%@page import="java.util.List"%>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Categories</title>
+        <title>Brand</title>
         <title>Kẻ kiểm soát thông tin</title>
         <link rel="stylesheet" href="css/user1.css" />
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
-        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
+        
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
     </head>
@@ -92,40 +93,78 @@
                     </div>
                     <div class="content">
                         <div class="welcome">
-
-                        <div class="welcome" >
+                            <form action="MainController" method="POST">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+                                <i class="fa-solid fa-plus"></i> Add new Brand
+                                </button>
+                            </form>
                             <%
-                                List<UserObjectDTO> categoriesList =(List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
-                                if(categoriesList != null){
+                                String searchBrandName = request.getParameter("searchBrandName");
+                                if(searchBrandName==null){
+                                    searchBrandName="";
+                                }
                             %>
-                            <div class="table-tilte">Categories Table</div>
+
+                            <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">  
+                                            <h1 class="modal-title fs-5" id="addModalLabel">Create new brand </h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="MainController" method="POST">
+                                            <div class="modal-body">
+                                                
+                                                
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Name</span>
+                                                    <input name="Name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <input type="submit" name="action" value="Create Brand" class="btn btn-primary"/>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="search-form">
+                                <form action="MainController" method="POST">
+                                    Search Brand: <input type="text" name="searchBrandName" placeholder="Enter brand name" value="<%= searchBrandName%>"/>
+                                    <button type="submit" name="action" value="SearchBrandName">Search</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="welcome" >
+                            <%  
+                                List<BrandDTO> brandList =(List<BrandDTO>) session.getAttribute("BRAND_LIST");
+                                if(brandList != null){
+                            %>
+                            <div class="table-tilte">Brand Table</div>
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>CategoryName</th>
-                                        <th>CategoryDetail</th>
-                                        <th>Total products</th>
-                                        
-                                        <th>
+                                        <th>Brand Name</th>
+                                        <th>Total products</th>                                      
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody>   
                                     <%
                                         int count=0;
-                                        for (UserObjectDTO category : categoriesList) {
+                                        for(BrandDTO b : brandList){
                                     %>
                                     <tr>
-                                        <td><%= count++%></td>
-                                        <td><%= category.getUserObjectName()%></td>
-                                        <td><%= category.getDetail()%></td>
-                                        <td><%= category.getProductCount()%></td>
-                                        
-                                    </tr>
+                                        <td> <%=count++%></td>    
+                                        <td> <%=b.getBrandName()%></td> 
+                                        <td> <%=b.getProductCount()%></td> 
+                                    </tr>  
                                     <%
-                                            }
                                         }
-                                    %>
+                                    }
+                                    %>                                
                                 </tbody>
                             </table>
                         </div>
@@ -141,3 +180,4 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
+
