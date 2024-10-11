@@ -112,10 +112,11 @@
                                 </thead>
                                 <tbody>
                                     <%
-                                            for (UserObjectDTO category : categoriesList) {
+                                        int count=0;
+                                        for (UserObjectDTO category : categoriesList) {
                                     %>
                                     <tr>
-                                        <td><%= category.getUserObjectId()%></td>
+                                        <td><%= count++%></td>
                                         <td><%= category.getUserObjectName()%></td>
                                         <td><%= category.getDetail()%></td>
                                         <td><%= category.getProductCount()%></td>

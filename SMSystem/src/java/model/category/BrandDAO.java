@@ -24,6 +24,14 @@ public class BrandDAO {
                                                     "WHERE brandId = ?";
     private static final String GET_ALL= "SELECT brandId,brandName\n" +
                                                     "FROM brands";
+    
+    private static final String GET_BRAND_BY_NAME= "SELECT brandId,brandName\n" +
+                                                    "FROM brands\n" +
+                                                    "WHERE brandName LIKE ?";
+    private static final String GET_NUMBER_OF_PRODUCT= "SELECT COUNT(productId) AS numberOfProduct\n" +
+                                                        "FROM products\n" +
+                                                        "WHERE brandId=?\n" +
+                                                        "GROUP BY brandId";
     public List<BrandDTO> getAllBrand() throws ClassNotFoundException, SQLException{
         List<BrandDTO> listBrand = new ArrayList();
         Connection conn = null;
@@ -68,5 +76,54 @@ public class BrandDAO {
             if(conn!=null) conn.close();
         }
         return brand;
+    }
+
+    public List<BrandDTO> getBrandByName(String searchTerm) throws ClassNotFoundException, SQLException {
+        List<BrandDTO> brandList = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try{
+            conn = DBUtils.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(GET_BRAND_BY_NAME);
+                ptm.setString(1, "%"+searchTerm +"%");
+                rs = ptm.executeQuery();
+                while(rs.next()){
+                    BrandDTO brand = new BrandDTO(
+                            rs.getInt("brandId"),
+                            rs.getString("brandName"));
+                    brandList.add(brand);
+                }
+            }
+        }finally{
+            if(rs!=null) rs.close();
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
+        return brandList;   
+    }
+
+    public int getProductCountByBrand(int brandId) throws ClassNotFoundException, SQLException {
+        int numberOfProduct = 0;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try{
+            conn = DBUtils.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(GET_NUMBER_OF_PRODUCT);
+                ptm.setInt(1, brandId);
+                rs = ptm.executeQuery();
+                while(rs.next()){
+                    numberOfProduct = rs.getInt("numberOfProduct");
+                }
+            }
+        }finally{
+            if(rs!=null) rs.close();
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
+        return numberOfProduct;   
     }
 }

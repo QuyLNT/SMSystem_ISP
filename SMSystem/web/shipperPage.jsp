@@ -72,10 +72,7 @@
 
                             <!-- Button trigger modal -->
                             
-                            <!-- Modal Add -->
-
-                            
-                                                                                <%
+                            <!-- Modal Add -->                                                                              <%
                                 String searchUserName = request.getParameter("searchUserName");
                                 if (searchUserName == null) {
                                     searchUserName = "";

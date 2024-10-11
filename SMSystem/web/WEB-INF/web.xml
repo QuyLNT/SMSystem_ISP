@@ -45,8 +45,8 @@
         <servlet-class>controller.SearchProductByNameController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SearchUserByUserNameController</servlet-name>
-        <servlet-class>controller.SearchUserByUserNameController</servlet-class>
+        <servlet-name>DeleteProductController</servlet-name>
+        <servlet-class>controller.DeleteProductController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoadProductListController</servlet-name>
@@ -63,6 +63,26 @@
     <servlet>
         <servlet-name>ToggleDiscountStatusController</servlet-name>
         <servlet-class>controller.ToggleDiscountStatusController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchBrandController</servlet-name>
+        <servlet-class>controller.SearchBrandController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadBrandListController</servlet-name>
+        <servlet-class>controller.LoadBrandListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadAdminHomeDataController</servlet-name>
+        <servlet-class>controller.LoadAdminHomeDataController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadUserListController</servlet-name>
+        <servlet-class>controller.LoadUserListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ToggleUserRoleController</servlet-name>
+        <servlet-class>controller.ToggleUserRoleController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
@@ -109,8 +129,8 @@
         <url-pattern>/SearchProductByNameController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SearchUserByUserNameController</servlet-name>
-        <url-pattern>/SearchUserByUserNameController</url-pattern>
+        <servlet-name>DeleteProductController</servlet-name>
+        <url-pattern>/DeleteProductController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoadProductListController</servlet-name>
@@ -127,6 +147,26 @@
     <servlet-mapping>
         <servlet-name>ToggleDiscountStatusController</servlet-name>
         <url-pattern>/ToggleDiscountStatusController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchBrandController</servlet-name>
+        <url-pattern>/SearchBrandController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadBrandListController</servlet-name>
+        <url-pattern>/LoadBrandListController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadAdminHomeDataController</servlet-name>
+        <url-pattern>/LoadAdminHomeDataController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadUserListController</servlet-name>
+        <url-pattern>/LoadUserListController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToggleUserRoleController</servlet-name>
+        <url-pattern>/ToggleUserRoleController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

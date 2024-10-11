@@ -58,6 +58,19 @@ public class MainController extends HttpServlet {
     private final static String SEARCH_USER_CONTROLLER = "SearchUserByUserNameController";
     private final static String TOGGLE_DISCOUNT_STATUS = "toggleDiscountStatus" ;
     private final static String TOGGLE_DISCOUNT_STATUS_CONTROLLER = "ToggleDiscountStatusController";
+    private final static String SEARCH_BRANCH = "SearchBrandName";
+    private final static String SEARCH_BRANCH_CONTROLLER = "SearchBrandController";
+    private final static String LOAD_BRAND_LIST="LoadBrandList" ;
+    private final static String LOAD_BRAND_LIST_CONTROLLER="LoadBrandListController";
+    private final static String DELETE_PRODUCT = "Delete Product" ;
+    private final static String DELETE_PRODUCT_CONTROLLER = "DeleteProductController";
+    
+    private final static String LOAD_ADMIN_HOME="LoadAdminHome" ;
+    private final static String LOAD_ADMIN_HOME_CONTROLLER="LoadAdminHomeDataController";
+    private final static String LOAD_USER_LIST="LoadUserList" ;
+    private final static String LOAD_USER_LIST_CONTROLLER="LoadUserListController";
+    private final static String TOGGLE_USER_ROLE="toggleUserRole" ;
+    private final static String TOGGLE_USER_ROLE_CONTROLLER="ToggleUserRoleController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -95,11 +108,30 @@ public class MainController extends HttpServlet {
                 url=LOAD_DISCOUNT_LIST_CONTROLLER;
             }else if(TOGGLE_DISCOUNT_STATUS.equals(action)){
                 url=TOGGLE_DISCOUNT_STATUS_CONTROLLER;  
+            }else if(SEARCH_BRANCH.equals(action)){
+                url=SEARCH_BRANCH_CONTROLLER;
+            }else if(LOAD_BRAND_LIST.equals(action)){
+                url=LOAD_BRAND_LIST_CONTROLLER;
+            }else if(DELETE_PRODUCT.equals(action)){
+                url=DELETE_PRODUCT_CONTROLLER;  
+            }else if(LOAD_ADMIN_HOME.equals(action)){
+                url=LOAD_ADMIN_HOME_CONTROLLER;
+            }else if(LOAD_USER_LIST.equals(action)){
+                url=LOAD_USER_LIST_CONTROLLER;
+            }else if(TOGGLE_USER_ROLE.equals(action)){
+                url=TOGGLE_USER_ROLE_CONTROLLER;
             }
-
-        } catch (Exception e) {
-            log("Error at MainController" + e.toString());
-        } finally {
+            
+            
+            
+            
+            
+            
+            
+            
+        }catch(Exception e){
+           log("Error at MainController" + e.toString());
+        }finally{           
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
