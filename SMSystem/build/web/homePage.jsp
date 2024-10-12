@@ -348,11 +348,11 @@
                                     <ul>
                                         <form action="MainController" method="post">
                                             <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
-                                            <li class="w-icon active"><a href="AddToCart?pId=<%=ele.getProductId()%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>
+<!--                                            <li class="w-icon active"><a href="AddToCart?pId=<%/*=ele.getProductId()*/%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>-->
                                             <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: #ffffff;
                                                                                                 font-weight: bold;
                                                                                                 border: none;" name="action" value="View"></a></li>
-                                            <li ><input type="submit" class="quick-view" name="action" value="View"></li>
+                                            
                                         </form>
                                     </ul>
                                 </div>
@@ -364,10 +364,12 @@
                                     <%
                                         if (ele.getSale() != 0) {
                                          %>
-                                    <div class="product-price">
-                                        $<%=ele.getPrice() * 0.9%>
+                                    
+                                        <div class="product-price">
+                                        $<%= String.format("%.1f", ele.getPrice() * (1 - ele.getSale()))%>
                                         <span>$<%=ele.getPrice()%></span>
                                     </div>
+                                    
                                     <%
                                     } else {
                                          %>
@@ -431,11 +433,11 @@
                                     <ul>
                                         <form action="MainController" method="post">
                                             <input type="hidden" name="productId" value="<%=ob.getProductId()%>">
-                                            <li class="w-icon active"><a href="AddToCart?pId=<%=ob.getProductId()%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>
+<!--                                            <li class="w-icon active"><a href="AddToCart?pId=<%/*=ob.getProductId()*/%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>-->
                                             <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: white;
                                                                                                 font-weight: bold;
                                                                                                 border: none;" name="action" value="View"></a></li>
-                                            <li class="quick-view"><a href="product.jsp"><button type="submit" class="btn btn-warning" value="View"><i class="fa fa-eye"></i></button></a></li>
+                                            
                                         </form>
                                     </ul>
                                 </div>
@@ -485,6 +487,8 @@
         </section>
         <!-- Man Banner Section End -->
 
+        <!-- Kid Banner Section Begin -->
+        
         <section class="women-banner spad">
             <div class="container-fluid">
                 <div class="row">
@@ -529,11 +533,11 @@
                                     <ul>
                                         <form action="MainController" method="post">
                                             <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
-                                            <li class="w-icon active"><a href="AddToCart?pId=<%=ele.getProductId()%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>
+<!--                                            <li class="w-icon active"><a href="AddToCart?pId=<%/*=ele.getProductId()*/%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>-->
                                             <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: #ffffff;
                                                                                                 font-weight: bold;
                                                                                                 border: none;" name="action" value="View"></a></li>
-                                            <li ><input type="submit" class="quick-view" name="action" value="View"></li>
+                                            
                                         </form>
                                     </ul>
                                 </div>
@@ -545,7 +549,10 @@
                                     <%
                                         if (ele.getSale() != 0) {
                                          %>
+                                        <div class="product-price">
+                                        $<%= String.format("%.1f", ele.getPrice() * (1 - ele.getSale()))%>
                                         <span>$<%=ele.getPrice()%></span>
+                                    </div>
                                     </div>
                                     <%
                                     } else {
