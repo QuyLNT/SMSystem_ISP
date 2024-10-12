@@ -357,7 +357,7 @@
                                     </ul>
                                 </div>
                                 <div class="pi-text">
-                                    <div class="category-name">Shoes</div>
+                                    <div class="catagory-name">Shoes</div>
                                     <a href="">
                                         <h5><%=ele.getName()%></h5>
                                     </a>
@@ -381,9 +381,8 @@
                             </div>
                             <%
                                 }
-}else{
-%> <h5> Can not load product.</h5><%
 }
+
                             %>
                         </div>
 
@@ -422,7 +421,7 @@
 
                                         <div class="icon">
                                             <button id="btn-icon" type="submit">
-                                                <input type="hidden" name="id" value="<%/*= ob.getProductId() */%>">
+                                                <input type="hidden" name="id" value="<%= ob.getProductId() %>">
                                                 <input type="hidden" name="url" value="homePage.jsp">
                                                 <i class="icon_heart_alt"></i>
                                             </button>
@@ -431,8 +430,8 @@
                                     </form>
                                     <ul>
                                         <form action="MainController" method="post">
-                                            <input type="hidden" name="productId" value="<%/*=ob.getProductId()*/%>">
-                                            <li class="w-icon active"><a href="AddToCart?pId=<%/*=ob.getProductId()*/%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>
+                                            <input type="hidden" name="productId" value="<%=ob.getProductId()%>">
+                                            <li class="w-icon active"><a href="AddToCart?pId=<%=ob.getProductId()%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>
                                             <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: white;
                                                                                                 font-weight: bold;
                                                                                                 border: none;" name="action" value="View"></a></li>
@@ -463,7 +462,7 @@
                                          %>
                                 </div>
                             </div>
-                            <%                                   }
+                            <%                                  }
                                  %>
                             <script>
                                 function doDelete(name, event) {
@@ -503,7 +502,7 @@
                         </div>
                         <div class="product-slider owl-carousel">
                             <%
-                                List<ProductDTO> ls2 = (List<ProductDTO>) session.getAttribute("kidList");
+                                List<ProductDTO> ls2 = (List<ProductDTO>) session.getAttribute("KID_LIST");
                                 for (ProductDTO ele : ls2) {
                                  %>
                             <div class="product-item">
@@ -546,15 +545,13 @@
                                     <%
                                         if (ele.getSale() != 0) {
                                          %>
-                                    <div class="product-price">
-                                        $<%/*=ele.getPrice() * 0.9*/%>
-                                        <span>$<%/*=ele.getPrice()*/%></span>
+                                        <span>$<%=ele.getPrice()%></span>
                                     </div>
                                     <%
                                     } else {
                                          %>
                                     <div class="product-price">
-                                        $<%/*=ele.getPrice()*/%> 
+                                        $<%=ele.getPrice()%> 
                                     </div>
                                     <%
                                         }
