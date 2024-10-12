@@ -4,6 +4,8 @@
     Author     : Luu Minh Quan
 --%>
 
+<%@page import="model.category.BrandDTO"%>
+<%@page import="model.category.UserObjectDTO"%>
 <%@page import="model.cart.CartItems"%>
 <%@page import="model.cart.CartDTO"%>
 <%@page import="model.user.UserDTO"%>
@@ -62,11 +64,11 @@
                         </div>
                     </div>
                     <%
-                        UserDTO u = (UserDTO) session.getAttribute("user");
+                        UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
                     %>
                     <div class="ht-right">
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  <%=u.getFullName()%></i>
+                            <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
 
                         </div>
                         <section class="user">
@@ -75,7 +77,6 @@
                                     <div><a href="myAccount.jsp">My account</a></div>
                                     <div><a href="myOrder.jsp">Order Status</a></div>
                                     <div><a href="LogoutController">Logout</a></div>
-
                                     </ul>
                                 </div>
                         </section>
@@ -102,7 +103,7 @@
                     <div class="row">
                         <div class="col-lg-2 col-md-2">
                             <div class="logo">
-                                <a href="index.jsp">
+                                <a href="homePage.jsp">
                                     <img src="img/logoweb.png" height="65px" alt="">
                                 </a>
                             </div>
@@ -120,19 +121,6 @@
                         </div>
                         <div class="col-lg-3 col-md-3 text-right">
                             <ul class="nav-right">
-                                <%
-                                    String sizeWishlist = (String) session.getAttribute("sizeWishlist");
-                                    if(sizeWishlist==null){
-                                        sizeWishlist="0";
-                                    }
-                                    
-                                    %>
-                                <li class="heart-icon">
-                                    <a href="wishlist.jsp">
-                                        <i class="icon_heart_alt"></i>
-                                        <span><%= sizeWishlist %></span>
-                                    </a>
-                                </li>
                                 <%
                                     String size = (String) session.getAttribute("size");
                                     if (size == null) {
@@ -170,10 +158,10 @@
                                                             double total = 0;
                                                             int count = 0;
                                                             for (CartItems ele : ls) {
-                                                                total += (ele.getProduct().getPrice()* ele.getQuantity());
+                                                                total += (ele.getProduct().getPrice() * ele.getQuantity());
                                                     %>
                                                     <tr>
-                                                        <td class="si-pic"><img src="<%= ele.getProduct().getAvatar()%>" style="height: 76px"></td>
+                                                        <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
                                                         <td class="si-text">
                                                             <div class="product-selected">
                                                                 <p>$<%= String.format("%.1f", ele.getProduct().getPrice())%> x <%= ele.getQuantity()%></p>
@@ -225,8 +213,8 @@
                 <div class="container">
                     <nav class="nav-menu mobile-menu">
                         <ul>
-                            <li><a href="index.jsp">Home</a></li>
-                            <li class="active"><a href="shop.jsp">Shop</a></li>
+                            <li><a href="HomePage.jsp">Home</a></li>
+                            <li class="active"><a href="MainController?action=ShopPage">Shop</a></li>
                             <li><a href="contact.jsp">Contact</a></li>
                             <li><a href="">Pages</a>
                                 <ul class="dropdown">
@@ -266,38 +254,53 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 product-sidebar-filter">
                         <div class="filter-widget">
-                            <h4 class="fw-title">Categories</h4>
-                            <ul class="filter-catagories">
-                                <li><a href="SearchServlet?type=1">Men</a></li>
-                                <li><a href="SearchServlet?type=2">Women</a></li>
-                                <li><a href="SearchServlet?type=3">Kids</a></li>
-                            </ul>
-                        </div>
-                        <div class="filter-widget">
-                            <h4 class="fw-title">Brand</h4>
                             <form method="get" action="FilterServlet">
+                            <h4 class="fw-title">Categories</h4>
                                 <div class="fw-brand-check">
+                                    <div class="filter-catagories">
+                                        <%
+                                            List<UserObjectDTO> uobList = (List<UserObjectDTO>) request.getAttribute("USER_OBJECT_LIST");
+                                            if (uobList != null) {
+                                                for (UserObjectDTO u : uobList) {
+                                        %>
                                     <div class="bc-item">
-                                        <label for="bc-nike">
-                                            Nike
-                                            <input type="checkbox" id="bc-nike" name="brand" value="1">
+                                            <label for="bc-<%=u.getUserObjectId()%>">
+                                                <%=u.getUserObjectName()%>
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
+                                        <%  }
+
+                                        } else {
+                                        %>
+                                        <h5> No categories found. </h5>
+                                        <%
+                                            }
+                                        %>
+                                    </div>
+                                </div>
+                                <h4 class="fw-title">Brand</h4>
+                                <div class="fw-brand-check">
+                                    <%
+                                        List<BrandDTO> brandList = (List<BrandDTO>) request.getAttribute("BRAND_LIST");
+                                        if (brandList != null) {
+                                            for (BrandDTO b : brandList) {
+                                    %>
                                     <div class="bc-item">
-                                        <label for="bc-adidas">
-                                            Adidas
-                                            <input type="checkbox" id="bc-adidas" name="brand" value="2">
+                                        <label for="bc-<%=b.getBrandId()%>">
+                                            <%=b.getBrandName()%>
+                                            <input type="checkbox" id="bc-<%=b.getBrandId()%>" name="brand" value="<%=b.getBrandId()%>"/>
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
-                                    <div class="bc-item">
-                                        <label for="bc-puma">
-                                            Puma
-                                            <input type="checkbox" id="bc-puma" name="brand" value="3">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
+                                    <%  }
+
+                                    } else {
+                                    %>
+                                    <h5> No brand found. </h5>
+                                    <%
+                                        }
+                                    %>
                                 </div>
                                 <h4 class="fw-title">Price</h4>
                                 <div class="filter-range-wrap">
@@ -314,26 +317,12 @@
                                         <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>  
                                     </div>
                                 </div>
-                                <!--<a href="#" class="filter-btn">Filter</a>-->
                                 <input style="border: none" type="submit" class="filter-btn" value="Filter">
                             </form>
                         </div>
                         <div class="filter-widget">
                         </div>
-
-                        <div class="filter-widget">
-                            <h4 class="fw-title">Tags</h4>
-                            <div class="fw-tags">
-                                <a href="">Football</a>
-                                <a href="">LifeStyle</a>
-                                <a href="">Running</a>
-                                <a href="">Outdoor</a>
-                                <a href="">Sportswear</a>
-                                <a href="">New Arrivals</a>
-                                <a href="">Sales</a>
                             </div>
-                        </div>
-                    </div>
                     <div class="col-lg-9 order-1 order-lg-2">
                         <div class="product-show-option">
                             <div class="row">
@@ -354,7 +343,7 @@
                         </div>
                         <div class="product-list">
                             <%
-                                List<ProductDTO> ls = (List<ProductDTO>) session.getAttribute("productList");
+                                List<ProductDTO> ls = (List<ProductDTO>) request.getAttribute("PRODUCT_LIST");
                                 if (ls != null && !ls.isEmpty()) {
                                     for (ProductDTO p : ls) {
 
@@ -362,7 +351,7 @@
                             <!-- Mot san pham o day -->
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="<%=p.getAvatar()%>" alt="">
+                                    <img src="<%=p.getAvatarPath()%>" alt="">
                                     <%
                                         if (p.getSale() != 0) {
                                     %>
@@ -374,7 +363,7 @@
                                     
                                     <div class="icon">
                                        <button id="btn-icon" type="submit">
-                                        <input type="hidden" name="id" value="<%= p.getProductId() %>">
+                                                <input type="hidden" name="id" value="<%= p.getProductId()%>">
                                         <input type="hidden" name="url" value="shop.jsp">
                                         <i class="icon_heart_alt"></i>
                                         </button>
@@ -394,11 +383,11 @@
 
                                 <div class="pi-text">
                                     <%
-                                        if (p.getUserOjectId()== 1) {
+                                        if (p.getUserOjectId() == 1) {
                                     %>
                                     <div class="catagory-name">Men</div>
                                     <%
-                                    } else if (p.getUserOjectId()== 2) {
+                                    } else if (p.getUserOjectId() == 2) {
                                     %>
                                     <div class="catagory-name">Women</div>
                                     <%
