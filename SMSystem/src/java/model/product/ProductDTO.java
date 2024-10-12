@@ -78,6 +78,10 @@ public class ProductDTO {
         this.productStatus = productStaus;
     }
 
+    ProductDTO(int aInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getTotalStock() {
         return totalStock;
     }

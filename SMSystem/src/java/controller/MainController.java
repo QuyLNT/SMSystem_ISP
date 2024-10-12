@@ -74,6 +74,8 @@ public class MainController extends HttpServlet {
     private final static String CREATE_BRAND_CONTROLLER= "CreateBrandController";
     private final static String LOAD_SHOP_PAGE ="ShopPage" ;
     private final static String LOAD_SHOP_PAGE_CONTROLLER="LoadShopPageController";
+    private final static String HOME_PAGE = "HomePage" ;
+    private final static String HOME_PAGE_CONTROLLER = "LoadTopListByCateController";   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -122,6 +124,8 @@ public class MainController extends HttpServlet {
                 url=CREATE_USER_CONTROLLER;
             }else if(DELETE_USER.equals(action)){
                 url=DELETE_USER_CONTROLLER;
+            }else if(HOME_PAGE.equals(action)){
+                url=HOME_PAGE_CONTROLLER;
             }else if(CREATE_BRAND.equals(action)){
                 url=CREATE_BRAND_CONTROLLER;
             }else if(LOAD_SHOP_PAGE.equals(action)){
