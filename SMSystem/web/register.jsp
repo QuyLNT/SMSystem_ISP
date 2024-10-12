@@ -87,20 +87,20 @@
                         <input type="text" placeholder="Full Name" name="fullName" required="" value="<%= (request.getParameter("fullName") != null) ? request.getParameter("fullName") : ""%>" />
                         <input type="text" placeholder="User Name" name="userName" required="" value="<%= (request.getParameter("userName") != null) ? request.getParameter("userName") : ""%>" />
                         <input type="text" placeholder="Email" name="email" required="" value="<%= (request.getParameter("email") != null) ? request.getParameter("email") : ""%>" />
-                        <input type="text" placeholder="roleId" name="roleId" required="" value="CUS" readonly="" />
                         <input type="password" placeholder="Password" name="password" required="" />
                         <input type="password" placeholder="Confirm Password" name="confirmPass" required="" />
                         <a href="login.jsp" class="haveAccount">Have account ?</a>
                         <div class="g-recaptcha" data-sitekey="6LdXPwgqAAAAADH4aZqMia8RCAPe-jw1GISS5lHp" style="display: flex;justify-content: center"></div>
                         <input type="submit" name="action" class="btn signin-btn" value="Sign Up" />
                     </form>
-                </div>
-            </div>
-            <div style="color: red">
+                                    <div style="color: red">
                 <% if (request.getAttribute("error") != null) {%>
                 <%= request.getAttribute("error")%>
                 <% }%>
             </div>
+                </div>
+            </div>
+
             <div class="overlay">
                 <div class="overlay-content">
                     <h2>Hello, Friend!</h2>

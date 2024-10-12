@@ -6,11 +6,8 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +16,12 @@ import javax.servlet.http.HttpSession;
 import model.user.UserDAO;
 import model.user.UserDTO;
 
+
 /**
  *
- * @author LENOVO
+ * @author Asus
  */
-public class ToggleUserRoleController extends HttpServlet {
+public class DeleteUserController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,37 +32,29 @@ public class ToggleUserRoleController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "LoadUserListController";
-    private static final String SUCCES = "LoadUserListController";
     
+    private static final String ERROR = "LoadUserListController";
+    private static final String SUCCESS = "LoadUserListController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
          String url = ERROR;
-        try {
-            String roleId = request.getParameter("roleId");
-            String userIdStr = request.getParameter("userId");
-            if(userIdStr!=null){
-                int userId = Integer.parseInt(userIdStr);
-                UserDAO userDao = new UserDAO();
-                boolean checkUpdate = userDao.setRoleId(userId,roleId);
-                if(checkUpdate){
-                    HttpSession session = request.getSession();
-                    List<UserDTO> userList = (List<UserDTO>) session.getAttribute("USER_LIST");
-                    for(UserDTO u : userList){
-                        if(u.getUserId()==userId){
-                            u.setRoleId(roleId);
-                        }
-                    }
-                    session.setAttribute("USER_LIST", userList);
-                    request.setAttribute("ms", "Set user role successfully");
-                }else{
-                    request.setAttribute("err", "Set user role failed");
+        try{
+            String userID= request.getParameter("userId");
+            HttpSession session = request.getSession();
+            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+            if(userID.equals(loginUser.getUserId())){
+                request.setAttribute("err", "Can not delete");     
+            }else{
+                UserDAO dao = new UserDAO();
+                boolean checkDelete = dao.delete(userID);
+                if(checkDelete){
+                    request.setAttribute("ms", "Delete user successfully");
+                    url=SUCCESS;
                 }
             }
-            
-        } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
-            log("Error at ToggleFlashSaleController: "+e.toString());
+        }catch(ClassNotFoundException | SQLException e ){
+           log("Error at LoadUserListController: " +e.toString());
         }finally{
             request.getRequestDispatcher(url).forward(request, response);
         }

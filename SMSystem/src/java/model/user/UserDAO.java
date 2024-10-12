@@ -23,8 +23,8 @@ import utils.DBUtils;
  * @author LENOVO
  */
 public class UserDAO {
-    private static final String CHECK_USERNAME_EXISTS = "SELECT COUNT(userId) FROM users WHERE userName = ?";
-    private static final String INSERT_USER = " INSERT INTO users (userName, fullName, password, phoneNumber, sex, email, isActive, roleId, createdAt) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String CHECK_USERNAME_EXISTS = "SELECT  FROM users WHERE userName = ?";
+    private static final String INSERT_USER = " INSERT INTO users (userName, fullName, password, phoneNumber, sex, email, roleId) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
     private static final String LOGIN = "SELECT userName,fullName,userId,phoneNumber,sex,email,isActive,roleId,createdAt\n"
             + "FROM users\n"
@@ -34,11 +34,13 @@ public class UserDAO {
     private static final String GET_TOTAL_ACCOUNT = "SELECT COUNT(userId) AS numberOfAccount\n" +
                                                     "FROM users";     
     private static final String GET_NUMBER_OF_ACCOUNT = "SELECT COUNT(userId) AS numberOfAccount\n" +
-                                                        "FROM users"
-                                                         + "WHERE roleId LIKE ?";
+"FROM users\n" +
+"WHERE roleId LIKE ?";
     private static final String SET_ROLE_ID = "UPDATE users\n" +
                                                 "SET roleId = ?\n" +
                                                 "WHERE userId = ?";
+    private static final String DELETE = "DELETE users WHERE userId = ?";
+
     public UserDTO checkLogin(String userIndentify, String password) throws SQLException, ClassNotFoundException, NamingException {
         UserDTO user = null;
         Connection conn = null;
@@ -231,9 +233,10 @@ public class UserDAO {
         try {
             conn = DBUtils.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(GET_TOTAL_ACCOUNT);
+                ptm = conn.prepareStatement(GET_NUMBER_OF_ACCOUNT);
+                ptm.setString(1, roleId);
                 rs = ptm.executeQuery();
-                if(rs.next()){
+                while(rs.next()){
                     result = rs.getInt("numberOfAccount");
                 }
             }
@@ -313,9 +316,7 @@ public class UserDAO {
                     ptm.setString(4, user.getPhoneNumber());
                     ptm.setString(5, user.getSex());
                     ptm.setString(6, user.getEmail());
-                    ptm.setBoolean(7, user.isActive());
-                    ptm.setString(8, user.getRoleId());
-                    ptm.setDate(9, (Date) user.getCreatedAt());
+                    ptm.setString(7, user.getRoleId());
                     check = ptm.executeUpdate() > 0;
                 }
             }finally{
@@ -323,6 +324,29 @@ public class UserDAO {
                 if(conn!=null) conn.close();
             }
             return check;
+    }
+
+    public boolean delete(String userID) throws ClassNotFoundException, SQLException {
+        boolean checkDelete = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(DELETE);
+                ptm.setString(1, userID);
+                checkDelete = ptm.executeUpdate() > 0;
+            }
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+
+        }
+        return checkDelete;
     }
         
 }

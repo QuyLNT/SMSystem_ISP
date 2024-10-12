@@ -93,6 +93,10 @@
         <servlet-class>controller.SearchUserByUserNameController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>DeleteUserController</servlet-name>
+        <servlet-class>controller.DeleteUserController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>LoadTopListByCate</servlet-name>
         <servlet-class>controller.LoadTopListByCateController</servlet-class>
     </servlet>
@@ -187,6 +191,10 @@
     <servlet-mapping>
         <servlet-name>SearchUserByUserNameController</servlet-name>
         <url-pattern>/SearchUserByUserNameController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteUserController</servlet-name>
+        <url-pattern>/DeleteUserController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoadTopListByCate</servlet-name>
