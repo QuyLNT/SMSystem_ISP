@@ -75,7 +75,7 @@ public class LoadTopListByCateController extends HttpServlet {
             
 
         }catch(ClassNotFoundException | SQLException e){
-            
+            log("Error at LoadTopListByCateController: " + e.toString());
         }finally{
             request.getRequestDispatcher(url).forward(request, response);
         }

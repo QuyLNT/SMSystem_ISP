@@ -46,9 +46,9 @@ public class ProductDAO {
             + "FROM products\n"
             + "WHERE name LIKE ?";
 
-    private static final String GET_TOP_WOMEN_LIST = "SELECT TOP 5 FROM products WHERE userObjectId = 2 and hot = 1 and productStatus = 1";
-    private static final String GET_TOP_MEN_LIST = "SELECT TOP 5 FROM products WHERE userObjectId = 1 and hot = 1 and productStatus = 1";
-    private static final String GET_TOP_KID_LIST = "SELECT TOP 5 FROM products WHERE userObjectId = 3 and hot = 1 and productStatus = 1";
+    private static final String GET_TOP_WOMEN_LIST = "SELECT TOP 5 * FROM products WHERE userObjectId = 2 and hot = 1 and productStatus = 1";
+    private static final String GET_TOP_MEN_LIST = "SELECT TOP 5 * FROM products WHERE userObjectId = 1 and hot = 1 and productStatus = 1";
+    private static final String GET_TOP_KID_LIST = "SELECT TOP 5 * FROM products WHERE userObjectId = 3 and hot = 1 and productStatus = 1";
 
     public List<ProductDTO> getAllProduct() throws ClassNotFoundException, SQLException {
         List<ProductDTO> listProduct = new ArrayList<>();

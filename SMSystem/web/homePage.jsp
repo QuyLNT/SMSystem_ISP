@@ -39,7 +39,7 @@
         <!-- Start coding here -->
         <!-- Page PreOrder -->
 
-        <!-- Header section begin -->
+         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
                 <div class="container">
@@ -60,7 +60,7 @@
                     %>
                     <div class="ht-right">
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  <%= (loginUser != null) ? loginUser.getFullName() : "Guest"%></i>
+                            <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
 
                         </div>
                         <section class="user">
@@ -69,6 +69,7 @@
                                     <div><a href="myAccount.jsp">My account</a></div>
                                     <div><a href="myOrder.jsp">Order Status</a></div>
                                     <div><a href="LogoutController">Logout</a></div>
+                                    </ul>
                                 </div>
                         </section>
                         <div class="lan-selector">
@@ -95,7 +96,7 @@
                         <div class="col-lg-2 col-md-2">
                             <div class="logo">
                                 <a href="homePage.jsp">
-                                    <img src="img/logoweb.png" height="100%" width="100%">
+                                    <img src="img/logoweb.png" height="65px" alt="">
                                 </a>
                             </div>
                         </div>
@@ -113,19 +114,6 @@
                         <div class="col-lg-3 col-md-3 text-right">
                             <ul class="nav-right">
                                 <%
-                                    String sizeWishlist = (String) session.getAttribute("sizeWishlist");
-                                    if (sizeWishlist == null) {
-                                        sizeWishlist = "0";
-                                    }
-
-                                %>
-                                <li class="heart-icon">
-                                    <a href="wishlist.jsp">
-                                        <i class="icon_heart_alt"></i>
-                                        <span><%= sizeWishlist%></span>
-                                    </a>
-                                </li>
-                                <%
                                     String size = (String) session.getAttribute("size");
                                     if (size == null) {
                                         size = "0";
@@ -139,7 +127,7 @@
                                     </a>
                                     <div class="cart-hover">
                                         <div class="select-items">
-                                            <%/* if (isEmptyCart) { */%>
+                                            <% if (isEmptyCart) { %>
                                             <p>No product in cart. Buy more</p>
                                             <div class="select-total">
                                                 <span>total:</span>
@@ -149,10 +137,10 @@
                                                 <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
 
                                             </div>
-                                            <%/* } else { */%>
+                                            <% } else { %>
                                             <table>
                                                 <tbody>
-                                                    <%/*
+                                                    <%
                                                         CartDTO cart = (CartDTO) session.getAttribute("CART");
                                                         if (cart == null) {
                                                             cart = new CartDTO();
@@ -162,41 +150,41 @@
                                                             double total = 0;
                                                             int count = 0;
                                                             for (CartItems ele : ls) {
-                                                                total += (ele.getCartItemId()* ele.getQuantity());
-                                                         */%>
+                                                                total += (ele.getProduct().getPrice() * ele.getQuantity());
+                                                    %>
                                                     <tr>
-                                                        <td class="si-pic"><img src="<%/*= ele.getProduct().getAvatarPath()*/%>" style="height: 76px"></td>
+                                                        <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
                                                         <td class="si-text">
                                                             <div class="product-selected">
-                                                                <p>$<%/*= String.format("%.1f", ele.getProduct().getPrice())*/%> x <%/*= ele.getQuantity()*/%></p>
-                                                                <h6><%/*= ele.getProduct().getName()*/%></h6>
-                                                                <h6>Size <%/*=ele.getSize()*/%></h6>
+                                                                <p>$<%= String.format("%.1f", ele.getProduct().getPrice())%> x <%= ele.getQuantity()%></p>
+                                                                <h6><%= ele.getProduct().getName()%></h6>
+                                                                <h6>Size <%=ele.getSize()%></h6>
                                                             </div>
                                                         </td>
                                                         <td class="si-close">
-                                                            <a href="RemoveServlet?pId=<%/*= count*/%>&url=homePage.jsp" onclick="doDelete('<%/*=ele.getProduct().getName()*/%>', event)">
+                                                            <a href="RemoveServlet?pId=<%=count%>&url=shop.jsp" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
                                                                 <i class="ti-close"></i>
                                                             </a>
                                                         </td>
                                                     </tr>
-                                                    <%/*
+                                                    <%
                                                             count++;
                                                         }
-                                                         */%>
+                                                    %>
                                                 </tbody>
                                             </table>
                                             <div class="select-total">
                                                 <span>total:</span>
-                                                <h5>$<%/*= String.format("%.1f", total)*/%></h5>
+                                                <h5>$<%=String.format("%.1f", total)%></h5>
                                             </div>
-                                            <%/*
+                                            <%
                                                 }
-                                                 */%>
+                                            %>
                                             <div class="select-button">
                                                 <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
 
                                             </div>
-                                            <%/* } */%>
+                                            <% } %>
                                         </div>
                                     </div>
                                 </li>
@@ -205,28 +193,25 @@
                     </div>
                 </div>
             </div>
-
+            <script>
+                function doDelete(name, event) {
+                    if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
+                    } else {
+                        event.preventDefault();
+                    }
+                }
+            </script>
             <div class="nav-item">
                 <div class="container">
-                    <div class="nav-depart">
-                        <div class="depart-btn">
-                            <i class="ti-menu"></i>
-                            <span>All Departments</span>
-                            <ul class="depart-hover">
-                                <li><a href="SearchServlet?type=2">Women's Clothing</a></li>
-                                <li><a href="SearchServlet?type=1">Men's Clothing</a></li>
-                                <li><a href="SearchServlet?type=3">Kid's Clothing</a></li>
-                            </ul>
-                        </div>
-                    </div>
                     <nav class="nav-menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="homePage.jsp">Home</a></li>
-                            <li><a href="shop.jsp">Shop</a></li>
+                            <li><a href="MainController?action=HomePage">Home</a></li>
+                            <li class="active"><a href="MainController?action=ShopPage">Shop</a></li>
                             <li><a href="contact.jsp">Contact</a></li>
                             <li><a href="">Pages</a>
                                 <ul class="dropdown">
                                     <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
+                                    <li><a href="check-out.jsp">Checkout</a></li>
 
                                 </ul>
                             </li>
@@ -237,6 +222,7 @@
             </div>
         </header>
         <!-- Header Section End -->
+
 
 
 
@@ -333,7 +319,9 @@
                         </div>
                         <div class="product-slider owl-carousel">
                             <%
-                                List<ProductDTO> ls1 = (List<ProductDTO>) session.getAttribute("womenList");
+                                List<ProductDTO> ls1 = (List<ProductDTO>) session.getAttribute("WOMEN_LIST");
+                                if(ls1!=null){
+                                                                   
                                 for (ProductDTO ele : ls1) {
                             %>
                             <div class="product-item">
@@ -350,7 +338,7 @@
 
                                         <div class="icon">
                                             <button id="btn-icon" type="submit">
-                                                <input type="hidden" name="id" value="<%/*= ele.getProductId() */%>">
+                                                <input type="hidden" name="id" value="<%= ele.getProductId() %>">
                                                 <input type="hidden" name="url" value="homePage.jsp">
                                                 <i class="icon_heart_alt"></i>
                                             </button>
@@ -359,8 +347,8 @@
                                     </form>
                                     <ul>
                                         <form action="MainController" method="post">
-                                            <input type="hidden" name="productId" value="<%/*=ele.getProductId()*/%>">
-                                            <li class="w-icon active"><a href="AddToCart?pId=<%/*=ele.getProductId()*/%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>
+                                            <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
+                                            <li class="w-icon active"><a href="AddToCart?pId=<%=ele.getProductId()%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>
                                             <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: #ffffff;
                                                                                                 font-weight: bold;
                                                                                                 border: none;" name="action" value="View"></a></li>
@@ -393,6 +381,9 @@
                             </div>
                             <%
                                 }
+}else{
+%> <h5> Can not load product.</h5><%
+}
                             %>
                         </div>
 
@@ -413,20 +404,20 @@
                             </ul>
                         </div>
                         <div class="product-slider owl-carousel">
-                            <%/*
-                                List<ProductDTO> ls = (List<ProductDTO>) session.getAttribute("menList");
+                            <%
+                                List<ProductDTO> ls = (List<ProductDTO>) session.getAttribute("MEN_LIST");
                                 for (ProductDTO ob : ls) {
 
-                                 */%>
+                                 %>
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="<%/*=ob.getAvatarPath()*/%>" alt="">
-                                    <%/*if (ob.getSale() != 0) {
-                                         */%>
+                                    <img src="<%=ob.getAvatarPath()%>" alt="">
+                                    <%if (ob.getSale() != 0) {
+                                         %>
                                     <div class="sale">Sale</div>
-                                    <%/*
+                                    <%
                                         }
-                                         */%>
+                                         %>
                                     <form action="InsertWishlist" method="post"> 
 
                                         <div class="icon">
@@ -452,28 +443,28 @@
                                 <div class="pi-text">
                                     <div class="catagory-name">SHOES</div>
                                     <a href="">
-                                        <h5><%/*=ob.getName()*/%></h5>
+                                        <h5><%=ob.getName()%></h5>
                                     </a>
-                                    <%/*
+                                    <%
                                         if (ob.getSale() != 0) {
-                                         */%>
+                                         %>
                                     <div class="product-price">
-                                        $<%/*= String.format("%.1f", ob.getPrice() * (1 - ob.getSale()))*/%>
-                                        <span>$<%/*=ob.getPrice()*/%></span>
+                                        $<%= String.format("%.1f", ob.getPrice() * (1 - ob.getSale()))%>
+                                        <span>$<%=ob.getPrice()%></span>
                                     </div>
-                                    <%/*
+                                    <%
                                     } else {
-                                         */%>
+                                         %>
                                     <div class="product-price">
-                                        $<%/*=ob.getPrice()*/%> 
+                                        $<%=ob.getPrice()%> 
                                     </div>
-                                    <%/*
+                                    <%
                                         }
-                                         */%>
+                                         %>
                                 </div>
                             </div>
-                            <%/*                                   }
-                                 */%>
+                            <%                                   }
+                                 %>
                             <script>
                                 function doDelete(name, event) {
                                     if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
@@ -511,25 +502,25 @@
                             </ul>
                         </div>
                         <div class="product-slider owl-carousel">
-                            <%/*
+                            <%
                                 List<ProductDTO> ls2 = (List<ProductDTO>) session.getAttribute("kidList");
                                 for (ProductDTO ele : ls2) {
-                                 */%>
+                                 %>
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="<%/*=ele.getAvatarPath()*/%>" alt="">
-                                    <%/*
+                                    <img src="<%=ele.getAvatarPath()%>" alt="">
+                                    <%
                                         if (ele.getSale() != 0) {
-                                         */%>
+                                         %>
                                     <div class="sale">Sale</div>
-                                    <%/*
+                                    <%
                                         }
-                                         */%>
+                                         %>
                                     <form action="InsertWishlist" method="post"> 
 
                                         <div class="icon">
                                             <button id="btn-icon" type="submit">
-                                                <input type="hidden" name="id" value="<%/*= ele.getProductId() */%>">
+                                                <input type="hidden" name="id" value="<%= ele.getProductId() %>">
                                                 <input type="hidden" name="url" value="homePage.jsp">
                                                 <i class="icon_heart_alt"></i>
                                             </button>
@@ -538,8 +529,8 @@
                                     </form>
                                     <ul>
                                         <form action="MainController" method="post">
-                                            <input type="hidden" name="productId" value="<%/*=ele.getProductId()*/%>">
-                                            <li class="w-icon active"><a href="AddToCart?pId=<%/*=ele.getProductId()*/%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>
+                                            <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
+                                            <li class="w-icon active"><a href="AddToCart?pId=<%=ele.getProductId()%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>
                                             <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: #ffffff;
                                                                                                 font-weight: bold;
                                                                                                 border: none;" name="action" value="View"></a></li>
@@ -550,28 +541,28 @@
                                 <div class="pi-text">
                                     <div class="catagory-name">Shoes</div>
                                     <a href="">
-                                        <h5><%/*=ele.getName()*/%></h5>
+                                        <h5><%=ele.getName()%></h5>
                                     </a>
-                                    <%/*
+                                    <%
                                         if (ele.getSale() != 0) {
-                                         */%>
+                                         %>
                                     <div class="product-price">
                                         $<%/*=ele.getPrice() * 0.9*/%>
                                         <span>$<%/*=ele.getPrice()*/%></span>
                                     </div>
-                                    <%/*
+                                    <%
                                     } else {
-                                         */%>
+                                         %>
                                     <div class="product-price">
                                         $<%/*=ele.getPrice()*/%> 
                                     </div>
-                                    <%/*
+                                    <%
                                         }
-                                         */%>
+                                         %>
                                 </div>
                             </div>
-                            <%/*                                   }
-                                 */%>
+                            <%                                }
+                                 %>
                         </div>
 
                     </div>

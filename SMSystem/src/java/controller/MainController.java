@@ -69,7 +69,9 @@ public class MainController extends HttpServlet {
     private final static String TOGGLE_USER_ROLE="toggleUserRole" ;
     private final static String TOGGLE_USER_ROLE_CONTROLLER="ToggleUserRoleController";
     private final static String DELETE_USER = "Delete User" ;
-    private final static String DELETE_USER_CONTROLLER = "DeleteUserController";   
+    private final static String DELETE_USER_CONTROLLER = "DeleteUserController";
+    private final static String HOME_PAGE = "HomePage" ;
+    private final static String HOME_PAGE_CONTROLLER = "LoadTopListByCateController";   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -118,6 +120,8 @@ public class MainController extends HttpServlet {
                 url=CREATE_USER_CONTROLLER;
             }else if(DELETE_USER.equals(action)){
                 url=DELETE_USER_CONTROLLER;
+            }else if(HOME_PAGE.equals(action)){
+                url=HOME_PAGE_CONTROLLER;
             }
         }catch(Exception e){
            log("Error at MainController" + e.toString());
