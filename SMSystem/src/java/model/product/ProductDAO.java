@@ -386,7 +386,6 @@ public class ProductDAO {
                 ptm = conn.prepareStatement(GET_TOP_WOMEN_LIST);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    ProductDTO p = new ProductDTO(rs.getInt("productId"));
                     int productId = rs.getInt("productId");
                     int brandId = rs.getInt("brandId");
                     int userObjectID = rs.getInt("userObjectId");
@@ -403,7 +402,7 @@ public class ProductDAO {
                 }
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         } finally {
             if (rs != null) {
                 rs.close();
@@ -430,7 +429,6 @@ public class ProductDAO {
                 ptm = conn.prepareStatement(GET_TOP_KID_LIST);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    ProductDTO p = new ProductDTO(rs.getInt("productId"));
                     int productId = rs.getInt("productId");
                     int brandId = rs.getInt("brandId");
                     int userObjectID = rs.getInt("userObjectId");
@@ -447,7 +445,7 @@ public class ProductDAO {
                 }
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         } finally {
             if (rs != null) {
                 rs.close();
