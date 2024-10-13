@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import model.user.UserDAO;
 import model.user.UserDTO;
 
-
 /**
  *
  * @author Asus
@@ -35,6 +34,9 @@ public class DeleteUserController extends HttpServlet {
     
     private static final String ERROR = "LoadUserListController";
     private static final String SUCCESS = "LoadUserListController";
+    private static final String ERROR = "userList.jsp";
+    private static final String SUCCESS = "userList.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -52,10 +54,30 @@ public class DeleteUserController extends HttpServlet {
                     request.setAttribute("ms", "Delete user successfully");
                     url=SUCCESS;
                 }
+        UserDAO userDAO = new UserDAO();
+
+        try {
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            boolean userDelete= userDAO.delete(userId);
+
+            if (userDelete) {
+                HttpSession session = request.getSession();
+            List<UserDTO> userList = (List<UserDTO>) session.getAttribute("USER_LIST");
+            
+            // Kiểm tra và xóa sản phẩm khỏi danh sách
+            if (userList != null) {
+                userList.removeIf(user -> user.getUserId() == userId);
+                session.setAttribute("USER_LIST", userList); // Cập nhật lại danh sách trong session
             }
-        }catch(ClassNotFoundException | SQLException e ){
-           log("Error at LoadUserListController: " +e.toString());
-        }finally{
+                request.setAttribute("ms", "User deleted successfully!");
+            } else {
+                request.setAttribute("err", "Failed to delete the user ");
+            }
+
+            url = SUCCESS;
+        } catch (SQLException | ClassNotFoundException | NumberFormatException e) {
+            log("Error at DeleteProductController: " + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

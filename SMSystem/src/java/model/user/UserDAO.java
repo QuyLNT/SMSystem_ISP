@@ -326,7 +326,7 @@ public class UserDAO {
             return check;
     }
 
-    public boolean delete(String userID) throws ClassNotFoundException, SQLException {
+    public boolean delete(int userId) throws ClassNotFoundException, SQLException {
         boolean checkDelete = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -334,7 +334,7 @@ public class UserDAO {
             conn = DBUtils.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(DELETE);
-                ptm.setString(1, userID);
+                ptm.setInt(1, userId);
                 checkDelete = ptm.executeUpdate() > 0;
             }
         } finally {
