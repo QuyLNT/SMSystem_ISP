@@ -34,8 +34,6 @@ public class DeleteUserController extends HttpServlet {
     
     private static final String ERROR = "LoadUserListController";
     private static final String SUCCESS = "LoadUserListController";
-    private static final String ERROR = "userList.jsp";
-    private static final String SUCCESS = "userList.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -43,41 +41,22 @@ public class DeleteUserController extends HttpServlet {
          String url = ERROR;
         try{
             String userID= request.getParameter("userId");
+            int userId = Integer.parseInt(userID);
             HttpSession session = request.getSession();
             UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
             if(userID.equals(loginUser.getUserId())){
                 request.setAttribute("err", "Can not delete");     
             }else{
                 UserDAO dao = new UserDAO();
-                boolean checkDelete = dao.delete(userID);
+                boolean checkDelete = dao.delete(userId);
                 if(checkDelete){
                     request.setAttribute("ms", "Delete user successfully");
                     url=SUCCESS;
                 }
-        UserDAO userDAO = new UserDAO();
-
-        try {
-            int userId = Integer.parseInt(request.getParameter("userId"));
-            boolean userDelete= userDAO.delete(userId);
-
-            if (userDelete) {
-                HttpSession session = request.getSession();
-            List<UserDTO> userList = (List<UserDTO>) session.getAttribute("USER_LIST");
-            
-            // Kiểm tra và xóa sản phẩm khỏi danh sách
-            if (userList != null) {
-                userList.removeIf(user -> user.getUserId() == userId);
-                session.setAttribute("USER_LIST", userList); // Cập nhật lại danh sách trong session
             }
-                request.setAttribute("ms", "User deleted successfully!");
-            } else {
-                request.setAttribute("err", "Failed to delete the user ");
-            }
-
-            url = SUCCESS;
-        } catch (SQLException | ClassNotFoundException | NumberFormatException e) {
-            log("Error at DeleteProductController: " + e.toString());
-        } finally {
+        }catch(ClassNotFoundException | SQLException e ){
+           log("Error at LoadUserListController: " +e.toString());
+        }finally{
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
