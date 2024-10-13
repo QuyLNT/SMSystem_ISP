@@ -87,13 +87,6 @@
                             
                             <!-- Search -->                            
                             <%
-
-                            <!-- Button trigger modal -->
-
-                            <!-- Modal Add -->
-
-
-                            <%
                                 String searchUserName = request.getParameter("searchUserName");
                                 if (searchUserName == null) {
                                     searchUserName = "";
@@ -109,23 +102,8 @@
 
                         <div class="welcome">
                             <%
-                                List<UserDTO> userList = (List<UserDTO>) session.getAttribute("USER_LIST");
-                                String ms = "";
-                                String err = "";
-                                if (request.getAttribute("ms") != null) {
-                                    ms = (String) request.getAttribute("ms");
-                                }
-                                if (request.getAttribute("err") != null) {
-                                    err = (String) request.getAttribute("err");
-                                }
-                                if (ms != null || err != null) {
-                           
-                            
+                                List<UserDTO> userList = (List<UserDTO>) request.getAttribute("USER_LIST");   
                             %>
-                            <div class="mes-suc">
-                                <%=ms%> <%=err%>
-                            </div>                          
-                            <%}%>
                             <div class="table-tilte">User Table</div>
                             <table class="table table-hover">
                                 <thead>
@@ -273,41 +251,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                          <td>
-
-
-                                            <!-- Nút Xóa -->
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= user.getUserId()%>">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-
-                                            <!-- Modal Xóa -->
-                                            <div class="modal fade" id="deleteModal<%= user.getUserId()%>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="deleteModalLabel">Confirm product deletion</h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <form action="DeleteUserController" method="POST">
-                                                            <div class="modal-body">
-                                                                <input type="hidden" name="userId" value="<%= user.getUserId()%>" />
-                                                                Are you sure you want to delete user '<%= user.getUserName() %>' ?
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-                                                                <input type="hidden" name="userId" value="<%= user.getUserId()%>" />
-                                                                <input type="hidden" name="action" value="DeleteUser" />
-                                                                <button type="submit" class="btn btn-danger">Delete</button>
-
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        </td>
+                                          </td>
                                     </tr>
                                     <%
                                             }
