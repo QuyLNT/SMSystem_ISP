@@ -23,25 +23,26 @@ import utils.DBUtils;
  * @author LENOVO
  */
 public class UserDAO {
+
     private static final String CHECK_USERNAME_EXISTS = "SELECT COUNT(userId) FROM users WHERE userName = ?";
-        private static final String CHECK_PHONE_EXISTS = "SELECT COUNT(userId) FROM users WHERE phoneNumber = ?";
+    private static final String CHECK_PHONE_EXISTS = "SELECT COUNT(userId) FROM users WHERE phoneNumber = ?";
     private static final String CHECK_EMAIL_EXISTS = "SELECT COUNT(userId) FROM users WHERE email = ?";
 
-    private static final String INSERT_USER = " INSERT INTO users (userName, fullName, password, phoneNumber, sex, email, isActive, roleId, createdAt) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_USER = " INSERT INTO users (userName, fullName, password, phoneNumber, sex, email,roleId) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
     private static final String LOGIN = "SELECT userName,fullName,userId,phoneNumber,sex,email,isActive,roleId,createdAt\n"
             + "FROM users\n"
             + "WHERE (userName =? OR email=?) AND password = ?";
     private static final String GET_ALL_USER = "SELECT userId,userName, fullName,phoneNumber,sex,email,isActive, roleId,createdAt FROM users WHERE userName LIKE ? ";
     private static final String UPDATE = "UPDATE users SET  password=?,fullName= ?, phoneNumber=?, sex=?, email=? where userName=?";
-    private static final String GET_TOTAL_ACCOUNT = "SELECT COUNT(userId) AS numberOfAccount\n" +
-                                                    "FROM users";     
-    private static final String GET_NUMBER_OF_ACCOUNT = "SELECT COUNT(userId) AS numberOfAccount\n" +
-"FROM users\n" +
-"WHERE roleId LIKE ?";
-    private static final String SET_ROLE_ID = "UPDATE users\n" +
-                                                "SET roleId = ?\n" +
-                                                "WHERE userId = ?";
+    private static final String GET_TOTAL_ACCOUNT = "SELECT COUNT(userId) AS numberOfAccount\n"
+            + "FROM users";
+    private static final String GET_NUMBER_OF_ACCOUNT = "SELECT COUNT(userId) AS numberOfAccount\n"
+            + "FROM users\n"
+            + "WHERE roleId LIKE ?";
+    private static final String SET_ROLE_ID = "UPDATE users\n"
+            + "SET roleId = ?\n"
+            + "WHERE userId = ?";
     private static final String DELETE = "DELETE users WHERE userId = ?";
 
     public UserDTO checkLogin(String userIndentify, String password) throws SQLException, ClassNotFoundException, NamingException {
@@ -130,7 +131,6 @@ public class UserDAO {
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
-        ResultSet rs = null;
 
         try {
             conn = DBUtils.getConnection();
@@ -145,9 +145,6 @@ public class UserDAO {
                 check = ptm.executeUpdate() > 0;
             }
         } finally {
-            if (rs != null) {
-                rs.close();
-            }
             if (ptm != null) {
                 ptm.close();
             }
@@ -160,7 +157,7 @@ public class UserDAO {
     }
 
     public int getTotalAccount() throws SQLException, ClassNotFoundException {
-        int result=0;
+        int result = 0;
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -169,12 +166,12 @@ public class UserDAO {
             if (conn != null) {
                 ptm = conn.prepareStatement(GET_TOTAL_ACCOUNT);
                 rs = ptm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     result = rs.getInt("numberOfAccount");
                 }
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
             if (ptm != null) {
@@ -184,12 +181,11 @@ public class UserDAO {
                 conn.close();
             }
         }
-        return  result;
+        return result;
     }
-    
 
-    public int getNumberOf(String roleId) throws SQLException,ClassNotFoundException {
-        int result=0;
+    public int getNumberOf(String roleId) throws SQLException, ClassNotFoundException {
+        int result = 0;
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -199,12 +195,12 @@ public class UserDAO {
                 ptm = conn.prepareStatement(GET_NUMBER_OF_ACCOUNT);
                 ptm.setString(1, roleId);
                 rs = ptm.executeQuery();
-                while(rs.next()){
+                while (rs.next()) {
                     result = rs.getInt("numberOfAccount");
                 }
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
             if (ptm != null) {
@@ -214,7 +210,7 @@ public class UserDAO {
                 conn.close();
             }
         }
-        return  result;
+        return result;
     }
 
     public boolean setRoleId(int userId, String roleId) throws ClassNotFoundException, SQLException {
@@ -227,7 +223,7 @@ public class UserDAO {
                 ptm = conn.prepareStatement(SET_ROLE_ID);
                 ptm.setString(1, roleId);
                 ptm.setInt(2, userId);
-                result = ptm.executeUpdate()>0;
+                result = ptm.executeUpdate() > 0;
             }
         } finally {
             if (ptm != null) {
@@ -237,56 +233,60 @@ public class UserDAO {
                 conn.close();
             }
         }
-        return  result;
+        return result;
     }
-    
-        public boolean isUserNameExists(String userName) throws ClassNotFoundException, SQLException{
-            boolean checkExits = true;
-            Connection conn = null;
-            PreparedStatement ptm = null;
-            
-            try{
-                conn = DBUtils.getConnection();
-                ptm = conn.prepareStatement(CHECK_USERNAME_EXISTS);
-                ptm.setString(1, userName);
-                if(ptm.executeUpdate()>0){
-                    checkExits = false;
-                }
-                    
-            }finally{
-                if(ptm!=null){
-                    conn.close();
-                }
-                if(conn != null){
-                    conn.close();
-                }
+
+    public boolean isUserNameExists(String userName) throws ClassNotFoundException, SQLException {
+        boolean checkExits = true;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+
+        try {
+            conn = DBUtils.getConnection();
+            ptm = conn.prepareStatement(CHECK_USERNAME_EXISTS);
+            ptm.setString(1, userName);
+            if (ptm.executeUpdate() > 0) {
+                checkExits = false;
             }
-            return checkExits;
+
+        } finally {
+            if (ptm != null) {
+                conn.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
-        
+        return checkExits;
+    }
+
     public boolean createUser(UserDTO user) throws SQLException, ClassNotFoundException {
         boolean check = false;
-            Connection conn = null;
-            PreparedStatement ptm = null;
-            try {
-    //userName,fullName,password,phoneNumber,sex,email,isActive,roleId,createdAt)
-                conn = DBUtils.getConnection();
-                if (conn != null) {
-                    ptm = conn.prepareStatement(INSERT_USER);
-                    ptm.setString(1, user.getUserName());
-                    ptm.setString(2, user.getFullName());
-                    ptm.setString(3, user.getPassword());
-                    ptm.setString(4, user.getPhoneNumber());
-                    ptm.setString(5, user.getSex());
-                    ptm.setString(6, user.getEmail());
-                    ptm.setString(7, user.getRoleId());
-                    check = ptm.executeUpdate() > 0;
-                }
-            }finally{
-                if(ptm!=null) ptm.close();
-                if(conn!=null) conn.close();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            //userName,fullName,password,phoneNumber,sex,email,isActive,roleId,createdAt)
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(INSERT_USER);
+                ptm.setString(1, user.getUserName());
+                ptm.setString(2, user.getFullName());
+                ptm.setString(3, user.getPassword());
+                ptm.setString(4, user.getPhoneNumber());
+                ptm.setString(5, user.getSex());
+                ptm.setString(6, user.getEmail());
+                ptm.setString(7, user.getRoleId());
+                check = ptm.executeUpdate() > 0;
             }
-            return check;
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
     }
 
     public boolean delete(int userId) throws ClassNotFoundException, SQLException {
@@ -311,51 +311,52 @@ public class UserDAO {
         }
         return checkDelete;
     }
-        public boolean isPhoneExists(String phoneNumber) throws ClassNotFoundException, SQLException{
-            boolean checkExits = true;
-            Connection conn = null;
-            PreparedStatement ptm = null;
-            
-            try{
-                conn = DBUtils.getConnection();
-                ptm = conn.prepareStatement(CHECK_PHONE_EXISTS);
-                ptm.setString(1, phoneNumber);
-                if(ptm.executeUpdate()>0){
-                    checkExits = false;
-                }
-                    
-            }finally{
-                if(ptm!=null){
-                    conn.close();
-                }
-                if(conn != null){
-                    conn.close();
-                }
+
+    public boolean isPhoneExists(String phoneNumber) throws ClassNotFoundException, SQLException {
+        boolean checkExits = true;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+
+        try {
+            conn = DBUtils.getConnection();
+            ptm = conn.prepareStatement(CHECK_PHONE_EXISTS);
+            ptm.setString(1, phoneNumber);
+            if (ptm.executeUpdate() > 0) {
+                checkExits = false;
             }
-            return checkExits;
+
+        } finally {
+            if (ptm != null) {
+                conn.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
-        
+        return checkExits;
+    }
+
         public boolean isEmailExists(String email) throws ClassNotFoundException, SQLException{
             boolean checkExits = true;
-            Connection conn = null;
-            PreparedStatement ptm = null;
-            
+        Connection conn = null;
+        PreparedStatement ptm = null;
+
             try{
-                conn = DBUtils.getConnection();
+            conn = DBUtils.getConnection();
                 ptm = conn.prepareStatement(CHECK_EMAIL_EXISTS);
                 ptm.setString(1, email);
                 if(ptm.executeUpdate()>0){
                     checkExits = false;
-                }
-                    
+            }
+
             }finally{
                 if(ptm!=null){
                     conn.close();
                 }
                 if(conn != null){
                     conn.close();
-                }
+            }
             }
             return checkExits;
-        }
-}
+            }
+            }
