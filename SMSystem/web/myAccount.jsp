@@ -194,7 +194,7 @@
         <!-- Shopping Cart Section Begin -->
         <div class="checkout-section spad">
             <div class="container">
-                <form action="UpdateUserController" class="checkout-form">
+                <form action="MainController" class="checkout-form">
                     <div class="row setting-center">
                         <div class="col-lg-6">
                             <div class="row">
@@ -203,7 +203,6 @@
                                     <% if (user.getUserName() == null) { %>
                                     <input type="text" id="userName" name="userName">
                                     <% } else {%>
-
                                     <input type="text" id="userName-exist" name="userName" value="<%=user.getUserName()%>" readonly>
                                     <button type="button" id="edit-btn-userName">
                                         <i class="fa fa-pencil-square-o"></i>
@@ -212,11 +211,9 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="password">password <span>*</span></label>
-<!--                                    <c:if test="${not empty PASS_ERROR}">
-        <div class="error" style="color: red;">
-                                    ${PASS_ERROR}
-                                </div>
-                            </c:if>-->
+                                    <% if (request.getAttribute("PASS_ERROR") != null) {%>
+                                    <p style="color: red;"><%= request.getAttribute("PASS_ERROR")%>
+                                    <% } %>
                                     <% if (user.getPassword() == null) { %>
                                     <input type="text" id="pass" name="pass">
                                     <% } else {%>
@@ -229,7 +226,10 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="fullName">Full Name <span>*</span></label>
-                                    <% if (user.getFullName() == null) { %>
+                                    <% if (request.getAttribute("FULLNAME_ERROR") != null) {%>
+                                    <p style="color: red;"><%= request.getAttribute("FULLNAME_ERROR")%>
+                                    <% } %> 
+                                    <% if (user.getFullName() == null) { %> 
                                     <input type="text" id="fullName" name="fullName">
                                     <% } else {%>
                                     <input type="text" id="fullName-exist" name="fullName" value="<%=user.getFullName()%>" readonly>
@@ -239,12 +239,10 @@
                                     <% } %>
                                 </div>
                                 <div class="col-lg-12">
-                                    <label for="phone">Phone <span>*</span></label>
-<!--                                    <c:if test="${not empty PHONE_ERROR}">
-                                        <div class="error" style="color: red;">
-                                    ${PHONE_ERROR}
-                                </div>
-                            </c:if>-->
+                                    <label for="phone">Phone <span>*</span></label> 
+                                    <% if (request.getAttribute("PHONE_ERROR") != null) {%>
+                                    <p style="color: red;"><%= request.getAttribute("PHONE_ERROR")%>
+                                        <% } %>
                                     <% if (user.getPhoneNumber() == null) { %>
                                     <input type="text" id="phone" name="phone" >
                                     <% } else {%>
@@ -257,11 +255,9 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="sex">Sex <span>*</span></label>
-<!--                                    <c:if test="${not empty SEX_ERROR}">
-        <div class="error" style="color: red;">
-                                    ${SEX_ERROR}
-                                </div>
-                            </c:if>-->
+                                    <% if (request.getAttribute("SEX_ERROR") != null) {%>
+                                    <p style="color: red;"><%= request.getAttribute("SEX_ERROR")%>
+                                    <% } %>
                                     <% if (user.getSex() == null) { %>
                                     <select id="sex" name="sex">
                                         <option value="male">Male</option>
@@ -277,11 +273,9 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="email">Email Address <span>*</span></label>
-<!--                                     <c:if test="${not empty EMAIL_ERROR}">
-        <div class="error" style="color: red;">
-                                    ${EMAIL_ERROR}
-                                </div>
-                            </c:if>-->
+                                    <% if (request.getAttribute("EMAIL_ERROR") != null) {%>
+                                    <p style="color: red;"><%= request.getAttribute("EMAIL_ERROR")%>
+                                    <% } %>
                                     <% if (user.getEmail() == null) { %>
                                     <input type="email" id="email" name="email">
                                     <% } else {%>
