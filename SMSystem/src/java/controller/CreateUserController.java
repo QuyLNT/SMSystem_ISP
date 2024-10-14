@@ -69,9 +69,9 @@ public class CreateUserController extends HttpServlet {
                 request.setAttribute("USER_ERROR", userError);
             }
             request.getRequestDispatcher(url).forward(request, response);
-        } catch (Exception e) {
+        } catch (IOException | ClassNotFoundException | SQLException | ServletException e) {
             // Xử lý ngoại lệ
-            if(e.toString().contains("duplicate"));
+            if(e.toString().contains("duplicategih"));
                 request.setAttribute("error", "Username or Email already exists.");
 
             }

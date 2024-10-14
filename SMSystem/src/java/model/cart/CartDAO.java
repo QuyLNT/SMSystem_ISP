@@ -43,9 +43,9 @@ public class CartDAO {
                 conn.close();
             }
         return result;
+        }
     }
 
-}
 
     public int createCart(int customerId) throws SQLException, ClassNotFoundException {
         int cartId = -1;
