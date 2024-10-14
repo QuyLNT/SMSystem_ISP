@@ -108,6 +108,14 @@
         <servlet-name>LoadShopPageController</servlet-name>
         <servlet-class>controller.LoadShopPageController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SortProductListController</servlet-name>
+        <servlet-class>controller.SortProductListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadProductDetailController</servlet-name>
+        <servlet-class>controller.LoadProductDetailController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -216,13 +224,20 @@
         <servlet-name>LoadShopPageController</servlet-name>
         <url-pattern>/LoadShopPageController</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SortProductListController</servlet-name>
+        <url-pattern>/SortProductListController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadProductDetailController</servlet-name>
+        <url-pattern>/LoadProductDetailController</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>login.jsp</welcome-file>
+        <welcome-file>LoadTopListByCateController</welcome-file>
     </welcome-file-list>
-
 </web-app>

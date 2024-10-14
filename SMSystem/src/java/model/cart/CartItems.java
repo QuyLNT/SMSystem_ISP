@@ -15,13 +15,15 @@ public class CartItems {
     private int cartItemId;
     private int cartId;
     private int quantity;
-    private double size;
+    private float size;
+    
+    private float salePrice;
 
-    public double getSize() {
+    public float getSize() {
         return size;
     }
     
-    public void setSize(double size) {
+    public void setSize(float size) {
         this.size = size;
     }
 
@@ -70,7 +72,7 @@ public class CartItems {
         this.cartItemId = 0;
         this.cartId = 0;
         this.quantity = 0;
-        this.size=0.0;
+        this.size=0;
     }
     
 }

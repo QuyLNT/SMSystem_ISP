@@ -49,6 +49,15 @@ public class ProductDAO {
     private static final String GET_TOP_WOMEN_LIST = "SELECT TOP 5 * FROM products WHERE userObjectId = 2 and hot = 1 and productStatus = 1";
     private static final String GET_TOP_MEN_LIST = "SELECT TOP 5 * FROM products WHERE userObjectId = 1 and hot = 1 and productStatus = 1";
     private static final String GET_TOP_KID_LIST = "SELECT TOP 5 * FROM products WHERE userObjectId = 3 and hot = 1 and productStatus = 1";
+    private static final String GET_RELATED_LIST = "SELECT TOP 4 *\n" +
+                                                    "FROM products\n" +
+                                                    "WHERE userObjectId = (SELECT userObjectId FROM products WHERE productId =2)\n" +
+                                                    "AND productStatus =1";
+
+    private static final String GET_SALE_PRODUCT = "SELECT *\n" +
+                                                    "FROM products\n" +
+                                                    "Where sale>0\n" +
+                                                    "ORder by sale";
 
     public List<ProductDTO> getAllProduct() throws ClassNotFoundException, SQLException {
         List<ProductDTO> listProduct = new ArrayList<>();
@@ -401,8 +410,6 @@ public class ProductDAO {
                     list.add(pr);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             if (rs != null) {
                 rs.close();
@@ -444,8 +451,6 @@ public class ProductDAO {
                     list.add(pro);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             if (rs != null) {
                 rs.close();
@@ -459,4 +464,86 @@ public class ProductDAO {
         }
         return list;
     }
+
+    public List<ProductDTO> sortSaleProduct() throws ClassNotFoundException, SQLException {
+        List<ProductDTO> listProduct = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_SALE_PRODUCT);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    int productId = rs.getInt("productId");
+                    int brandId = rs.getInt("brandId");
+                    int userObjectId = rs.getInt("userObjectId");
+                    String detail = rs.getString("detail");
+                    boolean hot = rs.getBoolean("hot");
+                    String name = rs.getString("name");
+                    float price = rs.getFloat("price");
+                    String color = rs.getString("color");
+                    float sale = rs.getFloat("sale");
+                    int warrantPeriod = rs.getInt("warrantPeriod");
+                    boolean productStatus = rs.getBoolean("productStatus");
+
+                    ProductDTO product = new ProductDTO(productId, brandId, userObjectId, detail, hot, name, color, price, sale, warrantPeriod, productStatus);
+                    listProduct.add(product);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+
+        return listProduct;
+    }
+
+    public List<ProductDTO> getRelatedList(int id) throws ClassNotFoundException, SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        List<ProductDTO> list = new ArrayList<>();
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_RELATED_LIST);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    int productId = rs.getInt("productId");
+                    int brandId = rs.getInt("brandId");
+                    int userObjectID = rs.getInt("userObjectId");
+                    String detail = rs.getString("detail");
+                    boolean hot = rs.getBoolean("hot");
+                    String name = rs.getString("name");
+                    String color = rs.getString("color");
+                    float price = rs.getFloat("price");
+                    float sale = rs.getFloat("sale");
+                    int warrantPeriod = rs.getInt("warrantPeriod");
+                    boolean productStatus = rs.getBoolean("productStatus");
+                    ProductDTO pro = new ProductDTO(productId, brandId, userObjectID, detail, hot, name, color, price, sale, warrantPeriod, productStatus);
+                    list.add(pro);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;    }
 }

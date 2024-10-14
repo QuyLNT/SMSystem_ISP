@@ -26,7 +26,7 @@ public class MainController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private final static String WELLCOME_PAGE = "login.jsp";
+    private final static String WELLCOME_PAGE = "LoadTopListByCateController";
     private final static String LOGIN = "Sign In";
     private final static String LOGIN_CONTROLLER = "LoginController";
     private final static String UPDATE_PRODUCT = "Update Product";
@@ -76,6 +76,10 @@ public class MainController extends HttpServlet {
     private final static String LOAD_SHOP_PAGE_CONTROLLER="LoadShopPageController";
     private final static String HOME_PAGE = "HomePage" ;
     private final static String HOME_PAGE_CONTROLLER = "LoadTopListByCateController";   
+    private final static String SORT_SHOP_PAGE = "SortShopPage" ;
+    private final static String SORT_SHOP_PAGE_CONTROLLER = "SortProductListController";   
+    private final static String VIEW = "View" ;
+    private final static String LOAD_PRODUCT_DETAIL = "LoadProductDetailController";  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -130,6 +134,10 @@ public class MainController extends HttpServlet {
                 url=CREATE_BRAND_CONTROLLER;
             }else if(LOAD_SHOP_PAGE.equals(action)){
                 url=LOAD_SHOP_PAGE_CONTROLLER;
+            }else if(SORT_SHOP_PAGE.equals(action)){
+                url=SORT_SHOP_PAGE_CONTROLLER;
+            }else if(VIEW.equals(action)){
+                url=LOAD_PRODUCT_DETAIL;
             }
         }catch(Exception e){
            log("Error at MainController" + e.toString());

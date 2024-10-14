@@ -22,7 +22,9 @@ public class ProductVariantDAO {
     private static final String GET_STOCK_BY_PRODUCT ="SELECT productId, SUM(stock) AS sumOfProduct\n" +
                                                         "FROM productVariants\n" +
                                                         "GROUP BY productId";
-    
+     private static final String GET_AVALABLE_SIZE_BY_PRODUCT ="SELECT size FROM productVariants WHERE productId = ? AND stock>0";
+     private static final String GET_ALL_SIZE_BY_PRODUCT ="SELECT size FROM productVariants WHERE productId = ?";
+
     public List<ProductVariantDTO> getAllVariant() throws SQLException, ClassNotFoundException {
         ProductVariantDTO variant;
         List<ProductVariantDTO> allListProduct = new ArrayList<>();
@@ -74,4 +76,55 @@ public class ProductVariantDAO {
         }
         return stockByProduct;
     }
+    
+    public List<Float> getAvailableSize(int productId) throws SQLException, ClassNotFoundException {
+        List<Float> sizeList = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(GET_AVALABLE_SIZE_BY_PRODUCT);
+                ptm.setInt(1, productId);
+
+                rs = ptm.executeQuery();
+                while(rs.next()){
+                    Float size = rs.getFloat("size");
+                    sizeList.add(size);
+                }
+            } 
+        }finally{
+            if(rs!=null) rs.close();
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
+        return sizeList;
+    }
+    
+        public List<Float> getAllSize(int productId) throws SQLException, ClassNotFoundException {
+        List<Float> sizeList = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(GET_ALL_SIZE_BY_PRODUCT);
+                ptm.setInt(1, productId);
+                rs = ptm.executeQuery();
+                
+                while(rs.next()){
+                    Float size = rs.getFloat("size");
+                    sizeList.add(size);
+                }
+            } 
+        }finally{
+            if(rs!=null) rs.close();
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
+        return sizeList;
+    }
+    
 }
