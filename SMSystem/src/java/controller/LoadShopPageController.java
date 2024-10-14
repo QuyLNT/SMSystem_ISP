@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -13,14 +14,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.user.UserDAO;
-import model.user.UserDTO;
+import model.category.BrandDAO;
+import model.category.BrandDTO;
+import model.category.UserObjectDAO;
+import model.category.UserObjectDTO;
+import model.product.ProductDAO;
+import model.product.ProductDTO;
+import model.product.ProductImageDAO;
+import model.product.ProductVariantDAO;
 
 /**
  *
- * @author Asus
+ * @author LENOVO
  */
-public class DeleteUserController extends HttpServlet {
+public class LoadShopPageController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,32 +38,42 @@ public class DeleteUserController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    private static final String ERROR = "LoadUserListController";
-    private static final String SUCCESS = "LoadUserListController";
-
+    private static final String ERROR="shop.jsp";
+    private static final String SUCCESS="shop.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String url = ERROR;
+        String url = ERROR;
         try{
-            String userID= request.getParameter("userId");
-            int userId = Integer.parseInt(userID);
-            HttpSession session = request.getSession();
-            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-            if(userID.equals(loginUser.getUserId())){
-                request.setAttribute("err", "Can not delete");     
-            }else{
-                UserDAO dao = new UserDAO();
-                boolean checkDelete = dao.delete(userId);
-                if(checkDelete){
-                    request.setAttribute("ms", "Delete user successfully");
-                    url=SUCCESS;
-                }
+            ProductDAO productDao = new ProductDAO();
+            BrandDAO brandDao = new BrandDAO();
+            UserObjectDAO uObDao= new UserObjectDAO();
+            ProductImageDAO imageDao = new ProductImageDAO();
+            List<ProductDTO> productList;
+            List<BrandDTO> brandList;
+            List<UserObjectDTO> uObList;
+            
+            productList = productDao.getAllProduct();
+            brandList = brandDao.getAllBrand();
+            uObList = uObDao.getAllUserObject();
+            for(ProductDTO p: productList){
+                p.setListImages(imageDao.getImageByProduct(p.getProductId()));
             }
-        }catch(ClassNotFoundException | SQLException e ){
-           log("Error at LoadUserListController: " +e.toString());
-        }finally{
+                        
+            if(productList !=null && brandList!=null && uObList!=null){
+                HttpSession session = request.getSession();
+                request.setAttribute("PRODUCT_LIST", productList);
+                request.setAttribute("USER_OBJECT_LIST", uObList);
+                request.setAttribute("BRAND_LIST", brandList);
+                
+                url = SUCCESS;
+
+            }
+            
+            
+        }catch(ClassNotFoundException | SQLException e){
+           log("Error at LoadProductController: " +e.toString());
+        }finally{           
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

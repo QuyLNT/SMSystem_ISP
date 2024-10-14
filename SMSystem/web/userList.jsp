@@ -69,13 +69,24 @@
                     </div>
                     <div class="content">
                         <div class="welcome" >
-
-                            <!-- Button trigger modal -->
+                            <%
+                                String ms = "";
+                                String err = "";
+                                if (request.getAttribute("ms") != null) {
+                                    ms = (String) request.getAttribute("ms");
+                                }
+                                if (request.getAttribute("err") != null) {
+                                    err = (String) request.getAttribute("err");
+                                }
+                                if (ms != null || err != null) {
+                            %>
+                            <div class="mes-suc">
+                                <%=ms%> <%=err%>
+                            </div>   
+                            <%}%>
                             
-                            <!-- Modal Add -->
-
-                            
-                                                                                <%
+                            <!-- Search -->                            
+                            <%
                                 String searchUserName = request.getParameter("searchUserName");
                                 if (searchUserName == null) {
                                     searchUserName = "";
@@ -91,7 +102,7 @@
 
                         <div class="welcome">
                             <%
-                                List<UserDTO> userList = (List<UserDTO>) session.getAttribute("USER_LIST");   
+                                List<UserDTO> userList = (List<UserDTO>) request.getAttribute("USER_LIST");   
                             %>
                             <div class="table-tilte">User Table</div>
                             <table class="table table-hover">
@@ -119,18 +130,18 @@
                                         <td><%= user.getFullName()%></td>
                                         <td><%= user.getEmail()%></td>
                                         <td>
-<!--                                            <form action="MainController" method="POST">
-                                                <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
-                                                <input type="hidden" name="action" value="toggleUserStatus"/>
-                                                <select name="isActive" onchange="this.form.submit()">
-                                                    <option value="1" <%= user.isIsActive() ? "selected" : ""%>>Active</option>
-                                                    <option value="0" <%= !user.isIsActive() ? "selected" : ""%>>Inactive</option>
-                                                </select>
-                                            </form>-->
+                                            <!--                                            <form action="MainController" method="POST">
+                                                                                            <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
+                                                                                            <input type="hidden" name="action" value="toggleUserStatus"/>
+                                                                                            <select name="isActive" onchange="this.form.submit()">
+                                                                                                <option value="1" <%= user.isIsActive() ? "selected" : ""%>>Active</option>
+                                                                                                <option value="0" <%= !user.isIsActive() ? "selected" : ""%>>Inactive</option>
+                                                                                            </select>
+                                                                                        </form>-->
                                             <%= user.getPhoneNumber()%>
                                         </td>
                                         <td>
-                                             <form action="MainController" method="POST">
+                                            <form action="MainController" method="POST">
                                                 <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
                                                 <input type="hidden" name="action" value="toggleUserRole"/>
                                                 <select name="roleId" onchange="this.form.submit()">
@@ -145,7 +156,7 @@
                                         <td>
                                             <input type="hidden" name="userId"  value="<%=user.getUserId()%>" />
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal<%=user.getUserId()%>">
-                                                <i class="fa-solid fa-pen-to-square"></i>
+                                                <i class="fas fa-eye"></i>
                                             </button>
 
                                             <!-- Modal Update -->
@@ -153,27 +164,27 @@
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="updateModalLabel">Update user '<%=user.getUserName()%>' information</h1>
+                                                            <h1 class="modal-title fs-5" id="updateModalLabel">View user '<%=user.getUserName()%>' information</h1>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-                                                        <form action="UpdateUserController" method="POST">
+                                                        <form action="MainController" method="POST">
                                                             <div class="modal-body">
                                                                 <input type="hidden" name="userId"  value="<%=user.getUserId()%>" />
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">User Name</span>
-                                                                    <input name="userName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getUserName()%>">
+                                                                    <input name="userName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getUserName()%>" readonly="">
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Full Name</span>
-                                                                    <input name="fullName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getFullName()%>">
+                                                                    <input name="fullName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getFullName()%>" readonly="">
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Password</span>
-                                                                    <input name="userPass" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getPassword()%>">
+                                                                    <input name="userPass" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getPassword()%>"readonly="">
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Phone Number</span>
-                                                                    <input name="phoneNumber" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getPhoneNumber()%>">
+                                                                    <input name="phoneNumber" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getPhoneNumber()%>" readonly="">
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Sex</span>
@@ -186,7 +197,7 @@
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Email</span>
-                                                                    <input name="email" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getEmail()%>">
+                                                                    <input name="email" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= user.getEmail()%>" readonly="">
                                                                 </div> 
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Role</span>
@@ -200,13 +211,47 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <input type="submit" name="action" value="Update User" class="btn btn-primary"/>
+                                                            </div>
+
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                            <!-- Nút Xóa -->
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= user.getUserId()%>">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+
+                                            <!-- Modal Xóa -->
+                                            <div class="modal fade" id="deleteModal<%= user.getUserId()%>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="deleteModalLabel">Confirm User deletion</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form action="MainController" method="POST">
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="userId" value="<%= user.getUserId()%>" />
+                                                                Are you sure you want to delete the user '<%= user.getUserName()%>'?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                                                <input type="hidden" name="userId" value="<%= user.getUserId()%>" />
+                                                                <button type="submit" name="action" value="Delete User" class="btn btn-danger">Delete</button>
+
                                                             </div>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
+                                          </td>
                                     </tr>
                                     <%
                                             }

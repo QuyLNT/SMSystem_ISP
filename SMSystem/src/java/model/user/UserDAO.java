@@ -37,8 +37,8 @@ public class UserDAO {
     private static final String GET_TOTAL_ACCOUNT = "SELECT COUNT(userId) AS numberOfAccount\n" +
                                                     "FROM users";     
     private static final String GET_NUMBER_OF_ACCOUNT = "SELECT COUNT(userId) AS numberOfAccount\n" +
-                                                        "FROM users"
-                                                         + "WHERE roleId LIKE ?";
+"FROM users\n" +
+"WHERE roleId LIKE ?";
     private static final String SET_ROLE_ID = "UPDATE users\n" +
                                                 "SET roleId = ?\n" +
                                                 "WHERE userId = ?";
@@ -196,9 +196,10 @@ public class UserDAO {
         try {
             conn = DBUtils.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(GET_TOTAL_ACCOUNT);
+                ptm = conn.prepareStatement(GET_NUMBER_OF_ACCOUNT);
+                ptm.setString(1, roleId);
                 rs = ptm.executeQuery();
-                if(rs.next()){
+                while(rs.next()){
                     result = rs.getInt("numberOfAccount");
                 }
             }
@@ -278,9 +279,7 @@ public class UserDAO {
                     ptm.setString(4, user.getPhoneNumber());
                     ptm.setString(5, user.getSex());
                     ptm.setString(6, user.getEmail());
-                    ptm.setBoolean(7, user.isActive());
-                    ptm.setString(8, user.getRoleId());
-                    ptm.setDate(9, (Date) user.getCreatedAt());
+                    ptm.setString(7, user.getRoleId());
                     check = ptm.executeUpdate() > 0;
                 }
             }finally{
@@ -290,7 +289,7 @@ public class UserDAO {
             return check;
     }
 
-    public boolean delete(String userID) throws ClassNotFoundException, SQLException {
+    public boolean delete(int userId) throws ClassNotFoundException, SQLException {
         boolean checkDelete = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -298,7 +297,7 @@ public class UserDAO {
             conn = DBUtils.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(DELETE);
-                ptm.setString(1, userID);
+                ptm.setInt(1, userId);
                 checkDelete = ptm.executeUpdate() > 0;
             }
         } finally {

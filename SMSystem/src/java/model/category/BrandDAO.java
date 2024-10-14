@@ -32,6 +32,8 @@ public class BrandDAO {
                                                         "FROM products\n" +
                                                         "WHERE brandId=?\n" +
                                                         "GROUP BY brandId";
+    private static final String INSERT_BRAND= "INSERT INTO brands(brandName)\n" +
+                                                    "VALUES (?)";
     public List<BrandDTO> getAllBrand() throws ClassNotFoundException, SQLException{
         List<BrandDTO> listBrand = new ArrayList();
         Connection conn = null;
@@ -125,5 +127,30 @@ public class BrandDAO {
             if(conn!=null) conn.close();
         }
         return numberOfProduct;   
+    }
+
+    public BrandDTO insertNewBrand(String brandName) throws SQLException, ClassNotFoundException {
+        BrandDTO brand = null;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try{
+            conn = DBUtils.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(INSERT_BRAND,PreparedStatement.RETURN_GENERATED_KEYS);
+                ptm.setString(1, brandName);
+                rs = ptm.executeQuery();
+                while(rs.next()){
+                    brand = new BrandDTO(rs.getInt("brandId"), 
+                    rs.getString("brandName"));
+}
+                
+            }
+        }finally{
+            if(rs!=null) rs.close();
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
+        return brand;   
     }
 }

@@ -35,7 +35,7 @@ public class LoginController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private static final String ERROR="login.jsp";
-    private static final String HOME_PAGE="homePage.jsp";
+    private static final String HOME_PAGE="LoadTopListByCateController";
     private static final String ADMIN_PAGE = "LoadAdminHomeDataController";
     private static final String MANAGER_PAGE = "LoadManagerHomeDataController";
     private static final String SHIPPER_PAGE = "shipperHome.jsp";

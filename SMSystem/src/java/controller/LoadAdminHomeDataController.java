@@ -46,17 +46,17 @@ public class LoadAdminHomeDataController extends HttpServlet {
             UserDAO userDao = new UserDAO();
             
             int totalAccount = userDao.getTotalAccount();
-            int numberOfAdmin = userDao.getNumberOf("AD");
             int numberOfCustomer = userDao.getNumberOf("CUS");
+            int numberOfAdmin = userDao.getNumberOf("AD");
             int numberOfManager = userDao.getNumberOf("MN");
             int numberOfShipper = userDao.getNumberOf("SP");
             
             request.setAttribute("TOTAL_ACCOUNT", totalAccount);
-            request.setAttribute("ADMIN_ACCOUNT", totalAccount);
-            request.setAttribute("CUSTOMER_ACCOUNT", totalAccount);
-            request.setAttribute("MANAGER_ACCOUNT", totalAccount);
-            request.setAttribute("SHIPPER_ACCOUNT", totalAccount);
-
+            request.setAttribute("ADMIN_ACCOUNT", numberOfAdmin);
+            request.setAttribute("CUSTOMER_ACCOUNT", numberOfCustomer);
+            request.setAttribute("MANAGER_ACCOUNT", numberOfManager);
+            request.setAttribute("SHIPPER_ACCOUNT", numberOfShipper);
+            url= SUCCESS;
             
         }catch(ClassNotFoundException|SQLException e){
            log("Error at LoadAdminHomeDataController: " +e.toString());

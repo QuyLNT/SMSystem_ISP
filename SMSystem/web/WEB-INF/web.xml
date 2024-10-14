@@ -100,6 +100,18 @@
         <servlet-name>RemoveCartController</servlet-name>
         <servlet-class>controller.RemoveCartController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadTopListByCate</servlet-name>
+        <servlet-class>controller.LoadTopListByCateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateBrandController</servlet-name>
+        <servlet-class>controller.CreateBrandController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadShopPageController</servlet-name>
+        <servlet-class>controller.LoadShopPageController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -200,6 +212,18 @@
         <servlet-name>RemoveCartController</servlet-name>
         <url-pattern>/RemoveCartController</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadTopListByCate</servlet-name>
+        <url-pattern>/LoadTopListByCateController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateBrandController</servlet-name>
+        <url-pattern>/CreateBrandController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadShopPageController</servlet-name>
+        <url-pattern>/LoadShopPageController</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -208,4 +232,5 @@
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
+
 </web-app>

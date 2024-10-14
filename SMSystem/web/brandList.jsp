@@ -93,11 +93,28 @@
                     </div>
                     <div class="content">
                         <div class="welcome">
+
                             <form action="MainController" method="POST">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
                                 <i class="fa-solid fa-plus"></i> Add new Brand
                                 </button>
                             </form>
+                                                        <%                                
+                                                            String ms = "";
+                                String err = "";
+                                if (request.getAttribute("ms") != null) {
+                                    ms = (String) request.getAttribute("ms");
+                                }
+                                if (request.getAttribute("err") != null) {
+                                    err = (String) request.getAttribute("err");
+                                }
+                                if (ms != null || err != null) {
+
+                            %>
+                            <div class="mes-suc">
+                                <%=ms%> <%=err%>
+                            </div>                          
+                            <%}%>
                             <%
                                 String searchBrandName = request.getParameter("searchBrandName");
                                 if(searchBrandName==null){
@@ -114,8 +131,6 @@
                                         </div>
                                         <form action="MainController" method="POST">
                                             <div class="modal-body">
-                                                
-                                                
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Name</span>
                                                     <input name="Name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
@@ -153,7 +168,7 @@
                                 </thead>
                                 <tbody>   
                                     <%
-                                        int count=0;
+                                        int count=1;
                                         for(BrandDTO b : brandList){
                                     %>
                                     <tr>

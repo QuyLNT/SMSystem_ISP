@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -13,14 +14,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.user.UserDAO;
-import model.user.UserDTO;
+import model.category.BrandDAO;
+import model.category.UserObjectDAO;
+import model.product.ProductDAO;
+import model.product.ProductDTO;
+import model.product.ProductImageDAO;
+import model.product.ProductVariantDAO;
 
 /**
  *
- * @author Asus
+ * @author ADMIN
  */
-public class DeleteUserController extends HttpServlet {
+public class LoadTopListByCateController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,31 +36,46 @@ public class DeleteUserController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    private static final String ERROR = "LoadUserListController";
-    private static final String SUCCESS = "LoadUserListController";
+    private static final String ERROR = "homePage.jsp";
+    private static final String SUCCESS = "homePage.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String url = ERROR;
-        try{
-            String userID= request.getParameter("userId");
-            int userId = Integer.parseInt(userID);
-            HttpSession session = request.getSession();
-            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-            if(userID.equals(loginUser.getUserId())){
-                request.setAttribute("err", "Can not delete");     
-            }else{
-                UserDAO dao = new UserDAO();
-                boolean checkDelete = dao.delete(userId);
-                if(checkDelete){
-                    request.setAttribute("ms", "Delete user successfully");
-                    url=SUCCESS;
-                }
+        String url = ERROR;
+        try {
+            ProductDAO productDao = new ProductDAO();
+            BrandDAO brandDao = new BrandDAO();
+            UserObjectDAO uObDao= new UserObjectDAO();
+            ProductVariantDAO variantDao = new ProductVariantDAO();
+            ProductImageDAO imageDao = new ProductImageDAO();
+            List<ProductDTO> menList;
+            List<ProductDTO> womenList;
+            List<ProductDTO> kidList;
+            menList = productDao.getTopMenList();
+            womenList = productDao.getTopWomenList();
+            kidList = productDao.getTopKidList();
+            for(ProductDTO p : menList){
+                p.setListImages(imageDao.getImageByProduct(p.getProductId()));
             }
-        }catch(ClassNotFoundException | SQLException e ){
-           log("Error at LoadUserListController: " +e.toString());
+            for(ProductDTO pr : womenList){
+                pr.setListImages(imageDao.getImageByProduct(pr.getProductId()));
+            }
+            for(ProductDTO pro : kidList){
+                pro.setListImages(imageDao.getImageByProduct(pro.getProductId()));
+            }
+            if(menList != null && womenList != null && kidList != null){
+                HttpSession session = request.getSession();
+                session.setAttribute("MEN_LIST", menList);
+                session.setAttribute("WOMEN_LIST", womenList);
+                session.setAttribute("KID_LIST", kidList);                
+                url = SUCCESS;
+
+            }
+            
+
+        }catch(ClassNotFoundException | SQLException e){
+            log("Error at LoadTopListByCateController: " + e.toString());
         }finally{
             request.getRequestDispatcher(url).forward(request, response);
         }

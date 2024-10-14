@@ -72,6 +72,12 @@ public class MainController extends HttpServlet {
     private final static String DELETE_USER_CONTROLLER = "DeleteUserController";   
     private final static String REMOVE_CART = "doDelete" ;
     private final static String REMOVE_CART_CONTROLLER = "RemoveCartController";   
+    private final static String CREATE_BRAND= "Create Brand";
+    private final static String CREATE_BRAND_CONTROLLER= "CreateBrandController";
+    private final static String LOAD_SHOP_PAGE ="ShopPage" ;
+    private final static String LOAD_SHOP_PAGE_CONTROLLER="LoadShopPageController";
+    private final static String HOME_PAGE = "HomePage" ;
+    private final static String HOME_PAGE_CONTROLLER = "LoadTopListByCateController";   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -122,6 +128,12 @@ public class MainController extends HttpServlet {
                 url=DELETE_USER_CONTROLLER;
             }else if(REMOVE_CART.equals(action)){
                 url=REMOVE_CART_CONTROLLER;
+            }else if(HOME_PAGE.equals(action)){
+                url=HOME_PAGE_CONTROLLER;
+            }else if(CREATE_BRAND.equals(action)){
+                url=CREATE_BRAND_CONTROLLER;
+            }else if(LOAD_SHOP_PAGE.equals(action)){
+                url=LOAD_SHOP_PAGE_CONTROLLER;
             }
         }catch(Exception e){
            log("Error at MainController" + e.toString());

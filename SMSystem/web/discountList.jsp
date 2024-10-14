@@ -191,7 +191,7 @@
                                     </thead>
                                     <tbody>
                                         <%
-                                            int count=0 ;
+                                            int count=1 ;
                                             for (DiscountDTO discount : discountList) {
                                         %>
 

@@ -49,7 +49,6 @@ public class CreateUserController extends HttpServlet {
             String password = request.getParameter("password");
 
             String email = request.getParameter("email");
-            String roleId = request.getParameter("roleId");
             String confirmPass = request.getParameter("confirmPass");
 
             // Validate form parameters
@@ -58,16 +57,12 @@ public class CreateUserController extends HttpServlet {
                 request.getRequestDispatcher(url).forward(request, response);
                 return;
             }
-            if (userDAO.isUserNameExists(userName)) {
-                request.setAttribute("error", "Username already exists.");
-                checkValidation = false;
-            }
 
             // Tạo đối tượng UserDTO
             UserDTO user = new UserDTO(0, fullName, userName, password, "", "", email, true, "CUS", null);
 
             // Gọi phương thức createUser trong UserDAO để tạo mới user
-            boolean result = userDAO.createUser(user);
+                boolean result = userDAO.createUser(user);
             if (result) {
                 url = SUCCESS;
             } else {
@@ -76,9 +71,11 @@ public class CreateUserController extends HttpServlet {
             request.getRequestDispatcher(url).forward(request, response);
         } catch (Exception e) {
             // Xử lý ngoại lệ
-            request.setAttribute("error", e.getMessage());
+            if(e.toString().contains("duplicate"));
+                request.setAttribute("error", "Username or Email already exists.");
+
+            }
             request.getRequestDispatcher(url).forward(request, response);
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

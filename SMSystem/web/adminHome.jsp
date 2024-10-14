@@ -73,12 +73,9 @@
                                             <img src="https://i.pinimg.com/236x/7b/12/d2/7b12d287221c0adf5b4efcdf326c178f.jpg" class="img-fluid rounded-start" alt="...">
                                         </div>
                                         <div class="col-md-12">
-                                            <%
-                                                ProductDAO productDao = new ProductDAO();
-                                            %>
                                             <div class="card-body">
                                                 <h5 class="card-title">Accounts</h5>
-                                                <p class="card-text"><%=999%></p>
+                                                <p class="card-text">${requestScope.TOTAL_ACCOUNT}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -96,8 +93,8 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
-                                                        <h5 class="card-title">Account Shipper</h5>
-                                                        <p class="card-text"><%=999.9%>$</p>
+                                                        <h5 class="card-title">Admin</h5>
+                                                        <p class="card-text">${requestScope.ADMIN_ACCOUNT}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -110,8 +107,8 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
-                                                        <h5 class="card-title">Account Manager</h5>
-                                                        <p class="card-text"><%=999.9%>$</p>
+                                                        <h5 class="card-title">Manager</h5>
+                                                        <p class="card-text">${requestScope.MANAGER_ACCOUNT}</p>
                                                     </div>
                                                 </div>
                                                 
@@ -132,8 +129,8 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
-                                                        <h5 class="card-title">Account User</h5>
-                                                        <p class="card-text"><%=999.9%>$</p>
+                                                        <h5 class="card-title">Customer</h5>
+                                                        <p class="card-text">${requestScope.CUSTOMER_ACCOUNT}</p>
                                                     </div>
                                                 </div>
                                                 
@@ -147,8 +144,8 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
-                                                        <h5 class="card-title">Account Admin</h5>
-                                                        <p class="card-text"><%=999.9%>$</p>
+                                                        <h5 class="card-title">Shipper</h5>
+                                                        <p class="card-text">${requestScope.SHIPPER_ACCOUNT}</p>
                                                     </div>
                                                 </div>
                                                 

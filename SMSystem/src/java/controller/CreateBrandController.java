@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -13,52 +14,43 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.user.UserDAO;
-import model.user.UserDTO;
+import model.category.BrandDAO;
+import model.category.BrandDTO;
 
 /**
  *
- * @author Asus
+ * @author LENOVO
  */
-public class DeleteUserController extends HttpServlet {
+public class CreateBrandController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    
-    private static final String ERROR = "LoadUserListController";
-    private static final String SUCCESS = "LoadUserListController";
-
+    private static final String ERROR = "brandList.jsp";
+    private static final String SUCCESS = "brandList.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String url = ERROR;
-        try{
-            String userID= request.getParameter("userId");
-            int userId = Integer.parseInt(userID);
-            HttpSession session = request.getSession();
-            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-            if(userID.equals(loginUser.getUserId())){
-                request.setAttribute("err", "Can not delete");     
-            }else{
-                UserDAO dao = new UserDAO();
-                boolean checkDelete = dao.delete(userId);
-                if(checkDelete){
-                    request.setAttribute("ms", "Delete user successfully");
-                    url=SUCCESS;
-                }
+        String url = ERROR;
+        HttpSession session = request.getSession();
+
+        try {
+            String name = request.getParameter("Name");
+            BrandDAO brandDao = new BrandDAO();
+            BrandDTO brand = brandDao.insertNewBrand(name);
+            if (brand!=null) {
+                
+                List<BrandDTO> brandList = (List<BrandDTO>) session.getAttribute("BRAND_LIST");
+                brandList.add(brand);
+                session.setAttribute("BRAND_LIST", brandList);
+                request.setAttribute("ms", "Create Successfully");
+                url = SUCCESS;
+            } else { 
+                request.setAttribute("err", "Create failed");
             }
-        }catch(ClassNotFoundException | SQLException e ){
-           log("Error at LoadUserListController: " +e.toString());
+            request.getRequestDispatcher(url).forward(request, response);
+        } catch (IOException | ClassNotFoundException | SQLException | ServletException e) {
         }finally{
             request.getRequestDispatcher(url).forward(request, response);
-        }
+        }   
+            
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
