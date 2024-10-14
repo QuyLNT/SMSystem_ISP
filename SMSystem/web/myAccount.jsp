@@ -65,12 +65,12 @@
                     <div class="ht-right">
                         <%
                             UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
-                            if(user.getFullName()!=null){
+                            if (user.getFullName() != null) {
                         %>
                         <div class="login-panel" id="user-btn">
                             <i class="fa fa-user"><%=user.getFullName()%></i>
                         </div>
-                        <% }else { %>
+                        <% } else { %>
                         <div class="login-panel" id="user-btn">
                             <i class="fa fa-user"></i>
                         </div>
@@ -123,15 +123,15 @@
                             <ul class="nav-right">
                                 <%
                                     String sizeWishlist = (String) session.getAttribute("sizeWishlist");
-                                    if(sizeWishlist==null){
-                                        sizeWishlist="0";
+                                    if (sizeWishlist == null) {
+                                        sizeWishlist = "0";
                                     }
-                                    
-                                    %>
+
+                                %>
                                 <li class="heart-icon">
                                     <a href="wishlist.jsp">
                                         <i class="icon_heart_alt"></i>
-                                        <span><%= sizeWishlist %></span>
+                                        <span><%= sizeWishlist%></span>
                                     </a>
                                 </li>
                             </ul>
@@ -156,12 +156,12 @@
                         <ul>
                             <li class="active"><a href="homePage.jsp">Home</a></li>
                             <li><a href="shop.jsp">Shop</a></li>
-                            
+
                             <li><a href="contact.jsp">Contact</a></li>
                             <li><a href="">Pages</a>
                                 <ul class="dropdown">
                                     <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
-                                    
+
                                 </ul>
                             </li>
                         </ul>
@@ -193,97 +193,120 @@
 
         <!-- Shopping Cart Section Begin -->
         <div class="checkout-section spad">
-    <div class="container">
-        <form action="UpdateUserController" class="checkout-form">
-            <div class="row setting-center">
-                <div class="col-lg-6">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <label for="userName">userName <span>*</span></label>
-                            <% if(user.getUserName()==null){ %>
-                            <input type="text" id="userName" name="userName">
-                            <% }else{ %>
-                            
-                            <input type="text" id="userName-exist" name="userName" value="<%=user.getUserName()%>" readonly>
-                            <button type="button" id="edit-btn-userName">
-                                <i class="fa fa-pencil-square-o"></i>
-                            </button>
-                            <% } %>
-                        </div>
-                         <div class="col-lg-12">
-                            <label for="password">password <span>*</span></label>
-                            <% if(user.getPassword()==null){ %>
-                            <input type="text" id="pass" name="pass">
-                            <% }else{ %>
-                            
-                            <input type="text" id="password-exist" name="pass" value="<%=user.getPassword()%>" readonly>
-                            <button type="button" id="edit-btn-pass">
-                                <i class="fa fa-pencil-square-o"></i>
-                            </button>
-                            <% } %>
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="fullName">Full Name <span>*</span></label>
-                            <% if(user.getFullName()==null){ %>
-                            <input type="text" id="fullName" name="fullName">
-                            <% }else{ %>
-                            <input type="text" id="fullName-exist" name="fullName" value="<%=user.getFullName()%>" readonly>
-                            <button type="button" id="edit-btn-fullName">
-                                <i class="fa fa-pencil-square-o"></i>
-                            </button>
-                            <% } %>
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="phone">Phone <span>*</span></label>
-                            <% if(user.getPhoneNumber()==null){ %>
-                            <input type="text" id="phone" name="phone" >
-                            <% }else{ %>
-                            <input type="text" id="phone-exist" name="phone" value="<%=user.getPhoneNumber()%>" readonly>
-                            <button type="button" id="edit-btn-phone">
-                                <i class="fa fa-pencil-square-o"></i>
-                            </button>
-                            <% } %>
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="sex">Sex <span>*</span></label>
-                            <% if(user.getSex()==null){ %>
-                            <select id="sex" name="sex">
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
-                            </select>
-                            <% }else{ %>
-                            <input type="text" id="sex-exist" name="sex" value="<%=user.getSex()%>" readonly>
-                            <button type="button" id="edit-btn-sex">
-                                <i class="fa fa-pencil-square-o"></i>
-                            </button>
-                            <% } %>
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="email">Email Address <span>*</span></label>
-                            <% if(user.getEmail()==null){ %>
-                            <input type="email" id="email" name="email">
-                            <% }else{ %>
-                            
-                            <input type="email" id="email-exist" name="email" value="<%=user.getEmail() %>" readonly>
-                            <button type="button" id="edit-btn-email">
-                                <i class="fa fa-pencil-square-o"></i>
-                            </button>
-                            
-                            <% } %>
+            <div class="container">
+                <form action="UpdateUserController" class="checkout-form">
+                    <div class="row setting-center">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="userName">userName <span>*</span></label>
+                                    <% if (user.getUserName() == null) { %>
+                                    <input type="text" id="userName" name="userName">
+                                    <% } else {%>
+
+                                    <input type="text" id="userName-exist" name="userName" value="<%=user.getUserName()%>" readonly>
+                                    <button type="button" id="edit-btn-userName">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </button>
+                                    <% } %>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label for="password">password <span>*</span></label>
+<!--                                    <c:if test="${not empty PASS_ERROR}">
+        <div class="error" style="color: red;">
+                                    ${PASS_ERROR}
+                                </div>
+                            </c:if>-->
+                                    <% if (user.getPassword() == null) { %>
+                                    <input type="text" id="pass" name="pass">
+                                    <% } else {%>
+
+                                    <input type="text" id="password-exist" name="pass" value="<%=user.getPassword()%>" readonly>
+                                    <button type="button" id="edit-btn-pass">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </button>
+                                    <% } %>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label for="fullName">Full Name <span>*</span></label>
+                                    <% if (user.getFullName() == null) { %>
+                                    <input type="text" id="fullName" name="fullName">
+                                    <% } else {%>
+                                    <input type="text" id="fullName-exist" name="fullName" value="<%=user.getFullName()%>" readonly>
+                                    <button type="button" id="edit-btn-fullName">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </button>
+                                    <% } %>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label for="phone">Phone <span>*</span></label>
+<!--                                    <c:if test="${not empty PHONE_ERROR}">
+                                        <div class="error" style="color: red;">
+                                    ${PHONE_ERROR}
+                                </div>
+                            </c:if>-->
+                                    <% if (user.getPhoneNumber() == null) { %>
+                                    <input type="text" id="phone" name="phone" >
+                                    <% } else {%>
+                                    <input type="text" id="phone-exist" name="phone" value="<%=user.getPhoneNumber()%>" readonly>
+                                    <button type="button" id="edit-btn-phone">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </button>
+                                    <% } %>
+
+                                </div>
+                                <div class="col-lg-12">
+                                    <label for="sex">Sex <span>*</span></label>
+<!--                                    <c:if test="${not empty SEX_ERROR}">
+        <div class="error" style="color: red;">
+                                    ${SEX_ERROR}
+                                </div>
+                            </c:if>-->
+                                    <% if (user.getSex() == null) { %>
+                                    <select id="sex" name="sex">
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <% } else {%>
+                                    <input type="text" id="sex-exist" name="sex" value="<%=user.getSex()%>" readonly>
+                                    <button type="button" id="edit-btn-sex">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </button>
+                                    <% } %>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label for="email">Email Address <span>*</span></label>
+<!--                                     <c:if test="${not empty EMAIL_ERROR}">
+        <div class="error" style="color: red;">
+                                    ${EMAIL_ERROR}
+                                </div>
+                            </c:if>-->
+                                    <% if (user.getEmail() == null) { %>
+                                    <input type="email" id="email" name="email">
+                                    <% } else {%>
+
+                                    <input type="email" id="email-exist" name="email" value="<%=user.getEmail()%>" readonly>
+                                    <button type="button" id="edit-btn-email">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </button>
+
+                                    <% } %>
+                                </div>
+                            </div>
+                            <%
+                                String message = (String) request.getAttribute("MESSAGE");
+                                if (message == null) {
+                                    message = "";
+                                }
+                            %>
+                            <h4 style="color:red "> <%= message%> </h4> 
+                            <input type="submit" id="UpdateUser" name="action" value="Update">
                         </div>
                     </div>
-                        <%
-                            String message = (String) request.getAttribute("MESSAGE");
-                            if(message==null) message="";
-                        %>
-                        <h4 style="color:red "> <%= message %> </h4> 
-                    <input type="submit" id="UpdateUser" name="action" value="Update">
-                </div>
+                </form>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
 
         <!-- Shopping Cart Section Begin -->
 

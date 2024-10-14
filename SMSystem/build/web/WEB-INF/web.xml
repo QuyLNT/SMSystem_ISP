@@ -97,6 +97,10 @@
         <servlet-class>controller.DeleteUserController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>RemoveCartController</servlet-name>
+        <servlet-class>controller.RemoveCartController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>LoadTopListByCate</servlet-name>
         <servlet-class>controller.LoadTopListByCateController</servlet-class>
     </servlet>
@@ -207,6 +211,10 @@
     <servlet-mapping>
         <servlet-name>DeleteUserController</servlet-name>
         <url-pattern>/DeleteUserController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveCartController</servlet-name>
+        <url-pattern>/RemoveCartController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoadTopListByCate</servlet-name>
