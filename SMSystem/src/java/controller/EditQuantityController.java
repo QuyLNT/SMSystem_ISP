@@ -7,27 +7,16 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.category.BrandDAO;
-import model.category.BrandDTO;
-import model.category.UserObjectDAO;
-import model.category.UserObjectDTO;
-import model.product.ProductDAO;
-import model.product.ProductDTO;
-import model.product.ProductImageDAO;
-import model.product.ProductVariantDAO;
 
 /**
  *
- * @author LENOVO
+ * @author Asus
  */
-public class LoadShopPageController extends HttpServlet {
+public class EditQuantityController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,43 +27,20 @@ public class LoadShopPageController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR="shop.jsp";
-    private static final String SUCCESS="shop.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
-        try{
-            ProductDAO productDao = new ProductDAO();
-            BrandDAO brandDao = new BrandDAO();
-            UserObjectDAO uObDao= new UserObjectDAO();
-            ProductImageDAO imageDao = new ProductImageDAO();
-            List<ProductDTO> productList;
-            List<BrandDTO> brandList;
-            List<UserObjectDTO> uObList;
-            
-            productList = productDao.getAllProduct();
-            brandList = brandDao.getAllBrand();
-            uObList = uObDao.getAllUserObject();
-            for(ProductDTO p: productList){
-                p.setListImages(imageDao.getImageByProduct(p.getProductId()));
-            }
-                        
-            if(productList !=null && brandList!=null && uObList!=null){
-                HttpSession session = request.getSession();
-                session.setAttribute("PRODUCT_LIST", productList);
-                session.setAttribute("USER_OBJECT_LIST", uObList);
-                session.setAttribute("BRAND_LIST", brandList);
-                
-                url = SUCCESS;
-
-            }
-            
-            
-        }catch(ClassNotFoundException | SQLException e){
-           log("Error at LoadProductController: " +e.toString());
-        }finally{           
-            request.getRequestDispatcher(url).forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet EditQuantityController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet EditQuantityController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

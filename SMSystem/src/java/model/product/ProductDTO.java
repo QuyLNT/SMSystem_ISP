@@ -17,6 +17,7 @@ public class ProductDTO {
     private int brandId;
     private int userOjectId;
     List<ProductImageDTO> listImages;
+    List<ProductVariantDTO> listVariants;
     private String detail;
     private boolean hot;
     private String name;

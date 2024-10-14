@@ -39,7 +39,6 @@ public class LoginController extends HttpServlet {
     private static final String ADMIN_PAGE = "LoadAdminHomeDataController";
     private static final String MANAGER_PAGE = "LoadManagerHomeDataController";
     private static final String SHIPPER_PAGE = "shipperHome.jsp";
-    private static final String ERROR_MESSAGE = "";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
@@ -67,9 +66,11 @@ public class LoginController extends HttpServlet {
                         url=SHIPPER_PAGE;
                         break;
                     default:
-                        request.setAttribute("LOGIN_ERROR", ERROR_MESSAGE);
+                        request.setAttribute("LOGIN_ERROR", "Role is not support");
                         break;
                 }        
+            }else{
+                request.setAttribute("LOGIN_ERROR", "Role is not support");
             }
             
         }catch(ClassNotFoundException | SQLException | NamingException e){

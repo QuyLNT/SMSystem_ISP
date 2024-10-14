@@ -41,41 +41,63 @@ public class CreateUserController extends HttpServlet {
         UserDAO userDAO = new UserDAO();
         boolean checkValidation = true;
         UserError userError = new UserError();
-
         try {
             // Fetching form parameters
             String fullName = request.getParameter("fullName");
             String userName = request.getParameter("userName");
             String password = request.getParameter("password");
-
+            String phoneNumber = request.getParameter("phoneNumber");
             String email = request.getParameter("email");
             String confirmPass = request.getParameter("confirmPass");
+            String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+            boolean isEmailValid = email.matches(emailRegex);
 
             // Validate form parameters
             if (password == null || password.isEmpty() || !password.equals(confirmPass)) {
-                request.setAttribute("error", "Password and confirm password do not match.");
+                request.setAttribute("err", "Password and confirm password do not match.");
                 request.getRequestDispatcher(url).forward(request, response);
                 return;
             }
-
-            // Tạo đối tượng UserDTO
-            UserDTO user = new UserDTO(0, fullName, userName, password, "", "", email, true, "CUS", null);
-
-            // Gọi phương thức createUser trong UserDAO để tạo mới user
-                boolean result = userDAO.createUser(user);
-            if (result) {
-                url = SUCCESS;
+            if (!isEmailValid) {
+                request.setAttribute("err", "Invalid email format.");
+                request.getRequestDispatcher(url).forward(request, response);
+                return;
+            }
+            // Validate phone number: not empty, 10 digits, not duplicate
+            if (phoneNumber == null || phoneNumber.isEmpty()) {
+                request.setAttribute("err", "Phone number cannot be empty.");
+                checkValidation = false;
             } else {
-                request.setAttribute("USER_ERROR", userError);
-            }
-            request.getRequestDispatcher(url).forward(request, response);
-        } catch (Exception e) {
-            // Xử lý ngoại lệ
-            if(e.toString().contains("duplicate"));
-                request.setAttribute("error", "Username or Email already exists.");
+                String phoneRegex = "^[0-9]{10}$"; // Only allow exactly 10 digits
+                boolean isPhoneValid = phoneNumber.matches(phoneRegex);
+                if (!isPhoneValid) {
+                    request.setAttribute("err", "Phone number must be exactly 10 digits.");
+                    checkValidation = false;
 
+                }
             }
+            if (checkValidation) {
+                // Tạo đối tượng UserDTO
+                UserDTO user = new UserDTO(0, fullName, userName, password, phoneNumber, "", email, true, "CUS", null);
+
+                // Gọi phương thức createUser trong UserDAO để tạo mới user
+                boolean result = userDAO.createUser(user);
+                if (result) {
+                    url = SUCCESS;
+                } else {
+                    request.setAttribute("USER_ERROR", userError);
+                }
+            }
+        } catch (IOException | ClassNotFoundException | SQLException | ServletException e) {
+            // Xử lý ngoại lệ
+            if (e.toString().contains("duplicate")) {
+                request.setAttribute("err", "Email or phone number is exits");
+            }
+
+        }finally{
             request.getRequestDispatcher(url).forward(request, response);
+           
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
