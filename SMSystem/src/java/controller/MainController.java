@@ -81,7 +81,15 @@ public class MainController extends HttpServlet {
     private final static String SORT_SHOP_PAGE = "SortShopPage" ;
     private final static String SORT_SHOP_PAGE_CONTROLLER = "SortProductListController";   
     private final static String VIEW = "View" ;
-    private final static String LOAD_PRODUCT_DETAIL = "LoadProductDetailController";  
+    private final static String LOAD_PRODUCT_DETAIL = "LoadProductDetailController"; 
+    
+    private final static String ADD_TO_CART = "Add To Cart" ;
+    private final static String ADD_TO_CART_CONTROLLER = "AddToCartController";
+    private static final String LOGIN_GOOGLE = "LoginGoogle";
+    private static final String LOGIN_GOOGLE_CONTROLLER = "LoginGoogleController";
+    private final static String EDIT_QUANTITY = "Edit quantity" ;
+    private final static String EDIT_QUANTITY_CONTROLLER = "EditQuantityController";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -142,6 +150,12 @@ public class MainController extends HttpServlet {
                 url=SORT_SHOP_PAGE_CONTROLLER;
             }else if(VIEW.equals(action)){
                 url=LOAD_PRODUCT_DETAIL;
+            }else if(ADD_TO_CART.equals(action)){
+                url=ADD_TO_CART_CONTROLLER;
+            }else if(LOGIN_GOOGLE.equals(action)){
+                url=LOGIN_GOOGLE_CONTROLLER;
+            }else if(EDIT_QUANTITY.equals(action)){
+                url=EDIT_QUANTITY_CONTROLLER;
             }
         }catch(Exception e){
            log("Error at MainController" + e.toString());
