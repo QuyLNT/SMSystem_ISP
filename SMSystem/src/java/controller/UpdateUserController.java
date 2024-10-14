@@ -45,27 +45,46 @@ public class UpdateUserController extends HttpServlet {
             if (fullName == null || fullName.isEmpty()) {
                 request.setAttribute("FULLNAME_ERROR", "Can't be blank!");
                 hasError = true;
-            }
-            if (pass == null || pass.isEmpty()) {
-                request.setAttribute("PASS_ERROR", "Can't be blank!");
+            } else if (fullName.length() > 50) {
+                request.setAttribute("FULLNAME_ERROR", "Must not exceed 50 characters!");
                 hasError = true;
-
             }
-            if (phone == null || phone.isEmpty()) {
+
+            if (pass == null || pass.isEmpty()) {
+                request.setAttribute("PASS_ERROR", "Can't be blank ");
+                hasError = true;
+            } else if (pass.length() < 3) {
+                request.setAttribute("PASS_ERROR", "Must be at least 3 characters long!");
+                hasError = true;
+            }
+
+            if (phone == null || phone.isEmpty() || !phone.matches("^\\d{10,15}$")) {
                 request.setAttribute("PHONE_ERROR", "Can't be blank!");
                 hasError = true;
-
+            } else if (!phone.matches("^\\d{10,15}$")) {
+                request.setAttribute("PHONE_ERROR", "Invalid phone number! Must contain only digits and be between 10 to 15 characters.");
+                hasError = true;
+            } else if (dao.isPhoneExists(phone) && !phone.equals(user.getPhoneNumber())) {
+                request.setAttribute("PHONE_ERROR", "Phone number already exists!");
+                hasError = true;
             }
+
             if (sex == null || sex.isEmpty()) {
                 request.setAttribute("SEX_ERROR", "Can't be blank!");
                 hasError = true;
-
             }
+
             if (email == null || email.isEmpty()) {
                 request.setAttribute("EMAIL_ERROR", "Can't be blank!");
                 hasError = true;
-
+            } else if (email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+                request.setAttribute("EMAIL_ERROR", "Invalid email format!");
+                hasError = true;
+            } else if (dao.isEmailExists(email) && !email.equals(user.getEmail())) {
+                request.setAttribute("EMAIL_ERROR", "Email already exists!");
+                hasError = true;
             }
+
             if (!hasError) {
                 boolean checkUserAfter = dao.userAfterUpdate(userInput);
                 if (checkUserAfter) {
@@ -80,7 +99,7 @@ public class UpdateUserController extends HttpServlet {
                     url = ERROR;
                     request.setAttribute("MESSAGE", "Update Fail");
                 }
-            }else{
+            } else {
                 url = ERROR;
             }
 

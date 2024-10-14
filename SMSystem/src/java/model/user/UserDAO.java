@@ -24,6 +24,9 @@ import utils.DBUtils;
  */
 public class UserDAO {
     private static final String CHECK_USERNAME_EXISTS = "SELECT COUNT(userId) FROM users WHERE userName = ?";
+        private static final String CHECK_PHONE_EXISTS = "SELECT COUNT(userId) FROM users WHERE phoneNumber = ?";
+    private static final String CHECK_EMAIL_EXISTS = "SELECT COUNT(userId) FROM users WHERE email = ?";
+
     private static final String INSERT_USER = " INSERT INTO users (userName, fullName, password, phoneNumber, sex, email, isActive, roleId, createdAt) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String LOGIN = "SELECT userName,fullName,userId,phoneNumber,sex,email,isActive,roleId,createdAt\n"
@@ -154,46 +157,6 @@ public class UserDAO {
             return check;
         }
 
-    }
-    public int beforeUpdate(UserDTO user, UserDTO userInput, List<UserDTO> allUser,Map<String, String> errorMessages){
-        int check = 0;
-        // Kiểm tra trường userName
-    if (userInput.getUserName() == null || userInput.getUserName().isEmpty()) {
-        errorMessages.put("userName", "Username can't be blank!");
-        check = 0; // Đánh dấu là không hợp lệ
-    }
-
-    // Kiểm tra trường fullName
-    if (userInput.getFullName() == null || userInput.getFullName().isEmpty()) {
-        errorMessages.put("fullName", "Full Name can't be blank!");
-        check = 0;
-    }
-
-    // Kiểm tra trường password
-    if (userInput.getPassword()== null || userInput.getPassword().isEmpty()) {
-        errorMessages.put("pass", "Password can't be blank!");
-        check = 0;
-    }
-
-    // Kiểm tra trường phone
-    if (userInput.getPhoneNumber()== null || userInput.getPhoneNumber().isEmpty()) {
-        errorMessages.put("phone", "Phone can't be blank!");
-        check = 0;
-    }
-
-    // Kiểm tra trường sex
-    if (userInput.getSex() == null || userInput.getSex().isEmpty()) {
-        errorMessages.put("sex", "Sex can't be blank!");
-        check = 0;
-    }
-
-    // Kiểm tra trường email
-    if (userInput.getEmail() == null || userInput.getEmail().isEmpty()) {
-        errorMessages.put("email", "Email can't be blank!");
-        check = 0;
-    }
-        
-        return check;
     }
 
     public int getTotalAccount() throws SQLException, ClassNotFoundException {
@@ -349,5 +312,51 @@ public class UserDAO {
         }
         return checkDelete;
     }
+        public boolean isPhoneExists(String phoneNumber) throws ClassNotFoundException, SQLException{
+            boolean checkExits = true;
+            Connection conn = null;
+            PreparedStatement ptm = null;
+            
+            try{
+                conn = DBUtils.getConnection();
+                ptm = conn.prepareStatement(CHECK_PHONE_EXISTS);
+                ptm.setString(1, phoneNumber);
+                if(ptm.executeUpdate()>0){
+                    checkExits = false;
+                }
+                    
+            }finally{
+                if(ptm!=null){
+                    conn.close();
+                }
+                if(conn != null){
+                    conn.close();
+                }
+            }
+            return checkExits;
+        }
         
+        public boolean isEmailExists(String email) throws ClassNotFoundException, SQLException{
+            boolean checkExits = true;
+            Connection conn = null;
+            PreparedStatement ptm = null;
+            
+            try{
+                conn = DBUtils.getConnection();
+                ptm = conn.prepareStatement(CHECK_EMAIL_EXISTS);
+                ptm.setString(1, email);
+                if(ptm.executeUpdate()>0){
+                    checkExits = false;
+                }
+                    
+            }finally{
+                if(ptm!=null){
+                    conn.close();
+                }
+                if(conn != null){
+                    conn.close();
+                }
+            }
+            return checkExits;
+        }
 }
