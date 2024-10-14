@@ -6,59 +6,48 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.user.UserDAO;
-import model.user.UserDTO;
+import model.cart.CartDAO;
+import model.cart.CartDTO;
 
 /**
  *
- * @author Asus
+ * @author CHAU DUYEN
  */
-public class DeleteUserController extends HttpServlet {
+public class RemoveCartController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    
-    private static final String ERROR = "LoadUserListController";
-    private static final String SUCCESS = "LoadUserListController";
+    private static final String ERROR = "shopping-cart.jsp";
+    private static final String SUCCESS = "shopping-cart.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String url = ERROR;
-        try{
-            String userID= request.getParameter("userId");
-            int userId = Integer.parseInt(userID);
+        String url = ERROR;
+        try {
+            int cartItemId = Integer.parseInt(request.getParameter("cartItemId"));
             HttpSession session = request.getSession();
-            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-            if(userID.equals(loginUser.getUserId())){
-                request.setAttribute("err", "Can not delete");     
-            }else{
-                UserDAO dao = new UserDAO();
-                boolean checkDelete = dao.delete(userId);
-                if(checkDelete){
-                    request.setAttribute("ms", "Delete user successfully");
-                    url=SUCCESS;
+            CartDTO cart = (CartDTO) session.getAttribute("CART");
+            CartDAO cartDAO = new CartDAO();
+            boolean deleteItem = cartDAO.deleteCartItem(cartItemId);
+            if (cart != null) {
+                if (deleteItem) {
+                    cart.removeItem(cartItemId);
+                    session.setAttribute("size", String.valueOf(cart.getSize()));
+                    url = SUCCESS;
                 }
             }
-        }catch(ClassNotFoundException | SQLException e ){
-           log("Error at LoadUserListController: " +e.toString());
-        }finally{
+        } catch (Exception e) {
+            log("Error at RemoveCartController: " + e.toString());
+
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

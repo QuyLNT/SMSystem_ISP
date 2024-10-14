@@ -130,18 +130,18 @@
                                         <td><%= user.getFullName()%></td>
                                         <td><%= user.getEmail()%></td>
                                         <td>
-<!--                                            <form action="MainController" method="POST">
-                                                <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
-                                                <input type="hidden" name="action" value="toggleUserStatus"/>
-                                                <select name="isActive" onchange="this.form.submit()">
-                                                    <option value="1" <%= user.isIsActive() ? "selected" : ""%>>Active</option>
-                                                    <option value="0" <%= !user.isIsActive() ? "selected" : ""%>>Inactive</option>
-                                                </select>
-                                            </form>-->
+                                            <!--                                            <form action="MainController" method="POST">
+                                                                                            <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
+                                                                                            <input type="hidden" name="action" value="toggleUserStatus"/>
+                                                                                            <select name="isActive" onchange="this.form.submit()">
+                                                                                                <option value="1" <%= user.isIsActive() ? "selected" : ""%>>Active</option>
+                                                                                                <option value="0" <%= !user.isIsActive() ? "selected" : ""%>>Inactive</option>
+                                                                                            </select>
+                                                                                        </form>-->
                                             <%= user.getPhoneNumber()%>
                                         </td>
                                         <td>
-                                             <form action="MainController" method="POST">
+                                            <form action="MainController" method="POST">
                                                 <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
                                                 <input type="hidden" name="action" value="toggleUserRole"/>
                                                 <select name="roleId" onchange="this.form.submit()">
@@ -212,7 +212,9 @@
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                             </div>
+
                                                         </form>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -249,7 +251,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
+                                          </td>
                                     </tr>
                                     <%
                                             }

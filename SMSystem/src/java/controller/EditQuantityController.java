@@ -6,21 +6,17 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.user.UserDAO;
-import model.user.UserDTO;
 
 /**
  *
  * @author Asus
  */
-public class DeleteUserController extends HttpServlet {
+public class EditQuantityController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,33 +27,20 @@ public class DeleteUserController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    private static final String ERROR = "LoadUserListController";
-    private static final String SUCCESS = "LoadUserListController";
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String url = ERROR;
-        try{
-            String userID= request.getParameter("userId");
-            int userId = Integer.parseInt(userID);
-            HttpSession session = request.getSession();
-            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-            if(userID.equals(loginUser.getUserId())){
-                request.setAttribute("err", "Can not delete");     
-            }else{
-                UserDAO dao = new UserDAO();
-                boolean checkDelete = dao.delete(userId);
-                if(checkDelete){
-                    request.setAttribute("ms", "Delete user successfully");
-                    url=SUCCESS;
-                }
-            }
-        }catch(ClassNotFoundException | SQLException e ){
-           log("Error at LoadUserListController: " +e.toString());
-        }finally{
-            request.getRequestDispatcher(url).forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet EditQuantityController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet EditQuantityController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

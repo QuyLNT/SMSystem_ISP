@@ -52,7 +52,7 @@ public class MainController extends HttpServlet {
     
     private final static String CREATE_USER = "Sign Up" ;
     private final static String CREATE_USER_CONTROLLER = "CreateUserController";
-    private final static String SEARCH_USER = "SearchUser";
+    private final static String SEARCH_USER = "SearchUserName";
     private final static String SEARCH_USER_CONTROLLER = "SearchUserByUserNameController";
     private final static String TOGGLE_DISCOUNT_STATUS = "toggleDiscountStatus" ;
     private final static String TOGGLE_DISCOUNT_STATUS_CONTROLLER = "ToggleDiscountStatusController";
@@ -70,6 +70,8 @@ public class MainController extends HttpServlet {
     private final static String TOGGLE_USER_ROLE_CONTROLLER="ToggleUserRoleController";
     private final static String DELETE_USER = "Delete User" ;
     private final static String DELETE_USER_CONTROLLER = "DeleteUserController";   
+    private final static String REMOVE_CART = "doDelete" ;
+    private final static String REMOVE_CART_CONTROLLER = "RemoveCartController";   
     private final static String CREATE_BRAND= "Create Brand";
     private final static String CREATE_BRAND_CONTROLLER= "CreateBrandController";
     private final static String LOAD_SHOP_PAGE ="ShopPage" ;
@@ -128,6 +130,8 @@ public class MainController extends HttpServlet {
                 url=CREATE_USER_CONTROLLER;
             }else if(DELETE_USER.equals(action)){
                 url=DELETE_USER_CONTROLLER;
+            }else if(REMOVE_CART.equals(action)){
+                url=REMOVE_CART_CONTROLLER;
             }else if(HOME_PAGE.equals(action)){
                 url=HOME_PAGE_CONTROLLER;
             }else if(CREATE_BRAND.equals(action)){
