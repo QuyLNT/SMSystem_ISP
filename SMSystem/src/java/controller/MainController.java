@@ -52,7 +52,7 @@ public class MainController extends HttpServlet {
     
     private final static String CREATE_USER = "Sign Up" ;
     private final static String CREATE_USER_CONTROLLER = "CreateUserController";
-    private final static String SEARCH_USER = "SearchUser";
+    private final static String SEARCH_USER = "SearchUserName";
     private final static String SEARCH_USER_CONTROLLER = "SearchUserByUserNameController";
     private final static String TOGGLE_DISCOUNT_STATUS = "toggleDiscountStatus" ;
     private final static String TOGGLE_DISCOUNT_STATUS_CONTROLLER = "ToggleDiscountStatusController";
@@ -70,6 +70,8 @@ public class MainController extends HttpServlet {
     private final static String TOGGLE_USER_ROLE_CONTROLLER="ToggleUserRoleController";
     private final static String DELETE_USER = "Delete User" ;
     private final static String DELETE_USER_CONTROLLER = "DeleteUserController";   
+    private final static String REMOVE_CART = "doDelete" ;
+    private final static String REMOVE_CART_CONTROLLER = "RemoveCartController";   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -118,6 +120,8 @@ public class MainController extends HttpServlet {
                 url=CREATE_USER_CONTROLLER;
             }else if(DELETE_USER.equals(action)){
                 url=DELETE_USER_CONTROLLER;
+            }else if(REMOVE_CART.equals(action)){
+                url=REMOVE_CART_CONTROLLER;
             }
         }catch(Exception e){
            log("Error at MainController" + e.toString());
