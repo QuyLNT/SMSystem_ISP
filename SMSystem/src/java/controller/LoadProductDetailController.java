@@ -13,11 +13,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.category.BrandDAO;
 import model.category.UserObjectDAO;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
 import model.product.ProductImageDAO;
+import model.product.ProductImageDTO;
 import model.product.ProductVariantDAO;
 
 /**
@@ -44,21 +46,27 @@ public class LoadProductDetailController extends HttpServlet {
             List<Float> availableleSize;
             List<Float> allSize;
             List<ProductDTO> relatedList;
+            List<ProductImageDTO> imageList;
             ProductDTO product;
 
             if (productID != null) {
                 int id = Integer.parseInt(productID);
                 product = productDao.getProductById(id);
-                product.setListImages(imageDao.getImageByProduct(id));
                 availableleSize = variantDao.getAvailableSize(id);
                 allSize = variantDao.getAllSize(id);
                 relatedList = productDao.getRelatedList(id);
+                imageList = imageDao.getImageByProduct(id);
+                product.setListImages(imageList);
+                for(ProductDTO p: relatedList){
+                    p.setListImages(imageDao.getImageByProduct(p.getProductId()));
+                }
 
-                request.setAttribute("PRODUCT", product);
-                request.setAttribute("IMAGE", product.getListImages());
-                request.setAttribute("ALL_SIZE", allSize);
-                request.setAttribute("AVAILABLE_SIZE", availableleSize);
-                request.setAttribute("RELATED_LIST", relatedList);
+                HttpSession session = request.getSession();
+                session.setAttribute("PRODUCT", product);
+                session.setAttribute("IMAGE", product.getListImages());
+                session.setAttribute("ALL_SIZE", allSize);
+                session.setAttribute("AVAILABLE_SIZE", availableleSize);
+                session.setAttribute("RELATED_LIST", relatedList);
                 url = SUCCESS;
 
             }
