@@ -27,7 +27,7 @@ public class UserDAO {
         private static final String CHECK_PHONE_EXISTS = "SELECT COUNT(userId) FROM users WHERE phoneNumber = ?";
     private static final String CHECK_EMAIL_EXISTS = "SELECT COUNT(userId) FROM users WHERE email = ?";
 
-    private static final String INSERT_USER = " INSERT INTO users (userName, fullName, password, phoneNumber, sex, email, roleId) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_USER = " INSERT INTO users (userName, fullName, password, phoneNumber, sex, email, isActive, roleId, createdAt) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String LOGIN = "SELECT userName,fullName,userId,phoneNumber,sex,email,isActive,roleId,createdAt\n"
             + "FROM users\n"
