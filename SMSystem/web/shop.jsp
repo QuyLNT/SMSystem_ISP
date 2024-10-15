@@ -325,16 +325,43 @@
                                 </div>
 
                                 <h4 class="fw-title">Color</h4>
-                                <div class="fw-brand-check">
-                                    <div class="bc-item">
-                                        <label for="bc-black">             
-                                            <input type="checkbox" id="bc-black" name="brand" value="black"/>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
 
 
+                                <div class="dropdown">
+                                    <div class="dropdown-header"></div>
+                                    <ul class="color-options">
+                                        <li>
+                                            <span class="color-circle" style="background-color: white;"></span>
+                                            Trắng
+                                        </li>
+                                        <li>
+                                            <span class="color-circle" style="background-color: #FFB6C1;"></span>
+                                            HỒNG
+                                        </li>
+                                        <li>
+                                            <span class="color-circle rainbow"></span>
+                                            NHIỀU MÀU
+                                        </li>
+                                        <li>
+                                            <span class="color-circle" style="background-color: #000;"></span>
+                                            Đen
+                                        </li>
+                                        <li>
+                                            <span class="color-circle" style="background-color: #cc2424;"></span>
+                                            Đỏ
+                                        </li>
+                                        <li>
+                                            <span class="color-circle" style="background-color: green;"></span>
+                                            Xanh lá cây
+                                        </li>
+                                        <li>
+                                            <span class="color-circle" style="background-color: blue;"></span>
+                                            Xanh nước biển
+                                        </li>
+                                    </ul>
                                 </div>
+
+
                                 <h4 class="fw-title">Price</h4>
                                 <div class="filter-range-wrap">
                                     <div class="range-slider">
@@ -409,8 +436,8 @@
                                             <input type="hidden" name="productId" value="<%=p.getProductId()%>">
                                             <!--<li class="w-icon active"><a href="AddToCart?pId=<%=p.getProductId()%>&qnt=1&url=shop.jsp"><i class="icon_bag_alt"></i></a></li>-->
                                             <li class="quick-view"><!--<a href="product.jsp">--><input type="submit" style="background-color: white;
-                                                                                                font-weight: bold;
-                                                                                                border: none;" name="action" value="View"></a></li>
+                                                                                                       font-weight: bold;
+                                                                                                       border: none;" name="action" value="View"></a></li>
                                         </form>
                                     </ul>
                                 </div>
