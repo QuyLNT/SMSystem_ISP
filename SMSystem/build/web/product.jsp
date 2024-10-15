@@ -39,11 +39,6 @@
     </head>
 
     <body>
-        <!-- Start coding here -->
-        <!-- Page PreOrder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
@@ -75,7 +70,6 @@
                                     <div><a href="myAccount.jsp">My account</a></div>
                                     <div><a href="myOrder.jsp">Order Status</a></div>
                                     <div><a href="LogoutController">Logout</a></div>
-                                    </ul>
                                 </div>
                         </section>
                         <%
@@ -83,14 +77,13 @@
                         %>
                         <div class="ht-right">
                             <div class="login-panel" id="user-btn">
-                                <i class="fa fa-user">  GUEST</i>
+                                <i class="fa fa-user">GUEST</i>
                             </div>
                             <section class="user">
                                 <div class="user-setting">
                                     <div class="content">
                                         <div><a href="MainController?action=Sign In">Sign In</a></div>
-                                        <div><a href="LogoutController">Sign Out</a></div>
-                                        </ul>
+                                        <div><a href="register.jsp">Sign Up</a></div>
                                     </div>
                             </section>
                             <%
@@ -137,7 +130,7 @@
                             </div>
                             <div class="col-lg-3 col-md-3 text-right">
                                 <ul class="nav-right">
-                                    
+
                                     <%
                                         String size = (String) session.getAttribute("size");
                                         if (size == null) {
@@ -175,13 +168,13 @@
                                                                 double total = 0;
                                                                 int count = 0;
                                                                 for (CartItems ele : ls) {
-                                                                    total += ((ele.getProduct().getPrice()*(1-ele.getProduct().getSale())) * ele.getQuantity());
+                                                                    total += ((ele.getProduct().getPrice() * (1 - ele.getProduct().getSale())) * ele.getQuantity());
                                                         %>
                                                         <tr>
                                                             <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
                                                             <td class="si-text">
                                                                 <div class="product-selected">
-                                                                    <p>$<%= String.format("%.1f", ele.getProduct().getPrice()*(1-ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
+                                                                    <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
                                                                     <h6><%= ele.getProduct().getName()%></h6>
                                                                     <h6>Size <%=ele.getSize()%></h6>
                                                                 </div>
@@ -233,8 +226,8 @@
                         </div>
                         <nav class="nav-menu mobile-menu">
                             <ul>
-                                <li><a href="index.jsp">Home</a></li>
-                                <li class="active"><a href="shop.jsp">Shop</a></li>
+                                <li><a href="MainController?action=HomePage">Home</a></li>
+                                <li class="active"><a href="MainController?action=ShopPage">Shop</a></li>
                                 <li><a href="contact.jsp">Contact</a></li>
                                 <li><a href="">Pages</a>
                                     <ul class="dropdown">
@@ -259,7 +252,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb-text">
-                            <a href="index.jsp"><i class="fa fa-home"></i> Home</a>
+                            <a href="homePage.jsp"><i class="fa fa-home"></i>Home</a>
                             <a href="shop.jsp">Shop</a>
                             <span>Detail</span>
                         </div>
@@ -268,7 +261,7 @@
             </div>
         </div>
         <!-- Breadcrumb Section End -->
-
+        
         <!-- Product Shop Section Begin -->
         <div class="product-shop spad page-details">
             <div class="container">
@@ -277,8 +270,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <%
-                                    String pId = request.getParameter("productId");
-                                    ProductDTO product = (ProductDTO)request.getAttribute("PRODUCT");
+                                    ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
                                     if (product.getListImages() != null) {
                                         for (ProductImageDTO ele : product.getListImages()) {
                                 %>
@@ -289,7 +281,6 @@
                                         <i class="fa fa-search"></i>
                                     </div>
                                 </div>
-
                                 <div class="product-thumbs">
 
                                     <div class="product-thumbs-track ps-slider owl-carousel">
@@ -308,6 +299,8 @@
                                 </div>
                                 <%                                            break;
                                         }
+                                    }else{
+                                        %><h4>LOAD PRODUCT FAILED</h4><%
                                     }
                                 %>
                             </div>
@@ -340,9 +333,9 @@
                                         %>
                                     </div>
                                     <%
-                                        if (product.getUserOjectId()== 1 || product.getUserOjectId()== 2) {
+                                        if (product.getUserOjectId() == 1 || product.getUserOjectId() == 2) {
                                             List<Float> validSizes = (List<Float>) session.getAttribute("AVAILABLE_SIZE");
-                                            List<Float> allSizes = Arrays.asList(6f, 6.5f, 7f, 7.5f, 8f, 8.5f, 9f, 9.5f, 10f, 10.5f, 11f); // Tất cả các size
+                                            List<Float> allSizes = (List<Float>) session.getAttribute("ALL_SIZE");
                                     %>
                                     <style>
                                         .unavailable-size {
@@ -373,8 +366,8 @@
                                         %>
                                     </div>
                                     <%                                                } else {
-                                        List<Float> validSizes = (List<Float>) session.getAttribute("sizes");
-                                        List<Float> allSizes = Arrays.asList(3f, 4f, 5f, 6f);
+                                        List<Float> validSizes = (List<Float>) session.getAttribute("AVAILABLE_SIZE");
+                                        List<Float> allSizes = (List<Float>) session.getAttribute("ALL_SIZE");
                                     %>
                                     <style>
                                         .unavailable-size {
@@ -589,7 +582,7 @@
                 </div>
                 <div class="product-list" style="width: 70rem">
                     <%
-                        List<ProductDTO> list = (List) session.getAttribute("RELATED_LIST");
+                        List<ProductDTO> list = (List<ProductDTO>) session.getAttribute("RELATED_LIST");
                         for (ProductDTO ele : list) {
                     %>
                     <div class="product-item">
@@ -606,22 +599,22 @@
                                 <i class="icon_heart_alt"></i>
                             </div>
                             <ul>
-                                <form action="MainController" method="post">
-                                    <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
-                                    <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: white;
-                                                                                        font-weight: bold;
-                                                                                        border: none;" name="action" value="View"></a></li>
-                                </form>
+                                        <form action="MainController" method="post">
+                                            <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
+                                            <!--<li class="w-icon active"><a href="AddToCart?pId=<%=ele.getProductId()%>&qnt=1&url=shop.jsp"><i class="icon_bag_alt"></i></a></li>-->
+                                            <li class="quick-view"><!--<a href="product.jsp">--><input type="submit" style="background-color: white;
+                                                                                                font-weight: bold;
+                                                                                                border: none;" name="action" value="View"></a></li>
+                                        </form>
                             </ul>
                         </div>
-
                         <div class="pi-text">
                             <%
-                                if (ele.getUserOjectId()== 1) {
+                                if (ele.getUserOjectId() == 1) {
                             %>
                             <div class="catagory-name">Men</div>
                             <%
-                            } else if (ele.getUserOjectId()== 2) {
+                            } else if (ele.getUserOjectId() == 2) {
                             %>
                             <div class="catagory-name">Women</div>
                             <%
