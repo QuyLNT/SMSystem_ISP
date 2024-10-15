@@ -70,7 +70,6 @@
                                     <div><a href="myAccount.jsp">My account</a></div>
                                     <div><a href="myOrder.jsp">Order Status</a></div>
                                     <div><a href="LogoutController">Logout</a></div>
-                                    </ul>
                                 </div>
                         </section>
                         <%
