@@ -1776,6 +1776,13 @@ favor-add{
     margin-bottom: 26px;
 }
 
+.filter-widget .fw-title1 {
+    color: #252525;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 26px;
+}
+
 .filter-widget .filter-catagories li {
     list-style: none;
 }
