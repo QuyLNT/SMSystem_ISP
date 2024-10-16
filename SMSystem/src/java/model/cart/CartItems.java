@@ -17,7 +17,10 @@ public class CartItems {
     private int quantity;
     private float size;
     
-    private float salePrice;
+    public double getPrice() {
+        float salePrice = product.getPrice() * (1 - product.getSale()); 
+        return salePrice;
+    }
 
     public float getSize() {
         return size;
