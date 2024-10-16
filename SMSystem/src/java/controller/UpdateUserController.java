@@ -54,12 +54,12 @@ public class UpdateUserController extends HttpServlet {
                 request.setAttribute("FULLNAME_ERROR", "Must not exceed 50 characters!");
                 hasError = true;
             }
-            
+
             if (pass == null || pass.isEmpty()) {
                 request.setAttribute("PASS_ERROR", "Can't be blank ");
                 hasError = true;
             }
-            if (pass.length() < 3) {
+            if (!pass.isEmpty() && pass.length() < 3) {
                 request.setAttribute("PASS_ERROR", "Must be at least 3 characters long!");
                 hasError = true;
             }
@@ -68,7 +68,7 @@ public class UpdateUserController extends HttpServlet {
                 request.setAttribute("PHONE_ERROR", "Can't be blank!");
                 hasError = true;
             }
-            if (!phone.matches("^\\d{10,15}$")) {
+            if (!phone.isEmpty() && !phone.matches("^\\d{10,15}$")) {
                 request.setAttribute("PHONE_ERROR", "Invalid phone number! Must contain only digits and be between 10 to 15 characters.");
                 hasError = true;
             }
@@ -77,8 +77,11 @@ public class UpdateUserController extends HttpServlet {
                 request.setAttribute("SEX_ERROR", "Can't be blank!");
                 hasError = true;
             }
-
-            if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            if (email == null || email.isEmpty()) {
+                request.setAttribute("EMAIL_ERROR", "Can't be blank!");
+                hasError = true;
+            }
+            if (!email.isEmpty() && !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
                 request.setAttribute("EMAIL_ERROR", "Invalid email format!");
                 hasError = true;
             }
@@ -93,18 +96,14 @@ public class UpdateUserController extends HttpServlet {
                     user.setPhoneNumber(phone);
                     user.setSex(sex);
                     user.setEmail(email);
-                } else {
-                    url = ERROR;
-                    request.setAttribute("MESSAGE", "Update Fail");
                 }
             } else {
                 url = ERROR;
                 request.setAttribute("MESSAGE", "Update Fail");
             }
-
-        } catch (SQLException e) {
-            if(e.toString().contains("duplicate")){
-                request.setAttribute("EMAIL_ERROR", "Email or phone number is already exist");
+        } catch (ClassNotFoundException | SQLException e) {
+            if (e.toString().contains("duplicate")) {
+                request.setAttribute("MESSAGE", "Email or phone number is exits");
             }
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

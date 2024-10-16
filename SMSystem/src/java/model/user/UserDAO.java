@@ -127,7 +127,7 @@ public class UserDAO {
         return userList;
     }
 
-    public boolean userAfterUpdate(UserDTO user) throws SQLException {
+    public boolean userAfterUpdate(UserDTO user) throws SQLException, ClassNotFoundException{
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -151,9 +151,9 @@ public class UserDAO {
             if (conn != null) {
                 conn.close();
             }
-            return check;
-        }
 
+        }
+        return check;
     }
 
     public int getTotalAccount() throws SQLException, ClassNotFoundException {
@@ -336,27 +336,27 @@ public class UserDAO {
         return checkExits;
     }
 
-        public boolean isEmailExists(String email) throws ClassNotFoundException, SQLException{
-            boolean checkExits = true;
+    public boolean isEmailExists(String email) throws ClassNotFoundException, SQLException {
+        boolean checkExits = true;
         Connection conn = null;
         PreparedStatement ptm = null;
 
-            try{
+        try {
             conn = DBUtils.getConnection();
-                ptm = conn.prepareStatement(CHECK_EMAIL_EXISTS);
-                ptm.setString(1, email);
-                if(ptm.executeUpdate()>0){
-                    checkExits = false;
+            ptm = conn.prepareStatement(CHECK_EMAIL_EXISTS);
+            ptm.setString(1, email);
+            if (ptm.executeUpdate() > 0) {
+                checkExits = false;
             }
 
-            }finally{
-                if(ptm!=null){
-                    conn.close();
-                }
-                if(conn != null){
-                    conn.close();
+        } finally {
+            if (ptm != null) {
+                conn.close();
             }
+            if (conn != null) {
+                conn.close();
             }
-            return checkExits;
-            }
-            }
+        }
+        return checkExits;
+    }
+}
