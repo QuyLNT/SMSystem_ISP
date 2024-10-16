@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,8 @@ import model.cart.CartDTO;
 import model.cart.CartItems;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
+import model.product.ProductVariantDAO;
+import model.product.ProductVariantDTO;
 import model.user.UserDTO;
 
 /**
@@ -25,12 +28,13 @@ import model.user.UserDTO;
  */
 public class AddToCartController extends HttpServlet {
 
-    private static final String ERROR = "shopping-cart.jsp";
-    private static final String SUCCESS = "shopping-cart.jsp";
+    private static final String ERROR = "product.jsp";
+    private static final String SUCCESS = "product.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
+
     String url = ERROR;
 
     try {
@@ -42,40 +46,54 @@ public class AddToCartController extends HttpServlet {
         ProductDAO productDao = new ProductDAO();
         ProductDTO product = productDao.getProductById(productId);
 
+        ProductVariantDAO variantDao = new ProductVariantDAO();
+        List<ProductVariantDTO> availableVariants = variantDao.getVariantByProduct(productId);
+
         HttpSession session = request.getSession();
         CartDTO cart = (CartDTO) session.getAttribute("CART");
 
-        // Nếu giỏ hàng chưa có, tạo mới
         if (cart == null) {
             cart = new CartDTO();
         }
 
-        // Kiểm tra sản phẩm còn hàng không
-        if (quantity > product.getTotalStock()) {
-            request.setAttribute("err", "Out of stock. Only " + product.getTotalStock() + " product .");
-        } else {
-            CartDAO cartDao = new CartDAO();
-            int customerId = ((UserDTO) session.getAttribute("LIST_USER")).getUserId();
-
-            // Tạo giỏ hàng nếu chưa có và lấy cartId
-            int cartId = cartDao.createCart(customerId);
-            cart.setCartId(cartId);
-
-            // Thêm sản phẩm vào giỏ hàng
-            if (cart.existedProduct(productId, size)) {
-                CartItems existingItem = new CartItems(product, 0, cartId, productId, quantity, size);
-                cart.addItemExist(existingItem);
-            } else {
-                CartItems newItem = new CartItems(product, 0, cartId, productId, quantity, size);
-                cartDao.addCartItem(cartId, productId, quantity, size);
-                cart.addItem(newItem);
+        ProductVariantDTO selectedVariant = null;
+        for (ProductVariantDTO variant : availableVariants) {
+            if (variant.getProductId() == productId && variant.getSize() == size) {
+                selectedVariant = variant;
+                break;
             }
-
-            session.setAttribute("CART", cart);
-            session.setAttribute("size", String.valueOf(cart.getSize()));
-            request.setAttribute("ms", "Purchase successful! Check cart and checkout.");
-            url = SUCCESS;
         }
+
+        CartItems existingItem = cart.getItemByProductIdAndSize(productId, size);
+        if (existingItem != null) {
+            existingItem.setQuantity(existingItem.getQuantity() + quantity); 
+            request.setAttribute("ms", "Quantity updated successfully!");
+        } else {
+            if (selectedVariant == null) {
+                request.setAttribute("err", "This size is not available for the selected product.");
+            } else if (quantity > selectedVariant.getStock()) {
+                request.setAttribute("err", "Out of stock for this size. Only " + selectedVariant.getStock() + " items available.");
+            } else {
+                CartItems newItem = new CartItems(product, 0, cart.getCartId(), product.getProductId(), quantity, size);
+                cart.addItem(newItem);
+                request.setAttribute("ms", "Added to cart successfully!");
+            }
+        }
+
+        session.setAttribute("CART", cart);
+        session.setAttribute("size", String.valueOf(cart.getSize()));
+
+        CartDAO cartDao = new CartDAO();
+        UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
+        int customerId = user.getUserId();
+        int cartId = cartDao.createCartIfNotExists(customerId);
+
+        if (existingItem != null) {
+            cartDao.updateCartItemQuantity(cartId, productId, size, existingItem.getQuantity());
+        } else {
+            cartDao.addCartItem(cartId, productId, quantity, size);
+        }
+        url = SUCCESS;
     } catch (Exception e) {
         log("Error at AddToCartController: " + e.toString());
     } finally {
@@ -84,7 +102,7 @@ public class AddToCartController extends HttpServlet {
 }
 
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
