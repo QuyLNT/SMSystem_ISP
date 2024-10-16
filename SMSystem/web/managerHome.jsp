@@ -99,7 +99,7 @@
                                     <div class="col"><div class="card mb-4" style="max-width: 540px;">
                                             <div class="row g-0">
                                                 <div class="col-md-4">
-                                                    <img src="https://i.pinimg.com/736x/81/25/15/8125155827666176f762074043410998.jpg" class="img-fluid rounded-start" alt="...">
+                                                    <img src="img/shoes-icon.png" class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
@@ -143,8 +143,10 @@
 
                                                     %>
                                                     <div class="card-body">
-                                                        <h5 class="card-title">Order</h5>
+                                                        <h5 class="card-title">Order</h5>   
+                                                        <p></p>                             
                                                         <p class="card-text"><%=999%></p>
+                                                        <p></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -152,7 +154,7 @@
                                     <div class="col"><div class="card mb-4" style="max-width: 540px;">
                                             <div class="row g-0">
                                                 <div class="col-md-4">
-                                                    <img src="https://i.pinimg.com/236x/76/61/87/7661877310594e9096e62bceba362a25.jpg"  class="img-fluid rounded-start" alt="...">
+                                                    <img src="img/tick.png"  class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
                                                     <%
@@ -168,7 +170,7 @@
                                     <div class="col"><div class="card mb-4" style="max-width: 540px;">
                                             <div class="row g-0">
                                                 <div class="col-md-4">
-                                                    <img src="https://i.pinimg.com/236x/c2/1b/42/c21b42b7622d89af053450385d5e1d72.jpg" class="img-fluid rounded-start" alt="...">
+                                                    <img src="img/x-icon.png" class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
                                                     <%

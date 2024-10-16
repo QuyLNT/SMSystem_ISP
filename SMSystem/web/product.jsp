@@ -693,7 +693,7 @@
                     <div class="col-lg-3">
                         <div class="footer-left">
                             <div class="footer-logo">
-                                <a href="index.jsp">
+                                <a href="homePage.jsp">
                                     <img src="img/logoweb.png" alt="">
                                 </a>
                             </div>

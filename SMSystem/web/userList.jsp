@@ -1,8 +1,4 @@
-<%-- 
-    Document   : index
-    Created on : Jun 18, 2024, 10:17:29 PM
-    Author     : DELL
---%>
+
 
 <%@page import="model.user.UserDTO"%>
 <%@page import="model.user.UserDAO"%>

@@ -227,7 +227,13 @@
                         <nav class="nav-menu mobile-menu">
                             <ul>
                                 <li><a href="MainController?action=HomePage">Home</a></li>
-                                <li class="active"><a href="MainController?action=ShopPage">Shop</a></li>
+                                <li><a href="">Shop</a>
+                                    <ul class="dropdown">
+                                        <li><a href="O day nha">Code jsp o day</a></li>
+                                        
+
+                                    </ul>
+                                </li>
                                 <li><a href="contact.jsp">Contact</a></li>
                                 <li><a href="">Pages</a>
                                     <ul class="dropdown">
@@ -268,29 +274,6 @@
                     <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 product-sidebar-filter">
                         <div class="filter-widget">
                             <form method="get" action="FilterServlet">
-                                <h4 class="fw-title">Categories</h4>                            
-                                    <div class="filter-catagories">
-                                        <%
-                                            List<UserObjectDTO> uobList = (List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
-                                            if (uobList != null) {
-                                                for (UserObjectDTO u : uobList) {
-                                        %>
-                                        <div class="bc-item">
-                                            <li for="bc-<%=u.getUserObjectId()%>">
-                                                <%=u.getUserObjectName()%>
-                                              
-                                            </li>
-                                        </div>
-                                        <%  }
-
-                                        } else {
-                                        %>
-                                        <h5> No categories found. </h5>
-                                        <%
-                                            }
-                                        %>
-                                    </div>
-                              
                                 <h4 class="fw-title">Brand</h4>
                                 <div class="fw-brand-check">
                                     <%
