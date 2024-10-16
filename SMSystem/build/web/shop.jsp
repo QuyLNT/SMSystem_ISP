@@ -1,8 +1,3 @@
-<%-- 
-    Document   : shop
-    Created on : Jun 13, 2024, 10:49:42 PM
-    Author     : Luu Minh Quan
---%>
 
 <%@page import="model.category.BrandDTO"%>
 <%@page import="model.category.UserObjectDTO"%>
@@ -257,7 +252,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb-text">
-                            <a href="index.jsp"><i class="fa fa-home"></i> Home</a>
+                            <a href="homePage.jsp"><i class="fa fa-home"></i> Home</a>
                             <span>Shop</span>
                         </div>
                     </div>
@@ -273,8 +268,7 @@
                     <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 product-sidebar-filter">
                         <div class="filter-widget">
                             <form method="get" action="FilterServlet">
-                                <h4 class="fw-title">Categories</h4>
-                                <div class="fw-brand-check">
+                                <h4 class="fw-title">Categories</h4>                            
                                     <div class="filter-catagories">
                                         <%
                                             List<UserObjectDTO> uobList = (List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
@@ -282,10 +276,10 @@
                                                 for (UserObjectDTO u : uobList) {
                                         %>
                                         <div class="bc-item">
-                                            <label for="bc-<%=u.getUserObjectId()%>">
+                                            <li for="bc-<%=u.getUserObjectId()%>">
                                                 <%=u.getUserObjectName()%>
-                                                <span class="checkmark"></span>
-                                            </label>
+                                              
+                                            </li>
                                         </div>
                                         <%  }
 
@@ -296,7 +290,7 @@
                                             }
                                         %>
                                     </div>
-                                </div>
+                              
                                 <h4 class="fw-title">Brand</h4>
                                 <div class="fw-brand-check">
                                     <%
