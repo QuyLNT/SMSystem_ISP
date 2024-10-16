@@ -38,8 +38,8 @@
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="img/logoweb.png" alt="" width="100%" height="100%"/>
-                                    <span class="title-text">Nice</span>
+                                    <img src="img/logoweb.png" alt="" width="32px" height="32px"/>
+                                    <span class="title-text">SMS</span>
                                 </h3>
                             </div>
                             <ul class="nav-list">
@@ -101,7 +101,7 @@
                         <div class="welcome">
 
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal1">
                                 <i class="fa-solid fa-plus"></i> Add new Product
                             </button>
                             <%
@@ -128,7 +128,7 @@
                             <%}%>
                             <!-- Modal Add -->
 
-                            <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="addModal1" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">  
@@ -443,13 +443,13 @@
                                         <td>
 
 
-                                            <!-- Nút Xóa -->
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal<%= product.getProductId()%>">
+                                            <!-- Nút Xem Chi Tiết Sản Phẩm -->
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal<%= product.getProductId()%>">
                                                 <i class="fas fa-eye"></i>
                                             </button>
 
-                                            <!-- Modal Xóa -->
-                                            <div class="modal fade" id="deleteModal<%= product.getProductId()%>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                            <!-- Modal Chi Tiết Sản Phẩm (View Modal) -->
+                                            <div class="modal fade" id="viewModal<%= product.getProductId()%>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -465,12 +465,49 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>                                                             
+                                                                <!-- Nút mở Modal Add new Brand -->
+                                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+                                                                    <i class="fa-solid fa-plus"></i> Add new Size
+                                                                </button>
+
+                                                                <!-- Nút đóng modal hiện tại -->
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                             </div>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <!-- Modal Add New Brand để thêm Size và Stock -->
+                                            <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">  
+                                                            <h1 class="modal-title fs-5" id="addModalLabel">Add Size and Stock</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form action="MainController" method="POST">
+                                                            <div class="modal-body">
+                                                                <!-- Input cho Size -->
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Size</span>
+                                                                    <input name="size" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
+                                                                </div>
+                                                                <!-- Input cho Total (Stock) -->
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Total</span>
+                                                                    <input name="stock" type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <input type="submit" name="action" value="Add Size and Stock" class="btn btn-primary"/>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </td>
                                     </tr>
                                     <%

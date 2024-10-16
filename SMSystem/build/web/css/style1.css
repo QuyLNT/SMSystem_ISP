@@ -1777,9 +1777,14 @@ favor-add{
     margin-bottom: 26px;
 }
 
-.filter-widget .filter-catagories li {
+/*.filter-widget .filter-catagories li {
     list-style: none;
+}*/
+
+.filter-widget .filter-catagories li :hover{
+    color: red;
 }
+
 
 .filter-widget .filter-catagories li a {
     display: inline-block;
@@ -1791,7 +1796,11 @@ favor-add{
     transition: color 0.3s ease;
 }
 
-.filter-widget .filter-catagories li a:hover {
+.filter-widget .filter-catagories li a :hover {
+    color: #273c70; /* Màu khi di chuột qua */
+}
+
+.filter-widget .filter-catagories li :hover {
     color: #273c70; /* Màu khi di chuột qua */
 }
 

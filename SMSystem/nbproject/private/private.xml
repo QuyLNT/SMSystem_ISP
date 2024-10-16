@@ -5,15 +5,14 @@
         <group>
             <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/css/style1.css</file>
             <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/css_1/style1.css</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/discountList.jsp</file>
             <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/shop.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/src/java/controller/LoadProductDetailController.java</file>
             <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/contact.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/css/style.css</file>
             <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/homePage.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/css/style3.css</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/productList.jsp</file>
             <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/adminHome.jsp</file>
+            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/css/home.css</file>
+            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/userList.jsp</file>
+            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/orderDetail.jsp</file>
         </group>
     </open-files>
 </project-private>

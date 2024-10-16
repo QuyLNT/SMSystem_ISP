@@ -13,7 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Categories</title>
-        <title>Kẻ kiểm soát thông tin</title>
+        <title></title>
         <link rel="stylesheet" href="css/user1.css" />
         <link
             rel="stylesheet"
@@ -31,8 +31,8 @@
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="img/logoweb.png" alt="" width="100%" height="100%"/>
-                                    <span class="title-text">Nice</span>
+                                    <img src="img/logoweb.png" alt="" width="32px" height="32px"/>
+                                    <span class="title-text">SMS</span>
                                 </h3>
                             </div>
                             <ul class="nav-list">
