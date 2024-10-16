@@ -4,12 +4,13 @@
     Author     : Luu Minh Quan
 --%>
 
-<%@page import="model.Code"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.discount.DiscountDTO"%>
 <%@page import="java.util.Arrays"%>
-<%@page import="model.UserDTO"%>
-<%@page import="model.ItemDTO"%>
+<%@page import="model.user.UserDTO"%>
+<%@page import="model.cart.CartItems"%>
 <%@page import="java.util.List"%>
-<%@page import="model.CartDTO"%>
+<%@page import="model.cart.CartDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -63,30 +64,26 @@
                         </div>
                     </div>
                     <%
-                        UserDTO user = (UserDTO) session.getAttribute("user");
+                        UserDTO user = (UserDTO) session.getAttribute("LIST_USER");
+                        if (user != null) {
                     %>
                     <div class="ht-right">
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  <%=user.getFullName()%></i>
-
+                            <i class="fa fa-user"> <%=user.getFullName()%> </i> 
                         </div>
                         <section class="user">
                             <div class="user-setting">
                                 <div class="content">
                                     <div><a href="myAccount.jsp">My account</a></div>
                                     <div><a href="myOrder.jsp">Order Status</a></div>
-
                                     <div><a href="LogoutController">Logout</a></div>
-
-                                    </ul>
                                 </div>
+                            </div>
                         </section>
                         <div class="lan-selector">
                             <select class="language_drop" name="countries" id="countries" style="width: 300px;">
-                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
-                                    English</option>
-                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
-                                    German</option>
+                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">English</option>
+                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">German</option>
                             </select>
                         </div>
                         <div class="top-social">
@@ -96,15 +93,17 @@
                             <a href="#"><i class="ti-pinterest"></i></a>
                         </div>
                     </div>
+                    <%
+                        }
+                    %>
                 </div>
-
             </div>
             <div class="container">
                 <div class="inner-header">
                     <div class="row">
                         <div class="col-lg-2 col-md-2">
                             <div class="logo">
-                                <a href="index.jsp">
+                                <a href="homePage.jsp">
                                     <img src="img/logoweb.png" height="65px" alt="">
                                 </a>
                             </div>
@@ -137,7 +136,7 @@
                     </div>
                     <nav class="nav-menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="index.jsp">Home</a></li>
+                            <li class="active"><a href="homePage.jsp">Home</a></li>
                             <li><a href="shop.jsp">Shop</a></li>
                             <li><a href="contact.jsp">Contact</a></li>
                             <li><a href="">Pages</a>
@@ -162,7 +161,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb-text">
-                            <a href="index.jsp"><i class="fa fa-home"></i> Home</a>
+                            <a href="homePage.jsp"><i class="fa fa-home"></i> Home</a>
                             <span>Shopping Cart</span>
                         </div>
                     </div>
@@ -196,15 +195,15 @@
                                         if (cart == null) {
                                             cart = new CartDTO();
                                         }
-                                        List<ItemDTO> ls = cart.getList();
+                                        List<CartItems> ls = cart.getCartItemsList();
                                         if (ls != null) {
                                             int count = 0;
                                             double total = 0;
-                                            for (ItemDTO ele : ls) {
+                                            for (CartItems ele : ls) {
                                                 total += (ele.getPrice() * ele.getQuantity());
                                     %>
                                     <tr>
-                                        <td class="cart-pic first-row"><img src="<%=ele.getProduct().getImg()%>" style="height: 100px; width: 100px" alt=""></td>
+                                        <td class="cart-pic first-row"><img src="<%=ele.getProduct().getListImages()%>" style="height: 100px; width: 100px" alt=""></td>
                                         <td class="cart-title first-row">
                                             <h5><%=ele.getProduct().getName()%></h5>
                                         </td>
@@ -221,7 +220,7 @@
                                         <td class="total-price first-row">$<%= String.format("%.1f", ele.getPrice() * ele.getQuantity())%></td>
                                         <td>
                                             <%
-                                                if (ele.getProduct().getUoId() == 3) {
+                                                if (ele.getProduct().getUserOjectId() == 3) {
                                             %>
                                             <select  style="margin-top:26px; width: 65px;" id="size-select-<%=count%>" onchange="updateSize(this.value, <%=count%>)">
                                                 <%
@@ -243,6 +242,9 @@
                                             <select id="size-select-<%=count%>" onchange="updateSize(this.value, <%=count%>)">
                                                 <%
                                                     List<Float> validSizes = (List<Float>) session.getAttribute("sizes");
+                                                    if (validSizes == null) {
+                                                        validSizes = new ArrayList<>();
+                                                    }
                                                     List<Float> allSizes = Arrays.asList(6f, 6.5f, 7f, 7.5f, 8f, 8.5f, 9f, 9.5f, 10f, 10.5f, 11f);
                                                     for (float sz : allSizes) {
                                                         boolean isAvailable = validSizes.contains(sz);
@@ -308,7 +310,7 @@
                                         <button type="submit" value="Apply" name="action" class="site-btn coupon-btn">Apply</button>
                                     </form>
                                     <%
-                                        Code c = (Code) session.getAttribute("code");
+                                        DiscountDTO c = (DiscountDTO) session.getAttribute("code");
                                         String ms = (String) request.getAttribute("msg");
                                         if (ms != null) {
                                     %>
@@ -395,7 +397,7 @@
                     <div class="col-lg-3">
                         <div class="footer-left">
                             <div class="footer-logo">
-                                <a href="index.jsp">
+                                <a href="homePage.jsp">
                                     <img src="img/logoweb.png" alt="">
                                 </a>
                             </div>

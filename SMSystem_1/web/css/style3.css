@@ -1,0 +1,317 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 24, 2024, 6:06:06 PM
+    Author     : Luu Minh Quan
+*/
+.header-section .ht-right .user{
+    position: absolute;
+    top: 6vh; right: 2vh;
+    background: #252525;
+    width: 16rem;
+    height: 7rem;
+    display: flex;
+    align-items: center;
+    transform: scaleY(0);
+    transition: 0.3s ease-in-out;
+    transform-origin: top;
+}
+
+.header-section .ht-right .user a{
+    color: #fff;
+} 
+
+.header-section .ht-right .user a:hover{
+    color: #e7ab3c;
+} 
+
+.header-section .ht-right .user.active{
+    z-index: 1000;
+    transform: scaleY(1);
+} 
+
+
+.header-top .ht-right .login-panel:hover{
+color: #C06B3E;
+cursor: pointer;;
+}
+
+.wishlist-heading{
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.p-price-wishlist{
+    color: #252525;
+    font-size: 16px;
+    font-weight: 600;
+    width: 14%;
+}
+
+.shopping-cart-wishlist{
+    padding-top: 40px;
+    padding-bottom: 60px;
+}
+
+#btn-icon{
+    border: none;
+    outline: none;
+}
+
+.cart-table table tr td.close-td i:hover{
+    color:red;
+}
+
+.setting-center{
+    justify-content: center;
+}
+
+#UpdateUser:hover{
+    background-color: #e7ab3c;
+    
+}
+
+#email-exist{
+    background-color: #cce7f0;
+    width: 100%;
+    padding-right: 40px;
+}
+
+#email-exist.active{
+    background: #fff;
+}
+
+#userName-exist{
+    background-color: #cce7f0;
+    width: 100%;
+    padding-right: 40px;
+}
+
+#userName-exist.active{
+    background: #fff;
+}
+
+#password-exist{
+    background-color: #cce7f0;
+    width: 100%;
+    padding-right: 40px;
+}
+
+#password-exist.active{
+    background: #fff;
+}
+
+#fullName-exist{
+    background-color: #cce7f0;
+    width: 100%;
+    padding-right: 40px;
+}
+
+#fullName-exist.active{
+    background: #fff;
+}
+
+#phone-exist{
+    background-color: #cce7f0;
+    width: 100%;
+    padding-right: 40px;
+}
+
+#phone-exist.active{
+    background: #fff;
+}
+
+#street-exist{
+    background-color: #cce7f0;
+    width: 100%;
+    padding-right: 40px;
+}
+
+#street-exist.active{
+    background: #fff;
+}
+
+#district-exist{
+    background-color: #cce7f0;
+    width: 100%;
+    padding-right: 40px;
+}
+
+#district-exist.active{
+    background: #fff;
+}
+
+#city-exist{
+    background-color: #cce7f0;
+    width: 100%;
+    padding-right: 40px;
+}
+
+#city-exist.active{
+    background: #fff;
+}
+
+#birth-exist{
+    background-color: #cce7f0;
+    width: 100%;
+    padding-right: 40px;
+}
+
+#birth-exist.active{
+    background: #fff;
+    padding-right: 10px;
+}
+
+#sex-exist{
+    background-color: #cce7f0;
+    width: 100%;
+    padding-right: 40px;
+}
+
+#sex-exist.active{
+    background: #fff;
+}
+
+#edit-btn-email {
+    position: absolute;
+    right: 20px;
+    top: 43%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#edit-btn-email .fa-pencil-square-o {
+    font-size: 20px;
+}
+
+#edit-btn-userName {
+    position: absolute;
+    right: 20px;
+    top: 43%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#edit-btn-userName .fa-pencil-square-o {
+    font-size: 20px;
+}
+
+#edit-btn-pass {
+    position: absolute;
+    right: 20px;
+    top: 43%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#edit-btn-pass .fa-pencil-square-o {
+    font-size: 20px;
+}
+
+#edit-btn-fullName {
+    position: absolute;
+    right: 20px;
+    top: 43%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#edit-btn-fullName .fa-pencil-square-o {
+    font-size: 20px;
+}
+
+#edit-btn-phone {
+    position: absolute;
+    right: 20px;
+    top: 43%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#edit-btn-phone .fa-pencil-square-o {
+    font-size: 20px;
+}
+
+#edit-btn-street {
+    position: absolute;
+    right: 20px;
+    top: 43%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#edit-btn-street .fa-pencil-square-o {
+    font-size: 20px;
+}
+
+#edit-btn-district {
+    position: absolute;
+    right: 20px;
+    top: 43%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#edit-btn-district .fa-pencil-square-o {
+    font-size: 20px;
+}
+
+#edit-btn-city {
+    position: absolute;
+    right: 20px;
+    top: 43%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#edit-btn-city .fa-pencil-square-o {
+    font-size: 20px;
+}
+
+#edit-btn-birth {
+    position: absolute;
+    right: 20px;
+    top: 43%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#edit-btn-birth .fa-pencil-square-o {
+    font-size: 20px;
+}
+
+#edit-btn-sex {
+    position: absolute;
+    right: 20px;
+    top: 43%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+
+#edit-btn-sex .fa-pencil-square-o {
+    font-size: 20px;
+}

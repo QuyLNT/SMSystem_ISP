@@ -14,13 +14,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>User</title>
-        <title>Kẻ kiểm soát thông tin</title>
+        <title></title>
         <link rel="stylesheet" href="css/user1.css" />
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
-        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
+<!--        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
     </head>
@@ -32,7 +32,7 @@
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="img/logoweb.png" alt="" width="100%" height="100%"/>
+                                    <img src="img/logoweb.png" alt="" width="32px" height="32px"/>
                                     <span class="title-text">SMS</span>
                                 </h3>
                             </div>

@@ -1,8 +1,3 @@
-<%-- 
-    Document   : shop
-    Created on : Jun 13, 2024, 10:49:42 PM
-    Author     : Luu Minh Quan
---%>
 
 <%@page import="model.category.BrandDTO"%>
 <%@page import="model.category.UserObjectDTO"%>
@@ -46,9 +41,6 @@
     <body>
         <!-- Start coding here -->
         <!-- Page PreOrder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
@@ -260,7 +252,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb-text">
-                            <a href="index.jsp"><i class="fa fa-home"></i> Home</a>
+                            <a href="homePage.jsp"><i class="fa fa-home"></i> Home</a>
                             <span>Shop</span>
                         </div>
                     </div>
@@ -276,8 +268,7 @@
                     <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 product-sidebar-filter">
                         <div class="filter-widget">
                             <form method="get" action="FilterServlet">
-                                <h4 class="fw-title">Categories</h4>
-                                <div class="fw-brand-check">
+                                <h4 class="fw-title">Categories</h4>                            
                                     <div class="filter-catagories">
                                         <%
                                             List<UserObjectDTO> uobList = (List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
@@ -285,10 +276,10 @@
                                                 for (UserObjectDTO u : uobList) {
                                         %>
                                         <div class="bc-item">
-                                            <label for="bc-<%=u.getUserObjectId()%>">
+                                            <li for="bc-<%=u.getUserObjectId()%>">
                                                 <%=u.getUserObjectName()%>
-                                                <span class="checkmark"></span>
-                                            </label>
+                                              
+                                            </li>
                                         </div>
                                         <%  }
 
@@ -299,7 +290,7 @@
                                             }
                                         %>
                                     </div>
-                                </div>
+                              
                                 <h4 class="fw-title">Brand</h4>
                                 <div class="fw-brand-check">
                                     <%
@@ -325,16 +316,43 @@
                                 </div>
 
                                 <h4 class="fw-title">Color</h4>
-                                <div class="fw-brand-check">
-                                    <div class="bc-item">
-                                        <label for="bc-black">             
-                                            <input type="checkbox" id="bc-black" name="brand" value="black"/>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
 
 
+                                <div class="dropdown">
+                                    <div class="dropdown-header"></div>
+                                    <ul class="color-options">
+                                        <li>
+                                            <span class="color-circle" style="background-color: white;"></span>
+                                            Trắng
+                                        </li>
+                                        <li>
+                                            <span class="color-circle" style="background-color: #FFB6C1;"></span>
+                                            HỒNG
+                                        </li>
+                                        <li>
+                                            <span class="color-circle rainbow"></span>
+                                            NHIỀU MÀU
+                                        </li>
+                                        <li>
+                                            <span class="color-circle" style="background-color: #000;"></span>
+                                            Đen
+                                        </li>
+                                        <li>
+                                            <span class="color-circle" style="background-color: #cc2424;"></span>
+                                            Đỏ
+                                        </li>
+                                        <li>
+                                            <span class="color-circle" style="background-color: green;"></span>
+                                            Xanh lá cây
+                                        </li>
+                                        <li>
+                                            <span class="color-circle" style="background-color: blue;"></span>
+                                            Xanh nước biển
+                                        </li>
+                                    </ul>
                                 </div>
+
+
                                 <h4 class="fw-title">Price</h4>
                                 <div class="filter-range-wrap">
                                     <div class="range-slider">
@@ -409,8 +427,8 @@
                                             <input type="hidden" name="productId" value="<%=p.getProductId()%>">
                                             <!--<li class="w-icon active"><a href="AddToCart?pId=<%=p.getProductId()%>&qnt=1&url=shop.jsp"><i class="icon_bag_alt"></i></a></li>-->
                                             <li class="quick-view"><!--<a href="product.jsp">--><input type="submit" style="background-color: white;
-                                                                                                font-weight: bold;
-                                                                                                border: none;" name="action" value="View"></a></li>
+                                                                                                       font-weight: bold;
+                                                                                                       border: none;" name="action" value="View"></a></li>
                                         </form>
                                     </ul>
                                 </div>

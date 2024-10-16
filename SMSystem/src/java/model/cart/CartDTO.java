@@ -138,5 +138,14 @@ public class CartDTO {
     public int getSize() {
         return (cartItemsList != null) ? cartItemsList.size() : 0;
     }
+
+    public CartItems getItemByProductIdAndSize(int productId, Float size) {
+        for (CartItems item : cartItemsList) {
+            if (item.getProduct().getProductId() == productId && item.getSize() == size) {
+                return item;
+            }
+        }
+        return null; 
+    }
 }
 

@@ -46,7 +46,7 @@ h4,
 h5,
 h6 {
     margin: 0;
-    color: #111111;
+    color: #2196F3;
     font-weight: 400;
     font-family: "Muli", sans-serif;
 }
@@ -57,6 +57,7 @@ h1 {
 
 h2 {
     font-size: 36px;
+    color: #2196F3;
 }
 
 h3 {
@@ -1776,9 +1777,14 @@ favor-add{
     margin-bottom: 26px;
 }
 
-.filter-widget .filter-catagories li {
+/*.filter-widget .filter-catagories li {
     list-style: none;
+}*/
+
+.filter-widget .filter-catagories li :hover{
+    color: red;
 }
+
 
 .filter-widget .filter-catagories li a {
     display: inline-block;
@@ -1790,7 +1796,11 @@ favor-add{
     transition: color 0.3s ease;
 }
 
-.filter-widget .filter-catagories li a:hover {
+.filter-widget .filter-catagories li a :hover {
+    color: #273c70; /* Màu khi di chuột qua */
+}
+
+.filter-widget .filter-catagories li :hover {
     color: #273c70; /* Màu khi di chuột qua */
 }
 

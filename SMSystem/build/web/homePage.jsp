@@ -70,7 +70,6 @@
                                     <div><a href="myAccount.jsp">My account</a></div>
                                     <div><a href="myOrder.jsp">Order Status</a></div>
                                     <div><a href="LogoutController">Logout</a></div>
-                                    </ul>
                                 </div>
                         </section>
                         <%
@@ -124,7 +123,7 @@
                                 <form action="MainController" method="get">
                                     <div class="advanced-search">
                                         <button type="button" class="category-btn">All Categories</button>
-                                        
+
                                         <div class="input-group">
                                             <input style="color: black;" type="text" name="text" placeholder="What do you need?">
                                             <button type="submit" name="action" value="Search"><i class="ti-search"></i></button>
@@ -135,77 +134,54 @@
                             <div class="col-lg-3 col-md-3 text-right">
                                 <ul class="nav-right">
                                     <%
-                                        String size = (String) session.getAttribute("size");
-                                        if (size == null) {
-                                            size = "0";
-                                        }
-                                        boolean isEmptyCart = size.equals("0");
+                                        CartDTO cart = (CartDTO) session.getAttribute("CART");
+                                        boolean isEmptyCart = cart == null || (cart.getCartItemsList() == null || cart.getCartItemsList().isEmpty());
+                                        int itemCount = isEmptyCart ? 0 : cart.getCartItemsList().size();
                                     %>
                                     <li class="cart-icon">
                                         <a href="#">
                                             <i class="icon_bag_alt"></i>
-                                            <span><%= size%></span>
+                                            <span><%= itemCount%></span>
                                         </a>
                                         <div class="cart-hover">
                                             <div class="select-items">
                                                 <% if (isEmptyCart) { %>
                                                 <p>No product in cart. Buy more</p>
-                                                <div class="select-total">
-                                                    <span>total:</span>
-                                                    <h5>$00.00</h5>
-                                                </div>
-                                                <div class="select-button">
-                                                    <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
-
-                                                </div>
                                                 <% } else { %>
                                                 <table>
                                                     <tbody>
                                                         <%
-                                                            CartDTO cart = (CartDTO) session.getAttribute("CART");
-                                                            if (cart == null) {
-                                                                cart = new CartDTO();
-                                                            }
                                                             List<CartItems> ls = cart.getCartItemsList();
-                                                            if (ls != null) {
-                                                                double total = 0;
-                                                                int count = 0;
-                                                                for (CartItems ele : ls) {
-                                                                    total += (ele.getProduct().getPrice() * ele.getQuantity());
+                                                            double total = 0;
+                                                            for (CartItems ele : ls) {
+                                                                total += (ele.getProduct().getPrice() * (1 - ele.getProduct().getSale())) * ele.getQuantity();
                                                         %>
                                                         <tr>
-                                                            <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
+                                                            <td class="si-pic"><img src="<%= ele.getProduct().getListImages()%>" style="height: 76px"></td>
                                                             <td class="si-text">
                                                                 <div class="product-selected">
-                                                                    <p>$<%= String.format("%.1f", ele.getProduct().getPrice())%> x <%= ele.getQuantity()%></p>
+                                                                    <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
                                                                     <h6><%= ele.getProduct().getName()%></h6>
-                                                                    <h6>Size <%=ele.getSize()%></h6>
+                                                                    <h6>Size <%= ele.getSize()%></h6>
                                                                 </div>
                                                             </td>
                                                             <td class="si-close">
-                                                                <a href="RemoveServlet?pId=<%=count%>&url=shop.jsp" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
+                                                                <a href="RemoveServlet?pId=<%= ele.getProduct().getProductId()%>" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
                                                                     <i class="ti-close"></i>
                                                                 </a>
                                                             </td>
                                                         </tr>
-                                                        <%
-                                                                count++;
-                                                            }
-                                                        %>
+                                                        <% }%>
                                                     </tbody>
                                                 </table>
                                                 <div class="select-total">
                                                     <span>total:</span>
-                                                    <h5>$<%=String.format("%.1f", total)%></h5>
-                                                </div>
-                                                <%
-                                                    }
-                                                %>
-                                                <div class="select-button">
-                                                    <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
-
+                                                    <h5>$<%= String.format("%.1f", total)%></h5>
                                                 </div>
                                                 <% } %>
+                                                <div class="select-button">
+                                                    <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </li>
@@ -347,7 +323,7 @@
                             %>
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="<%=ele.getAvatarPath()%>" alt="">
+                                    <img src="<%=ele.getAvatarPath()%>" alt="" width="240px" height="240px">
                                     <%
                                         if (ele.getSale() != 0) {
                                     %>
@@ -432,7 +408,7 @@
                             %>
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="<%=ob.getAvatarPath()%>" alt="">
+                                    <img src="<%=ob.getAvatarPath()%>" alt="" width="240px" height="240px">
                                     <%if (ob.getSale() != 0) {
                                     %>
                                     <div class="sale">Sale</div>
@@ -531,7 +507,7 @@
                             %>
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="<%=ele.getAvatarPath()%>" alt="">
+                                    <img src="<%=ele.getAvatarPath()%>" alt="" width="240px" height="240px">
                                     <%
                                         if (ele.getSale() != 0) {
                                     %>
