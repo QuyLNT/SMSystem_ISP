@@ -32,9 +32,7 @@ and open the template in the editor.
     <body>
         <!-- Start coding here -->
         <!-- Page PreOrder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
+        
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">

@@ -26,13 +26,13 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
-<!--        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />-->
+        <!--        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
     </head>
     <body>
         <main class="main-wrap">
-           <header class="main-head">
+            <header class="main-head">
                 <div class="main-nav">
                     <nav class="navbar">
                         <div class="navbar-nav">
@@ -167,7 +167,7 @@
                                                     <select name="userObjectID" class="form-control" required>
                                                         <%
 
-                                                            List<UserObjectDTO> userObjectList =(List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
+                                                            List<UserObjectDTO> userObjectList = (List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
                                                             for (UserObjectDTO uo : userObjectList) {
                                                         %>
                                                         <option value="<%= uo.getUserObjectId()%>"><%= uo.getUserObjectName()%></option>
@@ -322,8 +322,8 @@
                                                 <input type="hidden" name="productId" value="<%= product.getProductId()%>"/>
                                                 <input type="hidden" name="action" value="toggleFlashSale"/>
                                                 <select name="Hot" onchange="this.form.submit()">
-                                                    <option value="1" <%= product.isHot()==true ? "selected" : ""%>>Active</option>
-                                                    <option value="0" <%= product.isHot()==false ? "selected" : ""%>>Inactive</option>
+                                                    <option value="1" <%= product.isHot() == true ? "selected" : ""%>>Active</option>
+                                                    <option value="0" <%= product.isHot() == false ? "selected" : ""%>>Inactive</option>
                                                 </select>
                                             </form>
                                         </td>
@@ -350,8 +350,8 @@
                                                 <input type="hidden" name="productId" value="<%= product.getProductId()%>"/>
                                                 <input type="hidden" name="action" value="toggleProductStatus"/>
                                                 <select name="Product_Status" onchange="this.form.submit()">
-                                                    <option value="1" <%= product.isProductStatus()==true ? "selected" : ""%>>Active</option>
-                                                    <option value="0" <%= product.isProductStatus()==false ? "selected" : ""%>>Inactive</option>
+                                                    <option value="1" <%= product.isProductStatus() == true ? "selected" : ""%>>Active</option>
+                                                    <option value="0" <%= product.isProductStatus() == false ? "selected" : ""%>>Inactive</option>
                                                 </select>
                                             </form>
                                         </td>
@@ -444,8 +444,8 @@
 
 
                                             <!-- Nút Xóa -->
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= product.getProductId()%>">
-                                                <i class="fas fa-trash"></i>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal<%= product.getProductId()%>">
+                                                <i class="fas fa-eye"></i>
                                             </button>
 
                                             <!-- Modal Xóa -->
@@ -453,21 +453,19 @@
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="deleteModalLabel">Confirm product deletion</h1>
+                                                            <h1 class="modal-title fs-5" id="deleteModalLabel">Size product detail</h1>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <form action="DeleteProductController" method="POST">
                                                             <div class="modal-body">
-                                                                <input type="hidden" name="productId" value="<%= product.getProductId()%>" />
-                                                                Are you sure you want to delete the product '<%= product.getName()%>' and all related images?
+                                                                Name: 
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">Size</div>
+                                                                    <div class="col-sm-6">Stock</div>
+                                                                </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-                                                                <input type="hidden" name="productId" value="<%= product.getProductId()%>" />
-                                                                <input type="hidden" name="action" value="DeleteProduct" />
-                                                                <button type="submit" class="btn btn-danger">Delete</button>
-
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>                                                             
                                                             </div>
                                                         </form>
                                                     </div>

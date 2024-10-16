@@ -46,7 +46,7 @@ h4,
 h5,
 h6 {
     margin: 0;
-    color: #111111;
+    color: #2196F3;
     font-weight: 400;
     font-family: "Muli", sans-serif;
 }
@@ -57,6 +57,7 @@ h1 {
 
 h2 {
     font-size: 36px;
+    color: #2196F3;
 }
 
 h3 {

@@ -323,7 +323,7 @@
                             %>
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="<%=ele.getAvatarPath()%>" alt="">
+                                    <img src="<%=ele.getAvatarPath()%>" alt="" width="240px" height="240px">
                                     <%
                                         if (ele.getSale() != 0) {
                                     %>
@@ -408,7 +408,7 @@
                             %>
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="<%=ob.getAvatarPath()%>" alt="">
+                                    <img src="<%=ob.getAvatarPath()%>" alt="" width="240px" height="240px">
                                     <%if (ob.getSale() != 0) {
                                     %>
                                     <div class="sale">Sale</div>
@@ -507,7 +507,7 @@
                             %>
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="<%=ele.getAvatarPath()%>" alt="">
+                                    <img src="<%=ele.getAvatarPath()%>" alt="" width="240px" height="240px">
                                     <%
                                         if (ele.getSale() != 0) {
                                     %>
