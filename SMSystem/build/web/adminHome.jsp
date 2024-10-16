@@ -17,7 +17,6 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
-        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     </head>
     <body>
@@ -89,7 +88,7 @@
                                         <div class="card mb-4" style="max-width: 540px;">
                                             <div class="row g-0">
                                                 <div class="col-md-4">
-                                                    <img src="https://i.pinimg.com/736x/2e/79/00/2e790030135a071a105f649de7367a10.jpg" class="img-fluid rounded-start" alt="...">
+                                                    <img src="img/admin-icon.png" class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
@@ -103,7 +102,7 @@
                                         <div class="card mb-4" style="max-width: 540px;">
                                             <div class="row g-0">
                                                 <div class="col-md-4">
-                                                    <img src="https://i.pinimg.com/736x/2e/79/00/2e790030135a071a105f649de7367a10.jpg" class="img-fluid rounded-start" alt="...">
+                                                    <img src="img/manager-icon.png" class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
@@ -125,7 +124,7 @@
                                         <div class="card mb-4" style="max-width: 540px;">
                                             <div class="row g-0">
                                                 <div class="col-md-4">
-                                                    <img src="https://i.pinimg.com/736x/2e/79/00/2e790030135a071a105f649de7367a10.jpg" class="img-fluid rounded-start" alt="...">
+                                                    <img src="img/customer-icon.png" class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
@@ -140,7 +139,7 @@
                                         <div class="card mb-4" style="max-width: 540px;">
                                             <div class="row g-0">
                                                 <div class="col-md-4">
-                                                    <img src="https://i.pinimg.com/736x/2e/79/00/2e790030135a071a105f649de7367a10.jpg" class="img-fluid rounded-start" alt="...">
+                                                    <img src="img/shipper-icon.png" class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">

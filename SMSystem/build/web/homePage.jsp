@@ -1,4 +1,4 @@
-
+ 
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.cart.CartItems"%>
 <%@page import="model.cart.CartDTO"%>
@@ -203,7 +203,7 @@
                         <nav class="nav-menu mobile-menu">
                             <ul>
                                 <li><a href="MainController?action=HomePage">Home</a></li>
-                                <li class="active"><a href="MainController?action=ShopPage">Shop</a></li>
+                                <li><a href="MainController?action=ShopPage">Shop</a></li>
                                 <li><a href="contact.jsp">Contact</a></li>
                                 <li><a href="">Pages</a>
                                     <ul class="dropdown">
