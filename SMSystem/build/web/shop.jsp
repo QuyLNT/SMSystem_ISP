@@ -72,7 +72,6 @@
                                     <div><a href="myAccount.jsp">My account</a></div>
                                     <div><a href="myOrder.jsp">Order Status</a></div>
                                     <div><a href="LogoutController">Logout</a></div>
-                                    </ul>
                                 </div>
                         </section>
                         <%
@@ -85,9 +84,8 @@
                             <section class="user">
                                 <div class="user-setting">
                                     <div class="content">
-                                        <div><a href="MainController?action=Sign In">Sign In</a></div>
-                                        <div><a href="LogoutController">Sign Out</a></div>
-                                        </ul>
+                                        <div><a href="login.jsp">Sign In</a></div>
+                                        <div><a href="register.jsp">Sign Up</a></div>
                                     </div>
                             </section>
                             <%
@@ -224,10 +222,21 @@
                 </script>
                 <div class="nav-item">
                     <div class="container">
+                        <div class="nav-depart">
+                            <div class="depart-btn">
+                                <i class="ti-menu"></i>
+                                <span>All Departments</span>
+                                <ul class="depart-hover">
+                                    <li><a href="MainController?action=SearchCategories&type=1">Men's Clothing</a></li>
+                                    <li><a href="MainController?action=SearchCategories&type=2">Women's Clothing</a></li>
+                                    <li><a href="MainController?action=SearchCategories&type=3">Kid's Clothing</a></li>
+                                </ul>
+                            </div>
+                        </div>
                         <nav class="nav-menu mobile-menu">
                             <ul>
                                 <li><a href="MainController?action=HomePage">Home</a></li>
-                                <li class="active"><a href="MainController?action=ShopPage">Shop</a></li>
+                                <li><a href="MainController?action=ShopPage">Shop</a></li>
                                 <li><a href="contact.jsp">Contact</a></li>
                                 <li><a href="">Pages</a>
                                     <ul class="dropdown">
@@ -268,29 +277,6 @@
                     <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 product-sidebar-filter">
                         <div class="filter-widget">
                             <form method="get" action="FilterServlet">
-                                <h4 class="fw-title">Categories</h4>                            
-                                    <div class="filter-catagories">
-                                        <%
-                                            List<UserObjectDTO> uobList = (List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
-                                            if (uobList != null) {
-                                                for (UserObjectDTO u : uobList) {
-                                        %>
-                                        <div class="bc-item">
-                                            <li for="bc-<%=u.getUserObjectId()%>">
-                                                <%=u.getUserObjectName()%>
-                                              
-                                            </li>
-                                        </div>
-                                        <%  }
-
-                                        } else {
-                                        %>
-                                        <h5> No categories found. </h5>
-                                        <%
-                                            }
-                                        %>
-                                    </div>
-                              
                                 <h4 class="fw-title">Brand</h4>
                                 <div class="fw-brand-check">
                                     <%
@@ -316,8 +302,6 @@
                                 </div>
 
                                 <h4 class="fw-title">Color</h4>
-
-
                                 <div class="dropdown">
                                     <div class="dropdown-header"></div>
                                     <ul class="color-options">

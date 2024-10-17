@@ -35,13 +35,13 @@ public class MainController extends HttpServlet {
     private final static String LOAD_PRODUCT_DATA_CONTROLLER = "LoadProductController";
     private final static String UPDATE_USER = "Update";
     private final static String UPDATE_USER_CONTROLLER = "UpdateUserController";
-    private final static String LOAD_MANAGER_HOME_DATA="LoadManagerHomeData" ;
-    private final static String LOAD_MANAGER_HOME_CONTROLLER="LoadManagerHomeDataController";
-    private final static String LOAD_PRODUCT_LIST="LoadProductList" ;
-    private final static String LOAD_PRODUCT_LIST_CONTROLLER="LoadProductListController";
-    private final static String LOAD_DISCOUNT_LIST="LoadDiscountList" ;
-    private final static String LOAD_DISCOUNT_LIST_CONTROLLER="LoadDiscountListController";
-    private final static String CREATE_PRODUCT = "Create Product" ;
+    private final static String LOAD_MANAGER_HOME_DATA = "LoadManagerHomeData";
+    private final static String LOAD_MANAGER_HOME_CONTROLLER = "LoadManagerHomeDataController";
+    private final static String LOAD_PRODUCT_LIST = "LoadProductList";
+    private final static String LOAD_PRODUCT_LIST_CONTROLLER = "LoadProductListController";
+    private final static String LOAD_DISCOUNT_LIST = "LoadDiscountList";
+    private final static String LOAD_DISCOUNT_LIST_CONTROLLER = "LoadDiscountListController";
+    private final static String CREATE_PRODUCT = "Create Product";
     private final static String CREATE_PRODUCT_CONTROLLER = "CreateProductController";
     private final static String SEARCH_PRODUCT = "SearchProductName";
     private final static String SEARCH_PRODUCT_CONTROLLER = "SearchProductByNameController";
@@ -49,47 +49,51 @@ public class MainController extends HttpServlet {
     private final static String TOGGLE_FLASH_SALE_CONTROLLER = "ToggleFlashSaleController";
     private final static String TOGGLE_PRODUCT_STATUS = "toggleProductStatus";
     private final static String TOGGLE_PRODUCT_STATUS_CONTROLLER = "ToggleProductStatusController";
-    
-    private final static String CREATE_USER = "Sign Up" ;
+
+    private final static String CREATE_USER = "Sign Up";
     private final static String CREATE_USER_CONTROLLER = "CreateUserController";
     private final static String SEARCH_USER = "SearchUserName";
     private final static String SEARCH_USER_CONTROLLER = "SearchUserByUserNameController";
-    private final static String TOGGLE_DISCOUNT_STATUS = "toggleDiscountStatus" ;
+    private final static String TOGGLE_DISCOUNT_STATUS = "toggleDiscountStatus";
     private final static String TOGGLE_DISCOUNT_STATUS_CONTROLLER = "ToggleDiscountStatusController";
     private final static String SEARCH_BRANCH = "SearchBrandName";
     private final static String SEARCH_BRANCH_CONTROLLER = "SearchBrandController";
-    private final static String LOAD_BRAND_LIST="LoadBrandList" ;
-    private final static String LOAD_BRAND_LIST_CONTROLLER="LoadBrandListController";
-    private final static String DELETE_PRODUCT = "Delete Product" ;
-    private final static String DELETE_PRODUCT_CONTROLLER = "DeleteProductController";   
-    private final static String LOAD_ADMIN_HOME="LoadAdminHome" ;
-    private final static String LOAD_ADMIN_HOME_CONTROLLER="LoadAdminHomeDataController";
-    private final static String LOAD_USER_LIST="LoadUserList" ;
-    private final static String LOAD_USER_LIST_CONTROLLER="LoadUserListController";
-    private final static String TOGGLE_USER_ROLE="toggleUserRole" ;
-    private final static String TOGGLE_USER_ROLE_CONTROLLER="ToggleUserRoleController";
-    private final static String DELETE_USER = "Delete User" ;
-    private final static String DELETE_USER_CONTROLLER = "DeleteUserController";   
-    private final static String REMOVE_CART = "doDelete" ;
-    private final static String REMOVE_CART_CONTROLLER = "RemoveCartController";   
-    private final static String CREATE_BRAND= "Create Brand";
-    private final static String CREATE_BRAND_CONTROLLER= "CreateBrandController";
-    private final static String LOAD_SHOP_PAGE ="ShopPage" ;
-    private final static String LOAD_SHOP_PAGE_CONTROLLER="LoadShopPageController";
-    private final static String HOME_PAGE = "HomePage" ;
-    private final static String HOME_PAGE_CONTROLLER = "LoadTopListByCateController";   
-    private final static String SORT_SHOP_PAGE = "SortShopPage" ;
-    private final static String SORT_SHOP_PAGE_CONTROLLER = "SortProductListController";   
-    private final static String VIEW = "View" ;
-    private final static String LOAD_PRODUCT_DETAIL = "LoadProductDetailController"; 
-    
-    private final static String ADD_TO_CART = "Add To Cart" ;
+    private final static String LOAD_BRAND_LIST = "LoadBrandList";
+    private final static String LOAD_BRAND_LIST_CONTROLLER = "LoadBrandListController";
+    private final static String DELETE_PRODUCT = "Delete Product";
+    private final static String DELETE_PRODUCT_CONTROLLER = "DeleteProductController";
+    private final static String LOAD_ADMIN_HOME = "LoadAdminHome";
+    private final static String LOAD_ADMIN_HOME_CONTROLLER = "LoadAdminHomeDataController";
+    private final static String LOAD_USER_LIST = "LoadUserList";
+    private final static String LOAD_USER_LIST_CONTROLLER = "LoadUserListController";
+    private final static String TOGGLE_USER_ROLE = "toggleUserRole";
+    private final static String TOGGLE_USER_ROLE_CONTROLLER = "ToggleUserRoleController";
+    private final static String DELETE_USER = "Delete User";
+    private final static String DELETE_USER_CONTROLLER = "DeleteUserController";
+    private final static String REMOVE_CART = "doDelete";
+    private final static String REMOVE_CART_CONTROLLER = "RemoveCartController";
+    private final static String CREATE_BRAND = "Create Brand";
+    private final static String CREATE_BRAND_CONTROLLER = "CreateBrandController";
+    private final static String LOAD_SHOP_PAGE = "ShopPage";
+    private final static String LOAD_SHOP_PAGE_CONTROLLER = "LoadShopPageController";
+    private final static String HOME_PAGE = "HomePage";
+    private final static String HOME_PAGE_CONTROLLER = "LoadTopListByCateController";
+    private final static String SORT_SHOP_PAGE = "SortShopPage";
+    private final static String SORT_SHOP_PAGE_CONTROLLER = "SortProductListController";
+    private final static String VIEW = "View";
+    private final static String LOAD_PRODUCT_DETAIL = "LoadProductDetailController";
+
+    private final static String ADD_TO_CART = "Add To Cart";
     private final static String ADD_TO_CART_CONTROLLER = "AddToCartController";
     private static final String LOGIN_GOOGLE = "LoginGoogle";
     private static final String LOGIN_GOOGLE_CONTROLLER = "LoginGoogleController";
-    private final static String EDIT_QUANTITY = "Edit quantity" ;
+    private final static String EDIT_QUANTITY = "Edit quantity";
     private final static String EDIT_QUANTITY_CONTROLLER = "EditQuantityController";
-    
+    private final static String SEARCH_PRODUCT_CATEGORIES = "SearchCategories";
+    private final static String SEARCH_PRODUCT_CATEGORIES_CONTROLLER = "SearchCategoriesController";
+    private final static String EDIT_SIZE = "Edit Size";
+    private final static String EDIT_SIZE_CONTROLLER = "EditSizeController";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -112,54 +116,16 @@ public class MainController extends HttpServlet {
                 url = TOGGLE_PRODUCT_STATUS_CONTROLLER;
             } else if (SEARCH_PRODUCT.equals(action)) {
                 url = SEARCH_PRODUCT_CONTROLLER;
-            }else if (SEARCH_USER.equals(action)) {
+            } else if (SEARCH_USER.equals(action)) {
                 url = SEARCH_USER_CONTROLLER;
-            }else if(LOAD_MANAGER_HOME_DATA.equals(action)){
-                url=LOAD_MANAGER_HOME_CONTROLLER;
-            }else if(LOAD_PRODUCT_LIST.equals(action)){
-                url=LOAD_PRODUCT_LIST_CONTROLLER;
-            }else if(LOAD_DISCOUNT_LIST.equals(action)){
-                url=LOAD_DISCOUNT_LIST_CONTROLLER;
-            }else if(TOGGLE_DISCOUNT_STATUS.equals(action)){
-                url=TOGGLE_DISCOUNT_STATUS_CONTROLLER;  
-            }else if(SEARCH_BRANCH.equals(action)){
-                url=SEARCH_BRANCH_CONTROLLER;
-            }else if(LOAD_BRAND_LIST.equals(action)){
-                url=LOAD_BRAND_LIST_CONTROLLER;
-            }else if(DELETE_PRODUCT.equals(action)){
-                url=DELETE_PRODUCT_CONTROLLER;  
-            }else if(LOAD_ADMIN_HOME.equals(action)){
-                url=LOAD_ADMIN_HOME_CONTROLLER;
-            }else if(LOAD_USER_LIST.equals(action)){
-                url=LOAD_USER_LIST_CONTROLLER;
-            }else if(TOGGLE_USER_ROLE.equals(action)){
-                url=TOGGLE_USER_ROLE_CONTROLLER;
-            }else if(CREATE_USER.equals(action)){
-                url=CREATE_USER_CONTROLLER;
-            }else if(DELETE_USER.equals(action)){
-                url=DELETE_USER_CONTROLLER;
-            }else if(REMOVE_CART.equals(action)){
-                url=REMOVE_CART_CONTROLLER;
-            }else if(HOME_PAGE.equals(action)){
-                url=HOME_PAGE_CONTROLLER;
-            }else if(CREATE_BRAND.equals(action)){
-                url=CREATE_BRAND_CONTROLLER;
-            }else if(LOAD_SHOP_PAGE.equals(action)){
-                url=LOAD_SHOP_PAGE_CONTROLLER;
-            }else if(SORT_SHOP_PAGE.equals(action)){
-                url=SORT_SHOP_PAGE_CONTROLLER;
-            }else if(VIEW.equals(action)){
-                url=LOAD_PRODUCT_DETAIL;
-            }else if(ADD_TO_CART.equals(action)){
-                url=ADD_TO_CART_CONTROLLER;
-            }else if(LOGIN_GOOGLE.equals(action)){
-                url=LOGIN_GOOGLE_CONTROLLER;
-            }else if(EDIT_QUANTITY.equals(action)){
-                url=EDIT_QUANTITY_CONTROLLER;
+            } else if (EDIT_SIZE.equals(action)) {
+                url = EDIT_SIZE_CONTROLLER;
+            }else if(SEARCH_PRODUCT_CATEGORIES.equals(action)){
+                url=SEARCH_PRODUCT_CATEGORIES_CONTROLLER;
             }
-        }catch(Exception e){
-           log("Error at MainController" + e.toString());
-        }finally{           
+        } catch (Exception e) {
+            log("Error at MainController" + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

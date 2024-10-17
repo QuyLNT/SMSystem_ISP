@@ -9,17 +9,24 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.cart.CartDAO;
+import model.cart.CartDTO;
+import model.cart.CartItems;
 import model.category.BrandDAO;
 import model.category.UserObjectDAO;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
 import model.product.ProductImageDAO;
 import model.product.ProductVariantDAO;
+import model.user.UserDTO;
 
 /**
  *
@@ -44,9 +51,10 @@ public class LoadTopListByCateController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
+            HttpSession session = request.getSession();
             ProductDAO productDao = new ProductDAO();
             BrandDAO brandDao = new BrandDAO();
-            UserObjectDAO uObDao= new UserObjectDAO();
+            UserObjectDAO uObDao = new UserObjectDAO();
             ProductVariantDAO variantDao = new ProductVariantDAO();
             ProductImageDAO imageDao = new ProductImageDAO();
             List<ProductDTO> menList;
@@ -55,28 +63,47 @@ public class LoadTopListByCateController extends HttpServlet {
             menList = productDao.getTopMenList();
             womenList = productDao.getTopWomenList();
             kidList = productDao.getTopKidList();
-            for(ProductDTO p : menList){
+            for (ProductDTO p : menList) {
                 p.setListImages(imageDao.getImageByProduct(p.getProductId()));
             }
-            for(ProductDTO pr : womenList){
+            for (ProductDTO pr : womenList) {
                 pr.setListImages(imageDao.getImageByProduct(pr.getProductId()));
             }
-            for(ProductDTO pro : kidList){
+            for (ProductDTO pro : kidList) {
                 pro.setListImages(imageDao.getImageByProduct(pro.getProductId()));
             }
-            if(menList != null && womenList != null && kidList != null){
-                HttpSession session = request.getSession();
+
+            CartDAO cartDao = new CartDAO();
+            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+            if (loginUser != null) {
+                CartDTO cart = cartDao.getCartByUserId(loginUser.getUserId());
+                if (cart != null) {
+                    for (CartItems c : cart.getCartItemsList()) {
+                        c.getProduct().setListImages(imageDao.getImageByProduct(c.getProduct().getProductId()));
+                    }
+                    session.setAttribute("CART", cart); // Load cart có sẵn
+                } else {
+                    // Nếu user chưa có giỏ hàng, tạo giỏ hàng mới
+                    cart = new CartDTO();
+                    cart.setCustomerId(loginUser.getUserId());
+                    cartDao.createCart(cart); // Gọi createCart() để tạo giỏ hàng mới trong DB
+                    session.setAttribute("CART", cart); // Set giỏ hàng mới vào session
+                }
+            }
+
+            if (menList != null && womenList != null && kidList != null) {
                 session.setAttribute("MEN_LIST", menList);
                 session.setAttribute("WOMEN_LIST", womenList);
-                session.setAttribute("KID_LIST", kidList);                
+                session.setAttribute("KID_LIST", kidList);
                 url = SUCCESS;
 
             }
-            
 
-        }catch(ClassNotFoundException | SQLException e){
+        } catch (ClassNotFoundException | SQLException e) {
             log("Error at LoadTopListByCateController: " + e.toString());
-        }finally{
+        } catch (NamingException ex) {
+            Logger.getLogger(LoadTopListByCateController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

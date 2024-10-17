@@ -30,6 +30,8 @@ public class CartDAO {
     private static final String GET_CART_ITEMS = "SELECT cartItemId, productId, quantity, size FROM cart_items WHERE cartId = ?";
     private static final String UPDATE_CART_ITEM_QUANTITY = "UPDATE cart_items SET quantity = ? WHERE cartId = ? AND productId = ? AND size = ?";
     private static final String EXISTS_CART_ITEMS = "SELECT cartItemId FROM cart_items WHERE cartId = ? AND productId = ? AND size = ?";
+    private static final String UPDATE_QUANTITY = "UPDATE cart_items SET quantity = ? WHERE cartItemId = ? ";
+    private static final String UPDATE_SIZE = "UPDATE cart_items SET size = ? WHERE cartItemId = ?";
 
     public boolean deleteCartItem(int cartItemId) throws SQLException {
         Connection conn = null;
@@ -135,6 +137,7 @@ public class CartDAO {
                     List<CartItems> cartItemsList = new ArrayList<>();
                     while (rs.next()) {
                         int productId = rs.getInt("productId");
+                        int cartItemId = rs.getInt("cartItemId");
                         int quantity = rs.getInt("quantity");
                         float size = rs.getFloat("size");
 
@@ -142,6 +145,7 @@ public class CartDAO {
                         ProductDTO product = new ProductDAO().getProductById(productId);
 
                         CartItems item = new CartItems();
+                        item.setCartItemId(cartItemId);
                         item.setProduct(product);
                         item.setQuantity(quantity);
                         item.setSize(size);
@@ -288,7 +292,7 @@ public class CartDAO {
                 ps.setInt(2, productId);
                 ps.setFloat(3, size);
                 rs = ps.executeQuery();
-                return rs.next(); 
+                return rs.next();
             }
         } finally {
             if (rs != null) {
@@ -301,6 +305,58 @@ public class CartDAO {
                 conn.close();
             }
         }
-        return false; 
+        return false;
+    }
+
+    public boolean editQuantity(int cartItemId, int newQuantity) throws SQLException, ClassNotFoundException {
+        boolean rowUpdated = false;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = DBUtils.getConnection();
+            if (connection != null) {
+                preparedStatement = connection.prepareStatement(UPDATE_QUANTITY);
+                preparedStatement.setInt(1, newQuantity);
+                preparedStatement.setInt(2, cartItemId);
+
+                rowUpdated = preparedStatement.executeUpdate() > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return rowUpdated;
+    }
+
+    public boolean updateSize(int cartItemId, String newSize) throws SQLException, ClassNotFoundException {
+        boolean rowUpdated = false;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = DBUtils.getConnection();
+            if (connection != null) {
+                preparedStatement = connection.prepareStatement(UPDATE_SIZE);
+                preparedStatement.setString(1, newSize);
+                preparedStatement.setInt(2, cartItemId);
+
+                rowUpdated = preparedStatement.executeUpdate() > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return rowUpdated;
     }
 }

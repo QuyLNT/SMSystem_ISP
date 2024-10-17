@@ -1,4 +1,4 @@
-
+ 
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.cart.CartItems"%>
 <%@page import="model.cart.CartDTO"%>
@@ -77,15 +77,14 @@
                         %>
                         <div class="ht-right">
                             <div class="login-panel" id="user-btn">
-                                <i class="fa fa-user">  GUEST</i>
+                                <i class="fa fa-user">GUEST</i>
 
                             </div>
                             <section class="user">
                                 <div class="user-setting">
                                     <div class="content">
-                                        <div><a href="MainController?action=Sign In">Sign In</a></div>
-                                        <div><a href="LogoutController">Sign Out</a></div>
-                                        </ul>
+                                        <div><a href="login.jsp">Sign In</a></div>
+                                        <div><a href="register.jsp">Sign Up</a></div>
                                     </div>
                             </section>
                             <%
@@ -157,7 +156,7 @@
                                                                 total += (ele.getProduct().getPrice() * (1 - ele.getProduct().getSale())) * ele.getQuantity();
                                                         %>
                                                         <tr>
-                                                            <td class="si-pic"><img src="<%= ele.getProduct().getListImages()%>" style="height: 76px"></td>
+                                                            <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
                                                             <td class="si-text">
                                                                 <div class="product-selected">
                                                                     <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
@@ -203,7 +202,7 @@
                         <nav class="nav-menu mobile-menu">
                             <ul>
                                 <li><a href="MainController?action=HomePage">Home</a></li>
-                                <li class="active"><a href="MainController?action=ShopPage">Shop</a></li>
+                                <li><a href="MainController?action=ShopPage">Shop</a></li>
                                 <li><a href="contact.jsp">Contact</a></li>
                                 <li><a href="">Pages</a>
                                     <ul class="dropdown">
@@ -236,7 +235,7 @@
                                 <p style="color: white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores corrupti fuga ratione.
                                     Voluptates voluptatibus illo quaerat? Ea et, dignissimos dolor, dolore impedit odio
                                     officia ullam eaque obcaecati eligendi ipsam placeat?</p>
-                                <a href="SearchServlet?is=sale" class="primary-btn">Shop Now</a>
+                                <a href="MainController?action=ShopPage" class="primary-btn">Shop Now</a>
                             </div>
                         </div>
                         <div class="off-card">
@@ -273,7 +272,7 @@
                         <div class="single-banner">
                             <img src="https://i.pinimg.com/564x/c9/7b/8d/c97b8d8f1c6aa4c0df304167347bc3e8.jpg" alt="">
                             <div class="inner-text">
-                                <h4>Men's</h4>
+                                <a href="MainController?action=SearchCategories&type=1"><h4>Men's</h4></a>
                             </div>
                         </div>
                     </div>
@@ -281,7 +280,7 @@
                         <div class="single-banner">
                             <img src="https://i.pinimg.com/564x/f7/38/25/f7382542648a417ae5f4a222c25bd962.jpg" alt="">
                             <div class="inner-text">
-                                <h4>Women's</h4>
+                                <a href="MainController?action=SearchCategories&type=2"><h4>Women's</h4></a>
                             </div>
                         </div>
                     </div>
@@ -289,7 +288,7 @@
                         <div class="single-banner">
                             <img src="https://i.pinimg.com/564x/ce/22/b3/ce22b33873f87e269fa4afc86a7c704e.jpg" style="height: 333px" alt="">
                             <div class="inner-text">
-                                <h4>Kid's</h4>
+                                <a href="MainController?action=SearchCategories&type=3"><h4>Kid's</h4></a>
                             </div>
                         </div>
                     </div>

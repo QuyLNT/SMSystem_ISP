@@ -42,38 +42,44 @@ public class LoadManagerHomeDataController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR="managerHome.jsp";
-    private static final String SUCCESS="managerHome.jsp";
+    private static final String ERROR = "managerHome.jsp";
+    private static final String SUCCESS = "managerHome.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
- String url = ERROR;
-        try{
+        String url = ERROR;
+        try {
             ProductDAO productDao = new ProductDAO();
             ProductVariantDAO variantDao = new ProductVariantDAO();
+            UserObjectDAO uObDao = new UserObjectDAO();
+
             List<ProductDTO> productList;
             List<ProductDTO> stockOfProduct;
-            
+            List<UserObjectDTO> uObList;
+
             productList = productDao.getAllProduct();
             stockOfProduct = variantDao.getStockByProduct();
-            
+            uObList = uObDao.getAllUserObject();
+
             int allStock = 0;
-            for(ProductDTO p : stockOfProduct){
+            for (ProductDTO p : stockOfProduct) {
                 allStock += p.getTotalStock();
             }
-       
-            if(productList !=null){
+
+            if (productList != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("ALL_QUANTITY", allStock);
+                session.setAttribute("STOCK_OF_PRODUCT", stockOfProduct);
+                session.setAttribute("USER_OBJECT_LIST", uObList);
 
                 url = SUCCESS;
 
             }
-            
-            
-        }catch(ClassNotFoundException | SQLException e){
-           log("Error at LoadProductController: " +e.toString());
-        }finally{           
+
+        } catch (ClassNotFoundException | SQLException e) {
+            log("Error at LoadProductController: " + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
