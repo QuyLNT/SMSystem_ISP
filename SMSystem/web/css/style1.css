@@ -46,7 +46,7 @@ h4,
 h5,
 h6 {
     margin: 0;
-    color: #111111;
+    color: #2196F3;
     font-weight: 400;
     font-family: "Muli", sans-serif;
 }
@@ -57,6 +57,7 @@ h1 {
 
 h2 {
     font-size: 36px;
+    color: #2196F3;
 }
 
 h3 {
@@ -78,7 +79,7 @@ h6 {
 p {
     font-size: 16px;
     font-family: "Muli", sans-serif;
-    color: #636363;
+    color: #ffffff;
     font-weight: 400;
     line-height: 26px;
     margin: 0 0 15px 0;
@@ -120,7 +121,7 @@ ol {
 .section-title .product-price {
     font-size: 24px;
     font-weight: 700;
-    color: #e7ab3c;
+    color: #273c75;
 }
 
 .section-title .product-price span {
@@ -144,7 +145,7 @@ ol {
     bottom: -14px;
     width: 80px;
     height: 3px;
-    background: #e7ab3c;
+    background: #273c75;
     content: "";
     margin: 0 auto;
 }
@@ -261,14 +262,14 @@ favor-add{
     font-weight: 700;
     padding: 12px 30px;
     color: #ffffff;
-    background: #e7ab3c;
+    background: #273c75;
     text-transform: uppercase;
 }
 
 .site-btn {
     color: #ffffff;
-    background: #e7ab3c;
-    border: 1px solid #e7ab3c;
+    background: #273c75;
+    border: 1px solid #273c75;
     font-size: 14px;
     font-weight: 700;
     text-transform: uppercase;
@@ -522,8 +523,8 @@ favor-add{
     position: absolute;
     right: -3px;
     top: -1px;
-    border: 1px solid #e7ab3c;
-    background: #e7ab3c;
+    border: 1px solid #273c75;
+    background: #273c75;
     padding: 12px 16px 12px;
     cursor: pointer;
 }
@@ -789,9 +790,7 @@ favor-add{
     position: relative;
 }
 
-.nav-item .nav-menu li.active a {
-    background: #e7ab3c;
-}
+
 
 .nav-item .nav-menu li a {
     font-size: 14px;
@@ -807,7 +806,7 @@ favor-add{
 }
 
 .nav-item .nav-menu li:hover>a {
-    background: #e7ab3c;
+    background: #273c75;
 }
 
 .nav-item .nav-menu li:hover .dropdown {
@@ -1233,7 +1232,7 @@ favor-add{
 }
 
 .product-item .pi-pic .sale.pp-sale {
-    background: #e7ab3c;
+    background: #273c75;
 }
 
 .product-item .pi-pic .icon {
@@ -1267,7 +1266,7 @@ favor-add{
 }
 
 .product-item .pi-pic ul li.w-icon.active a {
-    background: #e7ab3c;
+    background: #273c75;
     color: #ffffff;
 }
 
@@ -1302,7 +1301,7 @@ favor-add{
 }
 
 .product-item .pi-text .product-price {
-    color: #e7ab3c;
+    color: #273c75;
     font-size: 20px;
     font-weight: 700;
 }
@@ -1343,7 +1342,7 @@ favor-add{
 }
 
 .countdown-timer .cd-item span {
-    color: #e7ab3c;
+    color: #273c75;
     font-weight: 700;
     line-height: 40px;
     font-size: 36px;
@@ -1470,7 +1469,7 @@ favor-add{
 }
 
 .single-latest-blog .latest-text .tag-list .tag-item i {
-    color: #e7ab3c;
+    color: #273c75;
 }
 
 .single-latest-blog .latest-text a {
@@ -1599,7 +1598,7 @@ favor-add{
     top: 0;
     height: 100%;
     width: 100%;
-    background: #e7ab3c;
+    background: #273c75;
     content: "";
     border-radius: 50%;
     opacity: 0;
@@ -1678,11 +1677,11 @@ favor-add{
 .newslatter-item .subscribe-form button {
     display: inline-block;
     color: #ffffff;
-    background: #e7ab3c;
+    background: #273c75;
     font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
-    border: 1px solid #e7ab3c;
+    border: 1px solid #273c75;
     position: absolute;
     right: 0;
     top: 0;
@@ -1711,7 +1710,7 @@ favor-add{
 }
 
 .copyright-reserved .copyright-text a:hover {
-    color: #e7ab3c;
+    color: #273c75;
 }
 
 .copyright-reserved .payment-pic {
@@ -1776,9 +1775,14 @@ favor-add{
     margin-bottom: 26px;
 }
 
-.filter-widget .filter-catagories li {
+/*.filter-widget .filter-catagories li {
     list-style: none;
+}*/
+
+.filter-widget .filter-catagories li :hover{
+    color: red;
 }
+
 
 .filter-widget .filter-catagories li a {
     display: inline-block;
@@ -1790,8 +1794,12 @@ favor-add{
     transition: color 0.3s ease;
 }
 
-.filter-widget .filter-catagories li a:hover {
-    color: yellow; /* Màu khi di chuột qua */
+.filter-widget .filter-catagories li a :hover {
+    color: #273c70; /* Màu khi di chuột qua */
+}
+
+.filter-widget .filter-catagories li :hover {
+    color: #273c70; /* Màu khi di chuột qua */
 }
 
 .filter-widget .fw-brand-check .bc-item {
@@ -1810,8 +1818,8 @@ favor-add{
 }
 
 .filter-widget .fw-brand-check .bc-item label input:checked~span {
-    background: #e7ab3c;
-    border-color: #e7ab3c;
+    background: #273c75;
+    border-color: #273c75;
 }
 
 .filter-widget .fw-brand-check .bc-item label .checkmark {
@@ -1898,14 +1906,14 @@ favor-add{
 }
 
 .filter-widget .filter-range-wrap .price-range .ui-slider-range.ui-corner-all.ui-widget-header:last-child {
-    background: #e7ab3c;
+    background: #273c75;
 }
 
 .filter-widget .filter-btn {
     font-size: 14px;
     color: #ffffff;
     font-weight: 700;
-    background: #e7ab3c;
+    background: #273c75;
     padding: 7px 20px 5px;
     border-radius: 2px;
     display: inline-block;
@@ -2106,7 +2114,7 @@ favor-add{
     bottom: -4px;
     width: 100%;
     height: 2px;
-    background: #e7ab3c;
+    background: #273c75;
     content: "";
 }
 
@@ -2157,7 +2165,7 @@ favor-add{
     height: 100%;
     left: 0;
     top: 0;
-    border: 1px solid #e7ab3c;
+    border: 1px solid #273c75;
     z-index: 1;
 }
 
@@ -2238,7 +2246,7 @@ favor-add{
 }
 
 .product-details .pd-desc h4 {
-    color: #e7ab3c;
+    color: #273c75;
     font-weight: 700;
 }
 
@@ -2454,7 +2462,7 @@ favor-add{
     top: -1px;
     width: 100%;
     height: 5px;
-    background: #e7ab3c;
+    background: #273c75;
     content: "";
     opacity: 0;
 }
@@ -2515,7 +2523,7 @@ favor-add{
 }
 
 .specification-table table tr td .p-price {
-    color: #e7ab3c;
+    color: #273c75;
     font-size: 16px;
     font-weight: 700;
 }
@@ -2747,7 +2755,7 @@ favor-add{
 
 .cart-table table tr td.p-price,
 .cart-table table tr td.total-price {
-    color: #e7ab3c;
+    color: #273c75;
     font-size: 16px;
     font-weight: 700;
 }
@@ -2899,7 +2907,7 @@ favor-add{
 }
 
 .proceed-checkout ul li.cart-total span {
-    color: #e7ab3c;
+    color: #273c75;
 }
 
 .proceed-checkout ul li span {
@@ -2992,8 +3000,8 @@ favor-add{
 }
 
 .checkout-form .create-item label input:checked~span {
-    background: #e7ab3c;
-    border-color: #e7ab3c;
+    background: #273c75;
+    border-color: #273c75;
 }
 
 .checkout-form .create-item label .checkmark {
@@ -3057,7 +3065,7 @@ favor-add{
 }
 
 .checkout-form .place-order .order-total .order-table li.total-price span {
-    color: #e7ab3c;
+    color: #273c75;
 }
 
 .checkout-form .place-order .order-total .order-table li span {
@@ -3083,8 +3091,8 @@ favor-add{
 }
 
 .checkout-form .place-order .order-total .payment-check .pc-item label input:checked~span {
-    background: #e7ab3c;
-    border-color: #e7ab3c;
+    background: #273c75;
+    border-color: #273c75;
 }
 
 .checkout-form .place-order .order-total .payment-check .pc-item label .checkmark {
@@ -3229,7 +3237,7 @@ favor-add{
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
-    color: #e7ab3c;
+    color: #273c75;
     letter-spacing: 2px;
     line-height: 20px;
 }
@@ -3282,7 +3290,7 @@ favor-add{
     font-size: 14px;
     font-weight: 700;
     text-transform: uppercase;
-    color: #e7ab3c;
+    color: #273c75;
     letter-spacing: 2px;
     line-height: 20px;
 }
@@ -3319,7 +3327,7 @@ favor-add{
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
-    color: #e7ab3c;
+    color: #273c75;
     letter-spacing: 2px;
     line-height: 20px;
     display: inline-block;
@@ -3403,7 +3411,7 @@ favor-add{
     top: 0;
     height: 88px;
     width: 3px;
-    background: #e7ab3c;
+    background: #273c75;
     content: "";
 }
 
@@ -3443,7 +3451,7 @@ favor-add{
 
 .blog-details-inner .tag-share .details-tag ul li i {
     font-size: 18px;
-    color: #e7ab3c;
+    color: #273c75;
 }
 
 .blog-details-inner .tag-share .blog-share {
@@ -3648,7 +3656,7 @@ favor-add{
 
 .map-inner .icon i {
     font-size: 48px;
-    color: #e7ab3c;
+    color: #273c75;
 }
 
 /*---------------------
@@ -3805,7 +3813,7 @@ favor-add{
     float: left;
     font-size: 13px;
     color: #ffffff;
-    background: #e7ab3c;
+    background: #273c75;
 }
 
 /*---------------------
@@ -4193,7 +4201,7 @@ favor-add{
     }
     .slicknav_btn {
         border-radius: 0;
-        background-color: #e7ab3c;
+        background-color: #273c75;
         display: inline-block;
         right: -16px;
     }
@@ -4203,12 +4211,12 @@ favor-add{
     }
     .slicknav_nav a:hover {
         border-radius: 0;
-        background: #e7ab3c;
+        background: #273c75;
         color: #fff;
     }
     .slicknav_nav .slicknav_row:hover {
         border-radius: 0;
-        background: #e7ab3c;
+        background: #273c75;
         color: #fff;
     }
     .inner-header .nav-right li.cart-icon .cart-hover {
@@ -4363,5 +4371,16 @@ favor-add{
     .benefit-items .single-benefit {
         padding-left: 15px;
         padding-right: 15px;
+    }
+    .search-btn-order{
+        font-size: 16px;
+        color: #ffffff;
+        position: absolute;
+        right: 63px;
+        top: -1px;
+        border: 1px solid #273c75;
+        background: #273c75;
+        padding: 12px 16px 12px;
+        cursor: pointer;
     }
 }

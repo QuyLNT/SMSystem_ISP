@@ -82,18 +82,26 @@
             <div class="signin-signup">
                 <div class="signin">
                     <h2>Sign up</h2>
-                    
-                    <form action="MainController" method="post" id="form">
-                        <input type="text" placeholder="Username" name="username" required />
-                        <input type="text" placeholder="Email" name="EmailAdress" required />
-                        <input type="password" placeholder="Password" name="pass" required />
-                        <input type="password" placeholder="ComfirmPass" name="comfirmpass" required />
+
+                    <form action="MainController" method="get" id="form">
+                        <input type="text" placeholder="Full Name" name="fullName" required="" value="<%= (request.getParameter("fullName") != null) ? request.getParameter("fullName") : ""%>" />
+                        <input type="text" placeholder="User Name" name="userName" required="" value="<%= (request.getParameter("userName") != null) ? request.getParameter("userName") : ""%>" />
+                        <input type="text" placeholder="Email" name="email" required="" value="<%= (request.getParameter("email") != null) ? request.getParameter("email") : ""%>" />
+                        <input type="text" placeholder="PhoneNumber" name="phoneNumber" required="" value="<%= (request.getParameter("phoneNumber") != null) ? request.getParameter("phoneNumber") : ""%>" />
+                        <input type="password" placeholder="Password" name="password" required="" />
+                        <input type="password" placeholder="Confirm Password" name="confirmPass" required="" />
                         <a href="login.jsp" class="haveAccount">Have account ?</a>
                         <div class="g-recaptcha" data-sitekey="6LdXPwgqAAAAADH4aZqMia8RCAPe-jw1GISS5lHp" style="display: flex;justify-content: center"></div>
-                        <input type="submit" class="btn signin-btn" value="Sign Up" />
+                        <input type="submit" name="action" class="btn signin-btn" value="Sign Up" />
                     </form>
+                    <div style="color: red">
+                        <% if (request.getAttribute("err") != null) {%>
+                        <%= request.getAttribute("err")%>
+                        <% }%>
+                    </div>
                 </div>
             </div>
+
             <div class="overlay">
                 <div class="overlay-content">
                     <h2>Hello, Friend!</h2>
@@ -103,11 +111,11 @@
             </div>
         </div>
         <!-- Register Section Begin -->
-        
-        <!-- Register Section End -->
-        
 
-        
+        <!-- Register Section End -->
+
+
+
 
         <!-- Js Plugins -->
         <script src="js/jquery-3.3.1.min.js"></script>
@@ -120,23 +128,23 @@
         <script src="js/jquery.slicknav.js"></script>
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/main.js"></script>
-         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-        <script>
-            window.onload = function () {
-                let isValid = false;
-                const form = document.getElementById("form");
-                const error = document.getElementById("error");
-
-                form.addEventListener("submit", function (event) {
-                    event.preventDefault();
-                    const response = grecaptcha.getResponse();
-                    if (response) {
-                        form.submit();
-                    } else {
-                        error.innerHTML = "Please check";
-                    }
-                });
-            };
-        </script>
+        <!--     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                   <script>
+                        window.onload = function () {
+                            let isValid = false;
+                            const form = document.getElementById("form");
+                            const error = document.getElementById("error");
+            
+                            form.addEventListener("submit", function (event) {
+                                event.preventDefault();
+                                const response = grecaptcha.getResponse();
+                                if (response) {
+                                    form.submit();
+                                } else {
+                                    error.innerHTML = "Please check";
+                                }
+                            });
+                        };
+                    </script>-->
     </body>
 </html>

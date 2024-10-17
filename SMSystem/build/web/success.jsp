@@ -52,9 +52,7 @@
     <body>
         <!-- Start coding here -->
         <!-- Page PreOrder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
+     
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
@@ -62,12 +60,12 @@
                     <div class="ht-left">
                         <div class="mail-service">
                             <i class="fa fa-envelope">
-                                minhquan141104@gmail.com
+                                smsystem@gmail.com
                             </i>
                         </div>
                         <div class="phone-service">
                             <i class="fa fa-phone">
-                                +84 78 566 3033
+                                +84 123456789
                             </i>
                         </div>
                     </div>
@@ -128,7 +126,7 @@
         <div class="back">
             <div> Press here to go back</div>
             <i class="fa-solid fa-arrow-right"></i>
-            <a href="index.jsp"> <i class="fa-solid fa-house"></i></a>
+            <a href="homePage.jsp"> <i class="fa-solid fa-house"></i></a>
         </div>
 
         <style>
@@ -162,32 +160,32 @@
                 <div class="logo-carousel owl-carousel">
                     <div class="logo-item">
                         <div class="tablecell-inner">
-                            <img src="img/logo-carousel/logo-1.png">
+                            <img src="img/nike.png" width="150" height="150">
                         </div>
                     </div>
                     <div class="logo-item">
                         <div class="tablecell-inner">
-                            <img src="img/logo-carousel/logo-2.png">
+                            <img src="img/adidas.png" width="150" height="150">
                         </div>
                     </div>
                     <div class="logo-item">
                         <div class="tablecell-inner">
-                            <img src="img/logo-carousel/logo-3.png">
+                            <img src="img/puma.png" width="150" height="150">
                         </div>
                     </div>
                     <div class="logo-item">
                         <div class="tablecell-inner">
-                            <img src="img/logo-carousel/logo-4.png">
+                            <img src="img/asics.png" width="150" height="150">
                         </div>
                     </div>
                     <div class="logo-item">
                         <div class="tablecell-inner">
-                            <img src="img/logo-carousel/logo-5.png">
+                            <img src="img/vans.png" width="150" height="150">
                         </div>
                     </div>
                     <div class="logo-item">
                         <div class="tablecell-inner">
-                            <img src="img/logo-carousel/logo-1.png">
+                            <img src="img/newbalance.png" width="150" height="150">
                         </div>
                     </div>
                 </div>
@@ -202,14 +200,14 @@
                     <div class="col-lg-3">
                         <div class="footer-left">
                             <div class="footer-logo">
-                                <a href="index.jsp">
-                                    <img src="favicon_io/android-chrome-192x192.png" alt="">
+                                <a href="homePage.jsp">
+                                    <img src="img/logoweb.png" alt="">
                                 </a>
                             </div>
                             <ul>
-                                <li>1A Yet Kieu . Ha Noi</li>
-                                <li>Phone: +84 78 566 3033</li>
-                                <li>Email: minhquan141104@gmail.com</li>
+                                <li>Lô E2a-7, Đường D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh 700000</li>
+                                <li>Phone: +84 123456789</li>
+                                <li>Email: smsystem@gmail.com</li>
                             </ul>
                             <div class="footer-social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
@@ -258,7 +256,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="copyright-text">
-                                Copyright ©2024 All reserved | MinQan
+                                Copyright ©2024 All reserved | SMSystem
                             </div>
                             <div class="payment-pic">
                                 <img src="img/payment-method.png" alt="">

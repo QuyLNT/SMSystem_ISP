@@ -4,16 +4,17 @@
     Author     : DELL
 --%>
 
+<%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="admin.sample.discount.AdminDiscountDAO"%>
-<%@page import="admin.sample.discount.AdminDiscountDTO"%>
+<%@page import="model.discount.DiscountDAO"%>
+<%@page import="model.discount.DiscountDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Discount</title>
-        <title>Kẻ kiểm soát thông tin</title>
+        <title></title>
         <link rel="stylesheet" type="text/css" href="css/discount1.css" />
         <link
             rel="stylesheet"
@@ -25,27 +26,21 @@
     </head>
     <body>
         <main class="main-wrap">
-            <header class="main-head">
+             <header class="main-head">
                 <div class="main-nav">
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="favicon_io/favicon-32x32.png" alt="anh giay nike" />
-                                    <span class="title-text">Nice</span>
+                                    <img src="img/logoweb.png" alt="" width="32px" height="32px"/>
+                                    <span class="title-text">SMS</span>
                                 </h3>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
-                                    <a href="adminHome.jsp" class="nav-link">
+                                    <a href="MainController?action=LoadManagerHomeData" class="nav-link">
                                         <i class="fa-solid fa-house"></i>
                                         <span class="link-text">Home</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
-                                    <a href="userList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-user"></i>
-                                        <span class="link-text">Accounts</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -54,23 +49,28 @@
                                         <span class="link-text">Categories</span>
                                     </a>
                                 </li>
-
                                 <li class="nav-list-item">
-                                    <a href="productList.jsp" class="nav-link">
+                                    <a href="MainController?action=LoadProductList" class="nav-link">
                                         <i class="fa-solid fa-capsules"></i>
                                         <span class="link-text">Products</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="discountList.jsp" class="nav-link">
+                                    <a href="MainController?action=LoadDiscountList" class="nav-link">
                                         <i class="fa-solid fa-percent"></i>
                                         <span class="link-text">Discount</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="orderList.jsp" class="nav-link">
+                                    <a href="MainController?action=LoadBrandList" class="nav-link">
                                         <i class="fa-solid fa-file-invoice"></i>
                                         <span class="link-text">Order</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadBrandList" class="nav-link">
+                                        <i class="fa-solid fa-tag"></i>
+                                        <span class="link-text">Brand</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -125,7 +125,7 @@
                                             <h1 class="modal-title fs-5" id="addModalLabel">Create a new discount </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form action="MainDiscountController" method="POST">
+                                        <form action="MainController" method="POST">
                                             <div class="modal-body">
 
                                                 <div class="input-group input-group-sm mb-3">
@@ -155,7 +155,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <input type="submit" name="action" value="Add" class="btn btn-primary"/>
+                                                <input type="submit" name="action" value="Add Discount" class="btn btn-primary"/>
                                             </div>
                                         </form>
                                     </div>
@@ -164,17 +164,16 @@
                         </div>
                         <div class="welcome">
                             <%
-                                AdminDiscountDAO d = new AdminDiscountDAO();
-                                ArrayList<AdminDiscountDTO> list = (ArrayList<AdminDiscountDTO>) d.getList();
-                                if (session.getAttribute("list") != null) {
-                                    list = (ArrayList<AdminDiscountDTO>) session.getAttribute("list");
-                                }
+                                List<DiscountDTO> discountList = (List<DiscountDTO>) session.getAttribute("DISCOUNT_LIST");
+                                if (discountList == null) {
+                                    discountList = new ArrayList<>();
+                               }
 
-                                if (list != null) {
+                                if (discountList != null) {
 
                             %>
                             <div class="table-tilte">Discount Table</div>
-                            <form action="MainDiscountController" method="POST">
+                            <form action="MainController" method="POST">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
@@ -182,42 +181,55 @@
                                             <th>Discount Code</th>
                                             <th>Detail</th>
                                             <th>Amount</th>
-
                                             <th>Date Start</th>
                                             <th>Date End</th>
                                             <th>Limit</th>
+                                            <th>Used</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%                                            int count = 0;
-                                            for (AdminDiscountDTO a : list) {
-                                                count++;
-
+                                        <%
+                                            int count=1 ;
+                                            for (DiscountDTO discount : discountList) {
                                         %>
 
                                         <tr>
-                                    <form action="MainDiscountController" method="POST">
-                                        <td><%=count%></td>
-                                        <td><%=a.getCode()%></td>
-                                        <td><%=a.getDetail()%></td>                                       
-                                        <td><%=a.getAmount()%></td>
-
-                                        <td><%=a.getStartAt()%></td>
-                                        <td><%=a.getEndAt()%></td>
-                                        <td><%=a.getLimit()%></td>
-                                        <td><%=a.getStatus()%></td>
+                                        <td><%=count++%></td>
+                                        <td><%=discount.getDiscountCode()%></td>
+                                        <td><%=discount.getDetail()%></td>                                       
+                                        <td><%
+                                                double discountAmount =discount.getDiscountAmount() * 100;
+                                                double roundedPercentage = Math.ceil(discountAmount * 100) / 100.0;
+                                            %>
+                                            <%= String.format("%.0f%%", roundedPercentage)%>
+                                        </td>
+                                        <td><%=discount.getStartDay()%></td>
+                                        <td><%=discount.getEndDay()%></td>
+                                        <td><%=discount.getUsageLimit()%></td>
+                                        <td><%=discount.getUsed()%></td>                                                                                
                                         <td>
-                                            <input type="hidden" name="code"  value="<%=a.getCode()%>" />
-                                        
-                                            <button type="submit" class="btn btn-primary" name="action" value="Remove">
-                                                <i class="fa-solid fa-delete-left"></i>     
-                                            </button>
-                                          
+                                            <form action="MainController" method="POST">
+                                                <input type="hidden" name="discountId" value="<%= discount.getDiscountId()%>"/>
+                                                <input type="hidden" name="action" value="toggleDiscountStatus"/>
+                                                <select name="status" onchange="this.form.submit()">
+                                                    <option value="Active" <%= discount.getStatus().equalsIgnoreCase("Active")? "selected" : ""%>>Active</option>
+                                                    <option value="Expired" <%= discount.getStatus().equalsIgnoreCase("Expired")? "selected" : ""%>>Expired</option>
+                                                    <option value="Limit Use" <%= discount.getStatus().equalsIgnoreCase("Limit Use")? "selected" : ""%>>Limit Use</option>
+                                                </select>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="MainController" method="POST">
+                                                <input type="hidden" name="code"  value="<%=discount.getDiscountCode()%>" />
+
+                                                <button type="submit" class="btn btn-primary" name="action" value="Remove">
+                                                    <i class="fa-solid fa-delete-left"></i>     
+                                                </button>
+                                            </form>
                                         
                                         </td>
-                                    </form>
                                     </tr> 
                                     <%}%>
                                     </tbody>

@@ -9,22 +9,27 @@ package model.product;
  *
  * @author Asus
  */
-public class ProductVariants {
-        private int variantId;
+public class ProductVariantDTO {
+    private int variantId;
     private int productId;
     private double size;
     private int stock;
 
     // Constructor
-    public ProductVariants(int variantId, int productId, double size, int stock) {
+    public ProductVariantDTO(int variantId, int productId, double size, int stock) {
         this.variantId = variantId;
         this.productId = productId;
         this.size = size;
         this.stock = stock;
     }
 
+    public ProductVariantDTO(int productId, int stock) {
+        this.productId = productId;
+        this.stock = stock;
+    }
+
     // Default constructor
-    public ProductVariants() {
+    public ProductVariantDTO() {
         this.variantId = 0;
         this.productId = 0;
         this.size = 0.0;

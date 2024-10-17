@@ -32,9 +32,7 @@ and open the template in the editor.
     <body>
         <!-- Start coding here -->
         <!-- Page PreOrder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
+        
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
@@ -113,7 +111,7 @@ and open the template in the editor.
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/main.js"></script>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-        <script>
+<!--        <script>
             window.onload = function () {
                 let isValid = false;
                 const form = document.getElementById("form");
@@ -129,6 +127,6 @@ and open the template in the editor.
                     }
                 });
             };
-        </script>
+        </script>-->
     </body>
 </html>

@@ -1,0 +1,137 @@
+/* body1, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f2f5;
+} */
+
+.container1 {
+  width: 100%;
+  height: 94.2%;
+  display: flex;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  margin: auto;
+}
+
+.signin-signup {
+  width: 50%;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.signin {
+  width: 80%;
+}
+
+h2 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.social-media {
+  display: flex;
+  gap: 10px;
+}
+
+.social-icon {
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #eaeaea;
+}
+
+.social-icon:hover {
+  background-color: #d1d1d1;
+}
+
+.haveAccount:hover {
+  color: #111111;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 20px;
+}
+
+form input[type="text"],
+form input[type="password"] {
+  padding: 10px;
+  margin: 5px 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.forgot-password {
+  margin: 10px 0;
+  color: #333;
+  text-align: left;
+  font-size: 14px;
+  
+}
+
+.forgot-password:hover {
+  color: blue; /* Màu xanh khi kê chuột vào */
+}
+
+.btn {
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  color: #ffffff;
+  background-color: #273c75;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.btn:hover {
+  background-color: #192a56;
+}
+
+.overlay {
+  width: 50%;
+  background: #273c75;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.overlay-content h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.overlay-content p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.signup-btn {
+  background-color: transparent;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.signup-btn:hover {
+  background-color: #ffffff;
+  color: #273c75;
+}

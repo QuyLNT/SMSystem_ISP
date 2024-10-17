@@ -202,3 +202,14 @@ border-bottom: 1px solid #deddde;
   font-weight: bold;
   border-bottom: 1px solid #deddde;
 }
+
+/* Màu nền khi hover */
+.user-object-item:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+/* Màu nền khi đã được nhấn */
+.user-object-item.active {
+    background-color: #d0e0ff;
+}

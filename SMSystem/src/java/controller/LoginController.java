@@ -8,6 +8,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -16,6 +17,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.cart.CartDAO;
+import model.cart.CartDTO;
+import model.cart.CartItems;
 import model.user.UserDAO;
 import model.user.UserDTO;
 
@@ -25,7 +29,7 @@ import model.user.UserDTO;
  */
 public class LoginController extends HttpServlet {
 
- /**
+    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -34,47 +38,52 @@ public class LoginController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR="login.jsp";
-    private static final String HOME_PAGE="homePage.jsp";
-    private static final String ADMIN_PAGE = "adminHome.jsp";
-    private static final String MANAGER_PAGE = "managerHome.jsp";
+    private static final String ERROR = "login.jsp";
+    private static final String HOME_PAGE = "LoadTopListByCateController";
+    private static final String ADMIN_PAGE = "LoadAdminHomeDataController";
+    private static final String MANAGER_PAGE = "LoadManagerHomeDataController";
     private static final String SHIPPER_PAGE = "shipperHome.jsp";
-    private static final String ERROR_MESSAGE = "";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        try{
+        try {
             String userIndentify = request.getParameter("usernameOrEmail");
             String password = request.getParameter("pass");
             UserDAO dao = new UserDAO();
             UserDTO loginUser = dao.checkLogin(userIndentify, password);
-            if(loginUser!= null){
+            if (loginUser != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("LOGIN_USER", loginUser);
                 String roleID = loginUser.getRoleId();
-                if(null != roleID)switch (roleID) {
-                    case "AD":
-                        url=ADMIN_PAGE;
-                        break;
-                    case "CUS":
-                        url=HOME_PAGE;
-                        break;
-                    case "MN":
-                        url=MANAGER_PAGE;
-                        break;
-                    case "SP":
-                        url=SHIPPER_PAGE;
-                        break;
-                    default:
-                        request.setAttribute("LOGIN_ERROR", ERROR_MESSAGE);
-                        break;
-                }        
+
+                if (null != roleID) {
+                    switch (roleID) {
+                        case "AD":
+                            url = ADMIN_PAGE;
+                            break;
+                        case "CUS":
+                            url = HOME_PAGE;
+                            break;
+                        case "MN":
+                            url = MANAGER_PAGE;
+                            break;
+                        case "SP":
+                            url = SHIPPER_PAGE;
+                            break;
+                        default:
+                            request.setAttribute("LOGIN_ERROR", "Role is not support");
+                            break;
+                    }
+                }
+            } else {
+                request.setAttribute("LOGIN_ERROR", "Role is not support");
             }
-            
-        }catch(ClassNotFoundException | SQLException | NamingException e){
-           log("Error at LoginController: " +e.toString());
-        }finally{           
+
+        } catch (ClassNotFoundException | SQLException | NamingException e) {
+            log("Error at LoginController: " + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
