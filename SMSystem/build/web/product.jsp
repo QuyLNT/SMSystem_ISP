@@ -82,7 +82,7 @@
                             <section class="user">
                                 <div class="user-setting">
                                     <div class="content">
-                                        <div><a href="MainController?action=Sign In">Sign In</a></div>
+                                        <div><a href="login.jsp">Sign In</a></div>
                                         <div><a href="register.jsp">Sign Up</a></div>
                                     </div>
                             </section>
@@ -155,7 +155,7 @@
                                                                 total += (ele.getProduct().getPrice() * (1 - ele.getProduct().getSale())) * ele.getQuantity();
                                                         %>
                                                         <tr>
-                                                            <td class="si-pic"><img src="<%= ele.getProduct().getListImages()%>" style="height: 76px"></td>
+                                                            <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
                                                             <td class="si-text">
                                                                 <div class="product-selected">
                                                                     <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
@@ -195,9 +195,9 @@
                                 <i class="ti-menu"></i>
                                 <span>All Departments</span>
                                 <ul class="depart-hover">
-                                    <li><a href="SearchServlet?type=2">Women's Clothing</a></li>
-                                    <li><a href="SearchServlet?type=1">Men's Clothing</a></li>
-                                    <li><a href="SearchServlet?type=3">Kid's Clothing</a></li>
+                                    <li><a href="MainController?action=SearchCategories&type=1">Men's Clothing</a></li>
+                                    <li><a href="MainController?action=SearchCategories&type=2">Women's Clothing</a></li>
+                                    <li><a href="MainController?action=SearchCategories&type=3">Kid's Clothing</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -220,8 +220,6 @@
         </header>
         <!-- Header Section End -->
 
-
-
         <!--  -->
         <!-- Breadcrumb Section Begin -->
         <div class="breadcrumb-section">
@@ -230,7 +228,7 @@
                     <div class="col-lg-12">
                         <div class="breadcrumb-text">
                             <a href="homePage.jsp"><i class="fa fa-home"></i>Home</a>
-                            <a href="shop.jsp">Shop</a>
+                            <a href="MainController?action=ShopPage">Shop</a>
                             <span>Detail</span>
                         </div>
                     </div>
@@ -284,7 +282,7 @@
                             <div class="col-lg-6">
                                 <div class="product-details">
                                     <div class="pd-title">
-                                        <span>oranges</span>
+                                        <span>Product Detail</span>
                                         <h3><%=product.getName()%></h3>
                                     </div>
                                     <div class="pd-rating">
@@ -386,7 +384,7 @@
                                         </form>
 
                                         <%
-                                            String successMessage = (String) request.getAttribute("ms"); 
+                                            String successMessage = (String) request.getAttribute("ms");
                                             String errorMessage = (String) request.getAttribute("err");
                                         %>
 
@@ -444,11 +442,6 @@
                                         <div class="product-content">
                                             <div class="row">
                                                 <div class="col-lg-7">
-                                                    <h5>Introduction</h5>
-                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas minima
-                                                        sint libero quo quisquam ipsum nam cum adipisci praesentium
-                                                        consequatur? Modi ab eaque voluptatibus a totam qui obcaecati
-                                                        ratione quos?</p>
                                                     <h5>Features</h5>
                                                     <p><%=product.getDetail()%></p>
                                                 </div>
@@ -486,293 +479,298 @@
                                                 <tr>
                                                     <td class="p-catagory">Size</td>
                                                     <td>
-                                                        <div class="p-size">IN RA SIZE</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="p-catagory">Color</td>
-                                                    <td>
-                                                        <span><%=product.getColor()%></span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="p-catagory">Sku</td>
-                                                    <td>
-                                                        <div class="p-code">00012</div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="tab-3" role="tabpanel">
-                                        <div class="customer-review-option">
-                                            <h4>2 Comments</h4>
-                                            <div class="comment-option">
-                                                <div class="co-item">
-                                                    <div class="avatar-pic">
-                                                        <img src="img/product-single/avatar-2.png" alt="">
-                                                    </div>
-                                                    <div class="avatar-text">
-                                                        <div class="at-rating">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <h5>Brandon Kelly <span>27 May 2024</span></h5>
-                                                        <div class="at-reply">Nice!</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="personal-rating">
-                                                <h6>Your Rating</h6>
-                                                <div class="rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                </div>
-                                            </div>
-                                            <div class="leave-comment">
-                                                <h4>Leave a comment</h4>
-                                                <form action="" class="comment-form">
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <input type="text" placeholder="Name">
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <input type="text" placeholder="Email">
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <textarea placeholder="Messages"></textarea>
-                                                            <button type="submit" class="site-btn">Send
-                                                                message</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Product Shop Section End -->
+                                                        <%
+                                                            List<Float> allSizes = (List<Float>) session.getAttribute("ALL_SIZE");
 
-        <!-- Related Products Section Begin -->
-        <div class="realated-products spad">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-title">
-                            <h2>Related Products</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-list" style="width: 70rem">
-                    <%
-                        List<ProductDTO> list = (List<ProductDTO>) session.getAttribute("RELATED_LIST");
-                        for (ProductDTO ele : list) {
-                    %>
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="<%=ele.getAvatarPath()%>" alt="">
-                            <%
-                                if (ele.getSale() != 0) {
-                            %>
-                            <div class="sale pp-sale">Sale</div>
-                            <%
-                                }
-                            %>
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <form action="MainController" method="post">
-                                    <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
-                                    <!--<li class="w-icon active"><a href="AddToCart?pId=<%=ele.getProductId()%>&qnt=1&url=shop.jsp"><i class="icon_bag_alt"></i></a></li>-->
-                                    <li class="quick-view"><!--<a href="product.jsp">--><input type="submit" style="background-color: white;
-                                                                                               font-weight: bold;
-                                                                                               border: none;" name="action" value="View"></a></li>
-                                </form>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <%
-                                if (ele.getUserOjectId() == 1) {
-                            %>
-                            <div class="catagory-name">Men</div>
-                            <%
-                            } else if (ele.getUserOjectId() == 2) {
-                            %>
-                            <div class="catagory-name">Women</div>
-                            <%
-                            } else {
-                            %>
-                            <div class="catagory-name">Kids</div>
-                            <%
-                                }
-                            %>
-                            <a href="#">
-                                <h5><%=ele.getName()%></h5>
-                            </a>
-                            <%
-                                if (ele.getSale() != 0) {
-                            %>
-                            <div class="product-price">
-                                $<%= String.format("%.1f", ele.getPrice() * (1 - ele.getSale()))%>
-                                <span>$<%=ele.getPrice()%></span>
-                            </div>
-                            <%
-                            } else {
-                            %>
-                            <div class="product-price">
-                                $<%=ele.getPrice()%>
-                            </div>
-                            <%
-                                }
-                            %>
-                        </div>
-                    </div>
-                    <%
-                        }
-                    %>
-                </div>
-            </div>
-        </div>
-        <!-- Related Products Section End -->
+                                                        %>
 
-        <!-- Partner Logo Section Begin -->
-        <div class="partner-logo">
-            <div class="container">
-                <div class="logo-carousel owl-carousel">
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="img/nike.png" width="150" height="150">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="img/adidas.png" width="150" height="150">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="img/puma.png" width="150" height="150">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="img/asics.png" width="150" height="150">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="img/vans.png" width="150" height="150">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="img/newbalance.png" width="150" height="150">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Partner Logo Section End -->
+                                                        <div class="p-size"><%= allSizes.get(0)%> - <%= allSizes.get(allSizes.size() -1)%></div>
+                                                        </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="p-catagory">Color</td>
+                                                            <td>
+                                                                <span><%=product.getColor()%></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="p-catagory">Sku</td>
+                                                            <td>
+                                                                <div class="p-code">SNK00<%=product.getProductId()%></div>
+                                                            </td>
+                                                        </tr>
+                                                        </table>
+                                                        </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                                                            <div class="customer-review-option">
+                                                                <h4>2 Comments</h4>
+                                                                <div class="comment-option">
+                                                                    <div class="co-item">
+                                                                        <div class="avatar-pic">
+                                                                            <img src="img/product-single/avatar-2.png" alt="">
+                                                                        </div>
+                                                                        <div class="avatar-text">
+                                                                            <div class="at-rating">
+                                                                                <i class="fa fa-star"></i>
+                                                                                <i class="fa fa-star"></i>
+                                                                                <i class="fa fa-star"></i>
+                                                                                <i class="fa fa-star"></i>
+                                                                                <i class="fa fa-star-o"></i>
+                                                                            </div>
+                                                                            <h5>Brandon Kelly <span>27 May 2024</span></h5>
+                                                                            <div class="at-reply">Nice!</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="personal-rating">
+                                                                    <h6>Your Rating</h6>
+                                                                    <div class="rating">
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <i class="fa fa-star-o"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="leave-comment">
+                                                                    <h4>Leave a comment</h4>
+                                                                    <form action="" class="comment-form">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6">
+                                                                                <input type="text" placeholder="Name">
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <input type="text" placeholder="Email">
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <textarea placeholder="Messages"></textarea>
+                                                                                <button type="submit" class="site-btn">Send
+                                                                                    message</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                        </div>
+                                                        <!-- Product Shop Section End -->
 
-        <!-- Footer Section Begin -->
-        <footer class="footer-section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="footer-left">
-                            <div class="footer-logo">
-                                <a href="homePage.jsp">
-                                    <img src="img/logoweb.png" alt="">
-                                </a>
-                            </div>
-                            <ul>
-                                <li>Lô E2a-7, Đường D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh 700000</li>
-                                <li>Phone: +84 123456789</li>
-                                <li>Email: smsystem@gmail.com</li>
-                            </ul>
-                            <div class="footer-social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 offset-lg-1">
-                        <div class="footer-widget">
-                            <h5>Information</h5>
-                            <ul>
-                                <li><a href="">About Us</a></li>
-                                <li><a href="">Checkout</a></li>
-                                <li><a href="">Contact</a></li>
-                                <li><a href="">Services</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="footer-widget">
-                            <h5>My Account</h5>
-                            <ul>
-                                <li><a href="">My Account</a></li>
-                                <li><a href="">Contact</a></li>
-                                <li><a href="">Shopping Cart</a></li>
-                                <li><a href="">Shop</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="newsletter-item">
-                            <h5>Join Out Newsletter Now</h5>
-                            <p>Get E-mail updates about our latest shop and special offers.</p>
-                            <form action="#" class="subcribe-form">
-                                <input type="text" placeholder="Enter Your Email">
-                                <button type="button">Subscribe</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="copyright-reserved">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="copyright-text">
-                                Copyright ©2024 All reserved | SMSystem
-                            </div>
-                            <div class="payment-pic">
-                                <img src="img/payment-method.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- Footer Section End -->
+                                                        <!-- Related Products Section Begin -->
+                                                        <div class="realated-products spad">
+                                                            <div class="container">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <div class="section-title">
+                                                                            <h2>Related Products</h2>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-list" style="width: 70rem">
+                                                                    <%
+                                                                        List<ProductDTO> list = (List<ProductDTO>) session.getAttribute("RELATED_LIST");
+                                                                        for (ProductDTO ele : list) {
+                                                                    %>
+                                                                    <div class="product-item">
+                                                                        <div class="pi-pic">
+                                                                            <img src="<%=ele.getAvatarPath()%>" alt="">
+                                                                            <%
+                                                                                if (ele.getSale() != 0) {
+                                                                            %>
+                                                                            <div class="sale pp-sale">Sale</div>
+                                                                            <%
+                                                                                }
+                                                                            %>
+                                                                            <div class="icon">
+                                                                                <i class="icon_heart_alt"></i>
+                                                                            </div>
+                                                                            <ul>
+                                                                                <form action="MainController" method="post">
+                                                                                    <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
+                                                                                    <!--<li class="w-icon active"><a href="AddToCart?pId=<%=ele.getProductId()%>&qnt=1&url=shop.jsp"><i class="icon_bag_alt"></i></a></li>-->
+                                                                                    <li class="quick-view"><!--<a href="product.jsp">--><input type="submit" style="background-color: white;
+                                                                                                                                               font-weight: bold;
+                                                                                                                                               border: none;" name="action" value="View"></a></li>
+                                                                                </form>
+                                                                            </ul>
+                                                                        </div>
+                                                                        <div class="pi-text">
+                                                                            <%
+                                                                                if (ele.getUserOjectId() == 1) {
+                                                                            %>
+                                                                            <div class="catagory-name">Men</div>
+                                                                            <%
+                                                                            } else if (ele.getUserOjectId() == 2) {
+                                                                            %>
+                                                                            <div class="catagory-name">Women</div>
+                                                                            <%
+                                                                            } else {
+                                                                            %>
+                                                                            <div class="catagory-name">Kids</div>
+                                                                            <%
+                                                                                }
+                                                                            %>
+                                                                            <a href="#">
+                                                                                <h5><%=ele.getName()%></h5>
+                                                                            </a>
+                                                                            <%
+                                                                                if (ele.getSale() != 0) {
+                                                                            %>
+                                                                            <div class="product-price">
+                                                                                $<%= String.format("%.1f", ele.getPrice() * (1 - ele.getSale()))%>
+                                                                                <span>$<%=ele.getPrice()%></span>
+                                                                            </div>
+                                                                            <%
+                                                                            } else {
+                                                                            %>
+                                                                            <div class="product-price">
+                                                                                $<%=ele.getPrice()%>
+                                                                            </div>
+                                                                            <%
+                                                                                }
+                                                                            %>
+                                                                        </div>
+                                                                    </div>
+                                                                    <%
+                                                                        }
+                                                                    %>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Related Products Section End -->
 
-        <!-- Js Plugins -->
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery-ui.min.js"></script>
-        <script src="js/jquery.countdown.min.js"></script>
-        <script src="js/jquery.nice-select.min.js"></script>
-        <script src="js/jquery.zoom.min.js"></script>
-        <script src="js/jquery.dd.min.js"></script>
-        <script src="js/jquery.slicknav.js"></script>
-        <script src="js/owl.carousel.min.js"></script>
-        <script src="js/main.js"></script>
-        <script src="js/main2.js"></script>
-        <script src="js/main3.js"></script>
-    </body>
-</html>
+                                                        <!-- Partner Logo Section Begin -->
+                                                        <div class="partner-logo">
+                                                            <div class="container">
+                                                                <div class="logo-carousel owl-carousel">
+                                                                    <div class="logo-item">
+                                                                        <div class="tablecell-inner">
+                                                                            <img src="img/nike.png" width="150" height="150">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="logo-item">
+                                                                        <div class="tablecell-inner">
+                                                                            <img src="img/adidas.png" width="150" height="150">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="logo-item">
+                                                                        <div class="tablecell-inner">
+                                                                            <img src="img/puma.png" width="150" height="150">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="logo-item">
+                                                                        <div class="tablecell-inner">
+                                                                            <img src="img/asics.png" width="150" height="150">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="logo-item">
+                                                                        <div class="tablecell-inner">
+                                                                            <img src="img/vans.png" width="150" height="150">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="logo-item">
+                                                                        <div class="tablecell-inner">
+                                                                            <img src="img/newbalance.png" width="150" height="150">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Partner Logo Section End -->
+
+                                                        <!-- Footer Section Begin -->
+                                                        <footer class="footer-section">
+                                                            <div class="container">
+                                                                <div class="row">
+                                                                    <div class="col-lg-3">
+                                                                        <div class="footer-left">
+                                                                            <div class="footer-logo">
+                                                                                <a href="homePage.jsp">
+                                                                                    <img src="img/logoweb.png" alt="">
+                                                                                </a>
+                                                                            </div>
+                                                                            <ul>
+                                                                                <li>Lô E2a-7, Đường D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh 700000</li>
+                                                                                <li>Phone: +84 123456789</li>
+                                                                                <li>Email: smsystem@gmail.com</li>
+                                                                            </ul>
+                                                                            <div class="footer-social">
+                                                                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                                                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                                                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                                                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-2 offset-lg-1">
+                                                                        <div class="footer-widget">
+                                                                            <h5>Information</h5>
+                                                                            <ul>
+                                                                                <li><a href="">About Us</a></li>
+                                                                                <li><a href="">Checkout</a></li>
+                                                                                <li><a href="">Contact</a></li>
+                                                                                <li><a href="">Services</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-2">
+                                                                        <div class="footer-widget">
+                                                                            <h5>My Account</h5>
+                                                                            <ul>
+                                                                                <li><a href="">My Account</a></li>
+                                                                                <li><a href="">Contact</a></li>
+                                                                                <li><a href="">Shopping Cart</a></li>
+                                                                                <li><a href="">Shop</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-4">
+                                                                        <div class="newsletter-item">
+                                                                            <h5>Join Out Newsletter Now</h5>
+                                                                            <p>Get E-mail updates about our latest shop and special offers.</p>
+                                                                            <form action="#" class="subcribe-form">
+                                                                                <input type="text" placeholder="Enter Your Email">
+                                                                                <button type="button">Subscribe</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="copyright-reserved">
+                                                                <div class="container">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12">
+                                                                            <div class="copyright-text">
+                                                                                Copyright ©2024 All reserved | SMSystem
+                                                                            </div>
+                                                                            <div class="payment-pic">
+                                                                                <img src="img/payment-method.png" alt="">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </footer>
+                                                        <!-- Footer Section End -->
+
+                                                        <!-- Js Plugins -->
+                                                        <script src="js/jquery-3.3.1.min.js"></script>
+                                                        <script src="js/bootstrap.min.js"></script>
+                                                        <script src="js/jquery-ui.min.js"></script>
+                                                        <script src="js/jquery.countdown.min.js"></script>
+                                                        <script src="js/jquery.nice-select.min.js"></script>
+                                                        <script src="js/jquery.zoom.min.js"></script>
+                                                        <script src="js/jquery.dd.min.js"></script>
+                                                        <script src="js/jquery.slicknav.js"></script>
+                                                        <script src="js/owl.carousel.min.js"></script>
+                                                        <script src="js/main.js"></script>
+                                                        <script src="js/main2.js"></script>
+                                                        <script src="js/main3.js"></script>
+                                                        </body>
+                                                        </html>

@@ -89,7 +89,8 @@ public class MainController extends HttpServlet {
     private static final String LOGIN_GOOGLE_CONTROLLER = "LoginGoogleController";
     private final static String EDIT_QUANTITY = "Edit quantity" ;
     private final static String EDIT_QUANTITY_CONTROLLER = "EditQuantityController";
-    
+    private final static String SEARCH_PRODUCT_CATEGORIES = "SearchCategories";
+    private final static String SEARCH_PRODUCT_CATEGORIES_CONTROLLER = "SearchCategoriesController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -156,6 +157,8 @@ public class MainController extends HttpServlet {
                 url=LOGIN_GOOGLE_CONTROLLER;
             }else if(EDIT_QUANTITY.equals(action)){
                 url=EDIT_QUANTITY_CONTROLLER;
+            }else if(SEARCH_PRODUCT_CATEGORIES.equals(action)){
+                url=SEARCH_PRODUCT_CATEGORIES_CONTROLLER;
             }
         }catch(Exception e){
            log("Error at MainController" + e.toString());
