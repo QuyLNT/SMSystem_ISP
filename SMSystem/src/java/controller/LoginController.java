@@ -58,19 +58,6 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("LOGIN_USER", loginUser);
                 String roleID = loginUser.getRoleId();
 
-                CartDAO cartDao = new CartDAO();
-                CartDTO cart = cartDao.getCartByUserId(loginUser.getUserId());
-
-                if (cart != null) {
-                    session.setAttribute("CART", cart); // Load cart có sẵn
-                } else {
-                    // Nếu user chưa có giỏ hàng, tạo giỏ hàng mới
-                    cart = new CartDTO();
-                    cart.setCustomerId(loginUser.getUserId());
-                    cartDao.createCart(cart); // Gọi createCart() để tạo giỏ hàng mới trong DB
-                    session.setAttribute("CART", cart); // Set giỏ hàng mới vào session
-                }
-
                 if (null != roleID) {
                     switch (roleID) {
                         case "AD":

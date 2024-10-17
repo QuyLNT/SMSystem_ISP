@@ -7,31 +7,20 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.category.BrandDAO;
-import model.category.BrandDTO;
-import model.category.UserObjectDAO;
-import model.category.UserObjectDTO;
-import model.discount.DiscountDAO;
-import model.discount.DiscountDTO;
-import model.product.ProductDAO;
-import model.product.ProductDTO;
-import model.product.ProductImageDAO;
-import model.product.ProductVariantDAO;
-import model.product.ProductVariantDTO;
+import model.cart.CartDTO;
+import model.cart.CartItems;
 
 /**
  *
- * @author LENOVO
+ * @author Asus
  */
-public class LoadProductListController extends HttpServlet {
+public class EditSizeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,42 +31,38 @@ public class LoadProductListController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR="productList.jsp";
-    private static final String SUCCESS="productList.jsp";
+    
+    private static final String ERROR = "shopping-cart.jsp";
+    private static final String SUCCESS = "shopping-cart.jsp";
+
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String url = ERROR;
-        try{
-            ProductDAO productDao = new ProductDAO();
-            BrandDAO brandDao = new BrandDAO();
-            UserObjectDAO uObDao= new UserObjectDAO();
-            ProductVariantDAO variantDao = new ProductVariantDAO();
-            ProductImageDAO imageDao = new ProductImageDAO();
-            List<ProductDTO> productList;
-            List<BrandDTO> brandList;
-            
-            productList = productDao.getAllProduct();
-            brandList = brandDao.getAllBrand();
-            for(ProductDTO p: productList){
-                p.setListImages(imageDao.getImageByProduct(p.getProductId()));
-            }
-                        
-            if(productList !=null && brandList!=null){
-                HttpSession session = request.getSession();
-                session.setAttribute("PRODUCT_LIST", productList);
-                session.setAttribute("BRAND_LIST", brandList);
-                
-                url = SUCCESS;
+               String url = ERROR;
+        try {
+            HttpSession session = request.getSession();
+            String cartItemIdRaw = request.getParameter("cartItemId");
+            String sizeRaw = request.getParameter("size");
 
+            CartDTO cart = (CartDTO) session.getAttribute("CART");
+            List<CartItems> ls = cart.getCartItemsList();
+
+            int cartItemId = Integer.parseInt(cartItemIdRaw);
+            float size = Float.parseFloat(sizeRaw);
+
+            for (CartItems item : ls) {
+                if (item.getCartItemId() == cartItemId) {
+                    item.setSize(size);  // Cập nhật kích thước cho CartItems
+                    url = SUCCESS;
+                    break;
+                }
             }
-            
-            
-        }catch(ClassNotFoundException | SQLException e){
-           log("Error at LoadProductController: " +e.toString());
-        }finally{           
-            request.getRequestDispatcher(url).forward(request, response);
+        } catch (NumberFormatException e) {
+            System.out.println("Error parsing cartItemId or size: " + e);
         }
+
+        request.getRequestDispatcher(url).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
