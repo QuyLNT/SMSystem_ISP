@@ -134,7 +134,6 @@ public class CartDAO {
 
                     List<CartItems> cartItemsList = new ArrayList<>();
                     while (rs.next()) {
-                        int cartItemId = rs.getInt("cartItemId"); 
                         int productId = rs.getInt("productId");
                         int cartItemId = rs.getInt("cartItemId");
                         int quantity = rs.getInt("quantity");
