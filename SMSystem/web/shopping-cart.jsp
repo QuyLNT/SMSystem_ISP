@@ -212,7 +212,7 @@
                                         }
                                         List<CartItems> ls = cart.getCartItemsList();
                                         if (ls != null) {
-                                            int count = 0;
+                                            int count = 1;
                                             double total = 0;
                                             for (CartItems ele : ls) {
                                                 total += (ele.getPrice() * ele.getQuantity());
@@ -301,12 +301,12 @@
                                         }
                                     }
                                 </script>
-                                <td class="close-td first-row"><a href="RemoveServlet?pId=<%= count%>&url=shopping-cart.jsp" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
+                                <td class="close-td first-row"><a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
                                         <i class="ti-close"></i>
                                     </a></td>
                                 </tr>
                                 <%
-                                        count++;
+                                       count++;
                                     }
                                 %>
                                 </tbody>
