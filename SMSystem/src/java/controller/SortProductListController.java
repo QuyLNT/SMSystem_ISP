@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
+import model.product.ProductImageDAO;
 
 
 /**
@@ -34,10 +35,14 @@ public class SortProductListController extends HttpServlet {
         try{
             String id = request.getParameter("id");
             ProductDAO productDao = new ProductDAO();
+            ProductImageDAO imageDao = new ProductImageDAO();
             HttpSession session = request.getSession();
             List<ProductDTO> productList;
             if(id.equals("2")){
                 productList = productDao.sortSaleProduct();
+                for(ProductDTO p: productList){
+                    p.setListImages(imageDao.getImageByProduct(p.getProductId()));
+                }
                 session.setAttribute("PRODUCT_LIST", productList);
             }
         }catch(ClassNotFoundException | SQLException e){

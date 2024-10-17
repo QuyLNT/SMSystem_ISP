@@ -18,6 +18,7 @@ import model.cart.CartDTO;
 import model.cart.CartItems;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
+import model.product.ProductImageDAO;
 import model.product.ProductVariantDAO;
 import model.product.ProductVariantDTO;
 import model.user.UserDTO;
@@ -45,7 +46,8 @@ public class AddToCartController extends HttpServlet {
 
         ProductDAO productDao = new ProductDAO();
         ProductDTO product = productDao.getProductById(productId);
-
+        ProductImageDAO imageDao = new ProductImageDAO();
+        product.setListImages(imageDao.getImageByProduct(productId));
         ProductVariantDAO variantDao = new ProductVariantDAO();
         List<ProductVariantDTO> availableVariants = variantDao.getVariantByProduct(productId);
 

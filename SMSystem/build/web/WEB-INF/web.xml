@@ -129,6 +129,10 @@
         <servlet-class>controller.AddToCartController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>SearchCategoriesController</servlet-name>
+        <servlet-class>controller.SearchCategoriesController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>UpdateSizeController</servlet-name>
         <servlet-class>controller.UpdateSizeController</servlet-class>
     </servlet>
@@ -267,6 +271,10 @@
     <servlet-mapping>
         <servlet-name>UpdateSizeController</servlet-name>
         <url-pattern>/UpdateSizeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchCategoriesController</servlet-name>
+        <url-pattern>/SearchCategoriesController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditSizeController</servlet-name>
