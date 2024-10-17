@@ -77,10 +77,10 @@ public class LoadTopListByCateController extends HttpServlet {
             UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
             if (loginUser != null) {
                 CartDTO cart = cartDao.getCartByUserId(loginUser.getUserId());
-                for(CartItems c: cart.getCartItemsList()){
-                    c.getProduct().setListImages(imageDao.getImageByProduct(c.getProduct().getProductId()));
-                }
                 if (cart != null) {
+                    for (CartItems c : cart.getCartItemsList()) {
+                        c.getProduct().setListImages(imageDao.getImageByProduct(c.getProduct().getProductId()));
+                    }
                     session.setAttribute("CART", cart); // Load cart có sẵn
                 } else {
                     // Nếu user chưa có giỏ hàng, tạo giỏ hàng mới
