@@ -62,6 +62,7 @@ public class EditQuantityController extends HttpServlet {
                             boolean updated = dao.editQuantity(item.getCartItemId(), newQuantity);
 
                             if (updated) {
+                                dao.editQuantity(item.getCartItemId(), newQuantity);
                                 session.setAttribute("CART", cart); // Cập nhật lại giỏ hàng trong session
                                 url = SUCCESS;
                             }

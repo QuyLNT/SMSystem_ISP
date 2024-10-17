@@ -210,11 +210,18 @@
                                         <td class="p-price first-row">$<%=String.format("%.1f", ele.getPrice())%></td>
                                         <td class="qua-col first-row">
                                             <div class="quantity">
-                                                <!--<div class="pro-qty">-->
-                                                <button style="border: none"><a href="UpdateCartServlet?num=-1&id=<%=count%>">-</a></button>
-                                                <input type="number" min="1" value="<%=ele.getQuantity()%>">
-                                                <button style="border: none"><a href="UpdateCartServlet?num=1&id=<%=count%>">+</a></button>
-                                                <!--</div>-->
+                                                <!-- Nút trừ số lượng -->
+                                                <button style="border: none">
+                                                    <a href="EditQuantityController?num=-1&cartItemId=<%=ele.getCartItemId()%>">-</a>
+                                                </button>
+
+                                                <!-- Hiển thị số lượng hiện tại, người dùng có thể chỉnh sửa thủ công -->
+                                                <input type="number" min="1" value="<%=ele.getQuantity()%>" readonly>
+
+                                                <!-- Nút cộng số lượng -->
+                                                <button style="border: none">
+                                                    <a href="EditQuantityController?num=1&cartItemId=<%=ele.getCartItemId()%>">+</a>
+                                                </button>
                                             </div>
                                         </td>
                                         <td class="total-price first-row">$<%= String.format("%.1f", ele.getPrice() * ele.getQuantity())%></td>
@@ -224,7 +231,7 @@
                                             %>
                                             <select  style="margin-top:26px; width: 65px;" id="size-select-<%=count%>" onchange="updateSize(this.value, <%=count%>)">
                                                 <%
-                                                    List<Float> validSizes = (List<Float>) session.getAttribute("sizes");
+                                                    List<Float> validSizes = (List<Float>) session.getAttribute("size");
                                                     List<Float> allSizes = Arrays.asList(3f, 4f, 5f, 6f);
                                                     for (float sz : allSizes) {
                                                         boolean isAvailable = validSizes.contains(sz);
@@ -241,7 +248,7 @@
                                             %>
                                             <select id="size-select-<%=count%>" onchange="updateSize(this.value, <%=count%>)">
                                                 <%
-                                                    List<Float> validSizes = (List<Float>) session.getAttribute("sizes");
+                                                    List<Float> validSizes = (List<Float>) session.getAttribute("size");
                                                     if (validSizes == null) {
                                                         validSizes = new ArrayList<>();
                                                     }
@@ -261,7 +268,7 @@
                                             %>
                                         </td>
                                         <td>
-                                            <form id="form-<%=count%>" action="UpdateSize" method="get">
+                                            <form id="form-<%=count%>" action="EditSizeController" method="get">
                                                 <input type="hidden" name="index" value="<%=count%>">
                                                 <input type="hidden" name="size" id="size-input-<%=count%>">
                                             </form>

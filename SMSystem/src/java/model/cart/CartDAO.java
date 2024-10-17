@@ -137,7 +137,7 @@ public class CartDAO {
                     List<CartItems> cartItemsList = new ArrayList<>();
                     while (rs.next()) {
                         int productId = rs.getInt("productId");
-//                        int cartItemId = rs.getInt("cartItemId");
+                        int cartItemId = rs.getInt("cartItemId");
                         int quantity = rs.getInt("quantity");
                         float size = rs.getFloat("size");
 
@@ -145,10 +145,10 @@ public class CartDAO {
                         ProductDTO product = new ProductDAO().getProductById(productId);
 
                         CartItems item = new CartItems();
+                        item.setCartItemId(cartItemId);
                         item.setProduct(product);
                         item.setQuantity(quantity);
                         item.setSize(size);
-//                        item.setCartItemId(cartItemId);
                         cartItemsList.add(item);
                     }
 
