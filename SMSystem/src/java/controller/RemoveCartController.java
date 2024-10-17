@@ -38,8 +38,10 @@ public class RemoveCartController extends HttpServlet {
                 if (deleteItem) {
                     cart.removeItem(cartItemId);
                     session.setAttribute("size", String.valueOf(cart.getSize()));
+                    cartDAO.deleteCartItem(cartItemId);
                     url = SUCCESS;
                 }
+                
             }
         } catch (Exception e) {
             log("Error at RemoveCartController: " + e.toString());
@@ -90,3 +92,8 @@ public class RemoveCartController extends HttpServlet {
     }// </editor-fold>
 
 }
+// if (cart != null) {
+//                cart.removeItem(cartItemId); // Xóa item trong session giỏ hàng
+//                session.setAttribute("CART", cart); // Cập nhật lại giỏ hàng trong session
+//                cartDAO.deleteCartItem(cartItemId);
+//            }
