@@ -26,12 +26,11 @@ public class CartDAO {
     private static final String INSERT_CART = "INSERT INTO carts (customerId) VALUES (?)";
     private static final String INSERT_CART_ITEM = "INSERT INTO cart_items (cartId, productId, quantity, size) VALUES (?, ?, ?, ?)";
     private static final String GET_CART_ID = "SELECT cartId FROM carts WHERE customerId = ?";
-    private static final String GET_CART_BY_USER_ID = "SELECT cartItemId, cartId, productId, quantity FROM cart_items WHERE cartId = ?";
     private static final String GET_CART_ITEMS = "SELECT cartItemId, productId, quantity, size FROM cart_items WHERE cartId = ?";
     private static final String UPDATE_CART_ITEM_QUANTITY = "UPDATE cart_items SET quantity = ? WHERE cartId = ? AND productId = ? AND size = ?";
     private static final String EXISTS_CART_ITEMS = "SELECT cartItemId FROM cart_items WHERE cartId = ? AND productId = ? AND size = ?";
 
-    public boolean deleteCartItem(int cartItemId) throws SQLException {
+    public boolean deleteCartItem(int cartItemId) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         PreparedStatement ptm = null;
         boolean result = false;
@@ -51,8 +50,7 @@ public class CartDAO {
             if (conn != null) {
                 conn.close();
             }
-            return result;
-        }
+        }return result;
     }
 
     public boolean createCart(CartDTO cart) throws SQLException, NamingException, ClassNotFoundException {
@@ -134,6 +132,7 @@ public class CartDAO {
 
                     List<CartItems> cartItemsList = new ArrayList<>();
                     while (rs.next()) {
+                        int cartItemId = rs.getInt("cartItemId"); 
                         int productId = rs.getInt("productId");
                         int quantity = rs.getInt("quantity");
                         float size = rs.getFloat("size");
@@ -142,6 +141,7 @@ public class CartDAO {
                         ProductDTO product = new ProductDAO().getProductById(productId);
 
                         CartItems item = new CartItems();
+                        item.setCartItemId(cartItemId);
                         item.setProduct(product);
                         item.setQuantity(quantity);
                         item.setSize(size);
@@ -303,4 +303,5 @@ public class CartDAO {
         }
         return false; 
     }
+    
 }

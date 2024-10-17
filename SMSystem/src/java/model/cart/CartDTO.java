@@ -122,8 +122,8 @@ public class CartDTO {
         CartItems item = getItemById(id);
         if (item != null) {
             cartItemsList.remove(item);
-        }
-    }
+                }
+            }
 
     // Calculate the total price of items in the cart
     public double getTotalPrice() {
@@ -147,5 +147,7 @@ public class CartDTO {
         }
         return null; 
     }
+    
+    
 }
 
