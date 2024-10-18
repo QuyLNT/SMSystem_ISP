@@ -52,7 +52,8 @@ public class CartDAO {
             if (conn != null) {
                 conn.close();
             }
-        }return result;
+        }
+        return result;
     }
 
     public boolean createCart(CartDTO cart) throws SQLException, NamingException, ClassNotFoundException {
@@ -337,25 +338,28 @@ public class CartDAO {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
+            // Lấy kết nối đến database
             connection = DBUtils.getConnection();
             if (connection != null) {
+                // Chuẩn bị câu lệnh SQL để cập nhật size
                 preparedStatement = connection.prepareStatement(UPDATE_SIZE);
                 preparedStatement.setString(1, newSize);
                 preparedStatement.setInt(2, cartItemId);
 
+                // Thực thi câu lệnh và kiểm tra số dòng bị ảnh hưởng
                 rowUpdated = preparedStatement.executeUpdate() > 0;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // In ra lỗi để kiểm tra nếu có vấn đề xảy ra
         } finally {
             if (preparedStatement != null) {
-                preparedStatement.close();
+                preparedStatement.close(); // Đảm bảo đóng PreparedStatement
             }
             if (connection != null) {
-                connection.close();
+                connection.close(); // Đảm bảo đóng kết nối cơ sở dữ liệu
             }
         }
-        return rowUpdated;
+        return rowUpdated; // Trả về true nếu cập nhật thành công
     }
-    
+
 }

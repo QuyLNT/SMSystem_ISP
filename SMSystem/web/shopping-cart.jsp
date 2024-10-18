@@ -281,7 +281,7 @@
                                         </td>
                                         <td>
                                             <form id="form-<%=count%>" action="EditSizeController" method="get">
-                                                <input type="hidden" name="index" value="<%=count%>">
+                                                <input type="hidden" name="cartItemId" value="<%=ele.getCartItemId()%>">
                                                 <input type="hidden" name="size" id="size-input-<%=count%>">
                                             </form>
                                         </td>
@@ -303,7 +303,7 @@
                                     </a></td>
                                 </tr>
                                 <%
-                                       count++;
+                                        count++;
                                     }
                                 %>
                                 </tbody>
