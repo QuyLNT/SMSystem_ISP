@@ -136,6 +136,10 @@
         <servlet-name>SearchCategoriesController</servlet-name>
         <servlet-class>controller.SearchCategoriesController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditSizeController</servlet-name>
+        <servlet-class>controller.EditSizeController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -271,6 +275,10 @@
     <servlet-mapping>
         <servlet-name>SearchCategoriesController</servlet-name>
         <url-pattern>/SearchCategoriesController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditSizeController</servlet-name>
+        <url-pattern>/EditSizeController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

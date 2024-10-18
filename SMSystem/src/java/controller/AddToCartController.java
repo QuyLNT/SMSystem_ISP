@@ -76,7 +76,7 @@ public class AddToCartController extends HttpServlet {
             } else if (quantity > selectedVariant.getStock()) {
                 request.setAttribute("err", "Out of stock for this size. Only " + selectedVariant.getStock() + " items available.");
             } else {
-                CartItems newItem = new CartItems(product, 0, cart.getCartId(), product.getProductId(), quantity, size);
+                CartItems newItem = new CartItems(product, 1, cart.getCartId(), product.getProductId(), quantity, size);
                 cart.addItem(newItem);
                 request.setAttribute("ms", "Added to cart successfully!");
             }

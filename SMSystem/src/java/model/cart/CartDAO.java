@@ -26,14 +26,13 @@ public class CartDAO {
     private static final String INSERT_CART = "INSERT INTO carts (customerId) VALUES (?)";
     private static final String INSERT_CART_ITEM = "INSERT INTO cart_items (cartId, productId, quantity, size) VALUES (?, ?, ?, ?)";
     private static final String GET_CART_ID = "SELECT cartId FROM carts WHERE customerId = ?";
-    private static final String GET_CART_BY_USER_ID = "SELECT cartItemId, cartId, productId, quantity FROM cart_items WHERE cartId = ?";
     private static final String GET_CART_ITEMS = "SELECT cartItemId, productId, quantity, size FROM cart_items WHERE cartId = ?";
     private static final String UPDATE_CART_ITEM_QUANTITY = "UPDATE cart_items SET quantity = ? WHERE cartId = ? AND productId = ? AND size = ?";
     private static final String EXISTS_CART_ITEMS = "SELECT cartItemId FROM cart_items WHERE cartId = ? AND productId = ? AND size = ?";
     private static final String UPDATE_QUANTITY = "UPDATE cart_items SET quantity = ? WHERE cartItemId = ? ";
     private static final String UPDATE_SIZE = "UPDATE cart_items SET size = ? WHERE cartItemId = ?";
 
-    public boolean deleteCartItem(int cartItemId) throws SQLException {
+    public boolean deleteCartItem(int cartItemId) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         PreparedStatement ptm = null;
         boolean result = false;
@@ -53,8 +52,8 @@ public class CartDAO {
             if (conn != null) {
                 conn.close();
             }
-            return result;
         }
+        return result;
     }
 
     public boolean createCart(CartDTO cart) throws SQLException, NamingException, ClassNotFoundException {
@@ -137,7 +136,7 @@ public class CartDAO {
                     List<CartItems> cartItemsList = new ArrayList<>();
                     while (rs.next()) {
                         int productId = rs.getInt("productId");
-//                        int cartItemId = rs.getInt("cartItemId");
+                        int cartItemId = rs.getInt("cartItemId");
                         int quantity = rs.getInt("quantity");
                         float size = rs.getFloat("size");
 
@@ -145,10 +144,10 @@ public class CartDAO {
                         ProductDTO product = new ProductDAO().getProductById(productId);
 
                         CartItems item = new CartItems();
+                        item.setCartItemId(cartItemId);
                         item.setProduct(product);
                         item.setQuantity(quantity);
                         item.setSize(size);
-//                        item.setCartItemId(cartItemId);
                         cartItemsList.add(item);
                     }
 
@@ -339,24 +338,28 @@ public class CartDAO {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
+            // Lấy kết nối đến database
             connection = DBUtils.getConnection();
             if (connection != null) {
+                // Chuẩn bị câu lệnh SQL để cập nhật size
                 preparedStatement = connection.prepareStatement(UPDATE_SIZE);
                 preparedStatement.setString(1, newSize);
                 preparedStatement.setInt(2, cartItemId);
 
+                // Thực thi câu lệnh và kiểm tra số dòng bị ảnh hưởng
                 rowUpdated = preparedStatement.executeUpdate() > 0;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // In ra lỗi để kiểm tra nếu có vấn đề xảy ra
         } finally {
             if (preparedStatement != null) {
-                preparedStatement.close();
+                preparedStatement.close(); // Đảm bảo đóng PreparedStatement
             }
             if (connection != null) {
-                connection.close();
+                connection.close(); // Đảm bảo đóng kết nối cơ sở dữ liệu
             }
         }
-        return rowUpdated;
+        return rowUpdated; // Trả về true nếu cập nhật thành công
     }
+
 }

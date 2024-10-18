@@ -209,7 +209,7 @@
                                         }
                                         List<CartItems> ls = cart.getCartItemsList();
                                         if (ls != null) {
-                                            int count = 0;
+                                            int count = 1;
                                             double total = 0;
                                             for (CartItems ele : ls) {
                                                 total += (ele.getPrice() * ele.getQuantity());
@@ -222,11 +222,18 @@
                                         <td class="p-price first-row">$<%=String.format("%.1f", ele.getPrice())%></td>
                                         <td class="qua-col first-row">
                                             <div class="quantity">
-                                                <!--<div class="pro-qty">-->
-                                                <button style="border: none"><a href="UpdateCartServlet?num=-1&id=<%=count%>">-</a></button>
-                                                <input type="number" min="1" value="<%=ele.getQuantity()%>">
-                                                <button style="border: none"><a href="UpdateCartServlet?num=1&id=<%=count%>">+</a></button>
-                                                <!--</div>-->
+                                                <!-- Nút trừ số lượng -->
+                                                <button style="border: none">
+                                                    <a href="EditQuantityController?num=-1&cartItemId=<%=ele.getCartItemId()%>">-</a>
+                                                </button>
+
+                                                <!-- Hiển thị số lượng hiện tại, người dùng có thể chỉnh sửa thủ công -->
+                                                <input type="number" min="1" value="<%=ele.getQuantity()%>" readonly>
+
+                                                <!-- Nút cộng số lượng -->
+                                                <button style="border: none">
+                                                    <a href="EditQuantityController?num=1&cartItemId=<%=ele.getCartItemId()%>">+</a>
+                                                </button>
                                             </div>
                                         </td>
                                         <td class="total-price first-row">$<%= String.format("%.1f", ele.getPrice() * ele.getQuantity())%></td>
@@ -273,8 +280,8 @@
                                             %>
                                         </td>
                                         <td>
-                                            <form id="form-<%=count%>" action="UpdateSize" method="get">
-                                                <input type="hidden" name="index" value="<%=count%>">
+                                            <form id="form-<%=count%>" action="EditSizeController" method="get">
+                                                <input type="hidden" name="cartItemId" value="<%=ele.getCartItemId()%>">
                                                 <input type="hidden" name="size" id="size-input-<%=count%>">
                                             </form>
                                         </td>
@@ -291,7 +298,7 @@
                                         }
                                     }
                                 </script>
-                                <td class="close-td first-row"><a href="RemoveServlet?pId=<%= count%>&url=shopping-cart.jsp" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
+                                <td class="close-td first-row"><a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
                                         <i class="ti-close"></i>
                                     </a></td>
                                 </tr>
