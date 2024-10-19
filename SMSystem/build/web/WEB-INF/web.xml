@@ -129,16 +129,20 @@
         <servlet-class>controller.AddToCartController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SearchCategoriesController</servlet-name>
-        <servlet-class>controller.SearchCategoriesController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>UpdateSizeController</servlet-name>
         <servlet-class>controller.UpdateSizeController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>SearchCategoriesController</servlet-name>
+        <servlet-class>controller.SearchCategoriesController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>EditSizeController</servlet-name>
         <servlet-class>controller.EditSizeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ApplyDiscountController</servlet-name>
+        <servlet-class>controller.ApplyDiscountController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
@@ -279,6 +283,10 @@
     <servlet-mapping>
         <servlet-name>EditSizeController</servlet-name>
         <url-pattern>/EditSizeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ApplyDiscountController</servlet-name>
+        <url-pattern>/ApplyDiscountController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

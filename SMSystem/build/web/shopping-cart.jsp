@@ -325,7 +325,7 @@
                                 <div class="discount-coupon">
                                     <h6>Discount Codes</h6>
                                     <form action="MainController" method="Post" class="coupon-form">
-                                        <input style="color: black;" type="text" name="code" placeholder="Enter your codes">
+                                        <input style="color: black;" type="text" name="code" placeholder="Enter your codes" value="<%= (request.getParameter("code") != null ? request.getParameter("code") : "") %>">
                                         <button type="submit" value="Apply" name="action" class="site-btn coupon-btn">Apply</button>
                                     </form>
                                     <%

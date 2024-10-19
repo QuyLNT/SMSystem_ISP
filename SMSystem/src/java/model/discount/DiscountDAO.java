@@ -77,4 +77,59 @@ public class DiscountDAO {
         return result;
 
     }
+    
+    public DiscountDTO ApplyCode(String discountCode) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DiscountDTO discount = null;
+
+        try {
+            con = DBUtils.getConnection();
+            String sql = "SELECT discountId, discountCode, detail, discountAmount, startDay, endDay, usageLimit, usage, discountStatus " +
+                         "FROM discountCodes " +
+                         "WHERE discountCode = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, discountCode);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                discount = new DiscountDTO(
+                        rs.getInt("discountId"),
+                        rs.getString("discountCode"),
+                        rs.getString("detail"),
+                        rs.getFloat("discountAmount"),
+                        rs.getDate("startDay"),
+                        rs.getDate("endDay"),
+                        rs.getInt("usageLimit"),
+                        rs.getInt("usage"),
+                        rs.getString("discountStatus")
+                );
+            }
+        } finally {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        }
+        return discount;
+    }
+
+    
+    public void updateUsage(String discountCode) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement ps = null;
+
+        try {
+            con = DBUtils.getConnection();
+            String sql = "UPDATE discountCodes " +
+                         "SET usage = usage + 1 " +
+                         "WHERE discountCode = ? AND discountStatus = 'Active' AND usageLimit > usage";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, discountCode);
+            ps.executeUpdate();
+        } finally {
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        }
+    }
 }

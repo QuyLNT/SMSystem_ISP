@@ -93,6 +93,8 @@ public class MainController extends HttpServlet {
     private final static String SEARCH_PRODUCT_CATEGORIES_CONTROLLER = "SearchCategoriesController";
     private final static String EDIT_SIZE = "Edit Size";
     private final static String EDIT_SIZE_CONTROLLER = "EditSizeController";
+    private final static String APPLY_DISCOUNT = "Apply";
+    private final static String APPLY_DISCOUNT_CONTROLLER = "ApplyDiscountController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -164,6 +166,8 @@ public class MainController extends HttpServlet {
                 url=SEARCH_PRODUCT_CATEGORIES_CONTROLLER;
             }else if(EDIT_SIZE.equals(action)){
                 url=EDIT_SIZE_CONTROLLER;
+            }else if(APPLY_DISCOUNT.equals(action)){
+                url=APPLY_DISCOUNT_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());
