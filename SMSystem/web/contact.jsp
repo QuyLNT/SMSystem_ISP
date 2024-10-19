@@ -4,10 +4,10 @@
     Author     : Luu Minh Quan
 --%>
 
-<%@page import="model.ItemDTO"%>
+<%@page import="model.cart.CartItems"%>
 <%@page import="java.util.List"%>
-<%@page import="model.CartDTO"%>
-<%@page import="model.UserDTO"%>
+<%@page import="model.cart.CartDTO"%>
+<%@page import="model.user.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -38,10 +38,6 @@
 
     <body>
         <!-- Start coding here -->
-        <!-- Page PreOrder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
@@ -59,11 +55,12 @@
                         </div>
                     </div>
                     <%
-                        UserDTO user = (UserDTO) session.getAttribute("user");
+                        UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                        if (loginUser != null) {
                     %>
                     <div class="ht-right">
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  <%=user.getFullName()%></i>
+                            <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
 
                         </div>
                         <section class="user">
@@ -72,179 +69,159 @@
                                     <div><a href="myAccount.jsp">My account</a></div>
                                     <div><a href="myOrder.jsp">Order Status</a></div>
                                     <div><a href="LogoutController">Logout</a></div>
-
-                                    </ul>
                                 </div>
                         </section>
-                        <div class="lan-selector">
-                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
-                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
-                                    English</option>
-                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
-                                    German</option>
-                            </select>
-                        </div>
-                        <div class="top-social">
-                            <a href="#"><i class="ti-facebook"></i></a>
-                            <a href="#"><i class="ti-twitter-alt"></i></a>
-                            <a href="#"><i class="ti-linkedin"></i></a>
-                            <a href="#"><i class="ti-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="container">
-                <div class="inner-header">
-                    <div class="row">
-                        <div class="col-lg-2 col-md-2">
-                            <div class="logo">
-                                <a href="index.jsp">
-                                    <img src="img/logoweb.png" height="65px" alt="">
-                                </a>
+                        <%
+                        } else {
+                        %>
+                        <div class="ht-right">
+                            <div class="login-panel" id="user-btn">
+                                <i class="fa fa-user">  GUEST</i>
+                            </div>
+                            <section class="user">
+                                <div class="user-setting">
+                                    <div class="content">
+                                        <div><a href="login.jsp">Sign In</a></div>
+                                        <div><a href="register.jsp">Sign Up</a></div>
+                                    </div>
+                            </section>
+                            <%
+                                }
+                            %>
+                            <div class="lan-selector">
+                                <select class="language_drop" name="countries" id="countries" style="width: 300px;">
+                                    <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                                        English</option>
+                                    <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
+                                        German</option>
+                                </select>
+                            </div>
+                            <div class="top-social">
+                                <a href="#"><i class="ti-facebook"></i></a>
+                                <a href="#"><i class="ti-twitter-alt"></i></a>
+                                <a href="#"><i class="ti-linkedin"></i></a>
+                                <a href="#"><i class="ti-pinterest"></i></a>
                             </div>
                         </div>
-                        <div class="col-lg-7 col-md-7">
-                            <div class="advanced-search">
-                                <button type="button" class="category-btn">All Categories</button>
-                                <div class="input-group">
-                                    <input type="text" placeholder="What do you need?">
-                                    <button type="button"><i class="ti-search"></i></button>
+                    </div>
+
+                </div>
+                <div class="container">
+                    <div class="inner-header">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2">
+                                <div class="logo">
+                                    <a href="index.jsp">
+                                        <img src="img/logoweb.png" height="65px" alt="">
+                                    </a>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 text-right">
-                            <ul class="nav-right">
-                                <%
-                                    String sizeWishlist = (String) session.getAttribute("sizeWishlist");
-                                    if(sizeWishlist==null){
-                                        sizeWishlist="0";
-                                    }
-                                    
-                                    %>
-                                <li class="heart-icon">
-                                    <a href="wishlist.jsp">
-                                        <i class="icon_heart_alt"></i>
-                                        <span><%= sizeWishlist %></span>
-                                    </a>
-                                </li>
-                                <%
-                                    String size = (String) session.getAttribute("size");
-                                    if (size == null) {
-                                        size = "0";
-                                    }
-                                    boolean isEmptyCart = size.equals("0");
-                                %>
-                                <li class="cart-icon">
-                                    <a href="#">
-                                        <i class="icon_bag_alt"></i>
-                                        <span><%= size%></span>
-                                    </a>
-                                    <div class="cart-hover">
-                                        <div class="select-items">
-                                            <% if (isEmptyCart) { %>
-                                            <p>No product in cart. Buy more</p>
-                                            <div class="select-total">
-                                                <span>total:</span>
-                                                <h5>$00.00</h5>
-                                            </div>
-                                            <div class="select-button">
-                                                <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
-                                               
-                                            </div>
-                                            <% } else { %>
-                                            <table>
-                                                <tbody>
-                                                    <%
-                                                        CartDTO cart = (CartDTO) session.getAttribute("CART");
-                                                        if (cart == null) {
-                                                            cart = new CartDTO();
-                                                        }
-                                                        List<ItemDTO> ls = cart.getList();
-                                                        if (ls != null) {
-                                                            double total = 0;
-                                                            int count = 0;
-                                                            for (ItemDTO ele : ls) {
-                                                                total += (ele.getPrice() * ele.getQuantity());
-                                                    %>
-                                                    <tr>
-                                                        <td class="si-pic"><img src="<%= ele.getProduct().getImg()%>" style="height: 76px"></td>
-                                                        <td class="si-text">
-                                                            <div class="product-selected">
-                                                                <p>$<%= String.format("%.1f", ele.getPrice())%> x <%= ele.getQuantity()%></p>
-                                                                <h6><%= ele.getProduct().getName()%></h6>
-                                                                <h6>Size <%=ele.getSize()%></h6>
-                                                            </div>
-                                                        </td>
-                                                        <td class="si-close">
-                                                            <a href="RemoveServlet?pId=<%=count%>&url=index.jsp"  onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
-                                                                <i class="ti-close"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <%
-                                                            count++;
-                                                        }
-                                                    %>
-                                                </tbody>
-                                                <script>
-                                                    function doDelete(name, event) {
-                                                        if (confirm("Bạn có chắc muốn bỏ " + name + " ra khỏi giỏ?")) {
-//                    window.location="RemoveServlet?mobileId = " + id;
-                                                        } else {
-                                                            event.preventDefault();
-                                                        }
-                                                    }</script>
-                                            </table>
-                                            <div class="select-total">
-                                                <span>total:</span>
-                                                <h5>$<%=String.format("%.1f", total)%></h5>
-                                            </div>
-                                            <%
-                                                }
-                                            %>
-                                            <div class="select-button">
-                                                <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
-                                               
-                                            </div>
-                                            <% }%>
-                                        </div>
+                            <div class="col-lg-7 col-md-7">
+                                <div class="advanced-search">
+                                    <button type="button" class="category-btn">All Categories</button>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="What do you need?">
+                                        <button type="button"><i class="ti-search"></i></button>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 text-right">
+                                <ul class="nav-right">
+                                    <%
+                                        CartDTO cart = (CartDTO) session.getAttribute("CART");
+                                        boolean isEmptyCart = cart == null || (cart.getCartItemsList() == null || cart.getCartItemsList().isEmpty());
+                                        int itemCount = isEmptyCart ? 0 : cart.getCartItemsList().size();
+                                    %>
+                                    <li class="cart-icon">
+                                        <a href="#">
+                                            <i class="icon_bag_alt"></i>
+                                            <span><%= itemCount%></span>
+                                        </a>
+                                        <div class="cart-hover">
+                                            <div class="select-items">
+                                                <% if (isEmptyCart) { %>
+                                                <p>No product in cart. Buy more</p>
+                                                <% } else { %>
+                                                <table>
+                                                    <tbody>
+                                                        <%
+                                                            List<CartItems> ls = cart.getCartItemsList();
+                                                            double total = 0;
+                                                            for (CartItems ele : ls) {
+                                                                total += (ele.getProduct().getPrice() * (1 - ele.getProduct().getSale())) * ele.getQuantity();
+                                                        %>
+                                                        <tr>
+                                                            <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
+                                                            <td class="si-text">
+                                                                <div class="product-selected">
+                                                                    <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
+                                                                    <h6><%= ele.getProduct().getName()%></h6>
+                                                                    <h6>Size <%= ele.getSize()%></h6>
+                                                                </div>
+                                                            </td>
+                                                            <td class="si-close">
+                                                                <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=contact.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
+                                                                    <i class="ti-close"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        <% }%>
+                                                    </tbody>
+                                                </table>
+                                                <div class="select-total">
+                                                    <span>total:</span>
+                                                    <h5>$<%= String.format("%.1f", total)%></h5>
+                                                </div>
+                                                <% }%>
+                                                <div class="select-button">
+                                                    <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function doDelete(name, event) {
+                        if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
+                        } else {
+                            event.preventDefault();
+                        }
+                    }
+                </script>
+                <div class="nav-item">
+                    <div class="container">
+                        <div class="nav-depart">
+                            <div class="depart-btn">
+                                <i class="ti-menu"></i>
+                                <span>All Departments</span>
+                                <ul class="depart-hover">
+                                    <li><a href="MainController?action=SearchCategories&type=1">Men's Clothing</a></li>
+                                    <li><a href="MainController?action=SearchCategories&type=2">Women's Clothing</a></li>
+                                    <li><a href="MainController?action=SearchCategories&type=3">Kid's Clothing</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <nav class="nav-menu mobile-menu">
+                            <ul>
+                                <li><a href="MainController?action=HomePage">Home</a></li>
+                                <li><a href="MainController?action=ShopPage">Shop</a></li>
+                                <li><a href="contact.jsp">Contact</a></li>
+                                <li><a href="">Pages</a>
+                                    <ul class="dropdown">
+                                        <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
+                                        <li><a href="check-out.jsp">Checkout</a></li>
+
+                                    </ul>
                                 </li>
                             </ul>
-                        </div>
+                        </nav>
+                        <div id="mobile-menu-wrap"></div>
                     </div>
                 </div>
-            </div>
-            <div class="nav-item">
-                <div class="container">
-                    <div class="nav-depart">
-                        <div class="depart-btn">
-                            <i class="ti-menu"></i>
-                            <span>All Departments</span>
-                            <ul class="depart-hover">
-                                <li><a href="SearchServlet?type=Women">Women's Clothing</a></li>
-                                <li><a href="SearchServlet?type=Men">Men's Clothing</a></li>
-                                <li><a href="SearchServlet?type=Kids">Kid's Clothing</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <nav class="nav-menu mobile-menu">
-                        <ul>
-                            <li ><a href="index.jsp">Home</a></li>
-                            <li><a href="shop.jsp">Shop</a></li>
-                            <li class="active"><a href="contact.jsp">Contact</a></li>
-                            <li><a href="">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
-                                    <li><a href="check-out.jsp">Checkout</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div id="mobile-menu-wrap"></div>
-                </div>
-            </div>
         </header>
         <!-- Header Section End -->
 
@@ -253,7 +230,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb-text">
-                            <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                            <a href="./homePage.jsp"><i class="fa fa-home"></i> Home</a>
                             <span>Contact</span>
                         </div>
                     </div>

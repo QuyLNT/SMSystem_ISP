@@ -165,7 +165,7 @@
                                                                 </div>
                                                             </td>
                                                             <td class="si-close">
-                                                                <a href="RemoveServlet?pId=<%= ele.getProduct().getProductId()%>" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
+                                                                <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=homePage.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
                                                                     <i class="ti-close"></i>
                                                                 </a>
                                                             </td>
@@ -322,7 +322,7 @@
                             %>
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="<%=ele.getAvatarPath()%>" alt="" width="240px" height="240px">
+                                    <img src="<%=ele.getAvatarPath()%>" alt="">
                                     <%
                                         if (ele.getSale() != 0) {
                                     %>
@@ -407,7 +407,7 @@
                             %>
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="<%=ob.getAvatarPath()%>" alt="" width="240px" height="240px">
+                                    <img src="<%=ob.getAvatarPath()%>" alt="">
                                     <%if (ob.getSale() != 0) {
                                     %>
                                     <div class="sale">Sale</div>
@@ -506,7 +506,7 @@
                             %>
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="<%=ele.getAvatarPath()%>" alt="" width="240px" height="240px">
+                                    <img src="<%=ele.getAvatarPath()%>" alt="">
                                     <%
                                         if (ele.getSale() != 0) {
                                     %>

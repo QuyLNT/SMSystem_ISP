@@ -22,6 +22,7 @@ import model.product.ProductImageDAO;
 import model.product.ProductVariantDAO;
 import model.product.ProductVariantDTO;
 import model.user.UserDTO;
+import model.product.ProductImageDAO;
 
 /**
  *
@@ -33,76 +34,78 @@ public class AddToCartController extends HttpServlet {
     private static final String SUCCESS = "product.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    response.setContentType("text/html;charset=UTF-8");
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
 
-    String url = ERROR;
+        String url = ERROR;
 
-    try {
-        int productId = Integer.parseInt(request.getParameter("pId"));
-        int quantity = Integer.parseInt(request.getParameter("qnt"));
-        String size_raw = request.getParameter("size");
-        Float size = Float.parseFloat(size_raw);
+        try {
+            int productId = Integer.parseInt(request.getParameter("pId"));
+            int quantity = Integer.parseInt(request.getParameter("qnt"));
+            String size_raw = request.getParameter("size");
+            Float size = Float.parseFloat(size_raw);
 
-        ProductDAO productDao = new ProductDAO();
-        ProductDTO product = productDao.getProductById(productId);
-        ProductImageDAO imageDao = new ProductImageDAO();
-        product.setListImages(imageDao.getImageByProduct(productId));
-        ProductVariantDAO variantDao = new ProductVariantDAO();
-        List<ProductVariantDTO> availableVariants = variantDao.getVariantByProduct(productId);
+            ProductDAO productDao = new ProductDAO();
+            ProductDTO product = productDao.getProductById(productId);
+            ProductImageDAO imageDao = new ProductImageDAO();
+            product.setListImages(imageDao.getImageByProduct(productId));
+            ProductVariantDAO variantDao = new ProductVariantDAO();
+            List<ProductVariantDTO> availableVariants = variantDao.getVariantByProduct(productId);
 
-        HttpSession session = request.getSession();
-        CartDTO cart = (CartDTO) session.getAttribute("CART");
+            HttpSession session = request.getSession();
+            CartDTO cart = (CartDTO) session.getAttribute("CART");
+            UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
+            if (user != null) {
+                int customerId = user.getUserId();
 
-        if (cart == null) {
-            cart = new CartDTO();
-        }
+                if (cart == null) {
+                    cart = new CartDTO();
+                }
 
-        ProductVariantDTO selectedVariant = null;
-        for (ProductVariantDTO variant : availableVariants) {
-            if (variant.getProductId() == productId && variant.getSize() == size) {
-                selectedVariant = variant;
-                break;
-            }
-        }
+                ProductVariantDTO selectedVariant = null;
+                for (ProductVariantDTO variant : availableVariants) {
+                    if (variant.getProductId() == productId && variant.getSize() == size) {
+                        selectedVariant = variant;
+                        break;
+                    }
+                }
 
-        CartItems existingItem = cart.getItemByProductIdAndSize(productId, size);
-        if (existingItem != null) {
-            existingItem.setQuantity(existingItem.getQuantity() + quantity); 
-            request.setAttribute("ms", "Quantity updated successfully!");
-        } else {
-            if (selectedVariant == null) {
-                request.setAttribute("err", "This size is not available for the selected product.");
-            } else if (quantity > selectedVariant.getStock()) {
-                request.setAttribute("err", "Out of stock for this size. Only " + selectedVariant.getStock() + " items available.");
+                CartItems existingItem = cart.getItemByProductIdAndSize(productId, size);
+                if (existingItem != null) {
+                    existingItem.setQuantity(existingItem.getQuantity() + quantity);
+                    request.setAttribute("ms", "Quantity updated successfully!");
+                } else {
+                    if (selectedVariant == null) {
+                        request.setAttribute("err", "This size is not available for the selected product.");
+                    } else if (quantity > selectedVariant.getStock()) {
+                        request.setAttribute("err", "Out of stock for this size. Only " + selectedVariant.getStock() + " items available.");
+                    }
+                }
+
+                CartDAO cartDao = new CartDAO();
+                int cartId = cartDao.createCartIfNotExists(customerId);
+                if (existingItem != null) {
+                    cartDao.updateCartItemQuantity(cartId, productId, size, existingItem.getQuantity());
+                } else {
+                    cartDao.addCartItem(cartId, productId, quantity, size);
+                    CartDTO newCart = new CartDTO();
+                    cart = cartDao.getCartByUserId(customerId);
+                    for (CartItems c : cart.getCartItemsList()) {
+                        c.getProduct().setListImages(imageDao.getImageByProduct(c.getProduct().getProductId()));
+                    }
+                    session.setAttribute("CART", cart);
+                    session.setAttribute("size", String.valueOf(cart.getSize()));
+                }
+                url = SUCCESS;
             } else {
-                CartItems newItem = new CartItems(product, 0, cart.getCartId(), product.getProductId(), quantity, size);
-                cart.addItem(newItem);
-                request.setAttribute("ms", "Added to cart successfully!");
+                url = "login.jsp";
             }
+        } catch (Exception e) {
+            log("Error at AddToCartController: " + e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
         }
-
-        session.setAttribute("CART", cart);
-        session.setAttribute("size", String.valueOf(cart.getSize()));
-
-        CartDAO cartDao = new CartDAO();
-        UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
-        int customerId = user.getUserId();
-        int cartId = cartDao.createCartIfNotExists(customerId);
-
-        if (existingItem != null) {
-            cartDao.updateCartItemQuantity(cartId, productId, size, existingItem.getQuantity());
-        } else {
-            cartDao.addCartItem(cartId, productId, quantity, size);
-        }
-        url = SUCCESS;
-    } catch (Exception e) {
-        log("Error at AddToCartController: " + e.toString());
-    } finally {
-        request.getRequestDispatcher(url).forward(request, response);
     }
-}
-
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
