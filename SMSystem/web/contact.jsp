@@ -128,85 +128,54 @@
                             <div class="col-lg-3 col-md-3 text-right">
                                 <ul class="nav-right">
                                     <%
-                                        String size = (String) session.getAttribute("size");
-                                        if (size == null) {
-                                            size = "0";
-                                        }
-                                        boolean isEmptyCart = size.equals("0");
+                                        CartDTO cart = (CartDTO) session.getAttribute("CART");
+                                        boolean isEmptyCart = cart == null || (cart.getCartItemsList() == null || cart.getCartItemsList().isEmpty());
+                                        int itemCount = isEmptyCart ? 0 : cart.getCartItemsList().size();
                                     %>
                                     <li class="cart-icon">
                                         <a href="#">
                                             <i class="icon_bag_alt"></i>
-                                            <span><%= size%></span>
+                                            <span><%= itemCount%></span>
                                         </a>
                                         <div class="cart-hover">
                                             <div class="select-items">
                                                 <% if (isEmptyCart) { %>
                                                 <p>No product in cart. Buy more</p>
-                                                <div class="select-total">
-                                                    <span>total:</span>
-                                                    <h5>$00.00</h5>
-                                                </div>
-                                                <div class="select-button">
-                                                    <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
-
-                                                </div>
                                                 <% } else { %>
                                                 <table>
                                                     <tbody>
                                                         <%
-                                                            CartDTO cart = (CartDTO) session.getAttribute("CART");
-                                                            if (cart == null) {
-                                                                cart = new CartDTO();
-                                                            }
                                                             List<CartItems> ls = cart.getCartItemsList();
-                                                            if (ls != null) {
-                                                                double total = 0;
-                                                                int count = 0;
-                                                                for (CartItems ele : ls) {
-                                                                    total += (ele.getPrice() * ele.getQuantity());
+                                                            double total = 0;
+                                                            for (CartItems ele : ls) {
+                                                                total += (ele.getProduct().getPrice() * (1 - ele.getProduct().getSale())) * ele.getQuantity();
                                                         %>
                                                         <tr>
                                                             <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
                                                             <td class="si-text">
                                                                 <div class="product-selected">
-                                                                    <p>$<%= String.format("%.1f", ele.getPrice())%> x <%= ele.getQuantity()%></p>
+                                                                    <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
                                                                     <h6><%= ele.getProduct().getName()%></h6>
-                                                                    <h6>Size <%=ele.getSize()%></h6>
+                                                                    <h6>Size <%= ele.getSize()%></h6>
                                                                 </div>
                                                             </td>
                                                             <td class="si-close">
-                                                                <a href="RemoveServlet?pId=<%=count%>&url=index.jsp"  onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
+                                                                <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=contact.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
                                                                     <i class="ti-close"></i>
                                                                 </a>
                                                             </td>
                                                         </tr>
-                                                        <%
-                                                                count++;
-                                                            }
-                                                        %>
+                                                        <% }%>
                                                     </tbody>
-                                                    <script>
-                                                        function doDelete(name, event) {
-                                                            if (confirm("Bạn có chắc muốn bỏ " + name + " ra khỏi giỏ?")) {
-                                                                //                    window.location="RemoveServlet?mobileId = " + id;
-                                                            } else {
-                                                                event.preventDefault();
-                                                            }
-                                                        }</script>
                                                 </table>
                                                 <div class="select-total">
                                                     <span>total:</span>
-                                                    <h5>$<%=String.format("%.1f", total)%></h5>
-                                                </div>
-                                                <%
-                                                    }
-                                                %>
-                                                <div class="select-button">
-                                                    <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
-
+                                                    <h5>$<%= String.format("%.1f", total)%></h5>
                                                 </div>
                                                 <% }%>
+                                                <div class="select-button">
+                                                    <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </li>
@@ -215,9 +184,17 @@
                         </div>
                     </div>
                 </div>
+                <script>
+                    function doDelete(name, event) {
+                        if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
+                        } else {
+                            event.preventDefault();
+                        }
+                    }
+                </script>
                 <div class="nav-item">
                     <div class="container">
-                                                <div class="nav-depart">
+                        <div class="nav-depart">
                             <div class="depart-btn">
                                 <i class="ti-menu"></i>
                                 <span>All Departments</span>
@@ -253,7 +230,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb-text">
-                            <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                            <a href="./homePage.jsp"><i class="fa fa-home"></i> Home</a>
                             <span>Contact</span>
                         </div>
                     </div>

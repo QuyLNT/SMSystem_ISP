@@ -164,7 +164,7 @@
                                                                 </div>
                                                             </td>
                                                             <td class="si-close">
-                                                                <a href="RemoveServlet?pId=<%= ele.getProduct().getProductId()%>" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
+                                                                <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=product.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
                                                                     <i class="ti-close"></i>
                                                                 </a>
                                                             </td>
@@ -374,13 +374,13 @@
                                         }
                                     %>
                                     <div class="quantity">
-                                        <form action="AddToCartController" method="get">
+                                        <form action="MainController" method="get">
                                             <div class="pro-qty">
                                                 <input type="text" name="qnt" value="1" min="0">
                                             </div>
                                             <input type="hidden" name="pId" value="<%=product.getProductId()%>">
                                             <input type="hidden" name="size" id="size-input">
-                                            <input style="border: none" type="submit" class="primary-btn pd-cart" value="Add To Cart">
+                                            <input style="border: none" type="submit" class="primary-btn pd-cart" name="action" value="Add To Cart">
                                         </form>
 
                                         <%
