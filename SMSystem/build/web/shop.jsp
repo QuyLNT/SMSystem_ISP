@@ -165,7 +165,7 @@
                                                                 </div>
                                                             </td>
                                                             <td class="si-close">
-                                                                <a href="RemoveServlet?pId=<%= ele.getProduct().getProductId()%>" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
+                                                                <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=shop.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
                                                                     <i class="ti-close"></i>
                                                                 </a>
                                                             </td>

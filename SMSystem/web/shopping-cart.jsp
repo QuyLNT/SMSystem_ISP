@@ -148,12 +148,13 @@
                         </div>
                         <nav class="nav-menu mobile-menu">
                             <ul>
-                                <li class="active"><a href="homePage.jsp">Home</a></li>
-                                <li><a href="shop.jsp">Shop</a></li>
+                                <li><a href="MainController?action=HomePage">Home</a></li>
+                                <li><a href="MainController?action=ShopPage">Shop</a></li>
                                 <li><a href="contact.jsp">Contact</a></li>
                                 <li><a href="">Pages</a>
                                     <ul class="dropdown">
                                         <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
+                                        <li><a href="check-out.jsp">Checkout</a></li>
 
                                     </ul>
                                 </li>
@@ -224,15 +225,15 @@
                                             <div class="quantity">
                                                 <!-- Nút trừ số lượng -->
                                                 <button style="border: none">
-                                                    <a href="EditQuantityController?num=-1&cartItemId=<%=ele.getCartItemId()%>">-</a>
+                                                    <a href="MainController?action=Edit quantity&num=-1&cartItemId=<%=ele.getCartItemId()%>">-</a>
                                                 </button>
 
                                                 <!-- Hiển thị số lượng hiện tại, người dùng có thể chỉnh sửa thủ công -->
-                                                <input type="number" min="1" value="<%=ele.getQuantity()%>" readonly>
+                                                <input type="number" min="1" value="<%=ele.getQuantity()%>" required="">
 
                                                 <!-- Nút cộng số lượng -->
                                                 <button style="border: none">
-                                                    <a href="EditQuantityController?num=1&cartItemId=<%=ele.getCartItemId()%>">+</a>
+                                                    <a href="MainController?action=Edit quantity&num=1&cartItemId=<%=ele.getCartItemId()%>">+</a>
                                                 </button>
                                             </div>
                                         </td>
@@ -280,9 +281,10 @@
                                             %>
                                         </td>
                                         <td>
-                                            <form id="form-<%=count%>" action="EditSizeController" method="get">
+                                            <form id="form-<%=count%>" action="MainController" method="get">
                                                 <input type="hidden" name="cartItemId" value="<%=ele.getCartItemId()%>">
                                                 <input type="hidden" name="size" id="size-input-<%=count%>">
+                                                <input type="hidden" name="action" value="Edit Size">
                                             </form>
                                         </td>
 
@@ -298,7 +300,7 @@
                                         }
                                     }
                                 </script>
-                                <td class="close-td first-row"><a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
+                                <td class="close-td first-row"><a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=shopping-cart.jsp" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
                                         <i class="ti-close"></i>
                                     </a></td>
                                 </tr>

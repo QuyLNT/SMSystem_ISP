@@ -21,13 +21,10 @@ import model.cart.CartDTO;
  */
 public class RemoveCartController extends HttpServlet {
 
-    private static final String ERROR = "shopping-cart.jsp";
-    private static final String SUCCESS = "shopping-cart.jsp";
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
+        String url = request.getParameter("url");
         try {
             int cartItemId = Integer.parseInt(request.getParameter("cartItemId"));
             HttpSession session = request.getSession();
@@ -39,7 +36,6 @@ public class RemoveCartController extends HttpServlet {
                     cart.removeItem(cartItemId);
                     session.setAttribute("size", String.valueOf(cart.getSize()));
                     cartDAO.deleteCartItem(cartItemId);
-                    url = SUCCESS;
                 }
                 
             }
