@@ -5,7 +5,7 @@
  */
 package model.discount;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -27,8 +27,8 @@ public class DiscountDTO {
         discountCode = "";
         discountAmount = 0;
         detail="";
-        startDay = new Date();
-        endDay = new Date();
+        startDay = new Date(System.currentTimeMillis()); 
+        endDay = new Date(System.currentTimeMillis());
         usageLimit = 0;
         used=0;
     }

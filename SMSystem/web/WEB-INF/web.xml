@@ -153,6 +153,10 @@
         <servlet-class>controller.ApplyDiscountController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CreateDiscountController</servlet-name>
+        <servlet-class>controller.CreateDiscountController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>SearchProductController</servlet-name>
         <servlet-class>controller.SearchProductController</servlet-class>
     </servlet>
@@ -299,6 +303,10 @@
     <servlet-mapping>
         <servlet-name>ApplyDiscountController</servlet-name>
         <url-pattern>/ApplyDiscountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateDiscountController</servlet-name>
+        <url-pattern>/CreateDiscountController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchProductController</servlet-name>
