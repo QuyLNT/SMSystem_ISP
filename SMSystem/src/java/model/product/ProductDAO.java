@@ -63,6 +63,10 @@ public class ProductDAO {
     private static final String GET_PRODUCT_BY_CATE = "SELECT productId,brandId,userObjectId,detail,hot,name,color,price,sale,warrantPeriod,productStatus \n"
             + "FROM products\n"
             + "WHERE userObjectId = ? AND productStatus = 1";
+     private static final String SEARCH_PRODUCT = "SELECT productId,brandId,userObjectId,detail,hot,"
+            + "                                      name,color,price,sale,warrantPeriod,productStatus \n"
+            + "FROM products\n"
+            + "WHERE name LIKE ? AND productStatus = 1";
 
     public List<ProductDTO> getAllProduct() throws ClassNotFoundException, SQLException {
         List<ProductDTO> listProduct = new ArrayList<>();
@@ -598,5 +602,49 @@ public class ProductDAO {
 
         return listProduct;
     }
+    public List<ProductDTO> search(String search) throws SQLException, ClassNotFoundException {
+        List<ProductDTO> products = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
+        try {
+            con = DBUtils.getConnection();
+            if (con != null) {
+                ps = con.prepareStatement(SEARCH_PRODUCT);
+                ps.setString(1, "%" + search + "%");
+                rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    int productId = rs.getInt("productId");
+                    int brandId = rs.getInt("brandId");
+                    int userObjectId = rs.getInt("userObjectId");
+                    String detail = rs.getString("detail");
+                    boolean hot = rs.getBoolean("hot");
+                    String productName = rs.getString("name");
+                    float price = rs.getFloat("price");
+                    String color = rs.getString("color");
+                    float sale = rs.getFloat("sale");
+                    int warrantPeriod = rs.getInt("warrantPeriod");
+                    boolean productStatus = rs.getBoolean("productStatus");
+
+                    ProductDTO product = new ProductDTO(productId, brandId, userObjectId, detail, hot, productName, color, price, sale, warrantPeriod, productStatus);
+                    products.add(product);
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return products;
+    }
 }
