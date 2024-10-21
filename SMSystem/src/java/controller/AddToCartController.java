@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +17,6 @@ import model.cart.CartDTO;
 import model.cart.CartItems;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
-import model.product.ProductImageDAO;
 import model.product.ProductVariantDAO;
 import model.product.ProductVariantDTO;
 import model.user.UserDTO;

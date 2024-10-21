@@ -6,7 +6,11 @@
     </filter>
     <filter-mapping>
         <filter-name>AuthenFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/*Controller</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>MainController</servlet-name>

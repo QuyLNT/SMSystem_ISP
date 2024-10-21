@@ -199,27 +199,27 @@
                     <div class="nav-depart">
                         <div class="depart-btn">
                             <i class="ti-menu"></i>
-                            <span>All Departments</span>
-                            <ul class="depart-hover">
-                                <li><a href="SearchServlet?type=2">Women's Clothing</a></li>
-                                <li><a href="SearchServlet?type=1">Men's Clothing</a></li>
-                                <li><a href="SearchServlet?type=3">Kid's Clothing</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <nav class="nav-menu mobile-menu">
-                        <ul>
-                            <li><a href="homePage.jsp">Home</a></li>
-                            <li class="active"><a href="shop.jsp">Shop</a></li>
-                            <li><a href="contact.jsp">Contact</a></li>
-                            <li><a href="">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
-                                   
+                                                            <span>All Departments</span>
+                                <ul class="depart-hover">
+                                    <li><a href="MainController?action=SearchCategories&type=1">Men's Clothing</a></li>
+                                    <li><a href="MainController?action=SearchCategories&type=2">Women's Clothing</a></li>
+                                    <li><a href="MainController?action=SearchCategories&type=3">Kid's Clothing</a></li>
                                 </ul>
-                            </li>
-                        </ul>
-                    </nav>
+                            </div>
+                        </div>
+                        <nav class="nav-menu mobile-menu">
+                            <ul>
+                                <li><a href="MainController?action=HomePage">Home</a></li>
+                                <li><a href="MainController?action=ShopPage">Shop</a></li>
+                                <li><a href="contact.jsp">Contact</a></li>
+                                <li><a href="">Pages</a>
+                                    <ul class="dropdown">
+                                        <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
+                                        <li><a href="check-out.jsp">Checkout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
                     <div id="mobile-menu-wrap"></div>
                 </div>
             </div>

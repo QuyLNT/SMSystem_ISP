@@ -252,7 +252,7 @@
                                 <p style="color: white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores corrupti fuga ratione.
                                     Voluptates voluptatibus illo quaerat? Ea et, dignissimos dolor, dolore impedit odio
                                     officia ullam eaque obcaecati eligendi ipsam placeat?</p>
-                                <a href="SearchServlet?is=sale" class="primary-btn">Shop Now</a>
+                                <a href="MainController?action=ShopPage" class="primary-btn">Shop Now</a>
                             </div>
                         </div>
                         <div class="off-card">
@@ -304,7 +304,7 @@
                     <div class="col-lg-3">
                         <div class="product-large set-bg" data-setbg="https://i.pinimg.com/564x/13/f5/64/13f5644533af0b5ac27069eeaf5c1a61.jpg">
                             <h2>Women's</h2>
-                            <a href="SearchServlet?type=2">Discover More</a>
+                            <a href="MainController?action=SearchCategories&type=2">Discover More</a>
                         </div>
                     </div>
                     <div class="col-lg-8 offset-lg-1">
@@ -474,7 +474,7 @@
                     <div class="col-lg-3 offset-lg-1">
                         <div class="product-large set-bg" data-setbg="https://i.pinimg.com/564x/3b/89/4d/3b894d8d394ad4dfa667bec6b073cf04.jpg">
                             <h2>Men's</h2>
-                            <a href="SearchServlet?type=1">Discover More</a>
+                            <a href="MainController?action=SearchCategories&type=1">Discover More</a>
                         </div>
                     </div>
                 </div>
@@ -490,7 +490,7 @@
                     <div class="col-lg-3">
                         <div class="product-large set-bg" data-setbg="https://assets.adidas.com/images/w_940,f_auto,q_auto/e1de913ec5f94fbdb4f7af8801289871_9366/IC3030_23_hover_model.jpg">
                             <h2>Kid's</h2>
-                            <a href="SearchServlet?type=3">Discover More</a>
+                            <a href="MainController?action=SearchCategories&type=3">Discover More</a>
                         </div>
                     </div>
                     <div class="col-lg-8 offset-lg-1">

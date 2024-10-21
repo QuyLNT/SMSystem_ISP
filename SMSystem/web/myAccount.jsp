@@ -146,21 +146,21 @@
                             <i class="ti-menu"></i>
                             <span>All Departments</span>
                             <ul class="depart-hover">
-                                <li class="active"><a href="#">Women's Clothing</a></li>
-                                <li><a href="#">a</a></li>
-                                <li><a href="#">a</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=1">Men's Clothing</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=2">Women's Clothing</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=3">Kid's Clothing</a></li>
                             </ul>
                         </div>
                     </div>
                     <nav class="nav-menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="homePage.jsp">Home</a></li>
-                            <li><a href="shop.jsp">Shop</a></li>
-
+                            <li><a href="MainController?action=HomePage">Home</a></li>
+                            <li><a href="MainController?action=ShopPage">Shop</a></li>
                             <li><a href="contact.jsp">Contact</a></li>
                             <li><a href="">Pages</a>
                                 <ul class="dropdown">
                                     <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
+                                    <li><a href="check-out.jsp">Checkout</a></li>
 
                                 </ul>
                             </li>
@@ -173,7 +173,6 @@
         <!-- Header Section End -->
 
         <!--  -->
-
         <!--Breadcrumb Section Begin-->
         <div class="breadcrumb-section">
             <div class="container">
@@ -213,79 +212,79 @@
                                     <label for="password">password <span>*</span></label>
                                     <% if (request.getAttribute("PASS_ERROR") != null) {%>
                                     <p style="color: red;"><%= request.getAttribute("PASS_ERROR")%>
-                                    <% } %>
-                                    <% if (user.getPassword() == null) { %>
-                                    <input type="text" id="pass" name="pass">
-                                    <% } else {%>
+                                        <% } %>
+                                        <% if (user.getPassword() == null) { %>
+                                        <input type="text" id="pass" name="pass">
+                                        <% } else {%>
 
-                                    <input type="text" id="password-exist" name="pass" value="<%=user.getPassword()%>" readonly>
-                                    <button type="button" id="edit-btn-pass">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </button>
-                                    <% } %>
+                                        <input type="text" id="password-exist" name="pass" value="<%=user.getPassword()%>" readonly>
+                                        <button type="button" id="edit-btn-pass">
+                                            <i class="fa fa-pencil-square-o"></i>
+                                        </button>
+                                        <% } %>
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="fullName">Full Name <span>*</span></label>
                                     <% if (request.getAttribute("FULLNAME_ERROR") != null) {%>
                                     <p style="color: red;"><%= request.getAttribute("FULLNAME_ERROR")%>
-                                    <% } %> 
-                                    <% if (user.getFullName() == null) { %> 
-                                    <input type="text" id="fullName" name="fullName">
-                                    <% } else {%>
-                                    <input type="text" id="fullName-exist" name="fullName" value="<%=user.getFullName()%>" readonly>
-                                    <button type="button" id="edit-btn-fullName">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </button>
-                                    <% } %>
+                                        <% } %> 
+                                        <% if (user.getFullName() == null) { %> 
+                                        <input type="text" id="fullName" name="fullName">
+                                        <% } else {%>
+                                        <input type="text" id="fullName-exist" name="fullName" value="<%=user.getFullName()%>" readonly>
+                                        <button type="button" id="edit-btn-fullName">
+                                            <i class="fa fa-pencil-square-o"></i>
+                                        </button>
+                                        <% } %>
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="phone">Phone <span>*</span></label> 
                                     <% if (request.getAttribute("PHONE_ERROR") != null) {%>
                                     <p style="color: red;"><%= request.getAttribute("PHONE_ERROR")%>
                                         <% } %>
-                                    <% if (user.getPhoneNumber() == null) { %>
-                                    <input type="text" id="phone" name="phone" >
-                                    <% } else {%>
-                                    <input type="text" id="phone-exist" name="phone" value="<%=user.getPhoneNumber()%>" readonly>
-                                    <button type="button" id="edit-btn-phone">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </button>
-                                    <% } %>
+                                        <% if (user.getPhoneNumber() == null) { %>
+                                        <input type="text" id="phone" name="phone" >
+                                        <% } else {%>
+                                        <input type="text" id="phone-exist" name="phone" value="<%=user.getPhoneNumber()%>" readonly>
+                                        <button type="button" id="edit-btn-phone">
+                                            <i class="fa fa-pencil-square-o"></i>
+                                        </button>
+                                        <% } %>
 
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="sex">Sex <span>*</span></label>
                                     <% if (request.getAttribute("SEX_ERROR") != null) {%>
                                     <p style="color: red;"><%= request.getAttribute("SEX_ERROR")%>
-                                    <% } %>
-                                    <% if (user.getSex() == null) { %>
-                                    <select id="sex" name="sex">
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                    <% } else {%>
-                                    <input type="text" id="sex-exist" name="sex" value="<%=user.getSex()%>" readonly>
-                                    <button type="button" id="edit-btn-sex">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </button>
-                                    <% } %>
+                                        <% } %>
+                                        <% if (user.getSex() == null) { %>
+                                        <select id="sex" name="sex">
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                        <% } else {%>
+                                        <input type="text" id="sex-exist" name="sex" value="<%=user.getSex()%>" readonly>
+                                        <button type="button" id="edit-btn-sex">
+                                            <i class="fa fa-pencil-square-o"></i>
+                                        </button>
+                                        <% } %>
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="email">Email Address <span>*</span></label>
                                     <% if (request.getAttribute("EMAIL_ERROR") != null) {%>
                                     <p style="color: red;"><%= request.getAttribute("EMAIL_ERROR")%>
-                                    <% } %>
-                                    <% if (user.getEmail() == null) { %>
-                                    <input type="email" id="email" name="email">
-                                    <% } else {%>
+                                        <% } %>
+                                        <% if (user.getEmail() == null) { %>
+                                        <input type="email" id="email" name="email">
+                                        <% } else {%>
 
-                                    <input type="email" id="email-exist" name="email" value="<%=user.getEmail()%>" readonly>
-                                    <button type="button" id="edit-btn-email">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </button>
+                                        <input type="email" id="email-exist" name="email" value="<%=user.getEmail()%>" readonly>
+                                        <button type="button" id="edit-btn-email">
+                                            <i class="fa fa-pencil-square-o"></i>
+                                        </button>
 
-                                    <% } %>
+                                        <% } %>
                                 </div>
                             </div>
                             <%
