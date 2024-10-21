@@ -22,15 +22,15 @@ import utils.DBUtils;
  */
 public class CartDAO {
 
-    private static final String DELETE_ITEM = "DELETE FROM cart_items WHERE cartItemId = ?";
+    private static final String DELETE_ITEM = "DELETE FROM cartItems WHERE cartItemId = ?";
     private static final String INSERT_CART = "INSERT INTO carts (customerId) VALUES (?)";
-    private static final String INSERT_CART_ITEM = "INSERT INTO cart_items (cartId, productId, quantity, size) VALUES (?, ?, ?, ?)";
+    private static final String INSERT_CART_ITEM = "INSERT INTO cartItems (cartId, productId, quantity, size) VALUES (?, ?, ?, ?)";
     private static final String GET_CART_ID = "SELECT cartId FROM carts WHERE customerId = ?";
-    private static final String GET_CART_ITEMS = "SELECT cartItemId, productId, quantity, size FROM cart_items WHERE cartId = ?";
-    private static final String UPDATE_CART_ITEM_QUANTITY = "UPDATE cart_items SET quantity = ? WHERE cartId = ? AND productId = ? AND size = ?";
-    private static final String EXISTS_CART_ITEMS = "SELECT cartItemId FROM cart_items WHERE cartId = ? AND productId = ? AND size = ?";
-    private static final String UPDATE_QUANTITY = "UPDATE cart_items SET quantity = ? WHERE cartItemId = ? ";
-    private static final String UPDATE_SIZE = "UPDATE cart_items SET size = ? WHERE cartItemId = ?";
+    private static final String GET_CART_ITEMS = "SELECT cartItemId, productId, quantity, size FROM cartItems WHERE cartId = ?";
+    private static final String UPDATE_CART_ITEM_QUANTITY = "UPDATE cartItems SET quantity = ? WHERE cartId = ? AND productId = ? AND size = ?";
+    private static final String EXISTS_CART_ITEMS = "SELECT cartItemId FROM cartItems WHERE cartId = ? AND productId = ? AND size = ?";
+    private static final String UPDATE_QUANTITY = "UPDATE cartItems SET quantity = ? WHERE cartItemId = ? ";
+    private static final String UPDATE_SIZE = "UPDATE cartItems SET size = ? WHERE cartItemId = ?";
 
     public boolean deleteCartItem(int cartItemId) throws SQLException, ClassNotFoundException {
         Connection conn = null;
@@ -128,7 +128,7 @@ public class CartDAO {
                 if (rs.next()) {
                     int cartId = rs.getInt("cartId");
 
-                    // Lấy các sản phẩm từ bảng cart_items
+                    // Lấy các sản phẩm từ bảng cartItems
                     ps = conn.prepareStatement(GET_CART_ITEMS);
                     ps.setInt(1, cartId);
                     rs = ps.executeQuery();
