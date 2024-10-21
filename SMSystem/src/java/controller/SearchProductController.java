@@ -8,8 +8,8 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +21,9 @@ import model.product.ProductImageDAO;
 
 /**
  *
- * @author LENOVO
+ * @author Asus
  */
-public class SearchProductByNameController extends HttpServlet {
+public class SearchProductController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,17 +34,18 @@ public class SearchProductByNameController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "productList.jsp";
-    private static final String SUCCESS = "productList.jsp";
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String url= ERROR;
+    private static final String ERROR = "shop.jsp";
+    private static final String SUCCESS = "shop.jsp";
+
+  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    response.setContentType("text/html;charset=UTF-8");
+    String url= ERROR;
         try {
-            String searchTerm = request.getParameter("searchProductName");
+            String searchTerm = request.getParameter("text");
             ProductDAO productDao = new ProductDAO();
             ProductImageDAO imageDao = new ProductImageDAO();
-            List<ProductDTO> products = productDao.searchProductsByName(searchTerm);
+            List<ProductDTO> products = productDao.search(searchTerm);
             for(ProductDTO p: products){
                 p.setListImages(imageDao.getImageByProduct(p.getProductId()));
             }
@@ -62,10 +63,10 @@ public class SearchProductByNameController extends HttpServlet {
             request.getRequestDispatcher(url).forward(request, response);
         }
 
-        
-    }
+}
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
