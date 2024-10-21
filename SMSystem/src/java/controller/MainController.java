@@ -97,6 +97,8 @@ public class MainController extends HttpServlet {
     private final static String APPLY_DISCOUNT_CONTROLLER = "ApplyDiscountController";
     private final static String CREATE_DISCOUNT = "Add Discount";
     private final static String CREATE_DISCOUNT_CONTROLLER = "CreateDiscountController";
+    private final static String REMOVE_DISCOUNT = "Remove";
+    private final static String REMOVE_DISCOUNT_CONTROLLER = "RemoveDiscountController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -172,6 +174,8 @@ public class MainController extends HttpServlet {
                 url=APPLY_DISCOUNT_CONTROLLER;
             }else if(CREATE_DISCOUNT.equals(action)){
                 url=CREATE_DISCOUNT_CONTROLLER;
+            }else if(REMOVE_DISCOUNT.equals(action)){
+                url=REMOVE_DISCOUNT_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());
