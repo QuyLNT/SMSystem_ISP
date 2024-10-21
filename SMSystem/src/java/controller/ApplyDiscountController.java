@@ -6,63 +6,57 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.product.ProductDAO;
-import model.product.ProductDTO;
-import model.product.ProductImageDAO;
+import model.discount.DiscountDAO;
+import model.discount.DiscountDTO;
 
 /**
  *
- * @author LENOVO
+ * @author dell
  */
-public class SearchProductByNameController extends HttpServlet {
+public class ApplyDiscountController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    private static final String ERROR = "productList.jsp";
-    private static final String SUCCESS = "productList.jsp";
+    private static final String ERROR = "shopping-cart.jsp";
+    private static final String SUCCESS = "shopping-cart.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url= ERROR;
+        String url = ERROR;
         try {
-            String searchTerm = request.getParameter("searchProductName");
-            ProductDAO productDao = new ProductDAO();
-            ProductImageDAO imageDao = new ProductImageDAO();
-            List<ProductDTO> products = productDao.searchProductsByName(searchTerm);
-            for(ProductDTO p: products){
-                p.setListImages(imageDao.getImageByProduct(p.getProductId()));
-            }
-            if (products.isEmpty()) {
-                request.setAttribute("NO_RESULTS", "No search results");
+            String discountCode = request.getParameter("code");
+            DiscountDAO dao = new DiscountDAO();
+            DiscountDTO discount = dao.ApplyCode(discountCode);
+            String msg = "";
+
+            HttpSession session = request.getSession();
+
+            if (discount != null) {
+                if ("Expired".equals(discount.getStatus())) {
+                    msg = "This discount code has expired."; 
+                } else if (discount.getUsed() >= discount.getUsageLimit()) {
+                    msg = "This discount code has reached its usage limit.";
+                } else {
+                    msg = "Code valid, your bill will be reduced by $" + discount.getDiscountAmount() + ".";
+                    session.setAttribute("code", discount);
+                    dao.updateUsage(discountCode);
+                }
             } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("PRODUCT_LIST", products);
-                url = SUCCESS;
+                msg = "Invalid code."; 
             }
-            
-        } catch (SQLException | ClassNotFoundException e) {
-            request.setAttribute("err", "Failed to search for products: " + e.getMessage());
-        }finally{
+
+            request.setAttribute("msg", msg);
+            url = SUCCESS;
+        } catch (Exception e) {
+            log("Error at ApplyDiscountController: " + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -134,9 +134,9 @@ public class CartDAO {
                     rs = ps.executeQuery();
 
                     List<CartItems> cartItemsList = new ArrayList<>();
-                    while (rs.next()) {
-                        int productId = rs.getInt("productId");
+                    while (rs.next()) { 
                         int cartItemId = rs.getInt("cartItemId");
+                        int productId = rs.getInt("productId");
                         int quantity = rs.getInt("quantity");
                         float size = rs.getFloat("size");
 

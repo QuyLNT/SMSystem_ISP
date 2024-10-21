@@ -93,6 +93,14 @@ public class MainController extends HttpServlet {
     private final static String SEARCH_PRODUCT_CATEGORIES_CONTROLLER = "SearchCategoriesController";
     private final static String EDIT_SIZE = "Edit Size";
     private final static String EDIT_SIZE_CONTROLLER = "EditSizeController";
+    private final static String APPLY_DISCOUNT = "Apply";
+    private final static String APPLY_DISCOUNT_CONTROLLER = "ApplyDiscountController";
+    private final static String CREATE_DISCOUNT = "Add Discount";
+    private final static String CREATE_DISCOUNT_CONTROLLER = "CreateDiscountController";
+    private final static String SEARCH_PRODUCT_CUS = "Search";
+    private final static String SEARCH_PRODUCT_CUS_CONTROLLER = "SearchProductController";
+    private final static String REMOVE_DISCOUNT = "Remove";
+    private final static String REMOVE_DISCOUNT_CONTROLLER = "RemoveDiscountController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -164,6 +172,14 @@ public class MainController extends HttpServlet {
                 url=SEARCH_PRODUCT_CATEGORIES_CONTROLLER;
             }else if(EDIT_SIZE.equals(action)){
                 url=EDIT_SIZE_CONTROLLER;
+            }else if(APPLY_DISCOUNT.equals(action)){
+                url=APPLY_DISCOUNT_CONTROLLER;
+            }else if(CREATE_DISCOUNT.equals(action)){
+                url=CREATE_DISCOUNT_CONTROLLER;
+            }else if(REMOVE_DISCOUNT.equals(action)){
+                url=REMOVE_DISCOUNT_CONTROLLER;
+            } else if (SEARCH_PRODUCT_CUS.equals(action)) {
+                url = SEARCH_PRODUCT_CUS_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());
@@ -172,7 +188,7 @@ public class MainController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

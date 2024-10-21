@@ -26,7 +26,7 @@
     </head>
     <body>
         <main class="main-wrap">
-             <header class="main-head">
+            <header class="main-head">
                 <div class="main-nav">
                     <nav class="navbar">
                         <div class="navbar-nav">
@@ -99,6 +99,10 @@
                                 <i class="fa-solid fa-plus"></i> Add new Discount Code
                             </button>
                             <%
+                                List<DiscountDTO> discountList = (List<DiscountDTO>) session.getAttribute("DISCOUNT_LIST");
+                                if (discountList == null) {
+                                    discountList = new ArrayList<>();
+                                }
                                 String ms = "";
                                 String err = "";
                                 if (request.getAttribute("ms") != null) {
@@ -164,10 +168,6 @@
                         </div>
                         <div class="welcome">
                             <%
-                                List<DiscountDTO> discountList = (List<DiscountDTO>) session.getAttribute("DISCOUNT_LIST");
-                                if (discountList == null) {
-                                    discountList = new ArrayList<>();
-                               }
 
                                 if (discountList != null) {
 
@@ -190,48 +190,48 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%
-                                            int count=1 ;
+                                        <%                                            
+                                            int count = 1;
                                             for (DiscountDTO discount : discountList) {
                                         %>
 
                                         <tr>
-                                        <td><%=count++%></td>
-                                        <td><%=discount.getDiscountCode()%></td>
-                                        <td><%=discount.getDetail()%></td>                                       
-                                        <td><%
-                                                double discountAmount =discount.getDiscountAmount() * 100;
+                                            <td><%=count++%></td>
+                                            <td><%=discount.getDiscountCode()%></td>
+                                            <td><%=discount.getDetail()%></td>                                       
+                                            <td><%
+                                                double discountAmount = discount.getDiscountAmount() * 100;
                                                 double roundedPercentage = Math.ceil(discountAmount * 100) / 100.0;
-                                            %>
-                                            <%= String.format("%.0f%%", roundedPercentage)%>
-                                        </td>
-                                        <td><%=discount.getStartDay()%></td>
-                                        <td><%=discount.getEndDay()%></td>
-                                        <td><%=discount.getUsageLimit()%></td>
-                                        <td><%=discount.getUsed()%></td>                                                                                
-                                        <td>
-                                            <form action="MainController" method="POST">
-                                                <input type="hidden" name="discountId" value="<%= discount.getDiscountId()%>"/>
-                                                <input type="hidden" name="action" value="toggleDiscountStatus"/>
-                                                <select name="status" onchange="this.form.submit()">
-                                                    <option value="Active" <%= discount.getStatus().equalsIgnoreCase("Active")? "selected" : ""%>>Active</option>
-                                                    <option value="Expired" <%= discount.getStatus().equalsIgnoreCase("Expired")? "selected" : ""%>>Expired</option>
-                                                    <option value="Limit Use" <%= discount.getStatus().equalsIgnoreCase("Limit Use")? "selected" : ""%>>Limit Use</option>
-                                                </select>
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <form action="MainController" method="POST">
-                                                <input type="hidden" name="code"  value="<%=discount.getDiscountCode()%>" />
+                                                %>
+                                                <%= String.format("%.0f%%", roundedPercentage)%>
+                                            </td>
+                                            <td><%=discount.getStartDay()%></td>
+                                            <td><%=discount.getEndDay()%></td>
+                                            <td><%=discount.getUsageLimit()%></td>
+                                            <td><%=discount.getUsed()%></td>                                                                                
+                                            <td>
+                                                <form action="MainController" method="POST">
+                                                    <input type="hidden" name="discountId" value="<%= discount.getDiscountId()%>"/>
+                                                    <input type="hidden" name="action" value="toggleDiscountStatus"/>
+                                                    <select name="status" onchange="this.form.submit()">
+                                                        <option value="Active" <%= discount.getStatus().equalsIgnoreCase("Active") ? "selected" : ""%>>Active</option>
+                                                        <option value="Expired" <%= discount.getStatus().equalsIgnoreCase("Expired") ? "selected" : ""%>>Expired</option>
+                                                        <option value="Limit Use" <%= discount.getStatus().equalsIgnoreCase("Limit Use") ? "selected" : ""%>>Limit Use</option>
+                                                    </select>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form action="MainController" method="POST">
+                                                    <input type="hidden" name="discountId"  value="<%=discount.getDiscountId()%>" />
 
-                                                <button type="submit" class="btn btn-primary" name="action" value="Remove">
-                                                    <i class="fa-solid fa-delete-left"></i>     
-                                                </button>
-                                            </form>
-                                        
-                                        </td>
-                                    </tr> 
-                                    <%}%>
+                                                    <button type="submit" class="btn btn-primary" name="action" value="Remove">
+                                                        <i class="fa-solid fa-delete-left"></i>     
+                                                    </button>
+                                                </form>
+
+                                            </td>
+                                        </tr> 
+                                        <%}%>
                                     </tbody>
                                 </table> 
                             </form>
