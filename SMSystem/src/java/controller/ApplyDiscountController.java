@@ -6,46 +6,57 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.cart.CartDAO;
-import model.cart.CartDTO;
+import model.discount.DiscountDAO;
+import model.discount.DiscountDTO;
 
 /**
  *
- * @author CHAU DUYEN
+ * @author dell
  */
-public class RemoveCartController extends HttpServlet {
+public class ApplyDiscountController extends HttpServlet {
+
+    private static final String ERROR = "shopping-cart.jsp";
+    private static final String SUCCESS = "shopping-cart.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = request.getParameter("url");
+        String url = ERROR;
         try {
-            int cartItemId = Integer.parseInt(request.getParameter("cartItemId"));
-            HttpSession session = request.getSession();
-            CartDTO cart = (CartDTO) session.getAttribute("CART");
-            CartDAO cartDAO = new CartDAO();
-            boolean deleteItem = cartDAO.deleteCartItem(cartItemId);
-            if (cart != null) {
-                if (deleteItem) {
-                    cart.removeItem(cartItemId);
-                    session.setAttribute("size", String.valueOf(cart.getSize()));
-                    cartDAO.deleteCartItem(cartItemId);
-                }
-                
-            }
-        } catch (Exception e) {
-            log("Error at RemoveCartController: " + e.toString());
+            String discountCode = request.getParameter("code");
+            DiscountDAO dao = new DiscountDAO();
+            DiscountDTO discount = dao.ApplyCode(discountCode);
+            String msg = "";
 
+            HttpSession session = request.getSession();
+
+            if (discount != null) {
+                if ("Expired".equals(discount.getStatus())) {
+                    msg = "This discount code has expired."; 
+                } else if (discount.getUsed() >= discount.getUsageLimit()) {
+                    msg = "This discount code has reached its usage limit.";
+                } else {
+                    msg = "Code valid, your bill will be reduced by $" + discount.getDiscountAmount() + ".";
+                    session.setAttribute("code", discount);
+                    dao.updateUsage(discountCode);
+                }
+            } else {
+                msg = "Invalid code."; 
+            }
+
+            request.setAttribute("msg", msg);
+            url = SUCCESS;
+        } catch (Exception e) {
+            log("Error at ApplyDiscountController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -88,8 +99,3 @@ public class RemoveCartController extends HttpServlet {
     }// </editor-fold>
 
 }
-// if (cart != null) {
-//                cart.removeItem(cartItemId); // Xóa item trong session giỏ hàng
-//                session.setAttribute("CART", cart); // Cập nhật lại giỏ hàng trong session
-//                cartDAO.deleteCartItem(cartItemId);
-//            }

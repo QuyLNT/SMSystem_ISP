@@ -93,6 +93,8 @@ public class MainController extends HttpServlet {
     private final static String SEARCH_PRODUCT_CATEGORIES_CONTROLLER = "SearchCategoriesController";
     private final static String EDIT_SIZE = "Edit Size";
     private final static String EDIT_SIZE_CONTROLLER = "EditSizeController";
+    private final static String APPLY_DISCOUNT = "Apply";
+    private final static String APPLY_DISCOUNT_CONTROLLER = "ApplyDiscountController";
     private final static String CREATE_DISCOUNT = "Add Discount";
     private final static String CREATE_DISCOUNT_CONTROLLER = "CreateDiscountController";
 
@@ -166,6 +168,8 @@ public class MainController extends HttpServlet {
                 url=SEARCH_PRODUCT_CATEGORIES_CONTROLLER;
             }else if(EDIT_SIZE.equals(action)){
                 url=EDIT_SIZE_CONTROLLER;
+            }else if(APPLY_DISCOUNT.equals(action)){
+                url=APPLY_DISCOUNT_CONTROLLER;
             }else if(CREATE_DISCOUNT.equals(action)){
                 url=CREATE_DISCOUNT_CONTROLLER;
             }
