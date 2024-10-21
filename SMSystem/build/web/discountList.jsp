@@ -222,7 +222,7 @@
                                             </td>
                                             <td>
                                                 <form action="MainController" method="POST">
-                                                    <input type="hidden" name="code"  value="<%=discount.getDiscountCode()%>" />
+                                                    <input type="hidden" name="discountId"  value="<%=discount.getDiscountId()%>" />
 
                                                     <button type="submit" class="btn btn-primary" name="action" value="Remove">
                                                         <i class="fa-solid fa-delete-left"></i>     

@@ -26,6 +26,7 @@ public class DiscountDAO {
             + "SET discountStatus=?\n"
             + "WHERE discountId=?";
     public static final String ADD_DISCOUNT = "INSERT INTO discountCodes(discountCode, detail, discountAmount, startDay, endDay, usageLimit,usage,discountStatus) VALUES (?,?,?,?,?,?,?,?)";
+    public static final String REMOVE_DISCOUNT = "DELETE FROM discountCodes WHERE discountId =?";
 
     public List<DiscountDTO> getALlDiscount() throws SQLException, ClassNotFoundException {
         List<DiscountDTO> discountList = new ArrayList<>();
@@ -187,5 +188,29 @@ public class DiscountDAO {
             }
         }
         return discount;
+    }
+    
+    public boolean deleteDiscount(int discountId) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        boolean result = false;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(REMOVE_DISCOUNT);
+                ptm.setInt(1, discountId);
+                result = ptm.executeUpdate() > 0;
+
+            }
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return result;
     }
 }
