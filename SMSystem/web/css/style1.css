@@ -4384,3 +4384,10 @@ favor-add{
         cursor: pointer;
     }
 }
+
+.input[type=checkbox], input[type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+    width: 100px;
+    height: 15px;
+}

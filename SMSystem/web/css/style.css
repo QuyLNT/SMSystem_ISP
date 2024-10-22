@@ -168,3 +168,9 @@ form input[type="password"] {
   background-color: #ffffff;
   color: #273c75;
 }
+
+.input[type=checkbox], input[type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+    height: 15px;
+}
