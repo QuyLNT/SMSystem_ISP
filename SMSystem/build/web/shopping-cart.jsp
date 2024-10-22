@@ -216,6 +216,7 @@
                                                 total += (ele.getPrice() * ele.getQuantity());
                                     %>
                                     <tr>
+                                        <td class="checkbox-card"><input style="height: 15px" name="" type="checkbox" checked></input></td>
                                         <td class="cart-pic first-row"><img src="<%=ele.getProduct().getAvatarPath()%>" style="height: 100px; width: 100px" alt=""></td>
                                         <td class="cart-title first-row">
                                             <h5><%=ele.getProduct().getName()%></h5>
