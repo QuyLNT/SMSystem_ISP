@@ -308,9 +308,8 @@
                                         %>
                                     </div>
                                     <%
-                                        if (product.getUserOjectId() == 1 || product.getUserOjectId() == 2) {
-                                            List<Float> validSizes = (List<Float>) session.getAttribute("AVAILABLE_SIZE");
-                                            List<Float> allSizes = (List<Float>) session.getAttribute("ALL_SIZE");
+                                            List<Float> validSizes = product.getAvaiableSize();
+                                            List<Float> allSizes = product.getAllSize();
                                     %>
                                     <style>
                                         .unavailable-size {
@@ -340,39 +339,6 @@
                                             }
                                         %>
                                     </div>
-                                    <%                                                } else {
-                                        List<Float> validSizes = (List<Float>) session.getAttribute("AVAILABLE_SIZE");
-                                        List<Float> allSizes = (List<Float>) session.getAttribute("ALL_SIZE");
-                                    %>
-                                    <style>
-                                        .unavailable-size {
-                                            color: gray;
-                                            cursor: not-allowed;
-                                        }
-                                    </style>
-
-                                    <div class="pd-size-choose">
-                                        <%
-                                            for (float sz : allSizes) {
-                                                boolean isAvailable = validSizes.contains(sz);
-                                        %>
-                                        <div class="sc-item">
-                                            <input type="radio" id="<%=sz%>-size" name="size" value="<%=sz%>" <%= isAvailable ? "" : "disabled"%> onchange="updateSize('<%=sz%>')">
-                                            <label for="<%=sz%>-size" style="<%= isAvailable ? "" : "color: gray; cursor: not-allowed;"%>"><%=sz%></label>
-                                        </div>
-                                        <%
-                                            }
-                                        %>
-                                    </div>
-                                    <%
-                                        String msg = (String) request.getAttribute("msg");
-                                        if (msg != null) {
-                                    %>
-                                    <p style="color: red"><%=msg%></p>
-                                    <%
-                                            }
-                                        }
-                                    %>
                                     <div class="quantity">
                                         <form action="MainController" method="get">
                                             <div class="pro-qty">
@@ -482,11 +448,6 @@
                                                 <tr>
                                                     <td class="p-catagory">Size</td>
                                                     <td>
-                                                        <%
-                                                            List<Float> allSizes = (List<Float>) session.getAttribute("ALL_SIZE");
-
-                                                        %>
-
                                                         <div class="p-size"><%= allSizes.get(0)%> - <%= allSizes.get(allSizes.size() - 1)%></div>
                                                     </td>
                                                 </tr>

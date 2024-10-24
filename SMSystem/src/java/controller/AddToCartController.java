@@ -90,6 +90,7 @@ public class AddToCartController extends HttpServlet {
                     cart = cartDao.getCartByUserId(customerId);
                     for (CartItems c : cart.getCartItemsList()) {
                         c.getProduct().setListImages(imageDao.getImageByProduct(c.getProduct().getProductId()));
+                        c.getProduct().setListVariants(variantDao.getVariantByProduct(c.getProduct().getProductId()));
                     }
                     session.setAttribute("CART", cart);
                     session.setAttribute("size", String.valueOf(cart.getSize()));

@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  *
  * @author LENOVO
  */
 public class CartDTO {
+
     private int cartId;
     private int customerId;
     private Date createdAt;
@@ -102,7 +102,7 @@ public class CartDTO {
     public void addItemExist(CartItems newItem) {
         for (CartItems item : cartItemsList) {
             if (item.getProduct().getProductId() == newItem.getProduct().getProductId()
-                && item.getSize() == newItem.getSize()) {
+                    && item.getSize() == newItem.getSize()) {
                 item.setQuantity(item.getQuantity() + newItem.getQuantity());
                 break;
             }
@@ -122,8 +122,8 @@ public class CartDTO {
         CartItems item = getItemById(id);
         if (item != null) {
             cartItemsList.remove(item);
-                }
-            }
+        }
+    }
 
     // Calculate the total price of items in the cart
     public double getTotalPrice() {
@@ -145,9 +145,9 @@ public class CartDTO {
                 return item;
             }
         }
-        return null; 
+        return null;
     }
-    
-    
-}
 
+
+
+}

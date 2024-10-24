@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package model.cart;
+
 import model.product.ProductDTO;
 
 /**
@@ -11,21 +12,23 @@ import model.product.ProductDTO;
  * @author Asus
  */
 public class CartItems {
+
     private ProductDTO product;
     private int cartItemId;
     private int cartId;
     private int quantity;
     private float size;
-    
+    private boolean isSelected;
+
     public double getPrice() {
-        float salePrice = product.getPrice() * (1 - product.getSale()); 
+        float salePrice = product.getPrice() * (1 - product.getSale());
         return salePrice;
     }
 
     public float getSize() {
         return size;
     }
-    
+
     public void setSize(float size) {
         this.size = size;
     }
@@ -62,12 +65,21 @@ public class CartItems {
         this.quantity = quantity;
     }
 
-    public CartItems(ProductDTO product, int cartItemId, int cartId, int productId, int quantity, float size ) {
+    public CartItems(ProductDTO product, int cartItemId, int cartId, int productId, int quantity, float size) {
         this.product = product;
         this.cartItemId = cartItemId;
         this.cartId = cartId;
         this.quantity = quantity;
-        this.size=size;
+        this.size = size;
+    }
+
+    public CartItems(ProductDTO product, int cartItemId, int cartId, int productId, int quantity, float size, boolean isSelected) {
+        this.product = product;
+        this.cartItemId = cartItemId;
+        this.cartId = cartId;
+        this.quantity = quantity;
+        this.size = size;
+        this.isSelected = isSelected;
     }
 
     public CartItems() {
@@ -75,7 +87,16 @@ public class CartItems {
         this.cartItemId = 0;
         this.cartId = 0;
         this.quantity = 0;
-        this.size=0;
+        this.size = 0;
+        this.isSelected = true;
     }
-    
+
+    public boolean isIsSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
+
 }
