@@ -49,6 +49,7 @@ public class LoadShopPageController extends HttpServlet {
             BrandDAO brandDao = new BrandDAO();
             UserObjectDAO uObDao= new UserObjectDAO();
             ProductImageDAO imageDao = new ProductImageDAO();
+            ProductVariantDAO variantDao = new ProductVariantDAO();
             List<ProductDTO> productList;
             List<BrandDTO> brandList;
             List<UserObjectDTO> uObList;

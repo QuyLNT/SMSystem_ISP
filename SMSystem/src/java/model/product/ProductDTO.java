@@ -50,6 +50,14 @@ public class ProductDTO {
         this.totalStock = totalStock;
     }
 
+    public List<ProductVariantDTO> getListVariants() {
+        return listVariants;
+    }
+
+    public void setListVariants(List<ProductVariantDTO> listVariants) {
+        this.listVariants = listVariants;
+    }
+
     public ProductDTO(int productId, int brandId, int userOjectId, String detail, boolean hot, String name, String color, float price, float sale, int warrantyPeriod, boolean productStatus) {
         this.productId = productId;
         this.brandId = brandId;
@@ -195,12 +203,24 @@ public class ProductDTO {
     }
     
     public void setAvatarPath(String path){
-        for(ProductImageDTO ele: this.listImages){
-            if(ele.getIsAvatar() == true){
-                ele.setImagePath(path);
-            }
-        }
+        this.listImages.stream().filter((ele) -> (ele.getIsAvatar() == true)).forEachOrdered((ele) -> {
+            ele.setImagePath(path);
+        });
     }
     
- 
+    public List<Float> getAvaiableSize(){
+        List<Float> avaiableSize = new ArrayList<>();
+        this.getListVariants().stream().filter((v) -> (v.getStock()>0)).forEachOrdered((v) -> {
+            avaiableSize.add(v.getSize());
+        });
+        return avaiableSize;
+    }
+    
+    public List<Float> getAllSize(){
+        List<Float> avaiableSize = new ArrayList<>();
+        this.getListVariants().forEach((v) -> {
+            avaiableSize.add(v.getSize());
+        });
+        return avaiableSize;
+    }
 }

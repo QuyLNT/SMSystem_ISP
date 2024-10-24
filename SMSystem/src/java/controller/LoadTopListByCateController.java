@@ -72,8 +72,7 @@ public class LoadTopListByCateController extends HttpServlet {
             for (ProductDTO pro : kidList) {
                 pro.setListImages(imageDao.getImageByProduct(pro.getProductId()));
             }
-                        List<Float> availableleSize=null;
-                        List<Float> allSize=null;
+            
             CartDAO cartDao = new CartDAO();
             UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
             if (loginUser != null) {
@@ -81,9 +80,7 @@ public class LoadTopListByCateController extends HttpServlet {
                 if (cart != null) {
                     for (CartItems c : cart.getCartItemsList()) {
                         c.getProduct().setListImages(imageDao.getImageByProduct(c.getProduct().getProductId()));
-
-                        availableleSize = variantDao.getAvailableSize(c.getProduct().getProductId());
-                        allSize = variantDao.getAllSize(c.getProduct().getProductId());
+                        c.getProduct().setListVariants(variantDao.getVariantByProduct(c.getProduct().getProductId()));
                     }
                     session.setAttribute("CART", cart); // Load cart có sẵn
                 } else {
@@ -99,8 +96,6 @@ public class LoadTopListByCateController extends HttpServlet {
                 session.setAttribute("MEN_LIST", menList);
                 session.setAttribute("WOMEN_LIST", womenList);
                 session.setAttribute("KID_LIST", kidList);
-                session.setAttribute("ALL_SIZE", allSize);
-                session.setAttribute("AVAILABLE_SIZE", availableleSize);
                 url = SUCCESS;
 
             }

@@ -188,185 +188,172 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="cart-table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Image</th>
-                                        <th class="p-name">Product Name</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
-                                        <th>Size</th>
-                                        <th></th>
-                                        <th><i class="ti-close"></i></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <%
-                                        CartDTO cart = (CartDTO) session.getAttribute("CART");
-                                        if (cart == null) {
-                                            cart = new CartDTO();
+                        <form id="checkout-form" action="MainController" method="post">
+                            <div class="cart-table">
+                                <table>
+                                    <thead>
+                                        <tr>                                                                                
+                                            <th>Select</th>
+                                            <th>Image</th>
+                                            <th class="p-name">Product Name</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th>Size</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            CartDTO cart = (CartDTO) session.getAttribute("CART");
+                                            if (cart == null) {
+                                                cart = new CartDTO();
+                                            }
+                                            List<CartItems> ls = cart.getCartItemsList();
+                                            if (ls != null) {
+                                                int count = 1;
+                                                double total = 0;
+                                                for (CartItems ele : ls) {
+                                                    if(ele.isIsSelected()) total += (ele.getPrice() * ele.getQuantity());
+                                        %>
+                                        <tr>
+                                            <td class="checkbox-card">
+                                                <input type="checkbox" 
+                                                       name="selectedProductId" 
+                                                       value="<%= ele.getProduct().getProductId()%>" 
+                                                       <%= ele.isIsSelected() ? "checked" : ""%> 
+                                                       onchange="toggleSelected(<%= ele.getCartItemId()%>, this.checked)">
+                                            </td>
+                                    <script>
+                                        function toggleSelected(cartItemId, select) {
+                                            var url = "MainController?action=toggleSelectProduct&cartItemId=" + cartItemId + "&isSelected=" + (select ? 1 : 0);
+                                            window.location.href = url;
                                         }
-                                        List<CartItems> ls = cart.getCartItemsList();
-                                        if (ls != null) {
-                                            int count = 1;
-                                            double total = 0;
-                                            for (CartItems ele : ls) {
-                                                total += (ele.getPrice() * ele.getQuantity());
-                                    %>
-                                    <tr>
-                                        <td class="checkbox-card"><input style="height: 15px" name="" type="checkbox" checked></input></td>
-                                        <td class="cart-pic first-row"><img src="<%=ele.getProduct().getAvatarPath()%>" style="height: 100px; width: 100px" alt=""></td>
-                                        <td class="cart-title first-row">
-                                            <h5><%=ele.getProduct().getName()%></h5>
-                                        </td>
-                                        <td class="p-price first-row">$<%=String.format("%.1f", ele.getPrice())%></td>
-                                        <td class="qua-col first-row">
-                                            <div class="quantity">
-                                                <!-- Nút trừ số lượng -->
-                                                <button style="border: none">
-                                                    <a href="MainController?action=Edit quantity&num=-1&cartItemId=<%=ele.getCartItemId()%>">-</a>
-                                                </button>
+                                    </script>    
+                                    <td class="cart-pic first-row"><img src="<%=ele.getProduct().getAvatarPath()%>" style="height: 100px; width: 100px" alt=""></td>
+                                    <td class="cart-title first-row">
+                                        <h5><%=ele.getProduct().getName()%></h5>
+                                    </td>
+                                    <td class="p-price first-row">$<%=String.format("%.1f", ele.getPrice())%></td>
+                                    <td class="qua-col first-row">
+                                        <div class="quantity">
+                                            <!-- Nút trừ số lượng -->
+                                            <button style="border: none">
+                                                <a href="MainController?action=Edit quantity&num=-1&cartItemId=<%=ele.getCartItemId()%>">-</a>
+                                            </button>
 
-                                                <!-- Hiển thị số lượng hiện tại, người dùng có thể chỉnh sửa thủ công -->
-                                                <input type="number" min="1" value="<%=ele.getQuantity()%>" required="">
+                                            <!-- Hiển thị số lượng hiện tại, người dùng có thể chỉnh sửa thủ công -->
+                                            <input type="number" min="1" value="<%=ele.getQuantity()%>" required="">
 
-                                                <!-- Nút cộng số lượng -->
-                                                <button style="border: none">
-                                                    <a href="MainController?action=Edit quantity&num=1&cartItemId=<%=ele.getCartItemId()%>">+</a>
-                                                </button>
-                                            </div>
-                                        </td>
-                                        <td class="total-price first-row">$<%= String.format("%.1f", ele.getPrice() * ele.getQuantity())%></td>
-                                        <td>
+                                            <!-- Nút cộng số lượng -->
+                                            <button style="border: none">
+                                                <a href="MainController?action=Edit quantity&num=1&cartItemId=<%=ele.getCartItemId()%>">+</a>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="total-price first-row">$<%= String.format("%.1f", ele.getPrice() * ele.getQuantity())%></td>
+                                    <td>
+                                        <select style="margin-top:26px; width: 65px;" id="size-select-<%=count%>" onchange="updateSize(this.value, '<%=ele.getCartItemId()%>', 'Edit Size')">
                                             <%
-                                                if (ele.getProduct().getUserOjectId() == 3) {
+                                                List<Float> validSizes = ele.getProduct().getAvaiableSize();
+                                                List<Float> allSizes = ele.getProduct().getAllSize();
+                                                for (float sz : allSizes) {
+                                                    boolean isAvailable = validSizes.contains(sz);
+                                                    if (isAvailable) {
                                             %>
-                                            <select  style="margin-top:26px; width: 65px;" id="size-select-<%=count%>" onchange="updateSize(this.value, <%=count%>)">
-                                                <%
-                                                    List<Float> validSizes = (List<Float>) session.getAttribute("AVAILABLE_SIZE");
-                                                    List<Float> allSizes = (List<Float>) session.getAttribute("ALL_SIZE");
-                                                    for (float sz : allSizes) {
-                                                        boolean isAvailable = validSizes.contains(sz);
-                                                        if (isAvailable) {
-                                                %>
-                                                <option value="<%=sz%>" <%=ele.getSize() == sz ? "selected" : ""%>><%=sz%></option>
-                                                <%
-                                                        }
-                                                    }
-                                                %>
-                                            </select>
+                                            <option value="<%=sz%>" <%=ele.getSize() == sz ? "selected" : ""%>><%=sz%></option>
                                             <%
-                                            } else {
-                                            %>
-                                            <select id="size-select-<%=count%>" onchange="updateSize(this.value, <%=count%>)">
-                                                <%
-                                                    List<Float> validSizes = (List<Float>) session.getAttribute("AVAILABLE_SIZE");
-                                                    if (validSizes == null) {
-                                                        validSizes = new ArrayList<>();
                                                     }
-                                                    List<Float> allSizes = (List<Float>) session.getAttribute("ALL_SIZE");
-                                                    for (float sz : allSizes) {
-                                                        boolean isAvailable = validSizes.contains(sz);
-                                                        if (isAvailable) {
-                                                %>
-                                                <option value="<%=sz%>" <%=ele.getSize() == sz ? "selected" : ""%>><%=sz%></option>
-                                                <%
-                                                        }
-                                                    }
-                                                %>
-                                            </select>
-                                            <%
                                                 }
                                             %>
-                                        </td>
-                                        <td>
-                                            <form id="form-<%=count%>" action="MainController" method="get">
-                                                <input type="hidden" name="cartItemId" value="<%=ele.getCartItemId()%>">
-                                                <input type="hidden" name="size" id="size-input-<%=count%>">
-                                                <input type="hidden" name="action" value="Edit Size">
-                                            </form>
-                                        </td>
-
-                                <script>
-                                    function updateSize(size, index) {
-                                        document.getElementById('size-input-' + index).value = size;
-                                        document.getElementById('form-' + index).submit();
-                                    }
-                                    function doDelete(name, event) {
-                                        if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
-                                        } else {
-                                            event.preventDefault();
+                                        </select>
+                                    </td>
+                                    <script>
+                                        function updateSize(size, cartItemId, action) {
+                                            var url = "MainController?action=" + action + "&cartItemId=" + cartItemId + "&size=" + size;
+                                            window.location.href = url;
                                         }
-                                    }
-                                </script>
-                                <td class="close-td first-row"><a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=shopping-cart.jsp" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
-                                        <i class="ti-close"></i>
-                                    </a></td>
-                                </tr>
-                                <%
-                                        count++;
-                                    }
-                                %>
-                                </tbody>
-                            </table>
-                        </div>
-                        <%
-                            String err = (String) request.getParameter("err");
-                            if (err != null) {
-                        %>
-                        <p><%= err%></p>
-                        <%
-                            }
-                        %>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="cart-buttons">
-                                    <a href="shop.jsp" class="primary-btn up-cart">Continue Shopping</a>
-                                </div>
-                                <div class="discount-coupon">
-                                    <h6>Discount Codes</h6>
-                                    <form action="MainController" method="Post" class="coupon-form">
-                                        <input style="color: black;" type="text" name="code" placeholder="Enter your codes" value="<%= (request.getParameter("code") != null ? request.getParameter("code") : "") %>">
-                                        <button type="submit" value="Apply" name="action" class="site-btn coupon-btn">Apply</button>
-                                    </form>
+                                        function doDelete(name, event) {
+                                            if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
+                                            } else {
+                                                event.preventDefault();
+                                            }
+                                        }
+                                    </script>
+                                    <td class="close-td first-row"><a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=shopping-cart.jsp" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
+                                            <i class="ti-close"></i>
+                                        </a>
+                                    </td>
+                                    </tr>
                                     <%
-                                        DiscountDTO c = (DiscountDTO) session.getAttribute("code");
-                                        String ms = (String) request.getAttribute("msg");
-                                        if (ms != null) {
-                                    %>
-                                    <p style="color: red"><%=ms%></p>
-                                    <%
+                                            count++;
                                         }
                                     %>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
-
-                            <div class="col-lg-4 offset-lg-4">
-                                <div class="proceed-checkout">
-                                    <ul>
-                                        <li class="subtotal">Subtotal <span>$<%=String.format("%.1f", total)%></span></li>
+                            <%
+                                String err = (String) request.getParameter("err");
+                                if (err != null) {
+                            %>
+                            <p><%= err%></p>
+                            <%
+                                }
+                            %>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="cart-buttons">
+                                        <a href="MainController?action=ShopPage" class="primary-btn up-cart">Continue Shopping</a>
+                                    </div>
+                                    <div class="discount-coupon">
+                                        <h6>Discount Codes</h6>
+                                        <div class="coupon-form">
+                                            <input style="color: black;" type="text" id="coupon-code" placeholder="Enter your codes" value="<%= (request.getParameter("code") != null ? request.getParameter("code") : "")%>">
+                                            <button type="button" class="site-btn coupon-btn" onclick="applyCoupon()">Apply</button>
+                                        </div>
 
                                         <%
-                                            if (c != null) {
+                                            DiscountDTO c = (DiscountDTO) session.getAttribute("code");
+                                            String ms = (String) request.getAttribute("msg");
+                                            if (ms != null) {
                                         %>
-                                        <li class="subtotal" style="margin-top: 15px;">Discount <span>-$<%=c.getDiscountAmount()%></span></li>
-                                        <li class="cart-total">Total <span>$<%= String.format("%.1f", total * 1 - c.getDiscountAmount())%></span></li>
-                                            <%
-                                            } else {
-                                            %>
-                                        <li class="cart-total">Total <span>$<%= String.format("%.1f", total * 1)%></span></li>
-                                            <%
-                                                }
-                                            %>
-                                    </ul>
-                                    <a href="check-out.jsp" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                                        <p style="color: red"><%=ms%></p>
+                                        <%
+                                            }
+                                        %>
+                                    </div>
+                                    <script>
+                                        function applyCoupon() {
+                                            var code = document.getElementById('coupon-code').value;
+                                            var url = "MainController?action=Apply&code=" + encodeURIComponent(code);
+                                            window.location.href = url;
+                                        }
+                                    </script>                                </div>
+
+                                <div class="col-lg-4 offset-lg-4">
+                                    <div class="proceed-checkout">
+                                        <ul>
+                                            <li class="subtotal">Subtotal <span>$<%=String.format("%.1f", total)%></span></li>
+                                                <%
+                                                    if (c != null) {
+                                                %>
+                                            <li class="subtotal" style="margin-top: 15px;">Discount <span>-$<%=c.getDiscountAmount()%></span></li>
+                                            <li class="cart-total">Total <span>$<%= String.format("%.1f", total * 1 - c.getDiscountAmount())%></span></li>
+                                                <%
+                                                } else {
+                                                %>
+                                            <li class="cart-total">Total <span>$<%= String.format("%.1f", total * 1)%></span></li>
+                                                <%
+                                                    }
+                                                %>
+                                        </ul>
+                                        <a href="MainController?action=ProceedCheckOut" class="proceed-btn">PROCEED TO CHECKOUT</a>
+                                    </div>
                                 </div>
+                                <%}
+                                %>
                             </div>
-                            <%}
-                            %>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
