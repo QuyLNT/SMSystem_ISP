@@ -176,6 +176,10 @@
         <servlet-name>ProceedCheckOutController</servlet-name>
         <servlet-class>controller.ProceedCheckOutController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchOrderController</servlet-name>
+        <servlet-class>controller.SearchOrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -339,6 +343,10 @@
     <servlet-mapping>
         <servlet-name>ProceedCheckOutController</servlet-name>
         <url-pattern>/ProceedCheckOutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchOrderController</servlet-name>
+        <url-pattern>/SearchOrderController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
