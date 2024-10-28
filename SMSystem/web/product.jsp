@@ -382,10 +382,10 @@
                                             <input type="hidden" name="size" id="size-input">
                                             <input style="border: none" type="submit" class="primary-btn pd-cart" name="action" value="Add To Cart">
                                             
-                                            <form>
+<!--                                            <form>
                                                 <h1>Vui lòng đăng nhập</h1>
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            </form>
+                                            </form>-->
                                         <%
                                             String successMessage = (String) request.getAttribute("ms");
                                             String errorMessage = (String) request.getAttribute("err");

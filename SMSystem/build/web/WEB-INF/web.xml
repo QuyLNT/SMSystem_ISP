@@ -168,6 +168,14 @@
         <servlet-name>RemoveDiscountController</servlet-name>
         <servlet-class>controller.RemoveDiscountController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadOrderDetailController</servlet-name>
+        <servlet-class>controller.LoadOrderDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadOrderListController</servlet-name>
+        <servlet-class>controller.LoadOrderListController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -323,6 +331,14 @@
     <servlet-mapping>
         <servlet-name>RemoveDiscountController</servlet-name>
         <url-pattern>/RemoveDiscountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadOrderDetailController</servlet-name>
+        <url-pattern>/LoadOrderDetailController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadOrderListController</servlet-name>
+        <url-pattern>/LoadOrderListController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -60,7 +60,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="MainController?action=LoadBrandList" class="nav-link">
+                                    <a href="MainController?action=LoadOrderList" class="nav-link">
                                         <i class="fa-solid fa-file-invoice"></i>
                                         <span class="link-text">Order</span>
                                     </a>
@@ -144,8 +144,7 @@
                                                     %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Order</h5>   
-                                                        <p></p>                             
-                                                        <p class="card-text"><%=999%></p>
+                                                        <p class="card-text">${sessionScope.TOTAL_ORDER}</p>
                                                         <p></p>
                                                     </div>
                                                 </div>

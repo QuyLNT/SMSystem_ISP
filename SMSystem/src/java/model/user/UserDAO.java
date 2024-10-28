@@ -44,6 +44,7 @@ public class UserDAO {
             + "SET roleId = ?\n"
             + "WHERE userId = ?";
     private static final String DELETE = "DELETE users WHERE userId = ?";
+    private static final String GET_USER = "SELECT userId,userName, fullName,phoneNumber,sex,email,isActive, roleId,createdAt FROM users WHERE userId = ? ";
 
     public UserDTO checkLogin(String userIndentify, String password) throws SQLException, ClassNotFoundException, NamingException {
         UserDTO user = null;
@@ -127,7 +128,7 @@ public class UserDAO {
         return userList;
     }
 
-    public boolean userAfterUpdate(UserDTO user) throws SQLException, ClassNotFoundException{
+    public boolean userAfterUpdate(UserDTO user) throws SQLException, ClassNotFoundException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -358,5 +359,45 @@ public class UserDAO {
             }
         }
         return checkExits;
+    }
+
+    public UserDTO getUserById(int userId) throws ClassNotFoundException, SQLException {
+        UserDTO user = null;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_USER);
+                ptm.setInt(1, userId);
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    String fullName = rs.getString("fullName");
+                    String userName = rs.getString("userName");
+                    String password = "***";
+                    String phoneNumber = rs.getString("phoneNumber");
+                    String sex = rs.getString("sex");
+                    String email = rs.getString("email");
+                    boolean isActive = rs.getBoolean("isActive");
+                    String roleId = rs.getString("roleId");
+                    Date createdAt = rs.getDate("createdAt");
+
+                    user = new UserDTO(userId, fullName, userName, password, phoneNumber, sex, email, isActive, roleId, createdAt);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+
+        return user;
     }
 }
