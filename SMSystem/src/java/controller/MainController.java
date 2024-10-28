@@ -101,6 +101,10 @@ public class MainController extends HttpServlet {
     private final static String SEARCH_PRODUCT_CUS_CONTROLLER = "SearchProductController";
     private final static String REMOVE_DISCOUNT = "Remove";
     private final static String REMOVE_DISCOUNT_CONTROLLER = "RemoveDiscountController";
+    private final static String ORDER_DETAIL = "View-Detail";
+    private final static String ORDER_DETAIL_CONTROLLER = "LoadOrderDetailController";
+    private final static String ORDER = "LoadOrderList";
+    private final static String ORDER_CONTROLLER = "LoadOrderListController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -180,6 +184,10 @@ public class MainController extends HttpServlet {
                 url=REMOVE_DISCOUNT_CONTROLLER;
             } else if (SEARCH_PRODUCT_CUS.equals(action)) {
                 url = SEARCH_PRODUCT_CUS_CONTROLLER;
+            }else if (ORDER_DETAIL.equals(action)) {
+                url = ORDER_DETAIL_CONTROLLER;
+            }else if (ORDER.equals(action)) {
+                url = ORDER_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());

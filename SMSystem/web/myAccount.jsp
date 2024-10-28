@@ -202,7 +202,7 @@
                                     <% if (user.getUserName() == null) { %>
                                     <input type="text" id="userName" name="userName">
                                     <% } else {%>
-                                    <input type="text" id="userName-exist" name="userName" value="<%=user.getUserName()%>" readonly>
+                                    <input type="text" id="userName-exist" name="userName" value="<%=user.getUserName()%>" readonly="">
                                     <button type="button" id="edit-btn-userName">
                                         <i class="fa fa-pencil-square-o"></i>
                                     </button>
@@ -264,7 +264,7 @@
                                             <option value="other">Other</option>
                                         </select>
                                         <% } else {%>
-                                        <input type="text" id="sex-exist" name="sex" value="<%=user.getSex()%>" readonly>
+                                        <input type="text" id="sex-exist" name="sex" value="<%=user.getSex()%>" required="">
                                         <button type="button" id="edit-btn-sex">
                                             <i class="fa fa-pencil-square-o"></i>
                                         </button>

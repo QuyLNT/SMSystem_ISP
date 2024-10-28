@@ -27,6 +27,8 @@ public class DiscountDAO {
             + "WHERE discountId=?";
     public static final String ADD_DISCOUNT = "INSERT INTO discountCodes(discountCode, detail, discountAmount, startDay, endDay, usageLimit,usage,discountStatus) VALUES (?,?,?,?,?,?,?,?)";
     public static final String REMOVE_DISCOUNT = "DELETE FROM discountCodes WHERE discountId =?";
+    private static final String GET_DISCOUNT = "SELECT discountId,discountCode,detail,discountAmount,startDay,endDay,usageLimit,usage,discountStatus\n"
+            + "                                          FROM discountCodes WHERE discountCode LIKE ? ";
 
     public List<DiscountDTO> getALlDiscount() throws SQLException, ClassNotFoundException {
         List<DiscountDTO> discountList = new ArrayList<>();
@@ -91,7 +93,7 @@ public class DiscountDAO {
         return result;
 
     }
-    
+
     public DiscountDTO ApplyCode(String discountCode) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -100,9 +102,9 @@ public class DiscountDAO {
 
         try {
             con = DBUtils.getConnection();
-            String sql = "SELECT discountId, discountCode, detail, discountAmount, startDay, endDay, usageLimit, usage, discountStatus " +
-                         "FROM discountCodes " +
-                         "WHERE discountCode = ?";
+            String sql = "SELECT discountId, discountCode, detail, discountAmount, startDay, endDay, usageLimit, usage, discountStatus "
+                    + "FROM discountCodes "
+                    + "WHERE discountCode = ?";
             ps = con.prepareStatement(sql);
             ps.setString(1, discountCode);
             rs = ps.executeQuery();
@@ -121,29 +123,38 @@ public class DiscountDAO {
                 );
             }
         } finally {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            if (con != null) con.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
         return discount;
     }
 
-    
     public void updateUsage(String discountCode) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement ps = null;
 
         try {
             con = DBUtils.getConnection();
-            String sql = "UPDATE discountCodes " +
-                         "SET usage = usage + 1 " +
-                         "WHERE discountCode = ? AND discountStatus = 'Active' AND usageLimit > usage";
+            String sql = "UPDATE discountCodes "
+                    + "SET usage = usage + 1 "
+                    + "WHERE discountCode = ? AND discountStatus = 'Active' AND usageLimit > usage";
             ps = con.prepareStatement(sql);
             ps.setString(1, discountCode);
             ps.executeUpdate();
         } finally {
-            if (ps != null) ps.close();
-            if (con != null) con.close();
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
     }
 
@@ -189,7 +200,7 @@ public class DiscountDAO {
         }
         return discount;
     }
-    
+
     public boolean deleteDiscount(int discountId) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -213,4 +224,44 @@ public class DiscountDAO {
         }
         return result;
     }
+
+    public DiscountDTO getDiscountByCode(String discountCode) throws ClassNotFoundException, SQLException {
+        DiscountDTO discount = null;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_DISCOUNT);
+                ptm.setString(1, discountCode);
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+
+                    discount = new DiscountDTO(rs.getInt("discountId"),
+                            rs.getString("discountCode"),
+                            rs.getString("detail"),
+                            rs.getFloat("discountAmount"),
+                            rs.getDate("startDay"),
+                            rs.getDate("endDay"),
+                            rs.getInt("usageLimit"),
+                            rs.getInt("usage"),
+                            rs.getString("discountStatus"));
+
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return discount;
+    }
+
 }
