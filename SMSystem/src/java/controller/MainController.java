@@ -105,6 +105,12 @@ public class MainController extends HttpServlet {
     private final static String TOGGLE_SELECT_PRODUCT_CONTROLLER = "ToggleSelectProductController"; 
     private final static String PROCEED_CHECK_OUT = "ProceedCheckOut";
     private final static String PROCEED_CHECK_OUT_CONTROLLER = "ProceedCheckOutController"; 
+    
+    private final static String LOAD_MY_ORDER = "LoadMyOrder";
+    private final static String LOAD_MY_ORDER_CONTROLLER = "LoadMyOrderController";
+    private final static String SEARCH_ORDER = "Search";
+    private final static String SEARCH_ORDER_CONTROLLER = "SearchOrderController"; 
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -187,6 +193,10 @@ public class MainController extends HttpServlet {
                 url = TOGGLE_SELECT_PRODUCT_CONTROLLER;
             }else if (PROCEED_CHECK_OUT.equals(action)) {
                 url = PROCEED_CHECK_OUT_CONTROLLER;
+            }else if (LOAD_MY_ORDER.equals(action)) {
+                url = LOAD_MY_ORDER_CONTROLLER;
+            }else if (SEARCH_ORDER.equals(action)) {
+                url = SEARCH_ORDER_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());
