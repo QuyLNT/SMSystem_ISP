@@ -13,29 +13,105 @@ import model.user.UserDTO;
  * @author LENOVO
  */
 public class OrderDTO {
+
     private int orderId;
     private UserDTO customer;
     private String street;
     private String district;
     private String city;
     private String discountCode;
-    private String paymentName;
-    private String shippingMethodName;            
+    private String paymentMethod;
+    private String shippingMethod;
     private Date createdAt;
     private String orderStatus;
+    private float totalPrice;
+    private  int totalOrder;
 
     public OrderDTO() {
-         this.orderId = 0;
+        this.orderId = 0;
         this.customer = new UserDTO();
         this.street = "";
         this.district = "";
         this.city = "";
         this.discountCode = "";
-        this.paymentName = "";
-        this.shippingMethodName = "";
+        this.paymentMethod = "";
+        this.shippingMethod = "";
         this.createdAt = new Date();
-        this.orderStatus = "";
-        
+        this.orderStatus = "Waiting for accept";
+        this.totalPrice = 0;
+        this.totalOrder =0;
+    }
+
+    public OrderDTO(int orderId, int totalOrder) {
+        this.orderId = orderId;
+        this.totalOrder = totalOrder;
+    }
+
+    
+    public OrderDTO(int orderId, UserDTO customer, String street, String district, String city,String discountCode, String paymentMethod, String shippingMethod, Date createdAt, String orderStatus) {
+        this.orderId = orderId;
+        this.customer = customer;
+        this.street = street;
+        this.district = district;
+        this.city = city;
+        this.discountCode = discountCode;
+        this.paymentMethod = paymentMethod;
+        this.shippingMethod = shippingMethod;
+        this.createdAt = createdAt;
+        this.orderStatus = orderStatus;
+    }
+    public OrderDTO(int orderId, UserDTO customer, String street, String district, String city,String discountCode, String paymentMethod, String shippingMethod, Date createdAt, String orderStatus,float totalPrice) {
+        this.orderId = orderId;
+        this.customer = customer;
+        this.street = street;
+        this.district = district;
+        this.city = city;
+        this.discountCode = discountCode;
+        this.paymentMethod = paymentMethod;
+        this.shippingMethod = shippingMethod;
+        this.createdAt = createdAt;
+        this.orderStatus = orderStatus;
+        this.totalPrice = totalPrice;
+
+    }
+
+    public int getTotalOrder() {
+        return totalOrder;
+    }
+
+    public void setTotalOrder(int totalOrder) {
+        this.totalOrder = totalOrder;
+    }
+
+    public String getDiscountCode() {
+        return discountCode;
+    }
+
+    public void setDiscountCode(String discountCode) {
+        this.discountCode = discountCode;
+    }
+
+    public float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+public String getShippingMethod() {
+        return shippingMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public void setShippingMethod(String shippingMethod) {
+        this.shippingMethod = shippingMethod;
     }
 
     public int getOrderId() {
@@ -76,30 +152,6 @@ public class OrderDTO {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getDiscountCode() {
-        return discountCode;
-    }
-
-    public void setDiscountCode(String discountCode) {
-        this.discountCode = discountCode;
-    }
-
-    public String getPaymentName() {
-        return paymentName;
-    }
-
-    public void setPaymentName(String paymentName) {
-        this.paymentName = paymentName;
-    }
-
-    public String getShippingMethodName() {
-        return shippingMethodName;
-    }
-
-    public void setShippingMethodName(String shippingMethodName) {
-        this.shippingMethodName = shippingMethodName;
     }
 
     public Date getCreatedAt() {

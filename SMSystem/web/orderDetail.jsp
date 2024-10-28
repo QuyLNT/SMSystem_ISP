@@ -4,16 +4,18 @@
     Author     : DELL
 --%>
 
-<%@page import="admin.sample.order.AdminOrderDetailDTO"%>
-<%@page import="admin.sample.order.AdminOrderDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="model.order.OrderDetailDTO"%>
+<%@page import="model.order.OrderDTO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="admin.sample.order.AdminOrderDAO"%>
+<%@page import="model.order.OrderDAO"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>OrderDetail</title>
+        <title>Order Detail</title>
         <title>Kẻ kiểm soát thông tin</title>
         <link rel="stylesheet" href="css/orderDetail1.css" />
         <link
@@ -90,64 +92,64 @@
                         <div class="welcome">
                             <%
 
-                                AdminOrderDTO a = new AdminOrderDTO();
-                                if (request.getAttribute("Order") != null) {
-                                    a = (AdminOrderDTO) request.getAttribute("Order");
+                                OrderDTO ord = new OrderDTO();
+                                if (request.getAttribute("ORDER") != null) {
+                                    ord = (OrderDTO) request.getAttribute("ORDER");
                                 }
 
-                                if (a != null) {
-
+                                if (ord != null) {
                             %>
-                            <div class="table-tilte">Customer Information</div>
+                            <div class="table-tilte"> 
+                                <a href="orderList.jsp" class="nav-link">
+                                        <i class="fa-solid fa-arrow-left"></i>
+                                </a>
+                                Customer Information
+                            </div>
                             <div class="row">
                                 <div class="col">
                                     <dl class="row">
                                         <dt class="col-sm-3">User Name</dt>
-                                        <dd class="col-sm-9"> <%=a.getFullName()%></dd>
+                                        <dd class="col-sm-9"> <%=ord.getCustomer().getFullName()%></dd>
 
                                         <dt class="col-sm-3">Address</dt>
                                         <dd class="col-sm-9">
-                                            <p>Street: <%=a.getStreet()%> </p>
-                                            <p>District: <%=a.getDistrict()%> </p>
-                                            <p>City: <%=a.getCity()%> </p>
+                                            <p>Street: <%=ord.getStreet()%> </p>
+                                            <p>District: <%=ord.getDistrict()%> </p>
+                                            <p>City: <%=ord.getCity()%> </p>
                                         </dd>
 
                                         <dt class="col-sm-3">Phone</dt>
-                                        <dd class="col-sm-9"> <%=a.getPhone()%></dd>
+                                        <dd class="col-sm-9"> <%=ord.getCustomer().getPhoneNumber()%></dd>
 
                                         <dt class="col-sm-3">Email</dt>
-                                        <dd class="col-sm-9"><%=a.getEmail()%></dd>
+                                        <dd class="col-sm-9"><%=ord.getCustomer().getEmail()%></dd>
                                 </div>
                                 <div class="col">
                                     <dt class="col-sm-3">Payment Method</dt>
-                                    <dd class="col-sm-9"><%=a.getPayMethod()%></dd>
+                                    <dd class="col-sm-9"><%=ord.getPaymentMethod()%></dd>
                                     <dt class="col-sm-3">Shipment Method</dt>
-                                    <dd class="col-sm-9"><%=a.getShipMethod()%></dd>
-                                    <dt class="col-sm-3">Total Price</dt>
-                                    <dd class="col-sm-9"><%=a.getTotalPrice()%></dd>
+                                    <dd class="col-sm-9"><%=ord.getShippingMethod()%></dd>
                                     <dt class="col-sm-3">Date</dt>
-                                    <dd class="col-sm-9"> <%=a.getCreateAt()%></dd>
+                                    <dd class="col-sm-9"> <%=ord.getCreatedAt()%></dd>
                                     <dt class="col-sm-3">Status</dt>
-                                    <dd class="col-sm-9"><%=a.getStatus()%></dd>  
+                                    <dd class="col-sm-9"><%=ord.getOrderStatus()%></dd>
+                                    <dt class="col-sm-3">Total Price</dt>
+                                    <dd class="col-sm-9"><%= String.format("%.2f", ord.getTotalPrice())%>$</dd>  
                                 </div>
                             </div>
 
-
-                            </dl>
-                            <%}%>                       
+                            <%
+                                }
+                            %>     
                         </div>
                         <div class="welcome">
                             <%
-                                ArrayList<AdminOrderDetailDTO> listOrderDetail = new ArrayList<>();
-
-                                if (request.getAttribute(
-                                        "listOrderDetail") != null) {
-                                    listOrderDetail = (ArrayList<AdminOrderDetailDTO>) request.getAttribute("listOrderDetail");
+                                List<OrderDetailDTO> listOrderDetail = new ArrayList<>();
+                                if (request.getAttribute("ORDER_DETAILS") != null) {
+                                    listOrderDetail = (List<OrderDetailDTO>) request.getAttribute("ORDER_DETAILS");
                                 }
 
-                                if (listOrderDetail
-                                        != null) {
-
+                                if (listOrderDetail != null && !listOrderDetail.isEmpty()) {
                             %>
                             <div class="table-tilte">Order Detail Table</div>
 
@@ -163,26 +165,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <%                                        for (AdminOrderDetailDTO od : listOrderDetail) {
+                                    <%  for (OrderDetailDTO od : listOrderDetail) {
                                             float totalPrice = 0;
-                                            totalPrice = od.getSalePrice() * od.getQuantity();
-
+                                            totalPrice = od.getProduct().getPrice() * (1 - od.getProduct().getSale()) * od.getQuantity();
                                     %>
 
                                     <tr>
-                                        <td><img src="<%=od.getPathImg()%>" class="img-thumbnail img-items" alt="..."></td>                                       
-                                        <td><%=od.getProductName()%></td>
-                                        <td><%=od.getUnitPrice()%></td>
-                                         <td><%=od.getSalePrice()%></td>
+                                        <td class="cart-pic first-row"><img src="<%=od.getProduct().getAvatarPath()%>" style="height: 100px; width: 100px" alt=""></td>                                       
+                                        <td><%=od.getProduct().getName()%></td>
+                                        <td><%=od.getProduct().getPrice()%></td>
+                                        <td><%= String.format("%.2f", od.getProduct().getPrice() * (1 - od.getProduct().getSale()))%>$</td>
                                         <td><%=od.getQuantity()%></td>
-                                        <td>
-                                            <%=totalPrice%>                                           
-                                        </td>
-
+                                        <td><%=String.format("%.2f", totalPrice)%>$</td>    
                                     </tr>
                                     <%}%>
                                 </tbody>
                             </table> 
+
 
                             <%}%>
 

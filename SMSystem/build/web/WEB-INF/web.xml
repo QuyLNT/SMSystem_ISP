@@ -169,6 +169,26 @@
         <servlet-class>controller.RemoveDiscountController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ToggleSelectProductController</servlet-name>
+        <servlet-class>controller.ToggleSelectProductController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProceedCheckOutController</servlet-name>
+        <servlet-class>controller.ProceedCheckOutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchOrderController</servlet-name>
+        <servlet-class>controller.SearchOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadOrderDetailController</servlet-name>
+        <servlet-class>controller.LoadOrderDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadOrderListController</servlet-name>
+        <servlet-class>controller.LoadOrderListController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>LoadOrderListController</servlet-name>
         <servlet-class>controller.LoadOrderListController</servlet-class>
     </servlet>
@@ -331,6 +351,26 @@
     <servlet-mapping>
         <servlet-name>RemoveDiscountController</servlet-name>
         <url-pattern>/RemoveDiscountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToggleSelectProductController</servlet-name>
+        <url-pattern>/ToggleSelectProductController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProceedCheckOutController</servlet-name>
+        <url-pattern>/ProceedCheckOutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchOrderController</servlet-name>
+        <url-pattern>/SearchOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadOrderDetailController</servlet-name>
+        <url-pattern>/LoadOrderDetailController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadOrderListController</servlet-name>
+        <url-pattern>/LoadOrderListController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoadOrderListController</servlet-name>

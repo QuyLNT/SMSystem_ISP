@@ -52,8 +52,7 @@ public class LoadProductDetailController extends HttpServlet {
             if (productID != null) {
                 int id = Integer.parseInt(productID);
                 product = productDao.getProductById(id);
-                availableleSize = variantDao.getAvailableSize(id);
-                allSize = variantDao.getAllSize(id);
+                product.setListVariants(variantDao.getVariantByProduct(product.getProductId()));
                 relatedList = productDao.getRelatedList(id);
                 imageList = imageDao.getImageByProduct(id);
                 product.setListImages(imageList);
@@ -64,8 +63,6 @@ public class LoadProductDetailController extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("PRODUCT", product);
                 session.setAttribute("IMAGE", product.getListImages());
-                session.setAttribute("ALL_SIZE", allSize);
-                session.setAttribute("AVAILABLE_SIZE", availableleSize);
                 session.setAttribute("RELATED_LIST", relatedList);
                 url = SUCCESS;
 

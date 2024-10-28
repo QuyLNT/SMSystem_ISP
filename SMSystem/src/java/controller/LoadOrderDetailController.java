@@ -6,26 +6,25 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.category.UserObjectDAO;
-import model.category.UserObjectDTO;
+import model.discount.DiscountDAO;
+import model.discount.DiscountDTO;
 import model.order.OrderDAO;
 import model.order.OrderDTO;
-import model.product.ProductDAO;
-import model.product.ProductDTO;
-import model.product.ProductVariantDAO;
+import model.order.OrderDetailDAO;
+import model.order.OrderDetailDTO;
+import model.product.ProductImageDAO;
 
 /**
  *
- * @author LENOVO
+ * @author CHAU DUYEN
  */
-public class LoadManagerHomeDataController extends HttpServlet {
+public class LoadOrderDetailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,49 +35,48 @@ public class LoadManagerHomeDataController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "managerHome.jsp";
-    private static final String SUCCESS = "managerHome.jsp";
+    private static final String ERROR = "orderDetail.jsp";
+    private static final String SUCCESS = "orderDetail.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            ProductDAO productDao = new ProductDAO();
-            ProductVariantDAO variantDao = new ProductVariantDAO();
-            UserObjectDAO uObDao = new UserObjectDAO();
-            OrderDAO ordDAO = new OrderDAO();
-            List<ProductDTO> productList;
-            List<ProductDTO> stockOfProduct;
-            List<UserObjectDTO> uObList;
-            List<OrderDTO> ordList;
 
-            productList = productDao.getAllProduct();
-            stockOfProduct = variantDao.getStockByProduct();
-            uObList = uObDao.getAllUserObject();
-            int allStock = 0;
-            for (ProductDTO p : stockOfProduct) {
-                allStock += p.getTotalStock();
-            }
+            int orderId = Integer.parseInt(request.getParameter("orderId"));
+            OrderDAO orderDao = new OrderDAO();
+            DiscountDAO discountDAO = new DiscountDAO();
+            OrderDetailDAO orderDetailDao = new OrderDetailDAO();
+            ProductImageDAO imageDao = new ProductImageDAO();
 
-            ordList = ordDAO.getAllOrder();
-            int allOrder = ordList.size();
-            for(OrderDTO o :ordList){
-                allOrder +=o.getTotalOrder();
-            }
-
-            if (productList != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("TOTAL_ORDER", allOrder);
-                session.setAttribute("ALL_QUANTITY", allStock);
-                session.setAttribute("STOCK_OF_PRODUCT", stockOfProduct);
-                session.setAttribute("USER_OBJECT_LIST", uObList);
-
+            OrderDTO order = orderDao.getOrderById(orderId);
+            List<OrderDetailDTO> orderDetails = orderDetailDao.getOrderDetailListByOrderID(orderId);
+            if (order != null && orderDetails != null) {
+                for (OrderDetailDTO detail : orderDetails) {
+                    detail.getProduct().setListImages(imageDao.getImageByProduct(detail.getProduct().getProductId()));
+                }
+                float total = 0;
+                for (OrderDetailDTO detail : orderDetails) {
+                    if (detail.getProduct() != null) {
+                        float salePrice = detail.getQuantity() * (detail.getProduct().getPrice() * (1 - detail.getProduct().getSale()));
+                        total += salePrice;
+                    }
+                }
+                if (order.getDiscountCode() != null) {
+                    DiscountDTO dc = discountDAO.getDiscountByCode(order.getDiscountCode());
+                    if (dc != null) {
+                        total = total * (1 - dc.getDiscountAmount());
+                    }
+                }
+                order.setTotalPrice(total);
+                request.setAttribute("ORDER", order);
+                request.setAttribute("ORDER_DETAILS", orderDetails);
                 url = SUCCESS;
             }
 
-        } catch (ClassNotFoundException | SQLException e) {
-            log("Error at LoadProductController: " + e.toString());
+        } catch (Exception e) {
+            log("Error at LoadOrderDetailController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
