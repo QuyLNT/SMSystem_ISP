@@ -101,11 +101,20 @@ public class MainController extends HttpServlet {
     private final static String SEARCH_PRODUCT_CUS_CONTROLLER = "SearchProductController";
     private final static String REMOVE_DISCOUNT = "Remove";
     private final static String REMOVE_DISCOUNT_CONTROLLER = "RemoveDiscountController";
+    private final static String TOGGLE_SELECT_PRODUCT = "toggleSelectProduct";
+    private final static String TOGGLE_SELECT_PRODUCT_CONTROLLER = "ToggleSelectProductController"; 
+    private final static String PROCEED_CHECK_OUT = "ProceedCheckOut";
+    private final static String PROCEED_CHECK_OUT_CONTROLLER = "ProceedCheckOutController"; 
+    private final static String LOAD_MY_ORDER = "LoadMyOrder";
+    private final static String LOAD_MY_ORDER_CONTROLLER = "LoadMyOrderController";
+    private final static String SEARCH_ORDER = "Search";
+    private final static String SEARCH_ORDER_CONTROLLER = "SearchOrderController"; 
+    
     private final static String ORDER_DETAIL = "View-Detail";
     private final static String ORDER_DETAIL_CONTROLLER = "LoadOrderDetailController";
     private final static String ORDER = "LoadOrderList";
     private final static String ORDER_CONTROLLER = "LoadOrderListController";
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -182,8 +191,16 @@ public class MainController extends HttpServlet {
                 url=CREATE_DISCOUNT_CONTROLLER;
             }else if(REMOVE_DISCOUNT.equals(action)){
                 url=REMOVE_DISCOUNT_CONTROLLER;
-            } else if (SEARCH_PRODUCT_CUS.equals(action)) {
+            }else if (SEARCH_PRODUCT_CUS.equals(action)) {
                 url = SEARCH_PRODUCT_CUS_CONTROLLER;
+            }else if (TOGGLE_SELECT_PRODUCT.equals(action)) {
+                url = TOGGLE_SELECT_PRODUCT_CONTROLLER;
+            }else if (PROCEED_CHECK_OUT.equals(action)) {
+                url = PROCEED_CHECK_OUT_CONTROLLER;
+            }else if (LOAD_MY_ORDER.equals(action)) {
+                url = LOAD_MY_ORDER_CONTROLLER;
+            }else if (SEARCH_ORDER.equals(action)) {
+                url = SEARCH_ORDER_CONTROLLER;
             }else if (ORDER_DETAIL.equals(action)) {
                 url = ORDER_DETAIL_CONTROLLER;
             }else if (ORDER.equals(action)) {

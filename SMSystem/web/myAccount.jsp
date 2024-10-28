@@ -217,7 +217,7 @@
                                         <input type="text" id="pass" name="pass">
                                         <% } else {%>
 
-                                        <input type="text" id="password-exist" name="pass" value="<%=user.getPassword()%>" readonly>
+                                        <input type="password" id="password-exist" name="pass" value="<%=user.getPassword()%>" readonly>
                                         <button type="button" id="edit-btn-pass">
                                             <i class="fa fa-pencil-square-o"></i>
                                         </button>
@@ -257,12 +257,15 @@
                                     <% if (request.getAttribute("SEX_ERROR") != null) {%>
                                     <p style="color: red;"><%= request.getAttribute("SEX_ERROR")%>
                                         <% } %>
-                                        <% if (user.getSex() == null) { %>
-                                        <select id="sex" name="sex">
+                                        <% if (user.getSex() == "") {%>
+                                        <select id="sex" name="sex" required="">
                                             <option value="male">Male</option>
                                             <option value="female">Female</option>
                                             <option value="other">Other</option>
                                         </select>
+                                        <button type="button" id="edit-btn-sex">
+                                            <i class="fa fa-pencil-square-o"></i>
+                                        </button>
                                         <% } else {%>
                                         <input type="text" id="sex-exist" name="sex" value="<%=user.getSex()%>" required="">
                                         <button type="button" id="edit-btn-sex">

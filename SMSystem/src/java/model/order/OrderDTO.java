@@ -102,8 +102,7 @@ public class OrderDTO {
     public String getPaymentMethod() {
         return paymentMethod;
     }
-
-    public String getShippingMethod() {
+public String getShippingMethod() {
         return shippingMethod;
     }
 

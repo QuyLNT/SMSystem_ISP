@@ -8,70 +8,56 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.category.BrandDAO;
-import model.category.UserObjectDAO;
-import model.product.ProductDAO;
-import model.product.ProductDTO;
+import model.cart.CartDAO;
+import model.cart.CartDTO;
+import model.cart.CartItems;
 import model.product.ProductImageDAO;
-import model.product.ProductImageDTO;
-import model.product.ProductVariantDAO;
+import model.user.UserDTO;
 
 /**
  *
  * @author LENOVO
  */
-public class LoadProductDetailController extends HttpServlet {
+public class ProceedCheckOutController extends HttpServlet {
 
-    private static final String ERROR = "product.jsp";
-    private static final String SUCCESS = "product.jsp";
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
         try {
-            String productID = request.getParameter("productId");
-            ProductDAO productDao = new ProductDAO();
-            BrandDAO brandDao = new BrandDAO();
-            UserObjectDAO userObjectDao = new UserObjectDAO();
-            ProductVariantDAO variantDao = new ProductVariantDAO();
-            ProductImageDAO imageDao = new ProductImageDAO();
-
-            List<Float> availableleSize;
-            List<Float> allSize;
-            List<ProductDTO> relatedList;
-            List<ProductImageDTO> imageList;
-            ProductDTO product;
-
-            if (productID != null) {
-                int id = Integer.parseInt(productID);
-                product = productDao.getProductById(id);
-                product.setListVariants(variantDao.getVariantByProduct(product.getProductId()));
-                relatedList = productDao.getRelatedList(id);
-                imageList = imageDao.getImageByProduct(id);
-                product.setListImages(imageList);
-                for(ProductDTO p: relatedList){
-                    p.setListImages(imageDao.getImageByProduct(p.getProductId()));
+            HttpSession session = request.getSession();
+            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+            if (loginUser != null) {
+                CartDAO cartDao = new CartDAO();
+                ProductImageDAO imageDao = new ProductImageDAO();
+                CartDTO selectedCart = cartDao.getSelectedCartByUser(loginUser.getUserId());
+                if(selectedCart!=null){
+                    for(CartItems c : selectedCart.getCartItemsList()){
+                        c.getProduct().setListImages(imageDao.getImageByProduct(c.getProduct().getProductId()));
+                    }
+                    session.setAttribute("SELECTED_CART", selectedCart);
+                }else{
+                    request.setAttribute("ms", "No product");
                 }
-
-                HttpSession session = request.getSession();
-                session.setAttribute("PRODUCT", product);
-                session.setAttribute("IMAGE", product.getListImages());
-                session.setAttribute("RELATED_LIST", relatedList);
-                url = SUCCESS;
-
             }
 
-        } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
-            log("Error at LoadProductDetailController: " + e.toString());
+        } catch (ClassNotFoundException | SQLException e) {
+            log("Error at ProceedCheckOutController: " + e.toString());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher("check-out.jsp").forward(request, response);
         }
     }
 

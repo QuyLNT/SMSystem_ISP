@@ -8,68 +8,60 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.category.BrandDAO;
-import model.category.UserObjectDAO;
-import model.product.ProductDAO;
-import model.product.ProductDTO;
-import model.product.ProductImageDAO;
-import model.product.ProductImageDTO;
-import model.product.ProductVariantDAO;
+import model.order.OrderDAO;
+import model.order.OrderDTO;
+import model.user.UserDTO;
 
 /**
  *
- * @author LENOVO
+ * @author dell
  */
-public class LoadProductDetailController extends HttpServlet {
+public class SearchOrderController extends HttpServlet {
 
-    private static final String ERROR = "product.jsp";
-    private static final String SUCCESS = "product.jsp";
+    private static final String ERROR = "myOrder.jsp";
+    private static final String SUCCESS = "myOrder.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
+        OrderDAO orderDao = new OrderDAO();
+
         try {
-            String productID = request.getParameter("productId");
-            ProductDAO productDao = new ProductDAO();
-            BrandDAO brandDao = new BrandDAO();
-            UserObjectDAO userObjectDao = new UserObjectDAO();
-            ProductVariantDAO variantDao = new ProductVariantDAO();
-            ProductImageDAO imageDao = new ProductImageDAO();
+            String orderIdStr = request.getParameter("OrderID");
+            List<OrderDTO> orderList;
 
-            List<Float> availableleSize;
-            List<Float> allSize;
-            List<ProductDTO> relatedList;
-            List<ProductImageDTO> imageList;
-            ProductDTO product;
+            if (orderIdStr == null || orderIdStr.isEmpty()) {
+                // Nếu không có OrderID, lấy tất cả đơn hàng
+                orderList = orderDao.getAllOrdersByCustomerId(user.getUserId());
+            } else {
+                // Nếu có OrderID, tìm kiếm theo OrderID
+                int orderId = Integer.parseInt(orderIdStr);
+                OrderDTO order = orderDao.getOrderById(user, orderId);
 
-            if (productID != null) {
-                int id = Integer.parseInt(productID);
-                product = productDao.getProductById(id);
-                product.setListVariants(variantDao.getVariantByProduct(product.getProductId()));
-                relatedList = productDao.getRelatedList(id);
-                imageList = imageDao.getImageByProduct(id);
-                product.setListImages(imageList);
-                for(ProductDTO p: relatedList){
-                    p.setListImages(imageDao.getImageByProduct(p.getProductId()));
-                }
-
-                HttpSession session = request.getSession();
-                session.setAttribute("PRODUCT", product);
-                session.setAttribute("IMAGE", product.getListImages());
-                session.setAttribute("RELATED_LIST", relatedList);
-                url = SUCCESS;
-
+            if (order != null) {
+                    orderList = new ArrayList<>();
+                orderList.add(order);
+            } else {
+                    orderList = new ArrayList<>();
+                session.setAttribute("ms", "You do not have an order with Order ID: " + orderIdStr);
+            }
             }
 
-        } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
-            log("Error at LoadProductDetailController: " + e.toString());
+            // Lưu danh sách đơn hàng vào session để hiển thị trong JSP
+            session.setAttribute("ORDER_LIST", orderList);
+            url = SUCCESS;
+        } catch (Exception e) {
+            log("Error at SearchOrderController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
