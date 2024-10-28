@@ -236,7 +236,9 @@
                                                 <button style="border: none">
                                                     <a href="MainController?action=Edit quantity&num=1&cartItemId=<%=ele.getCartItemId()%>">+</a>
                                                 </button>
+
                                             </div>
+
                                         </td>
                                         <td class="total-price first-row">$<%= String.format("%.1f", ele.getPrice() * ele.getQuantity())%></td>
                                         <td>
@@ -287,24 +289,47 @@
                                                 <input type="hidden" name="size" id="size-input-<%=count%>">
                                                 <input type="hidden" name="action" value="Edit Size">
                                             </form>
-                                        </td>
 
-                                <script>
-                                    function updateSize(size, index) {
-                                        document.getElementById('size-input-' + index).value = size;
-                                        document.getElementById('form-' + index).submit();
-                                    }
-                                    function doDelete(name, event) {
-                                        if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
-                                        } else {
-                                            event.preventDefault();
-                                        }
-                                    }
-                                </script>
-                                <td class="close-td first-row"><a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=shopping-cart.jsp" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
-                                        <i class="ti-close"></i>
-                                    </a></td>
-                                </tr>
+                                            <script>
+                                                function updateSize(size, index) {
+                                                    document.getElementById('size-input-' + index).value = size;
+                                                    document.getElementById('form-' + index).submit();
+                                                }
+                                                function doDelete(name, event) {
+                                                    if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
+                                                    } else {
+                                                        event.preventDefault();
+                                                    }
+                                                }
+                                            </script>
+
+                                        <td class="close-td first-row"><a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=shopping-cart.jsp" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
+                                                <i class="ti-close"></i>
+                                            </a></td>
+                                    </tr>
+                                    <!-- Ví dụ thanh điều hướng trong header.jsp hoặc shopping-cart.jsp -->
+                                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <!-- Các phần khác của thanh điều hướng -->
+
+                                    <%
+                                        String ms = (String) request.getAttribute("ms");
+                                        String err = (String) request.getAttribute("err");
+                                    %>
+
+                                    <!-- Hiển thị thông báo thành công mà không có khung -->
+                                    <div class="ml-auto">
+                                        <% if (ms != null) {%>
+                                        <span style="color: green;">
+                                            <%= ms%>
+                                        </span>
+                                        <% } else if (err != null) {%>
+                                        <span style="color: red;">
+                                            <%= err%>
+                                        </span>
+                                        <% } %>
+                                    </div>
+                                </nav>
+
                                 <%
                                         count++;
                                     }
@@ -328,7 +353,7 @@
                                 <div class="discount-coupon">
                                     <h6>Discount Codes</h6>
                                     <form action="MainController" method="Post" class="coupon-form">
-                                        <input style="color: black;" type="text" name="code" placeholder="Enter your codes" value="<%= (request.getParameter("code") != null ? request.getParameter("code") : "") %>">
+                                        <input style="color: black;" type="text" name="code" placeholder="Enter your codes" value="<%= (request.getParameter("code") != null ? request.getParameter("code") : "")%>">
                                         <button type="submit" value="Apply" name="action" class="site-btn coupon-btn">Apply</button>
                                     </form>
                                     <%

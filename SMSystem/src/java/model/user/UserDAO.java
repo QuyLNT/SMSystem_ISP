@@ -12,9 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.naming.NamingException;
 import utils.DBUtils;
 
@@ -44,6 +41,7 @@ public class UserDAO {
             + "SET roleId = ?\n"
             + "WHERE userId = ?";
     private static final String DELETE = "DELETE users WHERE userId = ?";
+    private static final String GET_USER_NAME = "SELECT userName FROM users WHERE userId = ? ";
 
     public UserDTO checkLogin(String userIndentify, String password) throws SQLException, ClassNotFoundException, NamingException {
         UserDTO user = null;
@@ -127,7 +125,7 @@ public class UserDAO {
         return userList;
     }
 
-    public boolean userAfterUpdate(UserDTO user) throws SQLException, ClassNotFoundException{
+    public boolean userAfterUpdate(UserDTO user) throws SQLException, ClassNotFoundException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -358,5 +356,35 @@ public class UserDAO {
             }
         }
         return checkExits;
+    }
+
+    public UserDTO getUserById(int userId) throws ClassNotFoundException, SQLException {
+        UserDTO user = null;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_USER_NAME);
+                ptm.setInt(1, userId);
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    String userName = rs.getString("userName"); // Lấy tên người dùng từ ResultSet
+                    user = new UserDTO(userId, userName); // Khởi tạo UserDTO với userId và userName
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return user;
     }
 }

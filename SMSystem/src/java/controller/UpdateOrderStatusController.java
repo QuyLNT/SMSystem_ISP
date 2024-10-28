@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -14,16 +15,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.cart.CartDAO;
-import model.cart.CartDTO;
-import model.cart.CartItems;
+import model.order.OrderDAO;
+import model.order.OrderDTO;
 
 /**
  *
  * @author Asus
  */
-public class EditSizeController extends HttpServlet {
+public class UpdateOrderStatusController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,53 +33,31 @@ public class EditSizeController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "shopping-cart.jsp";
-    private static final String SUCCESS = "shopping-cart.jsp";
+    private static final String ERROR = "orderList.jsp";
+    private static final String SUCCESS = "orderList.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ClassNotFoundException {
+            throws ServletException, IOException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
+
         String url = ERROR;
         try {
-            HttpSession session = request.getSession();
-            String cartItemIdRaw = request.getParameter("cartItemId");
-            String sizeRaw = request.getParameter("size");
+            String status = request.getParameter("status");
+            int orderId = Integer.parseInt(request.getParameter("orderId"));
+            OrderDAO d = new OrderDAO();
+            boolean check = d.updateOrderStatus(status, orderId);
+            if (check) {
+                 List<OrderDTO> updatedOrderList = d.getAllOrder(); // Lấy danh sách đơn hàng cập nhật
+                request.setAttribute("ORDER_LIST", updatedOrderList); // Đặt vào request để hiển thị
+                request.setAttribute("ms", "Update Successfully");
+                request.setAttribute("orderId", orderId);
+                url = SUCCESS;
 
-            // Kiểm tra tính hợp lệ của tham số
-            if (cartItemIdRaw == null || sizeRaw == null) {
-                request.setAttribute("err", "Missing cart item ID or size.");
             } else {
-                int cartItemId = Integer.parseInt(cartItemIdRaw);
-                float size = Float.parseFloat(sizeRaw);
-
-                CartDTO cart = (CartDTO) session.getAttribute("CART");
-                if (cart != null) {
-                    List<CartItems> cartItemsList = cart.getCartItemsList();
-                    CartDAO cartDAO = new CartDAO();
-//                    boolean itemFound = false;
-
-                    for (CartItems item : cartItemsList) {
-                        if (item.getCartItemId() == cartItemId) {
-                            item.setSize(size);
-                            boolean isUpdated = cartDAO.updateSize(cartItemId, sizeRaw);
-                            if (isUpdated) {
-                                session.setAttribute("CART", cart);
-                                request.setAttribute("ms", "Size updated successfully!");
-                                url = SUCCESS;
-                            } else {
-                                request.setAttribute("err", "Failed to update size in database.");
-                            }
-//                            itemFound = true;
-                            break;
-                        }
-                    }
-                }
+                request.setAttribute("ms", "Something wrong at sever");
             }
-
-        } catch (Exception e) {
-            request.setAttribute("err", "Invalid input format.");
-            e.printStackTrace();
-
+        } catch (SQLException e) {
+            log("Error at Update Order Controller:" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
@@ -100,10 +77,8 @@ public class EditSizeController extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(EditSizeController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EditSizeController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateOrderStatusController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -120,10 +95,8 @@ public class EditSizeController extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(EditSizeController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EditSizeController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateOrderStatusController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
