@@ -60,6 +60,11 @@ public class UserDTO {
         this.email = email;
     }
 
+    public UserDTO(int userId, String userName) {
+        this.userId = userId;
+        this.userName = userName;
+    }
+
     public void setUserId(int userId) {
         this.userId = userId;
     }
