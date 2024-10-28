@@ -189,10 +189,6 @@
         <servlet-class>controller.LoadOrderListController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LoadOrderListController</servlet-name>
-        <servlet-class>controller.LoadOrderListController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>UpdateOrderStatusController</servlet-name>
         <servlet-class>controller.UpdateOrderStatusController</servlet-class>
     </servlet>
@@ -367,10 +363,6 @@
     <servlet-mapping>
         <servlet-name>LoadOrderDetailController</servlet-name>
         <url-pattern>/LoadOrderDetailController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoadOrderListController</servlet-name>
-        <url-pattern>/LoadOrderListController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoadOrderListController</servlet-name>

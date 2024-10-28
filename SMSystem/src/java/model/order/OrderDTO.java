@@ -170,18 +170,7 @@ public String getShippingMethod() {
         this.orderStatus = orderStatus;
     }
 
-    public OrderDTO(int orderId, UserDTO customer, String street, String district, String city, String discountCode, String paymentName, String shippingMethodName, Date createdAt, String orderStatus) {
-        this.orderId = orderId;
-        this.customer = customer;
-        this.street = street;
-        this.district = district;
-        this.city = city;
-        this.discountCode = discountCode;
-        this.paymentName = paymentName;
-        this.shippingMethodName = shippingMethodName;
-        this.createdAt = createdAt;
-        this.orderStatus = orderStatus;
-    }
+ 
 
   
     

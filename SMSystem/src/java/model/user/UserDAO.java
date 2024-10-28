@@ -399,7 +399,7 @@ public class UserDAO {
         return user;
     }
 
-    public UserDTO getUserById(int userId) throws ClassNotFoundException, SQLException {
+    public UserDTO getUserByName(int userId) throws ClassNotFoundException, SQLException {
         UserDTO user = null;
         Connection conn = null;
         PreparedStatement ptm = null;

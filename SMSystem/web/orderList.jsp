@@ -90,9 +90,11 @@
                                 if (request.getAttribute("ms") != null && request.getAttribute("orderId") != null) {
                                     ms = request.getAttribute("ms").toString();
                                     orderid = request.getAttribute("orderId").toString();
-                                }
-                        %>
+                        %>                        
                         <div><%= ms%> Order ID: <%= orderid%></div>
+                        <%
+                            }
+                        %>
                         <div class="table-title">Order Table</div>
                         <table class="table table-hover">
                             <thead>
@@ -123,8 +125,8 @@
                                     <td><%= a.getDistrict()%></td>
                                     <td><%= a.getCity()%></td>
                                     <td><%= a.getDiscountCode()%></td>
-                                    <td><%= a.getPaymentName()%></td>
-                                    <td><%= a.getShippingMethodName()%></td>
+                                    <td><%= a.getPaymentMethod()%></td>
+                                    <td><%= a.getShippingMethod()%></td>
                                     <td><%= a.getCreatedAt()%></td>
                                     <td>
                                         <form action="UpdateOrderStatusController" method="POST">
@@ -143,11 +145,15 @@
 
                                         </form>
                                     <td>
-                                        <button type="submit" class="btn btn-primary" name="action" value="View-Detail">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>
-                                    </td>
-
+                                        <form action="MainController" method="POST">
+                                            <input type="hidden" name="orderId" value="<%= a.getOrderId()%>" />
+                                            <button type="submit" class="btn btn-primary" name="action" value="UpdateStatus">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </button>
+                                            <button type="submit" class="btn btn-primary" name="action" value="View-Detail">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
+                                        </form>
                                     </td>
 
                                 </tr>

@@ -214,7 +214,7 @@ public class OrderDAO {
 
                     // Lấy thông tin khách hàng từ UserDAO
                     UserDAO userDao = new UserDAO();
-                    UserDTO customer = userDao.getUserById(customerId);
+                    UserDTO customer = userDao.getUserByName(customerId);
 
                     // Tạo đối tượng OrderDTO với thông tin khách hàng là UserDTO
                     OrderDTO order = new OrderDTO(orderId, customer, street, district, city, discountCode, paymentMethod, shippingMethod, createdAt, orderStatus);
