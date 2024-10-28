@@ -139,17 +139,10 @@
                                                 <option value="Not Completed" <%= a.getOrderStatus().equalsIgnoreCase("Not Completed") ? "selected" : ""%>>Not Completed</option>
                                             </select>
                                             <input type="hidden" name="action" value="UpdateStatus"/>
-                                            <!--                                            <button type="submit" class="btn btn-primary" name="action" value="c">
-                                                                                            <i class="fa-solid fa-pen-to-square"></i>
-                                                                                        </button>    -->
-
                                         </form>
                                     <td>
                                         <form action="MainController" method="POST">
                                             <input type="hidden" name="orderId" value="<%= a.getOrderId()%>" />
-                                            <button type="submit" class="btn btn-primary" name="action" value="UpdateStatus">
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                            </button>
                                             <button type="submit" class="btn btn-primary" name="action" value="View-Detail">
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>

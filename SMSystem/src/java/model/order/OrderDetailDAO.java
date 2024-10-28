@@ -20,8 +20,7 @@ import utils.DBUtils;
  * @author LENOVO
  */
 public class OrderDetailDAO {
-
-    public static final String ORDER_DETAIL
+   public static final String ORDER_DETAIL
             = "SELECT od.orderDetailId, od.productId, od.quantity, "
             + "p.price AS unitPrice, p.sale AS salePrice, p.name, "
             + "pi.imagePath AS avatarPath "
@@ -72,5 +71,4 @@ public class OrderDetailDAO {
 
         return orderDetailsList;
     }
-
 }
