@@ -119,6 +119,8 @@ public class MainController extends HttpServlet {
     private final static String LOAD_ORDER_LIST_CONTROLLER = "LoadOrderListController";
     private final static String UPDATE_ORDER_STATUS = "UpdateStatus";
     private final static String UPDATE_ORDER_STATUS_CONTROLLER = "UpdateOrderStatusController";
+    private final static String FORGOT_PASSWORD = "ForgotPassword";
+    private final static String FORGOT_PASSWORD_CONTROLLER = "ForgotPasswordController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -214,6 +216,8 @@ public class MainController extends HttpServlet {
                 url = LOAD_ORDER_LIST_CONTROLLER;
             }else if (UPDATE_ORDER_STATUS.equals(action)) {
                 url = UPDATE_ORDER_STATUS_CONTROLLER;
+            }else if (FORGOT_PASSWORD.equals(action)) {
+                url = FORGOT_PASSWORD_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());
