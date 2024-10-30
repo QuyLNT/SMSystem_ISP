@@ -5,28 +5,31 @@
  */
 package model.order;
 
+import model.product.ProductDTO;
+
 /**
  *
  * @author LENOVO
  */
 public class OrderDetailDTO {
+
     private int orderDetailId;
-    private int productId;
+    private ProductDTO product;
     private int orderId;
     private int quantity;
-    private double unitPrice;
+    private float unitPrice;
 
     public OrderDetailDTO() {
         this.orderDetailId = 0;
-        this.productId = 0;
+        this.product = new ProductDTO();
         this.orderId = 0;
         this.quantity = 0;
-        this.unitPrice = 0.0;
+        this.unitPrice = 0.f;
     }
 
-    public OrderDetailDTO(int orderDetailId, int productId, int orderId, int quantity, double unitPrice) {
+    public OrderDetailDTO(int orderDetailId, ProductDTO product, int orderId, int quantity, float unitPrice) {
         this.orderDetailId = orderDetailId;
-        this.productId = productId;
+        this.product = product;
         this.orderId = orderId;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
@@ -40,12 +43,12 @@ public class OrderDetailDTO {
         this.orderDetailId = orderDetailId;
     }
 
-    public int getProductId() {
-        return productId;
+    public ProductDTO getProduct() {
+        return product;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProduct(ProductDTO product) {
+        this.product = product;
     }
 
     public int getOrderId() {
@@ -68,8 +71,8 @@ public class OrderDetailDTO {
         return unitPrice;
     }
 
-    public void setUnitPrice(double unitPrice) {
+    public void setUnitPrice(float unitPrice) {
         this.unitPrice = unitPrice;
     }
-    
+
 }

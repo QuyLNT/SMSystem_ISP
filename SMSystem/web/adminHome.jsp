@@ -16,9 +16,8 @@
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-            <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
             />
-        
+            <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     </head>
     <body>
@@ -82,7 +81,7 @@
                                     </div>
                                 </div>
                             </div>
-            
+
                             <!-- Right Table for Other Metrics -->
                             <div class="col-md-4">
                                 <div class="row">
@@ -112,7 +111,7 @@
                                                         <p class="card-text">${requestScope.MANAGER_ACCOUNT}</p>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
 
@@ -134,7 +133,7 @@
                                                         <p class="card-text">${requestScope.CUSTOMER_ACCOUNT}</p>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
 
@@ -149,7 +148,7 @@
                                                         <p class="card-text">${requestScope.SHIPPER_ACCOUNT}</p>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
 
@@ -161,7 +160,7 @@
                     </div>
                 </div>
             </section>
-            
+
         </main>
 
         <script src="js/app.js"></script>

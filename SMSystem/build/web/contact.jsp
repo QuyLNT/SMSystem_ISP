@@ -174,7 +174,7 @@
                                                 </div>
                                                 <% }%>
                                                 <div class="select-button">
-                                                    <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
+                                                    <a href="MainController?action=ViewCart&url=contact.jsp" class="primary-btn view-card">VIEW CART</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -212,8 +212,8 @@
                                 <li><a href="contact.jsp">Contact</a></li>
                                 <li><a href="">Pages</a>
                                     <ul class="dropdown">
-                                        <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
-                                        <li><a href="check-out.jsp">Checkout</a></li>
+                                        <li><a href="MainController?acion=ViewCart">Shopping Cart</a></li>
+                                        <li><a href="MainController?action=ViewCart&url=contact.jsp">Checkout</a></li>
 
                                     </ul>
                                 </li>
