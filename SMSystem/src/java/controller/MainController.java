@@ -122,7 +122,6 @@ public class MainController extends HttpServlet {
     private final static String FORGOT_PASSWORD = "ForgotPassword";
     private final static String FORGOT_PASSWORD_CONTROLLER = "ForgotPasswordController";
 
-    private final static String PROCEED_CHECK_OUT_CONTROLLER = "ProceedCheckOutController";
     private final static String PLACE_ORDER = "PlaceOrder";
     private final static String CHECK_OUT_CONTROLLER = "CheckoutController";
     private final static String VIEW_CART = "ViewCart";
