@@ -28,6 +28,7 @@ public class ProductVariantDAO {
     private static final String GET_AVALABLE_SIZE_BY_PRODUCT = "SELECT size FROM productVariants WHERE productId = ? AND stock>0";
     private static final String GET_ALL_SIZE_BY_PRODUCT = "SELECT size FROM productVariants WHERE productId = ?";
     private static final String VARIANTS_BY_PRODUCTID = "SELECT variantId, productId, size, stock FROM productVariants WHERE productId = ?";
+    private static final String GET_AVALABLE_SIZE = "SELECT stock FROM ProductSize WHERE productId = ? AND size = ?";
     private static final String UPDATE_STOCK = "UPDATE productVariants\n"
             + "SET stock = stock - ?\n"
             + "WHERE productId = ? AND size = ?";

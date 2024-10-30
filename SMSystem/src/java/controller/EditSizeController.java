@@ -48,7 +48,7 @@ public class EditSizeController extends HttpServlet {
 
             // Kiểm tra tính hợp lệ của tham số
             if (cartItemIdRaw == null || sizeRaw == null) {
-                request.setAttribute("ERROR_MESSAGE", "Missing cart item ID or size.");
+                request.setAttribute("err", "Missing cart item ID or size.");
             } else {
                 int cartItemId = Integer.parseInt(cartItemIdRaw);
                 float size = Float.parseFloat(sizeRaw);
@@ -65,9 +65,10 @@ public class EditSizeController extends HttpServlet {
                             boolean isUpdated = cartDAO.updateSize(cartItemId, sizeRaw);
                             if (isUpdated) {
                                 session.setAttribute("CART", cart);
+                                request.setAttribute("ms", "Size updated successfully!");
                                 url = SUCCESS;
                             } else {
-                                request.setAttribute("ERROR_MESSAGE", "Failed to update size in database.");
+                                request.setAttribute("err", "Failed to update size in database.");
                             }
 //                            itemFound = true;
                             break;
@@ -77,7 +78,7 @@ public class EditSizeController extends HttpServlet {
             }
 
         } catch (Exception e) {
-            request.setAttribute("ERROR_MESSAGE", "Invalid input format.");
+            request.setAttribute("err", "Invalid input format.");
             e.printStackTrace();
 
         } finally {

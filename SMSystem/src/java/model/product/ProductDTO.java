@@ -207,6 +207,7 @@ public class ProductDTO {
             ele.setImagePath(path);
         });
     }
+
     
     public List<Float> getAvaiableSize(){
         List<Float> avaiableSize = new ArrayList<>();

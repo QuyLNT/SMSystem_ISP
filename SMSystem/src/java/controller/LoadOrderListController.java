@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -13,19 +14,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.category.BrandDAO;
+import model.category.BrandDTO;
 import model.category.UserObjectDAO;
-import model.category.UserObjectDTO;
 import model.order.OrderDAO;
 import model.order.OrderDTO;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
+import model.product.ProductImageDAO;
 import model.product.ProductVariantDAO;
 
 /**
  *
- * @author LENOVO
+ * @author Asus
  */
-public class LoadManagerHomeDataController extends HttpServlet {
+public class LoadOrderListController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,53 +39,27 @@ public class LoadManagerHomeDataController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "managerHome.jsp";
-    private static final String SUCCESS = "managerHome.jsp";
+    private static final String ERROR = "orderList.jsp";
+    private static final String SUCCESS = "orderList.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            ProductDAO productDao = new ProductDAO();
-            ProductVariantDAO variantDao = new ProductVariantDAO();
-            UserObjectDAO uObDao = new UserObjectDAO();
-            OrderDAO ordDAO = new OrderDAO();
-            List<ProductDTO> productList;
-            List<ProductDTO> stockOfProduct;
-            List<UserObjectDTO> uObList;
-            List<OrderDTO> ordList;
-
-            productList = productDao.getAllProduct();
-            stockOfProduct = variantDao.getStockByProduct();
-            uObList = uObDao.getAllUserObject();
-            int allStock = 0;
-            for (ProductDTO p : stockOfProduct) {
-                allStock += p.getTotalStock();
-            }
-
-            ordList = ordDAO.getAllOrder();
-            int allOrder = ordList.size();
-            for(OrderDTO o :ordList){
-                allOrder +=o.getTotalOrder();
-            }
-
-            if (productList != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("TOTAL_ORDER", allOrder);
-                session.setAttribute("ALL_QUANTITY", allStock);
-                session.setAttribute("STOCK_OF_PRODUCT", stockOfProduct);
-                session.setAttribute("USER_OBJECT_LIST", uObList);
-
-                url = SUCCESS;
-            }
+            OrderDAO orderDao = new OrderDAO();
+            List<OrderDTO> orderList;
+            orderList = orderDao.getAllOrder();
+            request.setAttribute("ORDER_LIST", orderList);
+            url = SUCCESS;
 
         } catch (ClassNotFoundException | SQLException e) {
-            log("Error at LoadProductController: " + e.toString());
+            log("Error at LoadProductListController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

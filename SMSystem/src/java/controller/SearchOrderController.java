@@ -6,79 +6,62 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.category.UserObjectDAO;
-import model.category.UserObjectDTO;
 import model.order.OrderDAO;
 import model.order.OrderDTO;
-import model.product.ProductDAO;
-import model.product.ProductDTO;
-import model.product.ProductVariantDAO;
+import model.user.UserDTO;
 
 /**
  *
- * @author LENOVO
+ * @author dell
  */
-public class LoadManagerHomeDataController extends HttpServlet {
+public class SearchOrderController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    private static final String ERROR = "managerHome.jsp";
-    private static final String SUCCESS = "managerHome.jsp";
+    private static final String ERROR = "myOrder.jsp";
+    private static final String SUCCESS = "myOrder.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
+        OrderDAO orderDao = new OrderDAO();
+
         try {
-            ProductDAO productDao = new ProductDAO();
-            ProductVariantDAO variantDao = new ProductVariantDAO();
-            UserObjectDAO uObDao = new UserObjectDAO();
-            OrderDAO ordDAO = new OrderDAO();
-            List<ProductDTO> productList;
-            List<ProductDTO> stockOfProduct;
-            List<UserObjectDTO> uObList;
-            List<OrderDTO> ordList;
+            String orderIdStr = request.getParameter("OrderID");
+            List<OrderDTO> orderList;
 
-            productList = productDao.getAllProduct();
-            stockOfProduct = variantDao.getStockByProduct();
-            uObList = uObDao.getAllUserObject();
-            int allStock = 0;
-            for (ProductDTO p : stockOfProduct) {
-                allStock += p.getTotalStock();
+            if (orderIdStr == null || orderIdStr.isEmpty()) {
+                // Nếu không có OrderID, lấy tất cả đơn hàng
+                orderList = orderDao.getAllOrdersByCustomerId(user.getUserId());
+            } else {
+                // Nếu có OrderID, tìm kiếm theo OrderID
+                int orderId = Integer.parseInt(orderIdStr);
+                OrderDTO order = orderDao.getOrderById(user, orderId);
+
+            if (order != null) {
+                    orderList = new ArrayList<>();
+                orderList.add(order);
+            } else {
+                    orderList = new ArrayList<>();
+                session.setAttribute("ms", "You do not have an order with Order ID: " + orderIdStr);
+            }
             }
 
-            ordList = ordDAO.getAllOrder();
-            int allOrder = ordList.size();
-            for(OrderDTO o :ordList){
-                allOrder +=o.getTotalOrder();
-            }
-
-            if (productList != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("TOTAL_ORDER", allOrder);
-                session.setAttribute("ALL_QUANTITY", allStock);
-                session.setAttribute("STOCK_OF_PRODUCT", stockOfProduct);
-                session.setAttribute("USER_OBJECT_LIST", uObList);
-
-                url = SUCCESS;
-            }
-
-        } catch (ClassNotFoundException | SQLException e) {
-            log("Error at LoadProductController: " + e.toString());
+            // Lưu danh sách đơn hàng vào session để hiển thị trong JSP
+            session.setAttribute("ORDER_LIST", orderList);
+            url = SUCCESS;
+        } catch (Exception e) {
+            log("Error at SearchOrderController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

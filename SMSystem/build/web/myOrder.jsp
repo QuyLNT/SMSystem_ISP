@@ -4,22 +4,23 @@
     Author     : Luu Minh Quan
 --%>
 
+<%@page import="model.discount.DiscountDTO"%>
 <%-- 
     Document   : wishlist
     Created on : Jun 13, 2024, 11:09:49 PM
     Author     : Luu Minh Quan
 --%>
 
-<%@page import="model.OrderDTO"%>
-<%@page import="model.OrderDAO"%>
-<%@page import="model.OrderItemDTO"%>
-<%@page import="model.ProductDAO"%>
+<%@page import="model.order.OrderDTO"%>
+<%@page import="model.order.OrderDAO"%>
+<%@page import="model.order.OrderDetailDTO"%>
+<%@page import="model.product.ProductDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.ProductDTO"%>
-<%@page import="model.UserDTO"%>
-<%@page import="model.ItemDTO"%>
+<%@page import="model.product.ProductDTO"%>
+<%@page import="model.user.UserDTO"%>
+<%@page import="model.cart.CartItems"%>
 <%@page import="java.util.List"%>
-<%@page import="model.CartDTO"%>
+<%@page import="model.cart.CartDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -51,9 +52,9 @@
     <body>
         <!-- Start coding here -->
         <!-- Page PreOrder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
+        <!--                <div id="preloder">
+                            <div class="loader"></div>
+                        </div>-->
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
@@ -72,8 +73,8 @@
                     </div>
                     <div class="ht-right">
                         <%
-                            UserDTO user = (UserDTO) session.getAttribute("user");
-                            if (user.getFullName() != null) {
+                            UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
+                            if (user != null && user.getFullName() != null) {
                         %>
                         <div class="login-panel" id="user-btn">
                             <i class="fa fa-user"><%=user.getFullName()%></i>
@@ -87,11 +88,10 @@
                             <div class="user-setting">
                                 <div class="content">
                                     <div><a href="myAccount.jsp">My account</a></div>
-                                    <div><a href="myOrder.jsp">Order Status</a></div>
+                                    <div><a href="LoadMyOrderController">Order Status</a></div>
                                     <div><a href="LogoutController">Logout</a></div>
-
-                                    </ul>
                                 </div>
+                            </div>
                         </section>
                         <div class="lan-selector">
                             <select class="language_drop" name="countries" id="countries" style="width: 300px;">
@@ -167,7 +167,7 @@
                         <ul>
                             <li class="active"><a href="index.jsp">Home</a></li>
                             <li><a href="shop.jsp">Shop</a></li>
-                           
+
                             <li><a href="contact.jsp">Contact</a></li>
                             <li><a href="">Pages</a>
                                 <ul class="dropdown">
@@ -207,11 +207,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <form action="SearchOrderServlet" method="get">
+                        <form action="SearchOrderController" method="get">
                             <div class="advanced-search">
                                 <div class="input-group" style="justify-content: center;">
-                                    <input style="color: black; width: 80%;height: 3rem" type="text" name="OrderID" placeholder="Input OrderID">
-                                    <button id="search-btn-order" type="submit"  value="Search"><i class="ti-search"></i></button>
+                                    <input style="color: black; width: 80%; height: 3rem" type="text" name="OrderID" placeholder="Input OrderID">
+                                    <button id="search-btn-order" type="submit" name="action" value="Search"><i class="ti-search"></i></button>
                                 </div>
                             </div>
                         </form>
@@ -220,91 +220,103 @@
 
                 <section class="showcase">
                     <div class="overlay">
-                        <div class="container-fluid">                                                 
-                            <div class="welcome">
+                        <div class="container-fluid">                                                  
 
+                            <div class="welcome">
+                                <%
+                                    // Lấy thông báo lỗi từ session
+                                    String message = (String) session.getAttribute("ms");
+                                    session.removeAttribute("ms"); // Xóa thông báo sau khi đã hiển thị
+                                %>
+                                <% if (message != null) {%>
+                                <div class="alert alert-info">
+                                    <%= message%>
+                                </div>
+                                <% } %>
 
                                 <table class="table table-hover" style="margin: 50px;">
-
                                     <thead>
                                         <tr>
-                                            <th>Code</th>
+                                            <th>Order ID</th>
                                             <th>Customer</th>
                                             <th>Email</th>
                                             <th>Status</th>
                                             <th>Payment method</th>
                                             <th>Shipping method</th>
-                                            <th>total</th>
+                                            <th>Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         <%
+                                            // Lấy danh sách đơn hàng
+                                            OrderDAO orderDAO = new OrderDAO();
+                                            List<OrderDTO> ls = orderDAO.getAllOrdersByCustomerId(user.getUserId());
 
-                                            OrderDAO d = new OrderDAO();
-
-                                            List<OrderDTO> ls = d.getAllOrder(user.getUserId());
-                                            if (session.getAttribute("orderList") != null) {
-                                                ls = (List<OrderDTO>) session.getAttribute("orderList");
-                                            }
-                                            if (ls != null) {
-                                                for (OrderDTO ele : ls) {
-                                                    if (!ele.getOrderStatus().equals("Completed") && !ele.getOrderStatus().equals("Not Completed")) {
-
+                                            // Kiểm tra nếu không có đơn hàng nào
+                                            if (ls == null || ls.isEmpty()) {
                                         %>
                                         <tr>
+                                            <td colspan="7" style="text-align: center;">You do not have any orders</td>
+                                        </tr>
+                                        <%
+                                        } else {
+                                            // Lấy OrderID từ request
+                                            String orderIdStr = request.getParameter("OrderID");
+                                            List<OrderDTO> searchResults = new ArrayList<>();
 
+                                            // Nếu có OrderID, tìm kiếm trong danh sách đơn hàng
+                                            if (orderIdStr != null && !orderIdStr.isEmpty()) {
+                                                int orderId = Integer.parseInt(orderIdStr);
+                                                for (OrderDTO order : ls) {
+                                                    if (order.getOrderId() == orderId) {
+                                                        searchResults.add(order);
+                                                    }
+                                                }
+                                            } else {
+                                                searchResults = ls; // Nếu không có OrderID thì hiển thị tất cả
+                                            }
 
-                                            <td><%=ele.getOrderID()%></td>                                       
-                                            <td><%=ele.getFullName()%></td>
-                                            <td><%=ele.getEmail()%></td>
+                                            // Kiểm tra kết quả tìm kiếm
+                                            if (searchResults.isEmpty()) {
+                                        %>
+                                        <tr>
+                                            <td colspan="7" style="text-align: center;">No orders found with the given Order ID.</td>
+                                        </tr>
+                                        <%
+                                        } else {
+                                            // Hiển thị các đơn hàng tìm được
+                                            for (OrderDTO ele : searchResults) {
+                                        %>
+                                        <tr>
+                                            <td><%= ele.getOrderId()%></td>                                       
+                                            <td><%= ele.getCustomer().getFullName()%></td>
+                                            <td><%= ele.getCustomer().getEmail()%></td>
                                             <td>
                                                 <input type="text" style="border: none; outline: none;" value="<%= ele.getOrderStatus()%>" readonly="">
                                             </td>
                                             <td>
-                                                <%
-                                                    String payment = "";
-                                                    if (ele.getPaymentMethodID() == 1) {
-                                                        payment = "Cash";
-                                                    } else if (ele.getPaymentMethodID() == 2) {
-                                                        payment = "Credit Card";
-                                                    } else if (ele.getPaymentMethodID() == 3) {
-                                                        payment = "PayPal";
-                                                    }
-                                                %>
-                                                <input type="text" style="border: none; outline: none;" value="<%= payment%>" readonly=""/>
+                                                <input type="text" style="border: none; outline: none;" value="<%= ele.getPaymentMethod()%>" readonly="">
                                             </td>
                                             <td>
-                                                <%
-                                                    String shipping = "";
-                                                    if (ele.getShippingMethodID() == 1) {
-                                                        shipping = "Standard Shipping";
-                                                    } else if (ele.getShippingMethodID() == 2) {
-                                                        shipping = "Express Shipping";
-                                                    } else if (ele.getShippingMethodID() == 3) {
-                                                        shipping = "Rocket Shipping";
-                                                    }
-                                                %>
-                                                <input type="text" style="border: none; outline: none;"  value="<%= shipping%>"  readonly=""/>
+                                                <input type="text" style="border: none; outline: none;" value="<%= ele.getShippingMethod()%>" readonly="">
                                             </td>
-                                            <td class="p-price-wishlist first-row">$<%= String.format("%.2f", ele.getTotalPrice())%></td>
-
-                                        </tr> 
-                                        <% }
-                                            }%>
+                                            <td class="p-price-wishlist first-row">$<%= String.format("%.2f", ele.getTotalPrice()) %></td>
+                                        </tr>
+                                        <%
+                                                    }
+                                                }
+                                            }
+                                        %>
                                     </tbody>
-                                </table> 
-                                <%}%>
-
+                                </table>
                             </div>
-
                         </div>
-
                     </div>
-
                 </section>
             </div>
         </div>
+
+
         <!-- Shopping Cart Section Begin -->
 
         <!-- Partner Logo Section Begin -->

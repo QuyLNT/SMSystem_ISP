@@ -193,6 +193,30 @@
         <servlet-class>controller.ProceedCheckOutController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>SearchOrderController</servlet-name>
+        <servlet-class>controller.SearchOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadOrderDetailController</servlet-name>
+        <servlet-class>controller.LoadOrderDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadOrderListController</servlet-name>
+        <servlet-class>controller.LoadOrderListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateOrderStatusController</servlet-name>
+        <servlet-class>controller.UpdateOrderStatusController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPasswordController</servlet-name>
+        <servlet-class>controller.ForgotPasswordController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResetPasswordController</servlet-name>
+        <servlet-class>controller.ResetPasswordController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>PaymentController</servlet-name>
         <servlet-class>controller.PaymentController</servlet-class>
     </servlet>
@@ -371,6 +395,30 @@
     <servlet-mapping>
         <servlet-name>ProceedCheckOutController</servlet-name>
         <url-pattern>/ProceedCheckOutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchOrderController</servlet-name>
+        <url-pattern>/SearchOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadOrderDetailController</servlet-name>
+        <url-pattern>/LoadOrderDetailController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadOrderListController</servlet-name>
+        <url-pattern>/LoadOrderListController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateOrderStatusController</servlet-name>
+        <url-pattern>/UpdateOrderStatusController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotPasswordController</servlet-name>
+        <url-pattern>/ForgotPasswordController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordController</servlet-name>
+        <url-pattern>/ResetPasswordController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PaymentController</servlet-name>
