@@ -19,7 +19,7 @@ public class CartItems {
     private int quantity;
     private float size;
     private boolean isSelected;
-
+    private boolean status;
     public double getPrice() {
         float salePrice = product.getPrice() * (1 - product.getSale());
         return salePrice;
@@ -89,6 +89,7 @@ public class CartItems {
         this.quantity = 0;
         this.size = 0;
         this.isSelected = true;
+        this.status = true;
     }
 
     public boolean isIsSelected() {
@@ -97,6 +98,14 @@ public class CartItems {
 
     public void setIsSelected(boolean isSelected) {
         this.isSelected = isSelected;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
 }

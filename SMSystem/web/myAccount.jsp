@@ -159,7 +159,7 @@
                             <li><a href="contact.jsp">Contact</a></li>
                             <li><a href="">Pages</a>
                                 <ul class="dropdown">
-                                    <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
+                                    <li><a href="MainController?action=ViewCart&url=myAccount.jsp">Shopping Cart</a></li>
                                     <li><a href="check-out.jsp">Checkout</a></li>
 
                                 </ul>
@@ -217,7 +217,7 @@
                                         <input type="text" id="pass" name="pass">
                                         <% } else {%>
 
-                                        <input type="text" id="password-exist" name="pass" value="<%=user.getPassword()%>" readonly>
+                                        <input type="password" id="password-exist" name="pass" value="<%=user.getPassword()%>" readonly>
                                         <button type="button" id="edit-btn-pass">
                                             <i class="fa fa-pencil-square-o"></i>
                                         </button>

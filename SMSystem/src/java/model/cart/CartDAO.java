@@ -33,6 +33,7 @@ public class CartDAO {
     private static final String UPDATE_SIZE = "UPDATE cartItems SET size = ? WHERE cartItemId = ?";
     private static final String UPDATE_IS_SELECTED = "UPDATE cartItems SET isSelected = ? WHERE cartItemId = ?";
     private static final String GET_SELECTED_ITEMS = "SELECT cartItemId, productId, quantity, size, isSelected FROM cartItems WHERE cartId = ? AND isSelected = 1";
+    private static final String DELETE_SELECTED_ITEM = "DELETE FROM cartItems WHERE cartId = ? AND isSelected = 1";
 
     public boolean deleteCartItem(int cartItemId) throws SQLException, ClassNotFoundException {
         Connection conn = null;
@@ -450,6 +451,30 @@ public class CartDAO {
             }
         }
         return cart;
+    }
+
+    public boolean removeSelectedItem(int cartId) throws ClassNotFoundException, SQLException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        boolean result = false;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(DELETE_SELECTED_ITEM);
+                ptm.setInt(1, cartId);
+                result = ptm.executeUpdate() > 0;
+
+            }
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return result;
     }
 
 }

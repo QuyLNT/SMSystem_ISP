@@ -8,6 +8,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,13 @@ import javax.servlet.http.HttpSession;
 import model.cart.CartDAO;
 import model.cart.CartDTO;
 import model.cart.CartItems;
+import model.methods.PaymentMethodDAO;
+import model.methods.PaymentMethodDTO;
+import model.methods.ShippingMethodDAO;
+import model.methods.ShippingMethodDTO;
+import model.order.OrderDAO;
 import model.product.ProductImageDAO;
+import model.product.ProductVariantDAO;
 import model.user.UserDTO;
 
 /**
@@ -34,30 +41,54 @@ public class ProceedCheckOutController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private static final String ERROR = "shopping-cart.jsp";
+    private static final String SUCCESS = "check-out.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String url = ERROR;
         try {
+            boolean flag = true;
             HttpSession session = request.getSession();
             UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+            CartDTO cart = (CartDTO) session.getAttribute("CART");
             if (loginUser != null) {
+                ShippingMethodDAO shipDao = new ShippingMethodDAO();
+                List<ShippingMethodDTO> methodList = shipDao.getShippingMethod();
+                PaymentMethodDAO payDao = new PaymentMethodDAO();
+                List<PaymentMethodDTO> payList = payDao.getPaymentMethod();
+
                 CartDAO cartDao = new CartDAO();
+                OrderDAO orderDao = new OrderDAO();
                 ProductImageDAO imageDao = new ProductImageDAO();
+                ProductVariantDAO variantDao = new ProductVariantDAO();
                 CartDTO selectedCart = cartDao.getSelectedCartByUser(loginUser.getUserId());
-                if(selectedCart!=null){
-                    for(CartItems c : selectedCart.getCartItemsList()){
+                if (selectedCart.getCartItemsList().size() > 0 && cart.getCartItemsList().size() > 0) {
+                    for (CartItems c : selectedCart.getCartItemsList()) {
                         c.getProduct().setListImages(imageDao.getImageByProduct(c.getProduct().getProductId()));
+                        if (!variantDao.checkValidateStock(c.getProduct().getProductId(), c.getSize(), c.getQuantity())) {
+                            flag = false;
+                            request.setAttribute("STOCK_ERR", "Sorry product " + c.getProduct().getName() + "with size " + c.getSize() + " is not enough quantity to check-out");
+                            break;
+                        }
                     }
-                    session.setAttribute("SELECTED_CART", selectedCart);
-                }else{
-                    request.setAttribute("ms", "No product");
+                    if (flag) {
+                        session.setAttribute("SELECTED_CART", selectedCart);
+                        session.setAttribute("SHIPPING_METHOD", methodList);
+                        session.setAttribute("PAYMENT_METHOD", payList);
+                        url = SUCCESS;
+                    }
+
+                } else {
+                    request.setAttribute("EMPTY_CART_ERROR", "Check-out cannot proceed when you have not selected a product. ");
                 }
             }
 
         } catch (ClassNotFoundException | SQLException e) {
             log("Error at ProceedCheckOutController: " + e.toString());
         } finally {
-            request.getRequestDispatcher("check-out.jsp").forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
