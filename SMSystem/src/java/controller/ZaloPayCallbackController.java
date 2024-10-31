@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
+import model.payment.OnlinePaymentDAO;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,21 +85,22 @@ public class ZaloPayCallbackController extends HttpServlet {
                 // Callback hợp lệ: xử lý logic cập nhật trạng thái đơn hàng
                 JSONObject data = new JSONObject(dataStr);
                 String appTransId = data.getString("app_trans_id");
-                JSONArray itemsArray = data.getJSONArray("item");
 
-                int itemId = itemsArray.getJSONObject(0).getInt("itemid");
+                OnlinePaymentDAO payDao = new OnlinePaymentDAO();
+                String status = "Success";
+                boolean updateStatus = false;
+                updateStatus = payDao.updatePayStatus(appTransId, status);
 
                 result.put("returncode", 1);
                 result.put("returnmessage", "success");
             }
-        } catch (IllegalStateException | JSONException ex) {
+        } catch (ClassNotFoundException | SQLException | IllegalStateException | JSONException ex) {
             result.put("returncode", 0); // ZaloPay server sẽ callback lại nếu trả về mã này
             result.put("returnmessage", ex.getMessage());
         }
 
-        try (PrintWriter out = response.getWriter()) {
-            out.print(result.toString());
-        }
+        response.getWriter().write(result.toString());
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

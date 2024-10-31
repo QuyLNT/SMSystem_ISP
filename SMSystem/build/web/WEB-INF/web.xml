@@ -232,6 +232,18 @@
         <servlet-name>CheckCartItemController</servlet-name>
         <servlet-class>controller.CheckCartItemController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadPaymentListController</servlet-name>
+        <servlet-class>controller.LoadPaymentListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchPaymentController</servlet-name>
+        <servlet-class>controller.SearchPaymentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetPaymentStatusController</servlet-name>
+        <servlet-class>controller.GetPaymentStatusController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -435,6 +447,18 @@
     <servlet-mapping>
         <servlet-name>CheckCartItemController</servlet-name>
         <url-pattern>/CheckCartItemController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadPaymentListController</servlet-name>
+        <url-pattern>/LoadPaymentListController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchPaymentController</servlet-name>
+        <url-pattern>/SearchPaymentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetPaymentStatusController</servlet-name>
+        <url-pattern>/GetPaymentStatusController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

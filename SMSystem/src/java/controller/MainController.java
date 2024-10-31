@@ -104,17 +104,17 @@ public class MainController extends HttpServlet {
     private final static String TOGGLE_SELECT_PRODUCT = "toggleSelectProduct";
     private final static String TOGGLE_SELECT_PRODUCT_CONTROLLER = "ToggleSelectProductController";
     private final static String PROCEED_CHECK_OUT = "ProceedCheckOut";
-    private final static String PROCEED_CHECK_OUT_CONTROLLER = "ProceedCheckOutController"; 
+    private final static String PROCEED_CHECK_OUT_CONTROLLER = "ProceedCheckOutController";
     private final static String LOAD_MY_ORDER = "LoadMyOrder";
     private final static String LOAD_MY_ORDER_CONTROLLER = "LoadMyOrderController";
     private final static String SEARCH_ORDER = "Search";
-    private final static String SEARCH_ORDER_CONTROLLER = "SearchOrderController"; 
-    
+    private final static String SEARCH_ORDER_CONTROLLER = "SearchOrderController";
+
     private final static String ORDER_DETAIL = "View-Detail";
     private final static String ORDER_DETAIL_CONTROLLER = "LoadOrderDetailController";
     private final static String ORDER = "LoadOrderList";
     private final static String ORDER_CONTROLLER = "LoadOrderListController";
-    
+
     private final static String LOAD_ORDER_LIST = "LoadOrderList";
     private final static String LOAD_ORDER_LIST_CONTROLLER = "LoadOrderListController";
     private final static String UPDATE_ORDER_STATUS = "UpdateStatus";
@@ -126,6 +126,12 @@ public class MainController extends HttpServlet {
     private final static String CHECK_OUT_CONTROLLER = "CheckoutController";
     private final static String VIEW_CART = "ViewCart";
     private final static String VIEW_CART_CONTROLLER = "CheckCartItemController";
+    private final static String LOAD_PAYMENT = "LoadPaymentList";
+    private final static String LOAD_PAYMENT_CONTROLLER = "LoadPaymentListController";
+    private final static String SEARCH_PAYMENT = "SearchPayment";
+    private final static String SEARCH_PAYMENT_CONTROLLER = "SearchPaymentController";
+    private final static String GET_STATUS = "GetStatus";
+    private final static String GET_STATUS_CONTROLLER = "GetPaymentStatusController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -209,24 +215,30 @@ public class MainController extends HttpServlet {
                 url = TOGGLE_SELECT_PRODUCT_CONTROLLER;
             } else if (PROCEED_CHECK_OUT.equals(action)) {
                 url = PROCEED_CHECK_OUT_CONTROLLER;
-            }else if (LOAD_MY_ORDER.equals(action)) {
+            } else if (LOAD_MY_ORDER.equals(action)) {
                 url = LOAD_MY_ORDER_CONTROLLER;
-            }else if (SEARCH_ORDER.equals(action)) {
+            } else if (SEARCH_ORDER.equals(action)) {
                 url = SEARCH_ORDER_CONTROLLER;
-            }else if (ORDER_DETAIL.equals(action)) {
+            } else if (ORDER_DETAIL.equals(action)) {
                 url = ORDER_DETAIL_CONTROLLER;
-            }else if (ORDER.equals(action)) {
+            } else if (ORDER.equals(action)) {
                 url = ORDER_CONTROLLER;
             } else if (LOAD_ORDER_LIST.equals(action)) {
                 url = LOAD_ORDER_LIST_CONTROLLER;
-            }else if (UPDATE_ORDER_STATUS.equals(action)) {
+            } else if (UPDATE_ORDER_STATUS.equals(action)) {
                 url = UPDATE_ORDER_STATUS_CONTROLLER;
-            }else if (FORGOT_PASSWORD.equals(action)) {
+            } else if (FORGOT_PASSWORD.equals(action)) {
                 url = FORGOT_PASSWORD_CONTROLLER;
             } else if (PLACE_ORDER.equals(action)) {
                 url = CHECK_OUT_CONTROLLER;
-            }else if (VIEW_CART.equals(action)) {
+            } else if (VIEW_CART.equals(action)) {
                 url = VIEW_CART_CONTROLLER;
+            } else if (LOAD_PAYMENT.equals(action)) {
+                url = LOAD_PAYMENT_CONTROLLER;
+            } else if (SEARCH_PAYMENT.equals(action)) {
+                url = SEARCH_PAYMENT_CONTROLLER;
+            } else if (GET_STATUS.equals(action)) {
+                url = GET_STATUS_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());
