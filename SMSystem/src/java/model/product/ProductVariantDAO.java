@@ -39,7 +39,7 @@ public class ProductVariantDAO {
     private static final String GET_STATUS = "SELECT status FROM productVariants WHERE productId = ? AND size = ?";
     private static final String CREATE_SIZE = "INSERT INTO productVariants(productId,size,stock) VALUES (?,?,?)";
     private static final String CHECK_EXISTED_SIZE = "SELECT variantId,productId,size,stock FROM productVariants WHERE productId = ? AND size = ?";
-    private static final String UPDATE_STOCK = "UPDATE productVariants SET stock = ? WHERE variantId = ?";
+    private static final String UPDATE_STOCK_QUANTITY = "UPDATE productVariants SET stock = ? WHERE variantId = ?";
 
     public List<ProductVariantDTO> getAllVariant() throws SQLException, ClassNotFoundException {
         ProductVariantDTO variant;
@@ -223,6 +223,8 @@ public class ProductVariantDAO {
                 conn.close();
             }
         }
+    }
+    
     public ProductVariantDTO createNewSize(ProductVariantDTO variant) throws Exception {
         boolean check = false;
         Connection conn = null;
@@ -302,7 +304,7 @@ public class ProductVariantDAO {
         try {
             conn = DBUtils.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(UPDATE_STOCK);
+                ptm = conn.prepareStatement(UPDATE_STOCK_QUANTITY);
                 for (ProductVariantDTO variant : variants) {
                     ptm.setInt(1, variant.getStock());
                     ptm.setInt(2, variant.getVariantId());
@@ -321,7 +323,6 @@ public class ProductVariantDAO {
         }
         return check; // Trả về kết quả cập nhật
     }
-}
 
     public boolean checkValidateStock(int productId, float size, int newQuantity) throws ClassNotFoundException, SQLException {
         boolean check = false;
