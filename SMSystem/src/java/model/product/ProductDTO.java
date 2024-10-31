@@ -26,7 +26,6 @@ public class ProductDTO {
     private float sale;
     private int warrantyPeriod;
     private boolean productStatus;
-
     private  int totalStock;
     
     public ProductDTO() {

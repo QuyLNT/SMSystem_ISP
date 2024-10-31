@@ -10,6 +10,7 @@ package model.product;
  * @author Asus
  */
 public class ProductVariantDTO {
+
     private int variantId;
     private int productId;
     private float size;
@@ -25,6 +26,12 @@ public class ProductVariantDTO {
 
     public ProductVariantDTO(int productId, int stock) {
         this.productId = productId;
+        this.stock = stock;
+    }
+
+    public ProductVariantDTO(int productId, float size, int stock) {
+        this.productId = productId;
+        this.size = size;
         this.stock = stock;
     }
 
