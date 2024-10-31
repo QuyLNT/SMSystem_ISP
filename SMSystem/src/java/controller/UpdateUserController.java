@@ -68,21 +68,24 @@ public class UpdateUserController extends HttpServlet {
                 request.setAttribute("PHONE_ERROR", "Can't be blank!");
                 hasError = true;
             }
-            if (!phone.isEmpty() && !phone.matches("^\\d{10,15}$")) {
-                request.setAttribute("PHONE_ERROR", "Invalid phone number! Must contain only digits and be between 10 to 15 characters.");
+            if (!phone.isEmpty() && !phone.matches("^(09|08|07|05|03)\\d{8}$")) {
+                request.setAttribute("PHONE_ERROR", "Phone number must be 10 digits and start with 09, 08, 07, 05, or 03.");
                 hasError = true;
             }
 
             if (sex == null || sex.isEmpty()) {
-                request.setAttribute("SEX_ERROR", "Can't be blank!");
+                request.setAttribute("SEX_ERROR", "Please select your gender!");
+                hasError = true;
+            } else if (sex.equals("")) {
+                request.setAttribute("SEX_ERROR", "Please select your gender!");
                 hasError = true;
             }
+
             if (email == null || email.isEmpty()) {
                 request.setAttribute("EMAIL_ERROR", "Can't be blank!");
                 hasError = true;
-            }
-            if (!email.isEmpty() && !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-                request.setAttribute("EMAIL_ERROR", "Invalid email format!");
+            } else if (!email.isEmpty() && !email.matches("^(?=.*[a-zA-Z])[a-zA-Z0-9._%+-]{6,}@gmail\\.com$")) {
+                request.setAttribute("EMAIL_ERROR", "Email must be at least 6 characters before @gmail.com and contain letters (not just numbers).");
                 hasError = true;
             }
 

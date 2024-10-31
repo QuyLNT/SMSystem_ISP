@@ -233,6 +233,14 @@
         <servlet-class>controller.CheckCartItemController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CreateSizeController</servlet-name>
+        <servlet-class>controller.CreateSizeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateSizeStockController</servlet-name>
+        <servlet-class>controller.UpdateSizeStockController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>LoadPaymentListController</servlet-name>
         <servlet-class>controller.LoadPaymentListController</servlet-class>
     </servlet>
@@ -447,6 +455,14 @@
     <servlet-mapping>
         <servlet-name>CheckCartItemController</servlet-name>
         <url-pattern>/CheckCartItemController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateSizeController</servlet-name>
+        <url-pattern>/CreateSizeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateSizeStockController</servlet-name>
+        <url-pattern>/UpdateSizeStockController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoadPaymentListController</servlet-name>
