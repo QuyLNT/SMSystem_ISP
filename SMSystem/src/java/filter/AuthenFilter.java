@@ -52,7 +52,6 @@ public class AuthenFilter implements Filter {
         USER_RESOURCE.add("shopping-cart.jsp");
         USER_RESOURCE.add("check-out.jsp");
         USER_RESOURCE.add("myOrder.jsp");
-        USER_RESOURCE.add("success.jsp");
         USER_RESOURCE.add("product.jsp");
 
         ADMIN_RESOURCE = new ArrayList<>();
@@ -101,6 +100,7 @@ public class AuthenFilter implements Filter {
         NON_AUTHEN_RESOURCE.add("myAccount.jsp");
         NON_AUTHEN_RESOURCE.add("product.jsp");
         NON_AUTHEN_RESOURCE.add("shop.jsp");
+        NON_AUTHEN_RESOURCE.add("success.jsp");
         NON_AUTHEN_RESOURCE.add("MainController");
         NON_AUTHEN_RESOURCE.add("LoadTopListByCateController");
     }
