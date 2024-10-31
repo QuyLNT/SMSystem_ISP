@@ -526,7 +526,6 @@
 
             </section>
 
-
         </main>
 
         <script src="js/app.js"></script>

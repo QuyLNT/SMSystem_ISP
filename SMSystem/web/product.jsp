@@ -4,6 +4,7 @@
     Author     : Luu Minh Quan
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="model.product.ProductImageDTO"%>
 <%@page import="model.cart.CartItems"%>
 <%@page import="model.cart.CartDTO"%>
@@ -36,9 +37,119 @@
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
+        <style>
+            .card {
+                width: 300px;
+                height: fit-content;
+                background: rgb(255, 255, 255);
+                border-radius: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+                padding: 30px;
+                position: fixed;
+                /* Changed from relative to fixed */
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.1);
+                z-index: 1001;
+            }
+
+            /* Optional: Add a semi-transparent background overlay behind the modal */
+            .modal-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.5);
+                /* Semi-transparent black */
+                z-index: 1100;
+                /* Below the modal itself */
+            }
+
+            /* Existing styles for the content */
+            .card-content {
+                width: 100%;
+                height: fit-content;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .card-heading {
+                font-size: 20px;
+                font-weight: 700;
+                color: rgb(27, 27, 27);
+            }
+
+            .card-description {
+                font-weight: 100;
+                color: rgb(102, 102, 102);
+            }
+
+            .card-button-wrapper {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .card-button {
+                width: 50%;
+                height: 35px;
+                border-radius: 5px;
+                border: none;
+                cursor: pointer;
+                font-weight: 600;
+            }
+
+            .primary {
+                background-color: rgb(255, 114, 109);
+                color: white;
+            }
+
+            .primary:hover {
+                background-color: rgb(255, 73, 66);
+                color: white;
+            }
+
+            .secondary {
+                background-color: #ddd;
+            }
+
+            .secondary:hover {
+                background-color: rgb(197, 197, 197);
+            }
+
+            .exit-button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: none;
+                background-color: transparent;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                cursor: pointer;
+            }
+
+            .exit-button:hover svg {
+                fill: black;
+            }
+
+            .exit-button svg {
+                fill: rgb(175, 175, 175);
+            }
+        </style>
     </head>
 
     <body>
+
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
@@ -178,7 +289,7 @@
                                                 </div>
                                                 <% } %>
                                                 <div class="select-button">
-                                                    <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
+                                                    <a href="MainController?action=ViewCart&url=product.jsp" class="primary-btn view-card">VIEW CART</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -208,7 +319,7 @@
                                 <li><a href="contact.jsp">Contact</a></li>
                                 <li><a href="">Pages</a>
                                     <ul class="dropdown">
-                                        <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
+                                        <li><a href="MainController?action=ViewCart&url=product.jsp">Shopping Cart</a></li>
 
                                     </ul>
                                 </li>
@@ -236,6 +347,29 @@
             </div>
         </div>
         <!-- Breadcrumb Section End -->
+
+        <!--Popup start-->
+        <div id="modalOverlay" class="modal-overlay" style="display: none;">
+            <div id="deleteConfirmation" class="card">
+                <div class="card-content">
+                    <p class="card-heading">SMS</p>
+                    <p class="card-description">Please sign in to buy perfume</p>
+                </div>
+                <div class="card-button-wrapper">
+                    <a href="register.jsp" class="card-button secondary btn">Sign up</a>
+                    <a href="login.jsp" class="card-button primary btn">Sign in</a>
+                </div> 
+                <button class="exit-button" onclick="cancelDelete()">
+                    <svg height="20px" viewBox="0 0 384 512">
+                    <path
+                        d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z">
+                    </path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!--Popup end-->
 
         <!-- Product Shop Section Begin -->
         <div class="product-shop spad page-details">
@@ -308,8 +442,8 @@
                                         %>
                                     </div>
                                     <%
-                                            List<Float> validSizes = product.getAvaiableSize();
-                                            List<Float> allSizes = product.getAllSize();
+                                        List<Float> validSizes = product.getAvaiableSize();
+                                        List<Float> allSizes = product.getAllSize();
                                     %>
                                     <style>
                                         .unavailable-size {
@@ -340,36 +474,60 @@
                                         %>
                                     </div>
                                     <div class="quantity">
-                                        <form action="MainController" method="get">
-                                            <div class="pro-qty">
-                                                <input type="text" name="qnt" value="1" min="0">
-                                            </div>
-                                            <input type="hidden" name="pId" value="<%=product.getProductId()%>">
-                                            <input type="hidden" name="size" id="size-input">
-                                            <input style="border: none" type="submit" class="primary-btn pd-cart" name="action" value="Add To Cart">
-                                            
-<!--                                            <form>
-                                                <h1>Vui lòng đăng nhập</h1>
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            </form>-->
+                                        <c:choose>
+                                            <c:when test="${not empty sessionScope.USER_ID}">
+                                                <form action="MainController" method="get">
+                                                    <div class="pro-qty">
+                                                        <input type="text" name="qnt" value="1" min="0">
+                                                    </div>
+                                                    <input type="hidden" name="pId" value="<%=product.getProductId()%>">
+                                                    <input type="hidden" name="size" id="size-input">
+                                                    <input style="border: none" type="submit" class="primary-btn pd-cart" name="action" value="Add To Cart">
+                                                </form>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="pro-qty">
+                                                    <input type="text" name="qnt" value="1" min="0">
+                                                </div>
+                                                <input style="border: none" type="submit" class="primary-btn pd-cart" value="Add To Cart" onclick="openDeleteModal(this, event)">
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <script>
+                                            function openDeleteModal(button, event) {
+                                                event.preventDefault();
+                                                deleteButtonRef = button;
+                                                document.getElementById('deleteConfirmation').style.display = 'block';
+                                                document.getElementById('modalOverlay').style.display = 'block';
+                                            }
+
+
+
+                                            function cancelDelete() {
+                                                document.getElementById('deleteConfirmation').style.display = 'none';
+                                                document.getElementById('modalOverlay').style.display = 'none';
+                                            }
+
+
+                                        </script>
                                         <%
                                             String successMessage = (String) request.getAttribute("ms");
                                             String errorMessage = (String) request.getAttribute("err");
                                         %>
 
-                                        <% if (successMessage != null) {%>
-                                        <div class="alert alert-success">
-                                            <%= successMessage%>
-                                        </div>
-                                        <% } %>
 
-                                        <% if (errorMessage != null) {%>
-                                        <div class="alert alert-danger">
-                                            <%= errorMessage%>
-                                        </div>
-                                        <% }%>
 
                                     </div>
+                                    <% if (successMessage != null) {%>
+                                    <div class="alert alert-success">
+                                        <%= successMessage%>
+                                    </div>
+                                    <% } %>
+
+                                    <% if (errorMessage != null) {%>
+                                    <div class="alert alert-danger">
+                                        <%= errorMessage%>
+                                    </div>
+                                    <% }%>
                                     <ul class="pd-tags">
                                         <li><span>CATEGORIES</span>: More Shoes</li>
                                         <li><span>TAGS</span>: Men, LifeStyle, Running</li>
@@ -395,6 +553,8 @@
                                         event.preventDefault();
                                     }
                                 }
+
+
                             </script>
                         </div>
                         <div class="product-tab">
@@ -736,5 +896,9 @@
         <script src="js/main.js"></script>
         <script src="js/main2.js"></script>
         <script src="js/main3.js"></script>
+        <script>
+
+        </script>
+
     </body>
 </html>

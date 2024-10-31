@@ -7,6 +7,13 @@
             <file>file:/C:/Project_ISP/v4/SMSystem_ISP/SMSystem/src/java/controller/UpdateUserController.java</file>
             <file>file:/C:/Project_ISP/v4/SMSystem_ISP/SMSystem/src/java/model/user/UserDTO.java</file>
             <file>file:/C:/Project_ISP/v4/SMSystem_ISP/SMSystem/src/java/model/user/UserDAO.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/shopping-cart.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/CheckCartItemController.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/ProceedCheckOutController.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/model/product/ProductVariantDAO.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/ToggleSelectProductController.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/model/cart/CartDAO.java</file>
+            <file>file:/C:/Project_ISP/v4/SMSystem_ISP/SMSystem/web/login.jsp</file>
         </group>
     </open-files>
 </project-private>

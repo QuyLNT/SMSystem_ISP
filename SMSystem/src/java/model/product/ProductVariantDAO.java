@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.cart.CartDAO;
 import utils.DBUtils;
+import model.cart.CartItems;
 
 /**
  *
@@ -27,6 +29,13 @@ public class ProductVariantDAO {
     private static final String GET_ALL_SIZE_BY_PRODUCT = "SELECT size FROM productVariants WHERE productId = ?";
     private static final String VARIANTS_BY_PRODUCTID = "SELECT variantId, productId, size, stock FROM productVariants WHERE productId = ?";
     private static final String GET_AVALABLE_SIZE = "SELECT stock FROM ProductSize WHERE productId = ? AND size = ?";
+    private static final String UPDATE_STOCK = "UPDATE productVariants\n"
+            + "SET stock = stock - ?\n"
+            + "WHERE productId = ? AND size = ?";
+    private static final String CHECK_VALIDATE = "SELECT *\n"
+            + "FROM productVariants\n"
+            + "WHERE productId = ? AND size = ? AND stock >= ?";
+    private static final String GET_STATUS = "SELECT status FROM productVariants WHERE productId = ? AND size = ?";
 
     public List<ProductVariantDTO> getAllVariant() throws SQLException, ClassNotFoundException {
         ProductVariantDTO variant;
@@ -189,5 +198,86 @@ public class ProductVariantDAO {
         return variants;
     }
 
-   
+    public void updateStock(int pId, float size, int quantity) throws ClassNotFoundException, SQLException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(UPDATE_STOCK);
+                ptm.setInt(1, quantity);
+                ptm.setInt(2, pId);
+                ptm.setFloat(3, size);
+                ptm.executeUpdate();
+
+            }
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
     }
+
+    public boolean checkValidateStock(int productId, float size, int newQuantity) throws ClassNotFoundException, SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(CHECK_VALIDATE);
+                ptm.setInt(1, productId);
+                ptm.setInt(3, newQuantity);
+                ptm.setFloat(2, size);
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    check = true;
+                }
+            }
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public boolean getStatus(CartItems item) throws ClassNotFoundException, SQLException  {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_STATUS);
+                ptm.setInt(1, item.getProduct().getProductId());
+                ptm.setFloat(2, item.getSize());
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    check = rs.getBoolean("status");
+                    if(!check){
+                        CartDAO cartDao = new CartDAO();
+                        cartDao.updateSelectedItem(item.getCartItemId(), false);
+                    }
+                }
+            }
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+}

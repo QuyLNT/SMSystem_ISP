@@ -4,19 +4,14 @@
     Author     : Luu Minh Quan
 --%>
 
+<%@page import="model.user.UserDTO"%>
 <%-- 
     Document   : wishlist
     Created on : Jun 22, 2024, 7:08:51 PM
     Author     : Luu Minh Quan
 --%>
 
-<%@page import="model.ProductDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.ProductDTO"%>
-<%@page import="model.UserDTO"%>
-<%@page import="model.ItemDTO"%>
-<%@page import="java.util.List"%>
-<%@page import="model.CartDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -71,27 +66,40 @@
                     </div>
                     <div class="ht-right">
                         <%
-                            UserDTO user = (UserDTO) session.getAttribute("user");
-                            if (user.getFullName() != null) {
-                        %>
+                        UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                        if (loginUser != null) {
+                    %>
+                    <div class="ht-right">
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user"><%=user.getFullName()%></i>
+                            <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
+
                         </div>
-                        <% } else { %>
-                        <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user"></i>
-                        </div>
-                        <% }%>
                         <section class="user">
                             <div class="user-setting">
                                 <div class="content">
                                     <div><a href="myAccount.jsp">My account</a></div>
                                     <div><a href="myOrder.jsp">Order Status</a></div>
                                     <div><a href="LogoutController">Logout</a></div>
-
-                                    </ul>
                                 </div>
                         </section>
+                        <%
+                        } else {
+                        %>
+                        <div class="ht-right">
+                            <div class="login-panel" id="user-btn">
+                                <i class="fa fa-user">GUEST</i>
+
+                            </div>
+                            <section class="user">
+                                <div class="user-setting">
+                                    <div class="content">
+                                        <div><a href="login.jsp">Sign In</a></div>
+                                        <div><a href="register.jsp">Sign Up</a></div>
+                                    </div>
+                            </section>
+                            <%
+                                }
+                            %>
                         <div class="lan-selector">
                             <select class="language_drop" name="countries" id="countries" style="width: 300px;">
                                 <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
@@ -120,13 +128,13 @@
 
         <div class="wishlist-heading tk">Thank you for Buying</div>
         <div id="tick-img">
-            <img src="img/tick.jpg">
+            <img src="img/tick.png">
         </div>
 
         <div class="back">
             <div> Press here to go back</div>
             <i class="fa-solid fa-arrow-right"></i>
-            <a href="homePage.jsp"> <i class="fa-solid fa-house"></i></a>
+            <a href="MainController?action=HomePage"> <i class="fa-solid fa-house"></i></a>
         </div>
 
         <style>

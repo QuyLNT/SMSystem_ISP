@@ -8,26 +8,21 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.category.BrandDAO;
-import model.category.BrandDTO;
-import model.category.UserObjectDAO;
-import model.category.UserObjectDTO;
-import model.product.ProductDAO;
-import model.product.ProductDTO;
-import model.product.ProductImageDAO;
+import model.cart.CartDAO;
+import model.cart.CartDTO;
+import model.cart.CartItems;
 import model.product.ProductVariantDAO;
 
 /**
  *
  * @author LENOVO
  */
-public class LoadShopPageController extends HttpServlet {
+public class CheckCartItemController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,43 +33,26 @@ public class LoadShopPageController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR="shop.jsp";
-    private static final String SUCCESS="shop.jsp";
+    private static final String SUCCESS = "shopping-cart.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
-        try{
-            ProductDAO productDao = new ProductDAO();
-            BrandDAO brandDao = new BrandDAO();
-            UserObjectDAO uObDao= new UserObjectDAO();
-            ProductImageDAO imageDao = new ProductImageDAO();
+        String url = request.getParameter("url");
+        try {
+            HttpSession session = request.getSession();
+            CartDAO cartDao = new CartDAO();
             ProductVariantDAO variantDao = new ProductVariantDAO();
-            List<ProductDTO> productList;
-            List<BrandDTO> brandList;
-            List<UserObjectDTO> uObList;
-            
-            productList = productDao.search("");
-            brandList = brandDao.getAllBrand();
-            uObList = uObDao.getAllUserObject();
-            for(ProductDTO p: productList){
-                p.setListImages(imageDao.getImageByProduct(p.getProductId()));
-            }
-                        
-            if(productList !=null && brandList!=null && uObList!=null){
-                HttpSession session = request.getSession();
-                session.setAttribute("PRODUCT_LIST", productList);
-                session.setAttribute("USER_OBJECT_LIST", uObList);
-                session.setAttribute("BRAND_LIST", brandList);
-                
+            CartDTO cart = (CartDTO) session.getAttribute("CART");
+            if (cart != null) {
+                for (CartItems item : cart.getCartItemsList()) {
+                    item.setStatus(variantDao.getStatus(item));
+                }
                 url = SUCCESS;
-
             }
-            
-            
-        }catch(ClassNotFoundException | SQLException e){
-           log("Error at LoadProductController: " +e.toString());
-        }finally{           
+        } catch (ClassNotFoundException | SQLException e) {
+            log("Error at LoadProductController: " + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

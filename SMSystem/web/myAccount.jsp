@@ -164,7 +164,7 @@
                             <li><a href="contact.jsp">Contact</a></li>
                             <li><a href="">Pages</a>
                                 <ul class="dropdown">
-                                    <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
+                                    <li><a href="MainController?action=ViewCart&url=myAccount.jsp">Shopping Cart</a></li>
                                     <li><a href="check-out.jsp">Checkout</a></li>
 
                                 </ul>
