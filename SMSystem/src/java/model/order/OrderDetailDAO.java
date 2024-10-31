@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.product.ProductDTO;
+import model.product.ProductVariantDTO;
 import utils.DBUtils;
 
 /**
@@ -52,6 +53,7 @@ public class OrderDetailDAO {
                     product.setSale(rs.getFloat("salePrice"));
                     product.setAvatarPath(rs.getString("avatarPath"));
                     product.setPrice(unitPrice);
+                    
                     OrderDetailDTO orderDetail = new OrderDetailDTO(orderDetailId, product, orderId, quantity, unitPrice);
                     orderDetailsList.add(orderDetail);
                 }

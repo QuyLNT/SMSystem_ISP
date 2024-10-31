@@ -6,27 +6,19 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.category.BrandDAO;
-import model.category.BrandDTO;
-import model.category.UserObjectDAO;
-import model.product.ProductDAO;
-import model.product.ProductDTO;
-import model.product.ProductImageDAO;
 import model.product.ProductVariantDAO;
 import model.product.ProductVariantDTO;
 
 /**
  *
- * @author LENOVO
+ * @author CHAU DUYEN
  */
-public class LoadProductListController extends HttpServlet {
+public class CreateSizeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,39 +29,44 @@ public class LoadProductListController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "productList.jsp";
-    private static final String SUCCESS = "productList.jsp";
+    private static final String ERROR = "LoadProductListController";
+    private static final String SUCCESS = "LoadProductListController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            ProductDAO productDao = new ProductDAO();
-            BrandDAO brandDao = new BrandDAO();
-            UserObjectDAO uObDao = new UserObjectDAO();
-            ProductVariantDAO variantDao = new ProductVariantDAO();
-            ProductImageDAO imageDao = new ProductImageDAO();
-            List<ProductDTO> productList;
-            List<BrandDTO> brandList;
-            productList = productDao.getAllProduct();
-            brandList = brandDao.getAllBrand();
-            for (ProductDTO p : productList) {
-                p.setListImages(imageDao.getImageByProduct(p.getProductId()));
-                List<ProductVariantDTO> productVariants = variantDao.getVariantByProduct(p.getProductId());
-                p.setListVariants(productVariants);
+            ProductVariantDAO variantDAO = new ProductVariantDAO();
+            int productId = Integer.parseInt(request.getParameter("productId"));
+            float size = Float.parseFloat(request.getParameter("size"));
+            int stock = Integer.parseInt(request.getParameter("stock"));
+            boolean checkValidation = true;
+            if (stock < 0 || stock == 0) {
+                request.setAttribute("err", "Stock must be greater than 0!");
+                checkValidation = false;
             }
 
-            if (productList != null && brandList != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("PRODUCT_LIST", productList);
-                session.setAttribute("BRAND_LIST", brandList);
-                url = SUCCESS;
-
+            if (variantDAO.isSizeExists(productId, size)) {
+                request.setAttribute("err", "This size already exists for the selected product.");
+                checkValidation = false;
             }
 
-        } catch (ClassNotFoundException | SQLException e) {
-            log("Error at LoadProductController: " + e.toString());
+            if (checkValidation) {
+                ProductVariantDTO variant = new ProductVariantDTO(productId, size, stock);
+                variant = variantDAO.createNewSize(variant);
+                if (variant != null) {
+                    request.setAttribute("ms", "Size added successfully!");
+                    url = SUCCESS; // Update URL to success page
+                } else {
+                    request.setAttribute("err", "Failed to add size. Please try again.");
+                }
+            } else {
+                url = ERROR;
+            }
+
+        } catch (Exception e) {
+            log("Error at CreateSizeController:" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

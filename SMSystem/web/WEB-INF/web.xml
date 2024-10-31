@@ -192,6 +192,14 @@
         <servlet-name>UpdateOrderStatusController</servlet-name>
         <servlet-class>controller.UpdateOrderStatusController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateSizeController</servlet-name>
+        <servlet-class>controller.CreateSizeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateSizeStockController</servlet-name>
+        <servlet-class>controller.UpdateSizeStockController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -371,6 +379,14 @@
     <servlet-mapping>
         <servlet-name>UpdateOrderStatusController</servlet-name>
         <url-pattern>/UpdateOrderStatusController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateSizeController</servlet-name>
+        <url-pattern>/CreateSizeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateSizeStockController</servlet-name>
+        <url-pattern>/UpdateSizeStockController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

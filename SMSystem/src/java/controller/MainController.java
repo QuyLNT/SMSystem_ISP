@@ -119,6 +119,10 @@ public class MainController extends HttpServlet {
     private final static String LOAD_ORDER_LIST_CONTROLLER = "LoadOrderListController";
     private final static String UPDATE_ORDER_STATUS = "UpdateStatus";
     private final static String UPDATE_ORDER_STATUS_CONTROLLER = "UpdateOrderStatusController";
+    private final static String CREATE_SIZE= "Add Size and Stock";
+    private final static String CREATE_SIZE_CONTROLLER = "CreateSizeController";
+    private final static String UPDATE_STOCK = "Update Stock";
+    private final static String UPDATE_STOCK_CONTROLLER = "UpdateSizeStockController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -214,6 +218,10 @@ public class MainController extends HttpServlet {
                 url = LOAD_ORDER_LIST_CONTROLLER;
             }else if (UPDATE_ORDER_STATUS.equals(action)) {
                 url = UPDATE_ORDER_STATUS_CONTROLLER;
+            }else if (CREATE_SIZE.equals(action)) {
+                url = CREATE_SIZE_CONTROLLER;
+            }else if (UPDATE_STOCK.equals(action)) {
+                url = UPDATE_STOCK_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());
