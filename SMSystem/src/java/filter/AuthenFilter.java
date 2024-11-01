@@ -52,7 +52,6 @@ public class AuthenFilter implements Filter {
         USER_RESOURCE.add("shopping-cart.jsp");
         USER_RESOURCE.add("check-out.jsp");
         USER_RESOURCE.add("myOrder.jsp");
-        USER_RESOURCE.add("success.jsp");
         USER_RESOURCE.add("product.jsp");
 
         ADMIN_RESOURCE = new ArrayList<>();
@@ -72,6 +71,7 @@ public class AuthenFilter implements Filter {
         MANAGER_RESOURCE.add("categoriesList.jsp");
         MANAGER_RESOURCE.add("orderDetail.jsp");
         MANAGER_RESOURCE.add("productList.jsp");
+        MANAGER_RESOURCE.add("productList.jsp");
         MANAGER_RESOURCE.add("LoadManagerHomeDataController");
         MANAGER_RESOURCE.add("CreateBrandController");
         MANAGER_RESOURCE.add("CreateProductController");
@@ -87,7 +87,6 @@ public class AuthenFilter implements Filter {
         MANAGER_RESOURCE.add("ToggleProductStatusController");
         MANAGER_RESOURCE.add("UpdateProductController");
 
-
         SHIPPER_RESOURCE = new ArrayList<>();
         SHIPPER_RESOURCE.add("shipperPage.jsp");
         SHIPPER_RESOURCE.add("shipList.jsp");
@@ -101,6 +100,7 @@ public class AuthenFilter implements Filter {
         NON_AUTHEN_RESOURCE.add("myAccount.jsp");
         NON_AUTHEN_RESOURCE.add("product.jsp");
         NON_AUTHEN_RESOURCE.add("shop.jsp");
+        NON_AUTHEN_RESOURCE.add("success.jsp");
         NON_AUTHEN_RESOURCE.add("MainController");
         NON_AUTHEN_RESOURCE.add("LoadTopListByCateController");
     }
@@ -212,7 +212,8 @@ public class AuthenFilter implements Filter {
 
     /**
      * Return the filter configuration object for this filter.
-     * @return 
+     *
+     * @return
      */
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
@@ -236,6 +237,7 @@ public class AuthenFilter implements Filter {
 
     /**
      * Init method for this filter
+     *
      * @param filterConfig
      */
     @Override

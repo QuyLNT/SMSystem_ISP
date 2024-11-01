@@ -47,7 +47,6 @@ public class OrderDTO {
         this.totalOrder = totalOrder;
     }
 
-    
     public OrderDTO(int orderId, UserDTO customer, String street, String district, String city,String discountCode, String paymentMethod, String shippingMethod, Date createdAt, String orderStatus) {
         this.orderId = orderId;
         this.customer = customer;
@@ -60,6 +59,7 @@ public class OrderDTO {
         this.createdAt = createdAt;
         this.orderStatus = orderStatus;
     }
+    
     public OrderDTO(int orderId, UserDTO customer, String street, String district, String city,String discountCode, String paymentMethod, String shippingMethod, Date createdAt, String orderStatus,float totalPrice) {
         this.orderId = orderId;
         this.customer = customer;

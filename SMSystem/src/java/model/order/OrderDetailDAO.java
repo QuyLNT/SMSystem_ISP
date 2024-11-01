@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.product.ProductDTO;
+import model.product.ProductVariantDTO;
 import utils.DBUtils;
 
 /**
@@ -52,6 +53,7 @@ public class OrderDetailDAO {
                     product.setSale(rs.getFloat("salePrice"));
                     product.setAvatarPath(rs.getString("avatarPath"));
                     product.setPrice(unitPrice);
+                    
                     OrderDetailDTO orderDetail = new OrderDetailDTO(orderDetailId, product, orderId, quantity, unitPrice);
                     orderDetailsList.add(orderDetail);
                 }
@@ -71,4 +73,36 @@ public class OrderDetailDAO {
 
         return orderDetailsList;
     }
+
+    String INSERT_ORDER_DETAIL = "INSERT INTO orderDetails (orderId, productId, quantity, size) VALUES (?, ?, ?, ?)";
+
+    public boolean insertOrderDetail(int pId, int insertedOrderId, int quantity, float size) throws SQLException, ClassNotFoundException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet generatedKeys = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(INSERT_ORDER_DETAIL);
+                ptm.setInt(1, insertedOrderId);
+                ptm.setInt(2, pId);
+                ptm.setInt(3, quantity);
+                ptm.setFloat(4, size);
+                check = ptm.executeUpdate()>0;
+            }
+        } finally {
+            if (generatedKeys != null) {
+                generatedKeys.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
 }

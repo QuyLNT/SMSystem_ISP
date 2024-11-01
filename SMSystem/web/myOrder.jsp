@@ -161,7 +161,7 @@
                             <li><a href="contact.jsp">Contact</a></li>
                             <li><a href="">Pages</a>
                                 <ul class="dropdown">
-                                    <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
+                                    <li><a href="MainController?action=ViewCart&url=myOrder.jsp">Shopping Cart</a></li>
 
                                 </ul>
                             </li>
@@ -181,7 +181,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb-text">
-                            <a href="homePage.jsp"><i class="fa fa-home"></i> Home</a>
+                            <a href="MainController?action=HomePage"><i class="fa fa-home"></i> Home</a>
                             <span>My Order</span>
                         </div>
                     </div>

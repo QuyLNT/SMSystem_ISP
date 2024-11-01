@@ -56,6 +56,8 @@ public class LoginController extends HttpServlet {
             if (loginUser != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("LOGIN_USER", loginUser);
+                int userID = loginUser.getUserId();
+                session.setAttribute("USER_ID", userID);
                 String roleID = loginUser.getRoleId();
 
                 if (null != roleID) {

@@ -9,7 +9,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SM Shop</title>
-        
+
         <link rel="stylesheet" type="text/css" href="css/home.css"/>
         <link
             rel="stylesheet"
@@ -62,6 +62,12 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
+                                    <a href="MainController?action=LoadPaymentList" class="nav-link">
+                                        <i class="fa-solid fa-money-bill-wave"></i>                                        
+                                        <span class="link-text">Payment</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
                                     <a href="MainController?action=LoadBrandList" class="nav-link">
                                         <i class="fa-solid fa-tag"></i>
                                         <span class="link-text">Brand</span>
@@ -86,9 +92,6 @@
                         </button>
                     </div>
                     <div class=" container">
-
-
-
                         <div class="welcome">
                             <div class="container text-center">
                                 <div class="row">
@@ -112,7 +115,7 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <%
-                                                        
+
                                                     %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Revenue</h5>
@@ -121,7 +124,7 @@
                                                 </div>
                                             </div>
                                         </div></div>
-                                                            
+
                                 </div>
                             </div>
                         </div>
@@ -153,7 +156,6 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <%
-
                                                     %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Order completed</h5>

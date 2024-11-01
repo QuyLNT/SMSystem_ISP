@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                             </div>
-            
+
                             <!-- Right Table for Other Metrics -->
                             <div class="col-md-4">
                                 <div class="row">
@@ -108,7 +108,7 @@
                                                         <p class="card-text">${requestScope.MANAGER_ACCOUNT}</p>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
 
@@ -130,7 +130,7 @@
                                                         <p class="card-text">${requestScope.CUSTOMER_ACCOUNT}</p>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
 
@@ -145,7 +145,7 @@
                                                         <p class="card-text">${requestScope.SHIPPER_ACCOUNT}</p>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
 
@@ -157,7 +157,7 @@
                     </div>
                 </div>
             </section>
-            
+
         </main>
 
         <script src="js/app.js"></script>

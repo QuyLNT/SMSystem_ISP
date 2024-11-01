@@ -1,4 +1,5 @@
 
+<%@page import="model.product.ProductVariantDTO"%>
 <%@page import="model.product.ProductError"%>
 <%@page import="java.util.Map"%>
 <%@page import="model.product.ProductDAO"%>
@@ -439,48 +440,73 @@
                                         <td>
                                             <!-- Nút Xem Chi Tiết Sản Phẩm -->
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal<%= product.getProductId()%>">
-                                                <i class="fas fa-eye"></i>
+                                                <i class="fas fa-eye"></i> 
                                             </button>
 
                                             <!-- Modal Chi Tiết Sản Phẩm (View Modal) -->
-                                            <div class="modal fade" id="viewModal<%= product.getProductId()%>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="viewModal<%= product.getProductId()%>" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="deleteModalLabel">Size product detail</h1>
+                                                            <h1 class="modal-title fs-5" id="viewModalLabel">Size product detail</h1>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <form action="DeleteProductController" method="POST">
+                                                        </div>                      
+                                                        <form action="MainController" method="POST">
+                                                            <input type="hidden" name="productId"  value="<%=product.getProductId()%>" />
                                                             <div class="modal-body">
-                                                                Name: 
-                                                                <div class="row">
-                                                                    <div class="col-sm-6">Size</div>
-                                                                    <div class="col-sm-6">Stock</div>
+                                                                <h5>Name: <%= product.getName()%></h5>
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Size</th>
+                                                                            <th>Stock</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <%
+                                                                            List<ProductVariantDTO> productVariants = product.getListVariants();
+                                                                            if (productVariants != null && !productVariants.isEmpty()) {
+                                                                                for (ProductVariantDTO variant : productVariants) {
+                                                                        %>
+                                                                        <tr>
+                                                                            <td><%= variant.getSize()%></td>
+                                                                            <td>
+                                                                                <!-- Thêm input để người dùng có thể nhập số lượng tồn kho mới -->
+                                                                                <input type="hidden" name="variantId"  value="<%=variant.getVariantId()%>" />
+                                                                                <input type="number" name="stock" value="<%= variant.getStock()%>" min="0" required=""
+                                                                                       style="border: none; outline: none;"/>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <%
+                                                                                }
+                                                                            }
+                                                                        %>
+                                                                    </tbody>
+                                                                </table>
+                                                                <div class="modal-footer">
+                                                                    <!-- Nút mở Modal Add new Brand -->
+                                                                    <input type="submit" name="action" value="Update Stock" class="btn btn-primary" />
+                                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSizeModal<%= product.getProductId()%>">
+                                                                        <i class="fa-solid fa-plus"></i> Add new Size
+                                                                    </button>
+                                                                    <!-- Nút đóng modal hiện tại -->
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                 </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <!-- Nút mở Modal Add new Brand -->
-                                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
-                                                                    <i class="fa-solid fa-plus"></i> Add new Size
-                                                                </button>
-
-                                                                <!-- Nút đóng modal hiện tại -->
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                             </div>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <!-- Modal Add New Brand để thêm Size và Stock -->
-                                            <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="addSizeModal<%= product.getProductId()%>" tabindex="-1" aria-labelledby="addSizeModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">  
-                                                            <h1 class="modal-title fs-5" id="addModalLabel">Add Size and Stock</h1>
+                                                            <h1 class="modal-title fs-5" id="addSizeModalLabel">Add Size and Stock</h1>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-                                                        <form action="MainController" method="POST">
+                                                        <form action="MainController" method="POST">                                            
+                                                            <input type="hidden" name="productId"  value="<%=product.getProductId()%>" />
                                                             <div class="modal-body">
                                                                 <!-- Input cho Size -->
                                                                 <div class="input-group input-group-sm mb-3">
@@ -494,7 +520,9 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary-grey" data-bs-toggle="modal" data-bs-target="#viewModal<%= product.getProductId()%>">
+                                                                    Back
+                                                                </button>                                                                
                                                                 <input type="submit" name="action" value="Add Size and Stock" class="btn btn-primary"/>
                                                             </div>
                                                         </form>
@@ -519,7 +547,6 @@
                 </div>
 
             </section>
-
 
         </main>
 

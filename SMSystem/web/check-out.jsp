@@ -1,5 +1,7 @@
 
 
+<%@page import="model.methods.PaymentMethodDTO"%>
+<%@page import="model.methods.ShippingMethodDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="model.discount.DiscountDTO"%>
@@ -7,7 +9,7 @@
 <%@page import="java.util.List"%>
 <%@page import="model.cart.CartDTO"%>
 <%@page import="model.cart.CartItems"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -208,7 +210,7 @@
                                 <li><a href="contact.jsp">Contact</a></li>
                                 <li><a href="">Pages</a>
                                     <ul class="dropdown">
-                                        <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
+                                        <li><a href="MainController?action=ViewCart&url=check-out.jsp">Shopping Cart</a></li>
                                         <li><a href="check-out.jsp">Checkout</a></li>
                                     </ul>
                                 </li>
@@ -226,7 +228,7 @@
                     <div class="col-lg-12">
                         <div class="breadcrumb-text">
                             <a href="MainController?action=HomePage"><i class="fa fa-home"></i> Home</a>
-                            <a href="shopping-cart.jsp">Cart</a>
+                            <a href="MainController?action=ViewCart&url=check-out.jsp">Cart</a>
                             <span>Check Out</span>
                         </div>
                     </div>
@@ -238,7 +240,7 @@
         <!-- Shopping Cart Section Begin -->
         <div class="checkout-section spad">
             <div class="container">
-                <form action="MainOrderController" method="POST" class="checkout-form">
+                <form action="MainController" method="POST" accept-charset="UTF-8" onsubmit="return validateOrder()" class="checkout-form">
                     <div class="row">
                         <div class="col-lg-6">
                             <h4>Billing Details</h4>
@@ -247,17 +249,28 @@
                                     <label for="fir">Full Name <span>*</span></label>
                                     <input type="text" id="fir" name="fullname" value="<%= loginUser.getFullName()%>">
                                 </div>
+                                <div class="col-lg-7 col-md-7">
+                                    <div class="select-option">
+                                        <label for="province">Province / City <span>*</span></label>
+                                        <select id="province" name="province" required aria-live="polite" onchange="fetchDistricts()">
+                                            <option value="" disabled selected>Select Province / City</option>
+                                        </select>
+                                        <input type="hidden" id="provinceName" name="provinceName">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 col-md-7">
+                                    <div class="select-option">
+                                        <label for="district">District <span>*</span></label>
+                                        <select id="district" name="district" required aria-live="polite">
+                                            <option value="" disabled selected>Select District</option>
+                                        </select>
+                                        <input type="hidden" id="districtName" name="districtName">
+                                    </div>
+                                </div>
                                 <div class="col-lg-12">
                                     <label for="street">Street Address <span>*</span></label>
-                                    <input type="text" id="street" name="street" class="street-first">
-                                </div>
-                                <div class="col-lg-12">
-                                    <label for="cun">District <span>*</span></label>
-                                    <input type="text" id="cun" name="district">
-                                </div>
-                                <div class="col-lg-12">
-                                    <label for="town">Town / City <span>*</span></label>
-                                    <input type="text" id="town" name="city">
+                                    <input type="text" id="street" name="street" required="" class="street-first">
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="email">Email Address<span>*</span></label>
@@ -268,6 +281,8 @@
                                     <input type="text" id="phone" name="phone" value="<%= loginUser.getPhoneNumber()%>">
                                 </div>
                             </div>
+                            <p id="error-message" style="display:none; color:red;">Error fetching districts. Please try again.</p>
+
                         </div>
                         <div class="col-lg-6">
                             <div class="place-order">
@@ -293,6 +308,7 @@
                                             %>
                                         <li style="display: none">                                           
                                             <input type="hidden" name="userId" value="<%=ele.getProduct().getUserOjectId()%>" />
+                                            <input type="hidden" name="total" value="<%= total%>"/>
                                         </li>
                                         <li class="fw-normal"><%=ele.getProduct().getName()%> x <%=ele.getQuantity()%><br>Size: US <%=ele.getSize()%><span>$<%= String.format("%.1f", ele.getPrice())%> x <%= ele.getQuantity()%></span></li>
                                             <%
@@ -303,7 +319,7 @@
                                         <%
                                             if (c != null) {
                                         %>
-                                        <li class="fw-normal">Discount <span>-$ <input type="hidden" name="discount" value="<%=c.getDiscountCode()%>"/><%=c.getDiscountAmount()%></span></li>
+                                        <li class="fw-normal">Discount <span>-$ <input type="hidden" name="discount" value="<%=c.getDiscountId()%>"/><%=c.getDiscountAmount()%></span></li>
                                         <li class="fw-normal">Total <span>$<%= String.format("%.1f", total - c.getDiscountAmount())%></span></li>
                                             <%
                                             } else {
@@ -312,32 +328,54 @@
                                             <%
                                                 }
                                             %>
-
                                         <li class="fw-normal">  <label>PayMethod:</label>
-                                            <select name="pay" class="form-select" aria-label="Default select example">
-                                                <option selected>Choose your payment method</option>
-                                                <option value="1">Cash</option>
-                                                <option value="2">Credit Card</option>
-                                                <option value="3">Pay Pal</option>
+                                            <select name="pay" id="pay" class="form-select" required aria-label="Default select example">
+                                                <option value="" disabled="" selected>Choose your payment method</option>
+                                                <%
+                                                    List<PaymentMethodDTO> payMethods = (List<PaymentMethodDTO>) session.getAttribute("PAYMENT_METHOD");
+                                                    if (payMethods != null) {
+                                                        for (PaymentMethodDTO pay : payMethods) {
+                                                %>
+                                                <option value="<%= pay.getId()%>"><%= pay.getName()%></option>
+                                                <%
+                                                        }
+                                                    }
+                                                %>
                                             </select>
                                         </li>
                                         <li class="fw-normal"><label>ShipMethod:</label>
-
-                                            <select name="ship" class="form-select" aria-label="Default select example">
-                                                <option selected>Choose your shipment method</option>
-                                                <option value="1">Standard Shipping</option>
-                                                <option value="2">Express Shipping</option>
-                                                <option value="3">Rocket Shipping</option>
+                                            <select name="ship" id="ship" class="form-select" required="" aria-label="Default select example" >
+                                                <option value="" disabled="" selected>Choose your shipment method</option>
+                                                <%
+                                                    List<ShippingMethodDTO> shippingMethods = (List<ShippingMethodDTO>) session.getAttribute("SHIPPING_METHOD");
+                                                    if (shippingMethods != null) {
+                                                        for (ShippingMethodDTO shipping : shippingMethods) {
+                                                %>
+                                                <option value="<%= shipping.getId()%>"><%= shipping.getName()%></option>
+                                                <%
+                                                        }
+                                                    }
+                                                %>
                                             </select>
                                         </li>
-                                        <%
-                                            }
+                                        <%                                            }
                                         %>
                                     </ul>
                                     <div class="order-btn">
-                                        <button type="submit" name="action" value="Submit" class="site-btn place-btn">Place Order</button>
-                                    </div>
+                                        <button type="submit" name="action" value="PlaceOrder" class="site-btn place-btn">Place Order</button>
+                                        <script>
+                                            function validateOrder() {
+                                                var pay = document.getElementById('pay').value;
+                                                var ship = document.getElementById('ship').value;
 
+                                                if (!pay || !ship) {
+                                                    return false;
+                                                } else {
+                                                    return true;
+                                                }
+                                            }
+                                        </script>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -393,7 +431,7 @@
                     <div class="col-lg-3">
                         <div class="footer-left">
                             <div class="footer-logo">
-                                <a href="homePage.jsp">
+                                <a href="MainController?action=HomePage">
                                     <img src="img/logoweb.png" alt="">
                                 </a>
                             </div>
@@ -414,10 +452,10 @@
                         <div class="footer-widget">
                             <h5>Information</h5>
                             <ul>
-                                <li><a href="">About Us</a></li>
-                                <li><a href="">Checkout</a></li>
-                                <li><a href="">Contact</a></li>
-                                <li><a href="">Services</a></li>
+                                <li><a href="contact.jsp">About Us</a></li>
+                                <li><a href="MainController?action=ProceedCheckOut">Checkout</a></li>
+                                <li><a href="contact.jsp">Contact</a></li>
+                                <li><a href="contact.jsp">Services</a></li>
                             </ul>
                         </div>
                     </div>
@@ -425,7 +463,7 @@
                         <div class="footer-widget">
                             <h5>My Account</h5>
                             <ul>
-                                <li><a href="">My Account</a></li>
+                                <li><a href="myAccount.jsp">My Account</a></li>
                                 <li><a href="">Contact</a></li>
                                 <li><a href="">Shopping Cart</a></li>
                                 <li><a href="">Shop</a></li>
@@ -474,6 +512,60 @@
         <script src="js/main.js"></script>
         <script src="js/main2.js"></script>
         <script src="js/main3.js"></script>
+        <script>
+                                            // Fetch provinces on page load
+                                            document.addEventListener('DOMContentLoaded', fetchProvinces);
+
+                                            function fetchProvinces() {
+                                                fetch('https://provinces.open-api.vn/api/')
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            const provinceSelect = document.getElementById("province");
+                                                            data.forEach(province => {
+                                                                const option = document.createElement("option");
+                                                                option.value = province.code;
+                                                                option.textContent = province.name;
+                                                                provinceSelect.appendChild(option);
+                                                            });
+                                                        })
+                                                        .catch(error => console.error("Error fetching provinces:", error));
+                                            }
+
+                                            function fetchDistricts() {
+                                                const provinceCode = document.getElementById("province").value;
+                                                const districtSelect = document.getElementById("district");
+                                                districtSelect.innerHTML = '<option value="" disabled selected>Select District</option>';
+                                                const url = "https://provinces.open-api.vn/api/p/" + provinceCode + "?depth=2";
+
+                                                fetch(url)
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            if (data.districts) {
+                                                                data.districts.forEach(district => {
+                                                                    const option = document.createElement("option");
+                                                                    option.value = district.code;
+                                                                    option.textContent = district.name;
+                                                                    districtSelect.appendChild(option);
+                                                                });
+                                                            } else {
+                                                                console.error("No districts found for the selected province.");
+                                                            }
+                                                        })
+                                                        .catch(error => {
+                                                            console.error("Error fetching districts:", error);
+                                                            document.getElementById("error-message").style.display = "block";
+                                                        });
+                                            }
+                                            document.getElementById("province").addEventListener("change", function () {
+                                                const provinceName = this.options[this.selectedIndex].text;
+                                                document.getElementById("provinceName").value = provinceName;
+                                            });
+
+                                            document.getElementById("district").addEventListener("change", function () {
+                                                const districtName = this.options[this.selectedIndex].text;
+                                                document.getElementById("districtName").value = districtName;
+                                            });
+        </script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>

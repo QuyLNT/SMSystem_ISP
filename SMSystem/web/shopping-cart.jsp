@@ -150,7 +150,7 @@
                                 <li><a href="contact.jsp">Contact</a></li>
                                 <li><a href="">Pages</a>
                                     <ul class="dropdown">
-                                        <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
+                                        <li><a href="MainController?action=ViewCart&url=shopping-cart.jsp">Shopping Cart</a></li>
                                         <li><a href="check-out.jsp">Checkout</a></li>
 
                                     </ul>
@@ -211,9 +211,15 @@
                                                 int count = 1;
                                                 double total = 0;
                                                 for (CartItems ele : ls) {
-                                                    if(ele.isIsSelected()) total += (ele.getPrice() * ele.getQuantity());
+                                                    if (ele.isIsSelected()) {
+                                                        total += (ele.getPrice() * ele.getQuantity());
+                                                    }
                                         %>
                                         <tr>
+                                            <%
+                                                boolean status = ele.isStatus();
+                                                if (status) {
+                                            %>
                                             <td class="checkbox-card">
                                                 <input type="checkbox" 
                                                        name="selectedProductId" 
@@ -221,6 +227,15 @@
                                                        <%= ele.isIsSelected() ? "checked" : ""%> 
                                                        onchange="toggleSelected(<%= ele.getCartItemId()%>, this.checked)">
                                             </td>
+                                            <%
+                                            } else {
+                                            %>
+                                            <td class="checkbox-card">
+                                                <input type="checkbox" disabled />
+                                            </td>
+                                            <%
+                                                }
+                                            %>
                                     <script>
                                         function toggleSelected(cartItemId, select) {
                                             var url = "MainController?action=toggleSelectProduct&cartItemId=" + cartItemId + "&isSelected=" + (select ? 1 : 0);
@@ -230,6 +245,13 @@
                                     <td class="cart-pic first-row"><img src="<%=ele.getProduct().getAvatarPath()%>" style="height: 100px; width: 100px" alt=""></td>
                                     <td class="cart-title first-row">
                                         <h5><%=ele.getProduct().getName()%></h5>
+                                        <%
+                                            if (!status) {
+                                        %>
+                                        <p style="color: red; font-weight: bold;">Sorry, this size is out of stock</p>
+                                        <%
+                                            }
+                                        %>
                                     </td>
                                     <td class="p-price first-row">$<%=String.format("%.1f", ele.getPrice())%></td>
                                     <td class="qua-col first-row">
@@ -240,7 +262,7 @@
                                             </button>
 
                                             <!-- Hiển thị số lượng hiện tại, người dùng có thể chỉnh sửa thủ công -->
-                                            <input type="number" min="1" value="<%=ele.getQuantity()%>" required="">
+                                            <input type="number" min="1" value="<%=ele.getQuantity()%>" readonly="">
 
                                             <!-- Nút cộng số lượng -->
                                             <button style="border: none">
@@ -289,14 +311,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <%
-                                String err = (String) request.getParameter("err");
-                                if (err != null) {
-                            %>
-                            <p><%= err%></p>
-                            <%
-                                }
-                            %>
+                            <p style="color: red">${requestScope.err}</p>
+
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="cart-buttons">
@@ -346,6 +362,8 @@
                                         </ul>
                                         <a href="MainController?action=ProceedCheckOut" class="proceed-btn">PROCEED TO CHECKOUT</a>
                                     </div>
+                                    <p style="color: red">${requestScope.STOCK_ERR}</p>
+                                    <p style="color: red">${requestScope.EMPTY_CART_ERROR}</p>
                                 </div>
                                 <%}
                                 %>

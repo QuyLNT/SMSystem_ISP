@@ -102,23 +102,40 @@ public class MainController extends HttpServlet {
     private final static String REMOVE_DISCOUNT = "Remove";
     private final static String REMOVE_DISCOUNT_CONTROLLER = "RemoveDiscountController";
     private final static String TOGGLE_SELECT_PRODUCT = "toggleSelectProduct";
-    private final static String TOGGLE_SELECT_PRODUCT_CONTROLLER = "ToggleSelectProductController"; 
+    private final static String TOGGLE_SELECT_PRODUCT_CONTROLLER = "ToggleSelectProductController";
     private final static String PROCEED_CHECK_OUT = "ProceedCheckOut";
-    private final static String PROCEED_CHECK_OUT_CONTROLLER = "ProceedCheckOutController"; 
+    private final static String PROCEED_CHECK_OUT_CONTROLLER = "ProceedCheckOutController";
     private final static String LOAD_MY_ORDER = "LoadMyOrder";
     private final static String LOAD_MY_ORDER_CONTROLLER = "LoadMyOrderController";
     private final static String SEARCH_ORDER = "Search";
-    private final static String SEARCH_ORDER_CONTROLLER = "SearchOrderController"; 
-    
+    private final static String SEARCH_ORDER_CONTROLLER = "SearchOrderController";
+
     private final static String ORDER_DETAIL = "View-Detail";
     private final static String ORDER_DETAIL_CONTROLLER = "LoadOrderDetailController";
     private final static String ORDER = "LoadOrderList";
     private final static String ORDER_CONTROLLER = "LoadOrderListController";
-    
+
     private final static String LOAD_ORDER_LIST = "LoadOrderList";
     private final static String LOAD_ORDER_LIST_CONTROLLER = "LoadOrderListController";
     private final static String UPDATE_ORDER_STATUS = "UpdateStatus";
     private final static String UPDATE_ORDER_STATUS_CONTROLLER = "UpdateOrderStatusController";
+    private final static String FORGOT_PASSWORD = "ForgotPassword";
+    private final static String FORGOT_PASSWORD_CONTROLLER = "ForgotPasswordController";
+    private final static String CREATE_SIZE= "Add Size and Stock";
+    private final static String CREATE_SIZE_CONTROLLER = "CreateSizeController";
+    private final static String UPDATE_STOCK = "Update Stock";
+    private final static String UPDATE_STOCK_CONTROLLER = "UpdateSizeStockController";
+
+    private final static String PLACE_ORDER = "PlaceOrder";
+    private final static String CHECK_OUT_CONTROLLER = "CheckoutController";
+    private final static String VIEW_CART = "ViewCart";
+    private final static String VIEW_CART_CONTROLLER = "CheckCartItemController";
+    private final static String LOAD_PAYMENT = "LoadPaymentList";
+    private final static String LOAD_PAYMENT_CONTROLLER = "LoadPaymentListController";
+    private final static String SEARCH_PAYMENT = "SearchPayment";
+    private final static String SEARCH_PAYMENT_CONTROLLER = "SearchPaymentController";
+    private final static String GET_STATUS = "GetStatus";
+    private final static String GET_STATUS_CONTROLLER = "GetPaymentStatusController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -144,76 +161,92 @@ public class MainController extends HttpServlet {
                 url = SEARCH_PRODUCT_CONTROLLER;
             } else if (SEARCH_USER.equals(action)) {
                 url = SEARCH_USER_CONTROLLER;
-            }else if(LOAD_MANAGER_HOME_DATA.equals(action)){
-                url=LOAD_MANAGER_HOME_CONTROLLER;
-            }else if(LOAD_PRODUCT_LIST.equals(action)){
-                url=LOAD_PRODUCT_LIST_CONTROLLER;
-            }else if(LOAD_DISCOUNT_LIST.equals(action)){
-                url=LOAD_DISCOUNT_LIST_CONTROLLER;
-            }else if(TOGGLE_DISCOUNT_STATUS.equals(action)){
-                url=TOGGLE_DISCOUNT_STATUS_CONTROLLER;  
-            }else if(SEARCH_BRANCH.equals(action)){
-                url=SEARCH_BRANCH_CONTROLLER;
-            }else if(LOAD_BRAND_LIST.equals(action)){
-                url=LOAD_BRAND_LIST_CONTROLLER;
-            }else if(DELETE_PRODUCT.equals(action)){
-                url=DELETE_PRODUCT_CONTROLLER;  
-            }else if(LOAD_ADMIN_HOME.equals(action)){
-                url=LOAD_ADMIN_HOME_CONTROLLER;
-            }else if(LOAD_USER_LIST.equals(action)){
-                url=LOAD_USER_LIST_CONTROLLER;
-            }else if(TOGGLE_USER_ROLE.equals(action)){
-                url=TOGGLE_USER_ROLE_CONTROLLER;
-            }else if(CREATE_USER.equals(action)){
-                url=CREATE_USER_CONTROLLER;
-            }else if(DELETE_USER.equals(action)){
-                url=DELETE_USER_CONTROLLER;
-            }else if(REMOVE_CART.equals(action)){
-                url=REMOVE_CART_CONTROLLER;
-            }else if(HOME_PAGE.equals(action)){
-                url=HOME_PAGE_CONTROLLER;
-            }else if(CREATE_BRAND.equals(action)){
-                url=CREATE_BRAND_CONTROLLER;
-            }else if(LOAD_SHOP_PAGE.equals(action)){
-                url=LOAD_SHOP_PAGE_CONTROLLER;
-            }else if(SORT_SHOP_PAGE.equals(action)){
-                url=SORT_SHOP_PAGE_CONTROLLER;
-            }else if(VIEW.equals(action)){
-                url=LOAD_PRODUCT_DETAIL;
-            }else if(ADD_TO_CART.equals(action)){
-                url=ADD_TO_CART_CONTROLLER;
-            }else if(LOGIN_GOOGLE.equals(action)){
-                url=LOGIN_GOOGLE_CONTROLLER;
-            }else if(EDIT_QUANTITY.equals(action)){
-                url=EDIT_QUANTITY_CONTROLLER;
-            }else if(SEARCH_PRODUCT_CATEGORIES.equals(action)){
-                url=SEARCH_PRODUCT_CATEGORIES_CONTROLLER;
-            }else if(EDIT_SIZE.equals(action)){
-                url=EDIT_SIZE_CONTROLLER;
-            }else if(APPLY_DISCOUNT.equals(action)){
-                url=APPLY_DISCOUNT_CONTROLLER;
-            }else if(CREATE_DISCOUNT.equals(action)){
-                url=CREATE_DISCOUNT_CONTROLLER;
-            }else if(REMOVE_DISCOUNT.equals(action)){
-                url=REMOVE_DISCOUNT_CONTROLLER;
-            }else if (SEARCH_PRODUCT_CUS.equals(action)) {
+            } else if (LOAD_MANAGER_HOME_DATA.equals(action)) {
+                url = LOAD_MANAGER_HOME_CONTROLLER;
+            } else if (LOAD_PRODUCT_LIST.equals(action)) {
+                url = LOAD_PRODUCT_LIST_CONTROLLER;
+            } else if (LOAD_DISCOUNT_LIST.equals(action)) {
+                url = LOAD_DISCOUNT_LIST_CONTROLLER;
+            } else if (TOGGLE_DISCOUNT_STATUS.equals(action)) {
+                url = TOGGLE_DISCOUNT_STATUS_CONTROLLER;
+            } else if (SEARCH_BRANCH.equals(action)) {
+                url = SEARCH_BRANCH_CONTROLLER;
+            } else if (LOAD_BRAND_LIST.equals(action)) {
+                url = LOAD_BRAND_LIST_CONTROLLER;
+            } else if (DELETE_PRODUCT.equals(action)) {
+                url = DELETE_PRODUCT_CONTROLLER;
+            } else if (LOAD_ADMIN_HOME.equals(action)) {
+                url = LOAD_ADMIN_HOME_CONTROLLER;
+            } else if (LOAD_USER_LIST.equals(action)) {
+                url = LOAD_USER_LIST_CONTROLLER;
+            } else if (TOGGLE_USER_ROLE.equals(action)) {
+                url = TOGGLE_USER_ROLE_CONTROLLER;
+            } else if (CREATE_USER.equals(action)) {
+                url = CREATE_USER_CONTROLLER;
+            } else if (DELETE_USER.equals(action)) {
+                url = DELETE_USER_CONTROLLER;
+            } else if (REMOVE_CART.equals(action)) {
+                url = REMOVE_CART_CONTROLLER;
+            } else if (HOME_PAGE.equals(action)) {
+                url = HOME_PAGE_CONTROLLER;
+            } else if (CREATE_BRAND.equals(action)) {
+                url = CREATE_BRAND_CONTROLLER;
+            } else if (LOAD_SHOP_PAGE.equals(action)) {
+                url = LOAD_SHOP_PAGE_CONTROLLER;
+            } else if (SORT_SHOP_PAGE.equals(action)) {
+                url = SORT_SHOP_PAGE_CONTROLLER;
+            } else if (VIEW.equals(action)) {
+                url = LOAD_PRODUCT_DETAIL;
+            } else if (ADD_TO_CART.equals(action)) {
+                url = ADD_TO_CART_CONTROLLER;
+            } else if (LOGIN_GOOGLE.equals(action)) {
+                url = LOGIN_GOOGLE_CONTROLLER;
+            } else if (EDIT_QUANTITY.equals(action)) {
+                url = EDIT_QUANTITY_CONTROLLER;
+            } else if (SEARCH_PRODUCT_CATEGORIES.equals(action)) {
+                url = SEARCH_PRODUCT_CATEGORIES_CONTROLLER;
+            } else if (EDIT_SIZE.equals(action)) {
+                url = EDIT_SIZE_CONTROLLER;
+            } else if (APPLY_DISCOUNT.equals(action)) {
+                url = APPLY_DISCOUNT_CONTROLLER;
+            } else if (CREATE_DISCOUNT.equals(action)) {
+                url = CREATE_DISCOUNT_CONTROLLER;
+            } else if (REMOVE_DISCOUNT.equals(action)) {
+                url = REMOVE_DISCOUNT_CONTROLLER;
+            } else if (SEARCH_PRODUCT_CUS.equals(action)) {
                 url = SEARCH_PRODUCT_CUS_CONTROLLER;
-            }else if (TOGGLE_SELECT_PRODUCT.equals(action)) {
+            } else if (TOGGLE_SELECT_PRODUCT.equals(action)) {
                 url = TOGGLE_SELECT_PRODUCT_CONTROLLER;
-            }else if (PROCEED_CHECK_OUT.equals(action)) {
+            } else if (PROCEED_CHECK_OUT.equals(action)) {
                 url = PROCEED_CHECK_OUT_CONTROLLER;
-            }else if (LOAD_MY_ORDER.equals(action)) {
+            } else if (LOAD_MY_ORDER.equals(action)) {
                 url = LOAD_MY_ORDER_CONTROLLER;
-            }else if (SEARCH_ORDER.equals(action)) {
+            } else if (SEARCH_ORDER.equals(action)) {
                 url = SEARCH_ORDER_CONTROLLER;
-            }else if (ORDER_DETAIL.equals(action)) {
+            } else if (ORDER_DETAIL.equals(action)) {
                 url = ORDER_DETAIL_CONTROLLER;
-            }else if (ORDER.equals(action)) {
+            } else if (ORDER.equals(action)) {
                 url = ORDER_CONTROLLER;
             } else if (LOAD_ORDER_LIST.equals(action)) {
                 url = LOAD_ORDER_LIST_CONTROLLER;
-            }else if (UPDATE_ORDER_STATUS.equals(action)) {
+            } else if (UPDATE_ORDER_STATUS.equals(action)) {
                 url = UPDATE_ORDER_STATUS_CONTROLLER;
+            } else if (FORGOT_PASSWORD.equals(action)) {
+                url = FORGOT_PASSWORD_CONTROLLER;
+            } else if (PLACE_ORDER.equals(action)) {
+                url = CHECK_OUT_CONTROLLER;
+            } else if (VIEW_CART.equals(action)) {
+                url = VIEW_CART_CONTROLLER;
+            }else if (CREATE_SIZE.equals(action)) {
+                url = CREATE_SIZE_CONTROLLER;
+            }else if (UPDATE_STOCK.equals(action)) {
+                url = UPDATE_STOCK_CONTROLLER;
+            } else if (LOAD_PAYMENT.equals(action)) {
+                url = LOAD_PAYMENT_CONTROLLER;
+            } else if (SEARCH_PAYMENT.equals(action)) {
+                url = SEARCH_PAYMENT_CONTROLLER;
+            } else if (GET_STATUS.equals(action)) {
+                url = GET_STATUS_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());

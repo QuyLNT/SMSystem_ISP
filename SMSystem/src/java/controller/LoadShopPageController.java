@@ -54,7 +54,7 @@ public class LoadShopPageController extends HttpServlet {
             List<BrandDTO> brandList;
             List<UserObjectDTO> uObList;
             
-            productList = productDao.getAllProduct();
+            productList = productDao.search("");
             brandList = brandDao.getAllBrand();
             uObList = uObDao.getAllUserObject();
             for(ProductDTO p: productList){
