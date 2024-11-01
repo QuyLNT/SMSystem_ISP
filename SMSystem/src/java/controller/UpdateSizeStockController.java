@@ -6,27 +6,21 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.category.BrandDAO;
-import model.category.BrandDTO;
-import model.category.UserObjectDAO;
-import model.product.ProductDAO;
-import model.product.ProductDTO;
-import model.product.ProductImageDAO;
 import model.product.ProductVariantDAO;
 import model.product.ProductVariantDTO;
 
 /**
  *
- * @author LENOVO
+ * @author CHAU DUYEN
  */
-public class LoadProductListController extends HttpServlet {
+public class UpdateSizeStockController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,39 +31,36 @@ public class LoadProductListController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "productList.jsp";
-    private static final String SUCCESS = "productList.jsp";
+    private static final String ERROR = "LoadProductListController";
+    private static final String SUCCESS = "LoadProductListController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            ProductDAO productDao = new ProductDAO();
-            BrandDAO brandDao = new BrandDAO();
-            UserObjectDAO uObDao = new UserObjectDAO();
-            ProductVariantDAO variantDao = new ProductVariantDAO();
-            ProductImageDAO imageDao = new ProductImageDAO();
-            List<ProductDTO> productList;
-            List<BrandDTO> brandList;
-            productList = productDao.getAllProduct();
-            brandList = brandDao.getAllBrand();
-            for (ProductDTO p : productList) {
-                p.setListImages(imageDao.getImageByProduct(p.getProductId()));
-                List<ProductVariantDTO> productVariants = variantDao.getVariantByProduct(p.getProductId());
-                p.setListVariants(productVariants);
+            String[] variantIds = request.getParameterValues("variantId");
+            String[] stocks = request.getParameterValues("stock");
+
+            ProductVariantDAO variantDAO = new ProductVariantDAO();
+            List<ProductVariantDTO> variants = new ArrayList<>();
+            for (int i = 0; i < variantIds.length; i++) {
+                int variantId = Integer.parseInt(variantIds[i]);
+                int stock = Integer.parseInt(stocks[i]);
+
+                ProductVariantDTO variant = new ProductVariantDTO();
+                variant.setVariantId(variantId);
+                variant.setStock(stock);
+                variants.add(variant);
             }
 
-            if (productList != null && brandList != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("PRODUCT_LIST", productList);
-                session.setAttribute("BRAND_LIST", brandList);
+            for (ProductVariantDTO variant : variants) {
+                variantDAO.updateStock(variants);
+                request.setAttribute("ms", "Update stock successfully!");
                 url = SUCCESS;
-
             }
-
-        } catch (ClassNotFoundException | SQLException e) {
-            log("Error at LoadProductController: " + e.toString());
+        } catch (Exception e) {
+            log("Error at UpdateSizeStockController:" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

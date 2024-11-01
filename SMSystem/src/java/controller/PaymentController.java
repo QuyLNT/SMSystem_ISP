@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,6 +30,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TimeZone;
 import model.order.OrderDTO;
+import model.payment.OnlinePaymentDAO;
+import model.payment.OnlinePaymentDTO;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -107,14 +110,24 @@ public class PaymentController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            OrderDTO userOrder = (OrderDTO) request.getAttribute("ORDER");
-            
-            
             Random rand = new Random();
             int random_id = rand.nextInt(1000000);
+            OrderDTO userOrder = (OrderDTO) request.getAttribute("ORDER");
+
+            String app_trans_id = getCurrentTimeString("yyMMdd") + "_" + random_id;
+            String description = "SMSystem - Payment for the order #" + userOrder.getOrderId();
+            float amount = userOrder.getTotalPrice() * 100;
+            OnlinePaymentDTO payment = new OnlinePaymentDTO();
+            payment.setAmount(amount);
+            payment.setPaymentId(app_trans_id);
+            payment.setOrderId(userOrder.getOrderId());
+            payment.setDescription(description);
+            OnlinePaymentDAO payDao = new OnlinePaymentDAO();
+            boolean checkInsert = payDao.createPayment(payment);
+
             final Map embed_data = new HashMap() {
                 {
-                    put("redirecturl", "https://4726-123-21-145-218.ngrok-free.app/SMSystem/success.jsp");
+                    put("redirecturl", "https://e40e-27-78-75-19.ngrok-free.app/SMSystem/success.jsp");
                 }
             };
 
@@ -128,14 +141,13 @@ public class PaymentController extends HttpServlet {
             Map<String, Object> order = new HashMap<String, Object>() {
                 {
                     put("app_id", CONFIG.get("app_id"));
-                    put("app_trans_id", getCurrentTimeString("yyMMdd") + "_" + random_id);
+                    put("app_trans_id", app_trans_id);
                     put("app_time", System.currentTimeMillis());
                     put("app_user", "user123");
-                    put("amount", (long) userOrder.getTotalPrice()*100);
-                    put("description", "SMSystem - Payment for the order #" + userOrder.getOrderId());
+                    put("amount", (long) amount);
+                    put("description", description);
                     put("bank_code", "");
-                    put("redirect_url", "https://4726-123-21-145-218.ngrok-free.app/SMSystem/success.jsp");
-                    put("callback_url", "https://4726-123-21-145-218.ngrok-free.app/SMSystem/ZaloPayCallbackController");
+                    put("callback_url", "https://e40e-27-78-75-19.ngrok-free.app/SMSystem/ZaloPayCallbackController");
                     put("item", new JSONArray(item).toString());
                     put("embed_data", new JSONObject(embed_data).toString());
                 }
@@ -169,13 +181,14 @@ public class PaymentController extends HttpServlet {
             JSONObject result = new JSONObject(resultJsonStr.toString());
             if (result.has("order_url")) {
                 String orderUrl = result.getString("order_url");
+
                 response.sendRedirect(orderUrl);
             } else {
                 System.out.println("Không tìm thấy order_url trong phản hồi từ API.");
                 response.getWriter().write(result.toString());
             }
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | SQLException | IOException | JSONException e) {
+            log("Error at PaymentController: " + e.toString());
         }
     }
 

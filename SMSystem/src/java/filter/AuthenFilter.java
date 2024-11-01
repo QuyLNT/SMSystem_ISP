@@ -71,6 +71,7 @@ public class AuthenFilter implements Filter {
         MANAGER_RESOURCE.add("categoriesList.jsp");
         MANAGER_RESOURCE.add("orderDetail.jsp");
         MANAGER_RESOURCE.add("productList.jsp");
+        MANAGER_RESOURCE.add("productList.jsp");
         MANAGER_RESOURCE.add("LoadManagerHomeDataController");
         MANAGER_RESOURCE.add("CreateBrandController");
         MANAGER_RESOURCE.add("CreateProductController");
@@ -85,7 +86,6 @@ public class AuthenFilter implements Filter {
         MANAGER_RESOURCE.add("ToggleFlashSaleController");
         MANAGER_RESOURCE.add("ToggleProductStatusController");
         MANAGER_RESOURCE.add("UpdateProductController");
-
 
         SHIPPER_RESOURCE = new ArrayList<>();
         SHIPPER_RESOURCE.add("shipperPage.jsp");
@@ -212,7 +212,8 @@ public class AuthenFilter implements Filter {
 
     /**
      * Return the filter configuration object for this filter.
-     * @return 
+     *
+     * @return
      */
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
@@ -236,6 +237,7 @@ public class AuthenFilter implements Filter {
 
     /**
      * Init method for this filter
+     *
      * @param filterConfig
      */
     @Override

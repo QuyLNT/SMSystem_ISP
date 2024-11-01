@@ -6,27 +6,25 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.category.BrandDAO;
-import model.category.BrandDTO;
-import model.category.UserObjectDAO;
-import model.product.ProductDAO;
-import model.product.ProductDTO;
-import model.product.ProductImageDAO;
-import model.product.ProductVariantDAO;
-import model.product.ProductVariantDTO;
+import model.payment.OnlinePaymentDAO;
+import model.payment.OnlinePaymentDTO;
 
 /**
  *
  * @author LENOVO
  */
-public class LoadProductListController extends HttpServlet {
+public class LoadPaymentListController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,39 +35,26 @@ public class LoadProductListController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "productList.jsp";
-    private static final String SUCCESS = "productList.jsp";
+    private static final String ERROR = "paymentList.jsp";
+    private static final String SUCCESS = "paymentList.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            ProductDAO productDao = new ProductDAO();
-            BrandDAO brandDao = new BrandDAO();
-            UserObjectDAO uObDao = new UserObjectDAO();
-            ProductVariantDAO variantDao = new ProductVariantDAO();
-            ProductImageDAO imageDao = new ProductImageDAO();
-            List<ProductDTO> productList;
-            List<BrandDTO> brandList;
-            productList = productDao.getAllProduct();
-            brandList = brandDao.getAllBrand();
-            for (ProductDTO p : productList) {
-                p.setListImages(imageDao.getImageByProduct(p.getProductId()));
-                List<ProductVariantDTO> productVariants = variantDao.getVariantByProduct(p.getProductId());
-                p.setListVariants(productVariants);
-            }
-
-            if (productList != null && brandList != null) {
+            OnlinePaymentDAO payDao = new OnlinePaymentDAO();
+            List<OnlinePaymentDTO> payList = payDao.getAll();
+            if (payList != null) {
                 HttpSession session = request.getSession();
-                session.setAttribute("PRODUCT_LIST", productList);
-                session.setAttribute("BRAND_LIST", brandList);
+                session.setAttribute("PAY_LIST", payList);
                 url = SUCCESS;
-
+            } else {
+                request.setAttribute("err", "Load Payment Failed");
             }
 
-        } catch (ClassNotFoundException | SQLException e) {
-            log("Error at LoadProductController: " + e.toString());
+        } catch (Exception e) {
+            log("Error at LoadProductListController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
