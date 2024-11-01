@@ -232,6 +232,10 @@
         <servlet-name>CheckCartItemController</servlet-name>
         <servlet-class>controller.CheckCartItemController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AssignShipperController</servlet-name>
+        <servlet-class>controller.AssignShipperController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -435,6 +439,10 @@
     <servlet-mapping>
         <servlet-name>CheckCartItemController</servlet-name>
         <url-pattern>/CheckCartItemController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AssignShipperController</servlet-name>
+        <url-pattern>/AssignShipperController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

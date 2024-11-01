@@ -126,6 +126,8 @@ public class MainController extends HttpServlet {
     private final static String CHECK_OUT_CONTROLLER = "CheckoutController";
     private final static String VIEW_CART = "ViewCart";
     private final static String VIEW_CART_CONTROLLER = "CheckCartItemController";
+    private final static String ASSIGN_SHIPPER = "AssignShipper";
+    private final static String ASSIGN_SHIPPER_CONTROLLER = "AssignShipperController ";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -227,6 +229,8 @@ public class MainController extends HttpServlet {
                 url = CHECK_OUT_CONTROLLER;
             }else if (VIEW_CART.equals(action)) {
                 url = VIEW_CART_CONTROLLER;
+            }else if (ASSIGN_SHIPPER.equals(action)) {
+                url = ASSIGN_SHIPPER_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());

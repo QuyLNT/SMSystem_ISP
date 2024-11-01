@@ -1,3 +1,6 @@
+<%@page import="java.util.Map"%>
+<%@page import="model.user.UserDAO"%>
+<%@page import="model.user.UserDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="model.order.OrderDTO"%>
 <%@page import="model.order.OrderDAO"%>
@@ -77,16 +80,30 @@
                 <div class="container">
                     <div class="welcome">
                         <%
+                            String message = (String) request.getAttribute("message");
+                            if (message != null) {
+                        %>
+                        <p><%= message%></p>
+                        <%
+                            }
+                        %>
+                        <%
                             String ms = "";
                             String orderid = "";
                             OrderDAO d = new OrderDAO();
                             List<OrderDTO> list = null;
+                            List<UserDTO> shippers = null;
+                            Map<Integer, Integer> shipperMap = null;
 
                             try {
                                 list = d.getAllOrder();
                                 if (request.getAttribute("ORDER_LIST") != null) {
                                     list = (List<OrderDTO>) request.getAttribute("ORDER_LIST");
                                 }
+                                UserDAO userDAO = new UserDAO();
+                                shippers = userDAO.getAllShippers();
+                                shipperMap = d.getShipperMap();
+
                                 if (request.getAttribute("ms") != null && request.getAttribute("orderId") != null) {
                                     ms = request.getAttribute("ms").toString();
                                     orderid = request.getAttribute("orderId").toString();
@@ -110,6 +127,7 @@
                                     <th>Create At</th>
                                     <th>Order Status</th>
                                     <th>Actions</th>
+                                    <th>Assign Shipper</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -117,6 +135,9 @@
                                     if (list != null && !list.isEmpty()) {
                                         // Loop through the orderList and display each order
                                         for (OrderDTO a : list) {
+                                            int selectedShipperId = shipperMap != null && shipperMap.containsKey(a.getOrderId())
+                                                    ? shipperMap.get(a.getOrderId())
+                                                    : -1;
                                 %>
                                 <tr>
                                     <td><%= a.getOrderId()%></td>
@@ -146,6 +167,23 @@
                                             <button type="submit" class="btn btn-primary" name="action" value="View-Detail">
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>
+                                        </form>
+                                    </td>
+
+                                    <td>
+                                        <form action="AssignShipperController" method="POST">
+                                            <input type="hidden" name="orderId" value="<%= a.getOrderId()%>">
+                                            <input type="hidden" name="ship" value="<%= a.getShippingMethod()%>">
+                                            <select name="shipperId" onchange="this.form.submit()">
+                                                <option value="">Select Shipper</option>
+                                                <% for (UserDTO shipper : shippers) {
+                                                        boolean isSelected = (shipper.getUserId() == selectedShipperId);
+                                                %>
+                                                <option value="<%= shipper.getUserId()%>" <%= isSelected ? "selected" : ""%>>
+                                                    <%= shipper.getFullName()%>
+                                                </option>
+                                                <% } %>
+                                            </select>
                                         </form>
                                     </td>
 
