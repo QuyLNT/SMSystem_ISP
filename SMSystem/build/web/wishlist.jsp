@@ -1,16 +1,11 @@
-<%-- 
-    Document   : wishlist
-    Created on : Jun 22, 2024, 7:08:51 PM
-    Author     : Luu Minh Quan
---%>
 
-<%@page import="model.ProductDAO"%>
+<%@page import="model.product.ProductDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.ProductDTO"%>
-<%@page import="model.UserDTO"%>
+<%@page import="model.product.ProductDTO"%>
+<%@page import="model.user.UserDTO"%>
 <%@page import="model.ItemDTO"%>
 <%@page import="java.util.List"%>
-<%@page import="model.CartDTO"%>
+<%@page import="model.cart.CartDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -37,7 +32,7 @@
         <link rel="stylesheet" href="css/style.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
-        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
+        <link rel="icon" href="icon-logoweb.png" type="img/x-icon" />
     </head>
 
     <body>
@@ -65,12 +60,12 @@
                     <div class="ht-right">
                         <%
                             UserDTO user = (UserDTO) session.getAttribute("user");
-                            if(user.getFullName()!=null){
+                            if (user.getFullName() != null) {
                         %>
                         <div class="login-panel" id="user-btn">
                             <i class="fa fa-user"><%=user.getFullName()%></i>
                         </div>
-                        <% }else { %>
+                        <% } else { %>
                         <div class="login-panel" id="user-btn">
                             <i class="fa fa-user"></i>
                         </div>
@@ -126,15 +121,15 @@
                             <ul class="nav-right">
                                 <%
                                     String sizeWishlist = (String) session.getAttribute("sizeWishlist");
-                                    if(sizeWishlist==null){
-                                        sizeWishlist="0";
+                                    if (sizeWishlist == null) {
+                                        sizeWishlist = "0";
                                     }
-                                    
-                                    %>
+
+                                %>
                                 <li class="heart-icon">
                                     <a href="wishlist.jsp">
                                         <i class="icon_heart_alt"></i>
-                                        <span><%= sizeWishlist %></span>
+                                        <span><%= sizeWishlist%></span>
                                     </a>
                                 </li>
                                 <%
@@ -159,7 +154,7 @@
                                             </div>
                                             <div class="select-button">
                                                 <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
-                                              
+
                                             </div>
                                             <% } else { %>
                                             <table>
@@ -206,7 +201,7 @@
                                             %>
                                             <div class="select-button">
                                                 <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
-                                             
+
                                             </div>
                                             <% } %>
                                         </div>
@@ -234,12 +229,12 @@
                         <ul>
                             <li class="active"><a href="index.jsp">Home</a></li>
                             <li><a href="shop.jsp">Shop</a></li>
-                         
+
                             <li><a href="contact.jsp">Contact</a></li>
                             <li><a href="">Pages</a>
                                 <ul class="dropdown">
                                     <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
-                                   
+
                                 </ul>
                             </li>
                         </ul>
@@ -316,24 +311,24 @@
                                         </td>
                                         <td class="p-price-wishlist first-row"><%= pDAO.getBrandName(ele.getBrandId())%></td>
                                         <td class="p-price-wishlist first-row"><%= ele.getColor()%></td>
-                                        <%if(ele.getSale()!=0){ %>
-                                        <td class="p-price-wishlist first-row" style="text-decoration: line-through">$<%=ele.getPrice() %></td>
-                                        <%}else{ %>
-                                             <td class="p-price-wishlist first-row" ></td>
-                                        <%} %>
-                                        <td class="p-price-wishlist first-row">$<%= String.format("%.2f", (1-ele.getSale())* ele.getPrice())%></td>
-                                
+                                        <%if (ele.getSale() != 0) {%>
+                                        <td class="p-price-wishlist first-row" style="text-decoration: line-through">$<%=ele.getPrice()%></td>
+                                        <%} else { %>
+                                        <td class="p-price-wishlist first-row" ></td>
+                                        <%}%>
+                                        <td class="p-price-wishlist first-row">$<%= String.format("%.2f", (1 - ele.getSale()) * ele.getPrice())%></td>
+
                                         <td class="p-price-wishlist first-row">
                                             <form action="ProductInfoServlet" method="POST">
-                                                <input type="hidden" name="productId" value="<%= ele.getProductId() %>">
+                                                <input type="hidden" name="productId" value="<%= ele.getProductId()%>">
                                                 <button type="submit" name="action" value="View">View</button>
                                             </form>
                                         </td>
-                                
+
                                         <td class="close-td first-row"><a href="RemoveWishlistServlet?pId=<%= ele.getProductId()%>" onclick="doDelete('<%=ele.getName()%>', event)">
                                                 <i class="ti-close"></i>
                                             </a></td>
-                                            
+
                                     </tr>
                                     <%
                                         }
@@ -342,7 +337,7 @@
                                     No result found
                                 </div>
                                 <%}%>
-                                
+
                                 </tbody>
                             </table>
                         </div>
@@ -481,13 +476,13 @@
         <script src="js/main2.js"></script>
         <script src="js/main3.js"></script>
         <script>
-                                function doDelete(name, event) {
-                                    if (confirm("Are you sure you want to remove " + name + " from the wishlist?")) {
-                                    } else {
-                                        event.preventDefault();
-                                    }
-                                }
-                            </script>
+                                            function doDelete(name, event) {
+                                                if (confirm("Are you sure you want to remove " + name + " from the wishlist?")) {
+                                                } else {
+                                                    event.preventDefault();
+                                                }
+                                            }
+        </script>
     </body>
 </html>
 

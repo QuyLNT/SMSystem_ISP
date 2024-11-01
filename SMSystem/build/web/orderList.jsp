@@ -12,6 +12,7 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
     </head>
     <body>
         <main class="main-wrap">
@@ -21,8 +22,8 @@
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="img/logoweb.png" alt="" width="100%" height="100%"/>
-                                    <span class="title-text">Nice</span>
+                                    <img src="img/icon-logoweb.png" alt="" width="32px" height="32px""/>
+                                    <span class="title-text">SMSystem</span>
                                 </h3>
                             </div>
                             <ul class="nav-list">
@@ -74,97 +75,104 @@
                 </div>
             </header>
             <section class="showcase">
-                <div class="container">
-                    <div class="welcome">
-                        <%
-                            String ms = "";
-                            String orderid = "";
-                            OrderDAO d = new OrderDAO();
-                            List<OrderDTO> list = null;
+                <div class="overlay">
+                    <div class="head">
+                        <button class="toggler">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                    </div>
+                    <div class="container">
+                        <div class="welcome">
+                            <%
+                                String ms = "";
+                                String orderid = "";
+                                OrderDAO d = new OrderDAO();
+                                List<OrderDTO> list = null;
 
-                            try {
-                                list = d.getAllOrder();
-                                if (request.getAttribute("ORDER_LIST") != null) {
-                                    list = (List<OrderDTO>) request.getAttribute("ORDER_LIST");
-                                }
-                                if (request.getAttribute("ms") != null && request.getAttribute("orderId") != null) {
-                                    ms = request.getAttribute("ms").toString();
-                                    orderid = request.getAttribute("orderId").toString();
-                        %>                        
-                        <div><%= ms%> Order ID: <%= orderid%></div>
-                        <%
-                            }
-                        %>
-                        <div class="table-title">Order Table</div>
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Order Code</th>
-                                    <th>Customer</th>
-                                    <th>Street</th>
-                                    <th>District</th>
-                                    <th>City</th>
-                                    <th>Discount</th>
-                                    <th>Payment Method</th>
-                                    <th>Shipment Method</th>
-                                    <th>Create At</th>
-                                    <th>Order Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    if (list != null && !list.isEmpty()) {
-                                        // Loop through the orderList and display each order
-                                        for (OrderDTO a : list) {
-                                %>
-                                <tr>
-                                    <td><%= a.getOrderId()%></td>
-                                    <td><%= a.getCustomer().getUserName()%></td>
-                                    <td><%= a.getStreet()%></td>
-                                    <td><%= a.getDistrict()%></td>
-                                    <td><%= a.getCity()%></td>
-                                    <td><%= a.getDiscountCode()%></td>
-                                    <td><%= a.getPaymentMethod()%></td>
-                                    <td><%= a.getShippingMethod()%></td>
-                                    <td><%= a.getCreatedAt()%></td>
-                                    <td>
-                                        <form action="UpdateOrderStatusController" method="POST">
-                                            <input type="hidden" name="orderId" value="<%= a.getOrderId()%>">
-                                            <select name="status" onchange="this.form.submit()">
-                                                <option value="Accepted,waiting for Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Accepted,waiting for Delivering") ? "selected" : ""%>>Accepted,waiting for Delivering</option>
-                                                <option value="Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Delivering") ? "selected" : ""%>>Delivering</option>
-                                                <option value="Delivered" <%= a.getOrderStatus().equalsIgnoreCase("Delivered") ? "selected" : ""%>>Delivered</option>
-                                                <option value="Completed" <%= a.getOrderStatus().equalsIgnoreCase("Completed") ? "selected" : ""%>>Completed</option>
-                                                <option value="Not Completed" <%= a.getOrderStatus().equalsIgnoreCase("Not Completed") ? "selected" : ""%>>Not Completed</option>
-                                            </select>
-                                            <input type="hidden" name="action" value="UpdateStatus"/>
-                                        </form>
-                                    <td>
-                                        <form action="MainController" method="POST">
-                                            <input type="hidden" name="orderId" value="<%= a.getOrderId()%>" />
-                                            <button type="submit" class="btn btn-primary" name="action" value="View-Detail">
-                                                <i class="fa-solid fa-eye"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-
-                                </tr>
-                                <%
+                                try {
+                                    list = d.getAllOrder();
+                                    if (request.getAttribute("ORDER_LIST") != null) {
+                                        list = (List<OrderDTO>) request.getAttribute("ORDER_LIST");
                                     }
-                                } else {
-                                %>
-                                <tr><td colspan="11">No orders available or an error occurred.</td></tr>
-                                <%
-                                    }
-                                } catch (Exception e) {
-                                %>
-                            <div class="alert alert-danger">Error loading orders: <%= e.getMessage()%></div>
+                                    if (request.getAttribute("ms") != null && request.getAttribute("orderId") != null) {
+                                        ms = request.getAttribute("ms").toString();
+                                        orderid = request.getAttribute("orderId").toString();
+                            %>                        
+                            <div><%= ms%> Order ID: <%= orderid%></div>
                             <%
                                 }
                             %>
-                            </tbody>
-                        </table>
+                            <div class="table-title">Order Table</div>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Order Code</th>
+                                        <th>Customer</th>
+                                        <th>Street</th>
+                                        <th>District</th>
+                                        <th>City</th>
+                                        <th>Discount</th>
+                                        <th>Payment Method</th>
+                                        <th>Shipment Method</th>
+                                        <th>Create At</th>
+                                        <th>Order Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%
+                                        if (list != null && !list.isEmpty()) {
+                                            // Loop through the orderList and display each order
+                                            for (OrderDTO a : list) {
+                                    %>
+                                    <tr>
+                                        <td><%= a.getOrderId()%></td>
+                                        <td><%= a.getCustomer().getUserName()%></td>
+                                        <td><%= a.getStreet()%></td>
+                                        <td><%= a.getDistrict()%></td>
+                                        <td><%= a.getCity()%></td>
+                                        <td><%= a.getDiscountCode()%></td>
+                                        <td><%= a.getPaymentMethod()%></td>
+                                        <td><%= a.getShippingMethod()%></td>
+                                        <td><%= a.getCreatedAt()%></td>
+                                        <td>
+                                            <form action="UpdateOrderStatusController" method="POST">
+                                                <input type="hidden" name="orderId" value="<%= a.getOrderId()%>">
+                                                <select name="status" onchange="this.form.submit()">
+                                                    <option value="Accepted,waiting for Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Accepted,waiting for Delivering") ? "selected" : ""%>>Accepted,waiting for Delivering</option>
+                                                    <option value="Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Delivering") ? "selected" : ""%>>Delivering</option>
+                                                    <option value="Delivered" <%= a.getOrderStatus().equalsIgnoreCase("Delivered") ? "selected" : ""%>>Delivered</option>
+                                                    <option value="Completed" <%= a.getOrderStatus().equalsIgnoreCase("Completed") ? "selected" : ""%>>Completed</option>
+                                                    <option value="Not Completed" <%= a.getOrderStatus().equalsIgnoreCase("Not Completed") ? "selected" : ""%>>Not Completed</option>
+                                                </select>
+                                                <input type="hidden" name="action" value="UpdateStatus"/>
+                                            </form>
+                                        <td>
+                                            <form action="MainController" method="POST">
+                                                <input type="hidden" name="orderId" value="<%= a.getOrderId()%>" />
+                                                <button type="submit" class="btn btn-primary" name="action" value="View-Detail">
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+
+                                    </tr>
+                                    <%
+                                        }
+                                    } else {
+                                    %>
+                                    <tr><td colspan="11">No orders available or an error occurred.</td></tr>
+                                    <%
+                                        }
+                                    } catch (Exception e) {
+                                    %>
+                                <div class="alert alert-danger">Error loading orders: <%= e.getMessage()%></div>
+                                <%
+                                    }
+                                %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </section>

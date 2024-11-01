@@ -34,7 +34,7 @@
         <link rel="stylesheet" href="css/style.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
-        <link rel="icon" href="favicon_io (1)/favicon.ico" type="img/x-icon">
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
 
     </head>
 
@@ -227,6 +227,7 @@
                         <div id="mobile-menu-wrap"></div>
                     </div>
                 </div>
+                    </div>
         </header>
         <!-- Header Section End -->
 

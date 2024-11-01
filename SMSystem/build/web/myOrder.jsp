@@ -1,15 +1,7 @@
-<%-- 
-    Document   : wishlist
-    Created on : Jun 13, 2024, 11:09:49 PM
-    Author     : Luu Minh Quan
---%>
+
 
 <%@page import="model.discount.DiscountDTO"%>
-<%-- 
-    Document   : wishlist
-    Created on : Jun 13, 2024, 11:09:49 PM
-    Author     : Luu Minh Quan
---%>
+
 
 <%@page import="model.order.OrderDTO"%>
 <%@page import="model.order.OrderDAO"%>
@@ -46,15 +38,13 @@
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
-        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
     </head>
 
     <body>
         <!-- Start coding here -->
         <!-- Page PreOrder -->
-        <!--                <div id="preloder">
-                            <div class="loader"></div>
-                        </div>-->
+
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
@@ -116,7 +106,7 @@
                     <div class="row">
                         <div class="col-lg-2 col-md-2">
                             <div class="logo">
-                                <a href="index.jsp">
+                                <a href="homePage.jsp">
                                     <img src="img/logoweb.png" height="65px" alt="">
                                 </a>
                             </div>
@@ -131,21 +121,21 @@
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 text-right">
-                            <ul class="nav-right">
-                                <%
-                                    String sizeWishlist = (String) session.getAttribute("sizeWishlist");
-                                    if (sizeWishlist == null) {
-                                        sizeWishlist = "0";
-                                    }
+                            <!--                            <ul class="nav-right">
+                            <%--
+                                String sizeWishlist = (String) session.getAttribute("sizeWishlist");
+                                if (sizeWishlist == null) {
+                                    sizeWishlist = "0";
+                                }
 
-                                %>
-                                <li class="heart-icon">
-                                    <a href="wishlist.jsp">
-                                        <i class="icon_heart_alt"></i>
-                                        <span><%= sizeWishlist%></span>
-                                    </a>
-                                </li>
-                            </ul>
+                            --%>
+                            <li class="heart-icon">
+                                <a href="wishlist.jsp">
+                                    <i class="icon_heart_alt"></i>
+                                    <span><%/*= sizeWishlist*/%></span>
+                                </a>
+                            </li>
+                        </ul>-->
                         </div>
                     </div>
                 </div>
@@ -165,7 +155,7 @@
                     </div>
                     <nav class="nav-menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="index.jsp">Home</a></li>
+                            <li class="active"><a href="homePage.jsp">Home</a></li>
                             <li><a href="shop.jsp">Shop</a></li>
 
                             <li><a href="contact.jsp">Contact</a></li>
@@ -191,7 +181,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="breadcrumb-text">
-                            <a href="index.jsp"><i class="fa fa-home"></i> Home</a>
+                            <a href="homePage.jsp"><i class="fa fa-home"></i> Home</a>
                             <span>My Order</span>
                         </div>
                     </div>
@@ -244,6 +234,7 @@
                                             <th>Payment method</th>
                                             <th>Shipping method</th>
                                             <th>Total</th>
+                                            <th>View</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -300,13 +291,19 @@
                                             <td>
                                                 <input type="text" style="border: none; outline: none;" value="<%= ele.getShippingMethod()%>" readonly="">
                                             </td>
-                                            <td class="p-price-wishlist first-row">$<%= String.format("%.2f", ele.getTotalPrice()) %></td>
+                                            <td class="p-price-wishlist first-row">$<%= String.format("%.2f", ele.getTotalPrice())%></td>
+                                            <td>
+                                            <button type="submit" class="btn btn-primary" name="action" value="View">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>  
+                                        </td>
                                         </tr>
                                         <%
                                                     }
                                                 }
                                             }
                                         %>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -367,8 +364,8 @@
                     <div class="col-lg-3">
                         <div class="footer-left">
                             <div class="footer-logo">
-                                <a href="index.jsp">
-                                    <img src="favicon_io/android-chrome-192x192.png" alt="">
+                                <a href="homePage.jsp">
+                                    <img src="img/logoweb.png" alt="">
                                 </a>
                             </div>
                             <ul>

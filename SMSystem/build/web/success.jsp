@@ -1,22 +1,12 @@
-<%-- 
-    Document   : index
-    Created on : Jun 13, 2024, 11:03:48 PM
-    Author     : Luu Minh Quan
---%>
 
-<%-- 
-    Document   : wishlist
-    Created on : Jun 22, 2024, 7:08:51 PM
-    Author     : Luu Minh Quan
---%>
 
-<%@page import="model.ProductDAO"%>
+<%@page import="model.product.ProductDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.ProductDTO"%>
-<%@page import="model.UserDTO"%>
+<%@page import="model.product.ProductDTO"%>
+<%@page import="model.user.UserDTO"%>
 <%@page import="model.ItemDTO"%>
 <%@page import="java.util.List"%>
-<%@page import="model.CartDTO"%>
+<%@page import="model.cart.CartDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -46,13 +36,13 @@
         <link rel="stylesheet" href="css/style.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
-        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
     </head>
 
     <body>
         <!-- Start coding here -->
         <!-- Page PreOrder -->
-     
+
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">

@@ -1,8 +1,4 @@
-<%-- 
-    Document   : checkout
-    Created on : Jun 13, 2024, 11:17:40 PM
-    Author     : Luu Minh Quan
---%>
+
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
@@ -34,7 +30,7 @@
         <link rel="stylesheet" href="css/nice-select.css" type="text/css">
         <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-
+     <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style2.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">

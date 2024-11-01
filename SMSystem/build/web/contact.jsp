@@ -34,6 +34,7 @@
         <link rel="stylesheet" href="css/style.css" type="text/css"> 
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
+             <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
     </head>
 
     <body>

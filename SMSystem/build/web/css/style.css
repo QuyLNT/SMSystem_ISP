@@ -9,7 +9,7 @@
 }*/
 
 
-dropdown {
+.dropdown {
   max-width: 200px;
 }
 
@@ -173,4 +173,101 @@ form input[type="password"] {
     box-sizing: border-box;
     padding: 0;
     height: 15px;
+}
+
+.center-form {
+  display: flex;
+  justify-content: center;
+}
+
+
+.password-container {
+  position: relative;
+  display: inline-block;
+}
+
+.password-container input[type="password"] {
+  padding-right: 30px; 
+}
+
+.password-edit-btn {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-start; /* Align buttons to the left */
+  gap: 10px; /* Space between buttons */
+}
+
+.custom-btn {
+  border-radius: 8px; /* Make the buttons rounded */
+  padding: 5px 15px; /* Adjust padding for a compact look */
+  font-size: 14px; /* Adjust font size */
+}
+
+.btn-secondary.custom-btn {
+  background-color: #6c757d; /* Customize color for "Close" button */
+  color: white;
+  border: none;
+}
+
+.btn-primary.custom-btn {
+  background-color: #007bff; /* Customize color for "Update Product" button */
+  color: white;
+  border: none;
+}
+
+
+.password-container {
+  position: relative;
+  display: inline-block;
+}
+
+.password-container input[type="password"] {
+  padding-right: 30px;
+}
+
+.password-edit-btn {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.modal-footer1 {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px; 
+  padding: 10px;
+}
+
+.btn1 {
+  border-radius: 12px; 
+  padding: 6px 16px; 
+  font-size: 14px; 
+  font-weight: 500; 
+  border: none; 
+  color: white;
+  cursor: pointer;
+}
+
+button.btn1.btn-secondary1 {
+  background-color: #6c757d; 
+}
+
+button.btn1.btn-primary1 {
+  background-color: #007bff; 
+}
+.password-edit-btn i {
+  font-size: 20px; /* Set icon size to 20px */
+  padding: 1px;
 }
