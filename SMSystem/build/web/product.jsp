@@ -1,8 +1,3 @@
-<%-- 
-    Document   : product
-    Created on : Jun 13, 2024, 11:25:06 PM
-    Author     : Luu Minh Quan
---%>
 
 <%@page import="model.product.ProductImageDTO"%>
 <%@page import="model.cart.CartItems"%>
@@ -36,6 +31,7 @@
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
     </head>
 
     <body>
@@ -308,8 +304,8 @@
                                         %>
                                     </div>
                                     <%
-                                            List<Float> validSizes = product.getAvaiableSize();
-                                            List<Float> allSizes = product.getAllSize();
+                                        List<Float> validSizes = product.getAvaiableSize();
+                                        List<Float> allSizes = product.getAllSize();
                                     %>
                                     <style>
                                         .unavailable-size {
@@ -347,27 +343,27 @@
                                             <input type="hidden" name="pId" value="<%=product.getProductId()%>">
                                             <input type="hidden" name="size" id="size-input">
                                             <input style="border: none" type="submit" class="primary-btn pd-cart" name="action" value="Add To Cart">
-                                            
-<!--                                            <form>
-                                                <h1>Vui lòng đăng nhập</h1>
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            </form>-->
-                                        <%
-                                            String successMessage = (String) request.getAttribute("ms");
-                                            String errorMessage = (String) request.getAttribute("err");
-                                        %>
 
-                                        <% if (successMessage != null) {%>
-                                        <div class="alert alert-success">
-                                            <%= successMessage%>
-                                        </div>
-                                        <% } %>
+                                            <!--                                            <form>
+                                                                                            <h1>Vui lòng đăng nhập</h1>
+                                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                        </form>-->
+                                            <%
+                                                String successMessage = (String) request.getAttribute("ms");
+                                                String errorMessage = (String) request.getAttribute("err");
+                                            %>
 
-                                        <% if (errorMessage != null) {%>
-                                        <div class="alert alert-danger">
-                                            <%= errorMessage%>
-                                        </div>
-                                        <% }%>
+                                            <% if (successMessage != null) {%>
+                                            <div class="alert alert-success">
+                                                <%= successMessage%>
+                                            </div>
+                                            <% } %>
+
+                                            <% if (errorMessage != null) {%>
+                                            <div class="alert alert-danger">
+                                                <%= errorMessage%>
+                                            </div>
+                                            <% }%>
 
                                     </div>
                                     <ul class="pd-tags">
@@ -415,7 +411,7 @@
                                                     <p><%=product.getDetail()%></p>
                                                 </div>
                                                 <div class="col-lg-5">
-                                                    <img src="https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2017%2F08%2Ftyshawn-jones-adidas-pro-model-vulc-adv-white-green-python-1.jpg?cbr=1&q=90" alt="">
+                                                    <img src="img/size.jpg" alt="" width="500px" height="450px">
                                                 </div>
                                             </div>
                                         </div>

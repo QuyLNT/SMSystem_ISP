@@ -1,8 +1,4 @@
-<%-- 
-    Document   : wishlist
-    Created on : Otc 8, 2024, 11:09:49 PM
-    Author     : LENOVO
---%>
+
 
 <%@page import="model.product.ProductDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -37,15 +33,13 @@
         <link rel="stylesheet" href="css/style.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
-        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
     </head>
 
     <body>
         <!-- Start coding here -->
         <!-- Page PreOrder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
+
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
@@ -217,11 +211,46 @@
                                         <input type="text" id="pass" name="pass">
                                         <% } else {%>
 
-                                        <input type="password" id="password-exist" name="pass" value="<%=user.getPassword()%>" readonly>
-                                        <button type="button" id="edit-btn-pass">
-                                            <i class="fa fa-pencil-square-o"></i>
-                                        </button>
-                                        <% } %>
+                                            <input type="password" id="password-exist" name="pass" value="<%= user.getPassword() %>" readonly>
+                                            <button type="button" id="edit-btn-pass" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                                                <i class="fa fa-pencil-square-o"></i>
+                                            </button>
+
+
+                                    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title fs-5" id="updateModalLabel">Change password</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <span class="input-group-text" id="inputGroup-sizing-sm">Current password</span>
+                                                        <input name="name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <span class="input-group-text" id="inputGroup-sizing-sm">New Password</span>
+                                                        <input name="name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <span class="input-group-text" id="inputGroup-sizing-sm">Confirrm new password</span>
+                                                        <input name="name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
+                                                    </div>
+                                                </div>
+                                               <div class="modal-footer1">
+                                                    <button type="button" class="btn1 btn-secondary1" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" name="action" value="Update" class="btn1 btn-primary1">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <% } %>
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="fullName">Full Name <span>*</span></label>
@@ -434,6 +463,7 @@
         <script src="js/main.js"></script>
         <script src="js/main2.js"></script>
         <script src="js/main3.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     </body>
 </html>

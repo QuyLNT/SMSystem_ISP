@@ -1,8 +1,4 @@
-<%-- 
-    Document   : shopping-cart
-    Created on : Jun 13, 2024, 11:09:49 PM
-    Author     : Luu Minh Quan
---%>
+
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.discount.DiscountDTO"%>
@@ -39,6 +35,7 @@
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
+     <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
     </head>
 
     <body>

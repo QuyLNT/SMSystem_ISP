@@ -1,8 +1,4 @@
-<%-- 
-    Document   : register
-    Created on : Jun 13, 2024, 11:11:39 PM
-    Author     : Luu Minh Quan
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -29,15 +25,13 @@
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style.css" type="text/css">
+             <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
 
     </head>
 
     <body>
         <!-- Start coding here -->
         <!-- Page PreOrder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
