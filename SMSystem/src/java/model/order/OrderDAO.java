@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import model.user.UserDAO;
 import model.user.UserDTO;
 import utils.DBUtils;
@@ -58,7 +60,7 @@ public class OrderDAO {
                     String shippingMethodName = rs.getString("shippingMethodName");
                     Date createdAt = rs.getDate("createdAt");
                     String orderStatus = rs.getString("orderStatus");
-                    
+
                     UserDTO customer = new UserDTO();
                     customer.setFullName(customerName);
                     customer.setEmail(customerEmail);
@@ -188,6 +190,7 @@ public class OrderDAO {
             + "JOIN shippingMethods sM ON o.shippingMethodId = sM.shippingMethodId "
             + "LEFT JOIN discountCodes dC ON o.discountId = dC.discountId "
             + "WHERE o.orderId = ?";
+
     public List<OrderDTO> getAllOrder() throws ClassNotFoundException, SQLException {
         List<OrderDTO> listOrder = new ArrayList<>();
         Connection conn = null;
@@ -210,7 +213,6 @@ public class OrderDAO {
                     String paymentMethod = rs.getString("paymentName");
                     Date createdAt = rs.getDate("createdAt");
                     String orderStatus = rs.getString("orderStatus");
-
 
                     // Lấy thông tin khách hàng từ UserDAO
                     UserDAO userDao = new UserDAO();
@@ -235,20 +237,19 @@ public class OrderDAO {
         return listOrder;
     }
 
-    
     public OrderDTO getOrderById(int orderId) throws ClassNotFoundException, SQLException {
-    OrderDTO order = new OrderDTO();
-    Connection conn = null;
-    PreparedStatement ptm = null;
-    ResultSet rs = null;
-    try {
-        conn = DBUtils.getConnection();
-        if (conn != null) {
-            ptm = conn.prepareStatement(SHOW_ORDER);
-            ptm.setInt(1, orderId); 
-            rs = ptm.executeQuery();
+        OrderDTO order = new OrderDTO();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(SHOW_ORDER);
+                ptm.setInt(1, orderId);
+                rs = ptm.executeQuery();
 
-            if (rs.next()) {
+                if (rs.next()) {
                     int customerId = rs.getInt("customerId");
                     String street = rs.getString("street");
                     String district = rs.getString("district");
@@ -265,11 +266,11 @@ public class OrderDAO {
 
                     // Tạo đối tượng OrderDTO với thông tin khách hàng là UserDTO
                     order = new OrderDTO(orderId, customer, street, district, city, discountCode, paymentMethod, shippingMethod, createdAt, orderStatus);
+                }
             }
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }finally {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
             if (rs != null) {
                 rs.close();
             }
@@ -280,9 +281,10 @@ public class OrderDAO {
                 conn.close();
             }
         }
-    return order;
+        return order;
     }
-      public boolean updateOrderStatus( String status, int orderId) throws SQLException, ClassNotFoundException {
+
+    public boolean updateOrderStatus(String status, int orderId) throws SQLException, ClassNotFoundException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement ps = null;
@@ -295,7 +297,7 @@ public class OrderDAO {
                 check = ps.executeUpdate() > 0;
             }
 
-            }finally {
+        } finally {
             if (ps != null) {
                 ps.close();
             }
@@ -323,10 +325,10 @@ public class OrderDAO {
                 ptm.setString(2, street);
                 ptm.setString(3, district);
                 ptm.setString(4, city);
-                if(discount==null){
+                if (discount == null) {
                     ptm.setNull(5, java.sql.Types.INTEGER);
-                }else{
-                ptm.setInt(5, discount);
+                } else {
+                    ptm.setInt(5, discount);
                 }
                 ptm.setInt(6, payMethod);
                 ptm.setInt(7, shipMethod);
@@ -352,6 +354,94 @@ public class OrderDAO {
             }
         }
         return orderId;
-}
-  
+    }
+
+    public List<OrderDTO> getAllOrders() throws SQLException, ClassNotFoundException {
+        List<OrderDTO> orders = new ArrayList<>();
+        String sql = "SELECT o.orderId, o.street, o.district, o.city, o.createdAt, o.orderStatus, "
+                + "u.userId, u.fullName, d.discountCode, p.paymentName, s.methodName "
+                + "FROM orders o "
+                + "LEFT JOIN users u ON o.customerId = u.userId "
+                + "LEFT JOIN discountCodes d ON o.discountId = d.discountId "
+                + "LEFT JOIN paymentMethods p ON o.paymentMethodId = p.paymentMethodId "
+                + "LEFT JOIN shippingMethods s ON o.shippingMethodId = s.shippingMethodId";
+
+        try (Connection conn = DBUtils.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                OrderDTO order = new OrderDTO();
+                UserDTO customer = new UserDTO();
+
+                customer.setUserId(rs.getInt("userId"));
+                customer.setFullName(rs.getString("fullName"));
+                order.setCustomer(customer);
+
+                order.setOrderId(rs.getInt("orderId"));
+                order.setStreet(rs.getString("street"));
+                order.setDistrict(rs.getString("district"));
+                order.setCity(rs.getString("city"));
+                order.setCreatedAt(rs.getTimestamp("createdAt"));
+                order.setOrderStatus(rs.getString("orderStatus"));
+                order.setDiscountCode(rs.getString("discountCode"));
+                order.setPaymentMethod(rs.getString("paymentName"));
+                order.setShippingMethod(rs.getString("methodName"));
+
+                orders.add(order);
+            }
+        }
+        return orders;
+    }
+
+    public Map<Integer, Integer> getShipperMap() throws SQLException, ClassNotFoundException {
+        Map<Integer, Integer> shipperMap = new HashMap<>();
+        String sql = "SELECT orderId, shipperId FROM shipments";
+
+        try (Connection conn = DBUtils.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int orderId = rs.getInt("orderId");
+                int shipperId = rs.getInt("shipperId");
+                shipperMap.put(orderId, shipperId);
+            }
+        }
+        return shipperMap;
+    }
+
+    public boolean assignShipperToOrder(int orderId, int shipperId, String ship) throws SQLException, ClassNotFoundException {
+        boolean isAssigned = false;
+        String checkSql = "SELECT COUNT(*) FROM shipments WHERE orderId = ?";
+        String insertSql = "INSERT INTO shipments (orderId, shipperId, shippingMethodId, shipmentStatus)\n"
+                + "SELECT ?, ?, sm.shippingMethodId, 'Assigned'\n"
+                + "FROM shippingMethods sm\n"
+                + "WHERE sm.methodName = ?";
+        String updateSql = "UPDATE shipments SET shipperId = ?, shipmentStatus = 'Assigned' WHERE orderId = ?";
+
+        try (Connection conn = DBUtils.getConnection();
+                PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+
+            checkStmt.setInt(1, orderId);
+            ResultSet rs = checkStmt.executeQuery();
+            rs.next();
+            int count = rs.getInt(1);
+
+            if (count > 0) {
+                try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                    updateStmt.setInt(1, shipperId);
+                    updateStmt.setInt(2, orderId);
+                    isAssigned = updateStmt.executeUpdate() > 0;
+                }
+            } else {
+                try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                    insertStmt.setInt(1, orderId);
+                    insertStmt.setInt(2, shipperId);
+                    insertStmt.setString(3, ship);
+                    isAssigned = insertStmt.executeUpdate() > 0;
+                }
+            }
+        }
+        return isAssigned;
+    }
+
 }

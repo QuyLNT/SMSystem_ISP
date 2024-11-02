@@ -253,6 +253,10 @@
         <servlet-class>controller.GetPaymentStatusController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AssignShipperController</servlet-name>
+        <servlet-class>controller.AssignShipperController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>FilterController</servlet-name>
         <servlet-class>controller.FilterController</servlet-class>
     </servlet>
@@ -479,6 +483,10 @@
     <servlet-mapping>
         <servlet-name>GetPaymentStatusController</servlet-name>
         <url-pattern>/GetPaymentStatusController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AssignShipperController</servlet-name>
+        <url-pattern>/AssignShipperController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FilterController</servlet-name>

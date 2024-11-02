@@ -136,6 +136,8 @@ public class MainController extends HttpServlet {
     private final static String SEARCH_PAYMENT_CONTROLLER = "SearchPaymentController";
     private final static String GET_STATUS = "GetStatus";
     private final static String GET_STATUS_CONTROLLER = "GetPaymentStatusController";
+    private final static String ASSIGN_SHIPPER = "AssignShipper";
+    private final static String ASSIGN_SHIPPER_CONTROLLER = "AssignShipperController ";
     private final static String FILTER = "Filter";
     private final static String FILTER_CONTROLLER = "FilterController";
 
@@ -249,6 +251,8 @@ public class MainController extends HttpServlet {
                 url = SEARCH_PAYMENT_CONTROLLER;
             } else if (GET_STATUS.equals(action)) {
                 url = GET_STATUS_CONTROLLER;
+            }else if (ASSIGN_SHIPPER.equals(action)) {
+                url = ASSIGN_SHIPPER_CONTROLLER;
             } else if (FILTER.equals(action)) {
                 url = FILTER_CONTROLLER;
             }
