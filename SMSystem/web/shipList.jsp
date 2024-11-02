@@ -16,7 +16,7 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
-     <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
     </head>
@@ -27,10 +27,12 @@
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
-                                <h3>
-                                    <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
-                                    <span class="title-text">SM System</span>
-                                </h3>
+                                <a href="MainController?action=HomePage">
+                                    <h3>
+                                        <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
+                                        <span class="title-text">SMSystem</span>
+                                    </h3>
+                                </a>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
@@ -84,7 +86,7 @@
 
                         <div class="welcome">
                             <%
-                                List<UserDTO> userList = (List<UserDTO>) session.getAttribute("USER_LIST");   
+                                List<UserDTO> userList = (List<UserDTO>) session.getAttribute("USER_LIST");
                             %>
                             <div class="table-tilte">Ship Table</div>
                             <table class="table table-hover">

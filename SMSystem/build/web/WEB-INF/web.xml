@@ -264,6 +264,14 @@
         <servlet-name>CheckWarrantyController</servlet-name>
         <servlet-class>controller.CheckWarrantyController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReturnManageHomeController</servlet-name>
+        <servlet-class>controller.ReturnManageHomeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FilterOrderController</servlet-name>
+        <servlet-class>controller.FilterOrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -499,6 +507,14 @@
     <servlet-mapping>
         <servlet-name>CheckWarrantyController</servlet-name>
         <url-pattern>/CheckWarrantyController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReturnManageHomeController</servlet-name>
+        <url-pattern>/ReturnManageHomeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterOrderController</servlet-name>
+        <url-pattern>/FilterOrderController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

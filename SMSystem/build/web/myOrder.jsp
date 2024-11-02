@@ -121,25 +121,72 @@
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 text-right">
-                            <!--                            <ul class="nav-right">
-                            <%--
-                                String sizeWishlist = (String) session.getAttribute("sizeWishlist");
-                                if (sizeWishlist == null) {
-                                    sizeWishlist = "0";
-                                }
-
-                            --%>
-                            <li class="heart-icon">
-                                <a href="wishlist.jsp">
-                                    <i class="icon_heart_alt"></i>
-                                    <span><%/*= sizeWishlist*/%></span>
-                                </a>
-                            </li>
-                        </ul>-->
+                            <ul class="nav-right">
+                                <%
+                                    CartDTO cart = (CartDTO) session.getAttribute("CART");
+                                    boolean isEmptyCart = cart == null || (cart.getCartItemsList() == null || cart.getCartItemsList().isEmpty());
+                                    int itemCount = isEmptyCart ? 0 : cart.getCartItemsList().size();
+                                %>
+                                <li class="cart-icon">
+                                    <a href="#">
+                                        <i class="icon_bag_alt"></i>
+                                        <span><%= itemCount%></span>
+                                    </a>
+                                    <div class="cart-hover">
+                                        <div class="select-items">
+                                            <% if (isEmptyCart) { %>
+                                            <p>No product in cart. Buy more</p>
+                                            <% } else { %>
+                                            <table>
+                                                <tbody>
+                                                    <%
+                                                        List<CartItems> ls = cart.getCartItemsList();
+                                                        double total = 0;
+                                                        for (CartItems ele : ls) {
+                                                            total += (ele.getProduct().getPrice() * (1 - ele.getProduct().getSale())) * ele.getQuantity();
+                                                    %>
+                                                    <tr>
+                                                        <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
+                                                        <td class="si-text">
+                                                            <div class="product-selected">
+                                                                <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
+                                                                <h6><%= ele.getProduct().getName()%></h6>
+                                                                <h6>Size <%= ele.getSize()%></h6>
+                                                            </div>
+                                                        </td>
+                                                        <td class="si-close">
+                                                            <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=myOrder.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
+                                                                <i class="ti-close"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <% }%>
+                                                </tbody>
+                                            </table>
+                                            <div class="select-total">
+                                                <span>total:</span>
+                                                <h5>$<%= String.format("%.1f", total)%></h5>
+                                            </div>
+                                            <% } %>
+                                            <div class="select-button">
+                                                <a href="MainController?action=ViewCart&url=myOrder.jsp" class="primary-btn view-card">VIEW CART</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
+            <script>
+                function doDelete(name, event) {
+                    if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
+                    } else {
+                        event.preventDefault();
+                    }
+                }
+            </script>
             <div class="nav-item">
                 <div class="container">
                     <div class="nav-depart">
@@ -155,16 +202,11 @@
                     </div>
                     <nav class="nav-menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="homePage.jsp">Home</a></li>
-                            <li><a href="shop.jsp">Shop</a></li>
-
+                            <li><a href="MainController?action=HomePage">Home</a></li>
+                            <li><a href="MainController?action=ShopPage">Shop</a></li>
                             <li><a href="contact.jsp">Contact</a></li>
-                            <li><a href="">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="MainController?action=ViewCart&url=myOrder.jsp">Shopping Cart</a></li>
-
-                                </ul>
-                            </li>
+                            <li><a href="MainController?action=ViewCart&url=myOrder.jsp">Shopping Cart</a></li>
+                            <li><a href="warrantyPage.jsp">Warranty</a></li>
                         </ul>
                     </nav>
                     <div id="mobile-menu-wrap"></div>
@@ -293,10 +335,10 @@
                                             </td>
                                             <td class="p-price-wishlist first-row">$<%= String.format("%.2f", ele.getTotalPrice())%></td>
                                             <td>
-                                            <button type="submit" class="btn btn-primary" name="action" value="View">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>  
-                                        </td>
+                                                <button type="submit" class="btn btn-primary" name="action" value="View">
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </button>  
+                                            </td>
                                         </tr>
                                         <%
                                                     }

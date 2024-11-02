@@ -168,7 +168,7 @@
                                                                 </div>
                                                             </td>
                                                             <td class="si-close">
-                                                                <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=homePage.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
+                                                                <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=warrantyPage.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
                                                                     <i class="ti-close"></i>
                                                                 </a>
                                                             </td>
@@ -182,7 +182,7 @@
                                                 </div>
                                                 <% }%>
                                                 <div class="select-button">
-                                                    <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
+                                                    <a href="MainController?action=ViewCart&url=warrantyPage.jsp" class="primary-btn view-card">VIEW CART</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -202,18 +202,24 @@
                 </script>
                 <div class="nav-item">
                     <div class="container">
+                        <div class="nav-depart">
+                            <div class="depart-btn">
+                                <i class="ti-menu"></i>
+                                <span>All Departments</span>
+                                <ul class="depart-hover">
+                                    <li><a href="MainController?action=SearchCategories&type=1">Men's Clothing</a></li>
+                                    <li><a href="MainController?action=SearchCategories&type=2">Women's Clothing</a></li>
+                                    <li><a href="MainController?action=SearchCategories&type=3">Kid's Clothing</a></li>
+                                </ul>
+                            </div>
+                        </div>
                         <nav class="nav-menu mobile-menu">
                             <ul>
                                 <li><a href="MainController?action=HomePage">Home</a></li>
                                 <li><a href="MainController?action=ShopPage">Shop</a></li>
                                 <li><a href="contact.jsp">Contact</a></li>
-                                <li><a href="">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
-                                        <li><a href="check-out.jsp">Checkout</a></li>
-
-                                    </ul>
-                                </li>
+                                <li><a href="MainController?action=ViewCart&url=warrantyPage.jsp">Shopping Cart</a></li>
+                                <li><a href="warrantyPage.jsp">Warranty</a></li>
                             </ul>
                         </nav>
                         <div id="mobile-menu-wrap"></div>

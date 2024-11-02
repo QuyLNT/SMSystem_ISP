@@ -27,10 +27,12 @@
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
-                                <h3>
-                                    <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
-                                    <span class="title-text">SMSystem</span>
-                                </h3>
+                                <a href="MainController?action=HomePage">
+                                    <h3>
+                                        <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
+                                        <span class="title-text">SMSystem</span>
+                                    </h3>
+                                </a>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">

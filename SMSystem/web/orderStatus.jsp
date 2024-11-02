@@ -165,7 +165,7 @@
                                                             </div>
                                                         </td>
                                                         <td class="si-close">
-                                                            <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=homePage.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
+                                                            <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=orderStatus.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
                                                                 <i class="ti-close"></i>
                                                             </a>
                                                         </td>
@@ -179,7 +179,7 @@
                                             </div>
                                             <% } %>
                                             <div class="select-button">
-                                                <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
+                                                <a href="MainController?action=ViewCart&url=orderStatus.jsp" class="primary-btn view-card">VIEW CART</a>
                                             </div>
                                         </div>
                                     </div>
@@ -202,15 +202,10 @@
                     <nav class="nav-menu mobile-menu">
                         <ul>
                             <li><a href="MainController?action=HomePage">Home</a></li>
-                            <li><a href="MainController?action=ShopPage">Shop</a></li>
-                            <li><a href="contact.jsp">Contact</a></li>
-                            <li><a href="">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
-                                    <li><a href="check-out.jsp">Checkout</a></li>
-
-                                </ul>
-                            </li>
+                                <li><a href="MainController?action=ShopPage">Shop</a></li>
+                                <li><a href="contact.jsp">Contact</a></li>
+                                <li><a href="MainController?action=ViewCart&url=orderStatus.jsp">Shopping Cart</a></li>
+                                <li><a href="warrantyPage.jsp">Warranty</a></li>
                         </ul>
                     </nav>
                     <div id="mobile-menu-wrap"></div>

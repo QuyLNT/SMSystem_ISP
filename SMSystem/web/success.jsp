@@ -1,12 +1,6 @@
 
-
-<%@page import="model.product.ProductDAO"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="model.product.ProductDTO"%>
 <%@page import="model.user.UserDTO"%>
-<%@page import="model.ItemDTO"%>
-<%@page import="java.util.List"%>
-<%@page import="model.cart.CartDTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

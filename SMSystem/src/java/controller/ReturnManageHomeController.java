@@ -7,23 +7,16 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.order.OrderDAO;
-import model.order.OrderDTO;
 
 /**
  *
- * @author Asus
+ * @author LENOVO
  */
-public class UpdateOrderStatusController extends HttpServlet {
+public class ReturnManageHomeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,37 +27,23 @@ public class UpdateOrderStatusController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "orderList.jsp";
-    private static final String SUCCESS = "orderList.jsp";
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String url = ERROR;
+        String url = "homePage.jsp";
         try {
-            String status = request.getParameter("status");
-            int orderId = Integer.parseInt(request.getParameter("orderId"));
-            OrderDAO d = new OrderDAO();
-            boolean check = d.updateOrderStatus(status, orderId);
-            if (check) {
-                HttpSession session = request.getSession();
-                List<OrderDTO> orderList = (List<OrderDTO>) session.getAttribute("ORDER_LIST");
-
-                for (OrderDTO o : orderList) {
-                    if(o.getOrderId()==orderId){
-                        o.setOrderStatus(status);
-                    }
-                }
-                request.setAttribute("ORDER_LIST", orderList);
-                request.setAttribute("ms", "Update Successfully");
-                request.setAttribute("orderId", orderId);
-                url = SUCCESS;
-            } else {
-                request.setAttribute("ms", "Something wrong at sever");
+            String role = request.getParameter("role");
+            switch (role) {
+                case "MN": url = "MainController?action=LoadManagerHomeData";
+                    break;
+                case "AD": url = "MainController?action=LoadAdminHome";
+                    break;
+                case "SP": url = "shipperPage.jsp";
+                    break;
+                default:
+                    break;
             }
-        } catch (SQLException e) {
-            log("Error at Update Order Controller:" + e.toString());
+        } catch (Exception e) {
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
@@ -82,11 +61,7 @@ public class UpdateOrderStatusController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UpdateOrderStatusController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -100,11 +75,7 @@ public class UpdateOrderStatusController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UpdateOrderStatusController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
