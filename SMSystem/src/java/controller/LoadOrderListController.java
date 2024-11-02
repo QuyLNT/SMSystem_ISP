@@ -6,23 +6,14 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.category.BrandDAO;
-import model.category.BrandDTO;
-import model.category.UserObjectDAO;
 import model.order.OrderDAO;
 import model.order.OrderDTO;
-import model.product.ProductDAO;
-import model.product.ProductDTO;
-import model.product.ProductImageDAO;
-import model.product.ProductVariantDAO;
 
 /**
  *

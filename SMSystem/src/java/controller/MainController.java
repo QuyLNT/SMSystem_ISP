@@ -121,7 +121,7 @@ public class MainController extends HttpServlet {
     private final static String UPDATE_ORDER_STATUS_CONTROLLER = "UpdateOrderStatusController";
     private final static String FORGOT_PASSWORD = "ForgotPassword";
     private final static String FORGOT_PASSWORD_CONTROLLER = "ForgotPasswordController";
-    private final static String CREATE_SIZE= "Add Size and Stock";
+    private final static String CREATE_SIZE = "Add Size and Stock";
     private final static String CREATE_SIZE_CONTROLLER = "CreateSizeController";
     private final static String UPDATE_STOCK = "Update Stock";
     private final static String UPDATE_STOCK_CONTROLLER = "UpdateSizeStockController";
@@ -136,6 +136,8 @@ public class MainController extends HttpServlet {
     private final static String SEARCH_PAYMENT_CONTROLLER = "SearchPaymentController";
     private final static String GET_STATUS = "GetStatus";
     private final static String GET_STATUS_CONTROLLER = "GetPaymentStatusController";
+    private final static String FILTER = "Filter";
+    private final static String FILTER_CONTROLLER = "FilterController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -237,9 +239,9 @@ public class MainController extends HttpServlet {
                 url = CHECK_OUT_CONTROLLER;
             } else if (VIEW_CART.equals(action)) {
                 url = VIEW_CART_CONTROLLER;
-            }else if (CREATE_SIZE.equals(action)) {
+            } else if (CREATE_SIZE.equals(action)) {
                 url = CREATE_SIZE_CONTROLLER;
-            }else if (UPDATE_STOCK.equals(action)) {
+            } else if (UPDATE_STOCK.equals(action)) {
                 url = UPDATE_STOCK_CONTROLLER;
             } else if (LOAD_PAYMENT.equals(action)) {
                 url = LOAD_PAYMENT_CONTROLLER;
@@ -247,6 +249,8 @@ public class MainController extends HttpServlet {
                 url = SEARCH_PAYMENT_CONTROLLER;
             } else if (GET_STATUS.equals(action)) {
                 url = GET_STATUS_CONTROLLER;
+            } else if (FILTER.equals(action)) {
+                url = FILTER_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());

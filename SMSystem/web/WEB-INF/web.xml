@@ -252,6 +252,10 @@
         <servlet-name>GetPaymentStatusController</servlet-name>
         <servlet-class>controller.GetPaymentStatusController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FilterController</servlet-name>
+        <servlet-class>controller.FilterController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -475,6 +479,10 @@
     <servlet-mapping>
         <servlet-name>GetPaymentStatusController</servlet-name>
         <url-pattern>/GetPaymentStatusController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterController</servlet-name>
+        <url-pattern>/FilterController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

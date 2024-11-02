@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -21,35 +22,58 @@ import model.product.ProductImageDAO;
  *
  * @author LENOVO
  */
-public class SearchCategoriesController extends HttpServlet {
+public class FilterController extends HttpServlet {
 
-    private static final String ERROR = "shop.jsp";
-    private static final String SUCCES = "shop.jsp";
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
         try {
-            String typeStr = request.getParameter("type");
-            int type = Integer.parseInt(typeStr);
-            HttpSession session = request.getSession();
-            ProductDAO productDao = new ProductDAO();
+            String[] colors = request.getParameterValues("color");
+            String[] brands = request.getParameterValues("brand");
+            String minPrice_raw = request.getParameter("minPrice");
+            String maxPrice_raw = request.getParameter("maxPrice");
+            String uOb = request.getParameter("uOb");
+            int[] intBrands;
+            int[] intUOb;
+            if (brands != null) {
+                intBrands = new int[brands.length];
+                for (int i = 0; i < brands.length; i++) {
+                    try {
+                        intBrands[i] = Integer.parseInt(brands[i]);
+                    } catch (NumberFormatException e) {
+
+                    }
+                }
+            } else {
+                intBrands = new int[0];
+            }
+            if(colors == null) colors = new String[0];
+            if(uOb != null){
+                intUOb = new int[1];
+                intUOb[0] = Integer.parseInt(uOb);
+            }else{
+                intUOb = new int[0];
+            }
+            ProductDAO dao = new ProductDAO();
             ProductImageDAO imageDao = new ProductImageDAO();
-            List<ProductDTO> productList;
-            productList = productDao.getProductByCate(type);
-            for(ProductDTO p : productList){
+            List<ProductDTO> list = dao.filter(intBrands, minPrice_raw, maxPrice_raw, colors, intUOb);
+            for(ProductDTO p: list){
                 p.setListImages(imageDao.getImageByProduct(p.getProductId()));
             }
-            if (productList != null) {
-                session.setAttribute("PRODUCT_LIST", productList);
-                session.setAttribute("CATE", type);
-                url = SUCCES;
-            }
+            HttpSession session = request.getSession();
+            session.setAttribute("PRODUCT_LIST", list);
         } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
-            log("Error at SearchCategoriesController: " + e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+        }finally{
+            request.getRequestDispatcher("shop.jsp").forward(request, response);
         }
     }
 
