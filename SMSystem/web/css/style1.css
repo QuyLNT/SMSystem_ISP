@@ -4391,3 +4391,41 @@ favor-add{
     width: 100px;
     height: 15px;
 }
+.select-option-province select {
+    width: 100%; /* Chiều rộng bằng 100% để đồng bộ */
+    padding: 10px 12px; /* Khoảng cách bên trong để ô chọn trông thoải mái hơn */
+    font-size: 16px; /* Kích thước chữ nhất quán */
+    color: #333; /* Màu chữ */
+    background-color: #ffffff; /* Màu nền nhẹ */
+    border: 1px solid #ccc; /* Viền mỏng để tạo khung */
+    border-radius: 4px; /* Bo tròn các góc để tạo sự mềm mại */
+    box-sizing: border-box; /* Đảm bảo padding không ảnh hưởng kích thước */
+    -webkit-appearance: none; /* Loại bỏ kiểu dáng mặc định trên một số trình duyệt */
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer; /* Hiển thị con trỏ khi di chuột */
+    transition: border-color 0.3s ease; /* Hiệu ứng mượt khi hover */
+}/* Hiệu ứng khi di chuột vào ô chọn */
+.select-option-province select:hover, .select-option select:focus {
+    border-color: #007bff; /* Màu viền xanh khi hover hoặc focus */
+}
+
+/* Đặt khoảng cách giữa các nhãn và các trường */
+.select-option-province label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #333; /* Màu của nhãn */
+}
+
+/* Căn chỉnh khoảng cách cho từng .col-lg-7 */
+.col-lg-7 {
+    margin-bottom: 20px; /* Khoảng cách dưới giữa các mục chọn */
+}
+
+/* Điều chỉnh để hộp chọn không bị tràn trên các thiết bị nhỏ */
+@media (max-width: 768px) {
+    .col-lg-7 {
+        width: 100%;
+    }
+}

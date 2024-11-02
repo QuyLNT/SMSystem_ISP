@@ -32,7 +32,7 @@
         <link rel="stylesheet" href="css/nice-select.css" type="text/css">
         <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-     <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style2.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
@@ -250,20 +250,22 @@
                                     <input type="text" id="fir" name="fullname" value="<%= loginUser.getFullName()%>">
                                 </div>
                                 <div class="col-lg-7 col-md-7">
-                                    <div class="select-option">
+                                    <div class="select-option-province">
                                         <label for="province">Province / City <span>*</span></label>
                                         <select id="province" name="province" required aria-live="polite" onchange="fetchDistricts()">
                                             <option value="" disabled selected>Select Province / City</option>
+                                            <!-- Các tùy chọn tỉnh/thành phố sẽ được thêm ở đây -->
                                         </select>
                                         <input type="hidden" id="provinceName" name="provinceName">
-
                                     </div>
                                 </div>
+
                                 <div class="col-lg-7 col-md-7">
-                                    <div class="select-option">
+                                    <div class="select-option-province">
                                         <label for="district">District <span>*</span></label>
                                         <select id="district" name="district" required aria-live="polite">
                                             <option value="" disabled selected>Select District</option>
+                                            <!-- Các tùy chọn quận/huyện sẽ được thêm ở đây -->
                                         </select>
                                         <input type="hidden" id="districtName" name="districtName">
                                     </div>

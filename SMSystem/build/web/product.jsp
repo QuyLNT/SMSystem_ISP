@@ -141,6 +141,7 @@
                 fill: rgb(175, 175, 175);
             }
         </style>
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
     </head>
 
     <body>
