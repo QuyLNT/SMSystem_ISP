@@ -22,14 +22,14 @@
     </head>
     <body>
         <main class="main-wrap">
-                        <header class="main-head">
+            <header class="main-head">
                 <div class="main-nav">
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
                                     <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
-                                    <span class="title-text">SMS</span>
+                                    <span class="title-text">SMSystem</span>
                                 </h3>
                             </div>
                             <ul class="nav-list">
@@ -40,15 +40,21 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="categoriesList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-list"></i>
-                                        <span class="link-text">Categories</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
                                     <a href="MainController?action=LoadProductList" class="nav-link">
                                         <i class="fa-solid fa-capsules"></i>
                                         <span class="link-text">Products</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadOrderList" class="nav-link">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span class="link-text">Order</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadPaymentList" class="nav-link">
+                                        <i class="fa-solid fa-money-bill-wave"></i>                                        
+                                        <span class="link-text">Payment</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -58,9 +64,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="MainController?action=LoadOrderList" class="nav-link">
-                                        <i class="fa-solid fa-file-invoice"></i>
-                                        <span class="link-text">Order</span>
+                                    <a href="categoriesList.jsp" class="nav-link">
+                                        <i class="fa-solid fa-list"></i>
+                                        <span class="link-text">Categories</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -72,7 +78,7 @@
                                 <li class="nav-list-item">
                                     <a href="LogoutController" class="nav-link">
                                         <i class="fa-solid fa-right-from-bracket"></i>
-                                        <span class="link-text">Log out</span>
+                                        <span class="link-text">Logout</span>
                                     </a>
                                 </li>
                             </ul>
@@ -92,11 +98,11 @@
 
                             <form action="MainController" method="POST">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
-                                <i class="fa-solid fa-plus"></i> Add new Brand
+                                    <i class="fa-solid fa-plus"></i> Add new Brand
                                 </button>
                             </form>
-                                                        <%                                
-                                                            String ms = "";
+                            <%
+                                String ms = "";
                                 String err = "";
                                 if (request.getAttribute("ms") != null) {
                                     ms = (String) request.getAttribute("ms");
@@ -113,8 +119,8 @@
                             <%}%>
                             <%
                                 String searchBrandName = request.getParameter("searchBrandName");
-                                if(searchBrandName==null){
-                                    searchBrandName="";
+                                if (searchBrandName == null) {
+                                    searchBrandName = "";
                                 }
                             %>
 
@@ -149,9 +155,9 @@
                             </div>
                         </div>
                         <div class="welcome" >
-                            <%  
-                                List<BrandDTO> brandList =(List<BrandDTO>) session.getAttribute("BRAND_LIST");
-                                if(brandList != null){
+                            <%
+                                List<BrandDTO> brandList = (List<BrandDTO>) session.getAttribute("BRAND_LIST");
+                                if (brandList != null) {
                             %>
                             <div class="table-tilte">Brand Table</div>
                             <table class="table table-hover">
@@ -164,8 +170,8 @@
                                 </thead>
                                 <tbody>   
                                     <%
-                                        int count=1;
-                                        for(BrandDTO b : brandList){
+                                        int count = 1;
+                                        for (BrandDTO b : brandList) {
                                     %>
                                     <tr>
                                         <td> <%=count++%></td>    
@@ -173,8 +179,8 @@
                                         <td> <%=b.getProductCount()%></td> 
                                     </tr>  
                                     <%
+                                            }
                                         }
-                                    }
                                     %>                                
                                 </tbody>
                             </table>

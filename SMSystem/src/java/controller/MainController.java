@@ -140,6 +140,8 @@ public class MainController extends HttpServlet {
     private final static String ASSIGN_SHIPPER_CONTROLLER = "AssignShipperController ";
     private final static String FILTER = "Filter";
     private final static String FILTER_CONTROLLER = "FilterController";
+    private final static String CHECK_WARRANTY = "CheckWarranty";
+    private final static String CHECK_WARRANTY_CONTROLLER = "CheckWarrantyController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -255,6 +257,8 @@ public class MainController extends HttpServlet {
                 url = ASSIGN_SHIPPER_CONTROLLER;
             } else if (FILTER.equals(action)) {
                 url = FILTER_CONTROLLER;
+            }else if (CHECK_WARRANTY.equals(action)) {
+                url = CHECK_WARRANTY_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());

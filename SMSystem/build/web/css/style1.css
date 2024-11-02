@@ -3754,6 +3754,98 @@ favor-add{
 }
 
 /*---------------------
+  Warranty Section
+-----------------------*/
+
+.warranty-section {
+    padding-top: 75px;
+    padding-bottom: 80px;
+}
+
+.warranty-title {
+    margin-bottom: 30px;
+}
+
+.warranty-title h4 {
+    color: #252525;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.warranty-widget .cw-item {
+    background: #ffffff;
+    margin-bottom: 11px;
+    padding-left: 25px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 10px;
+}
+
+.warranty-widget .cw-item .ci-icon {
+    float: left;
+    margin-top: 12px;
+}
+
+.warranty-widget .cw-item .ci-icon i {
+    font-size: 30px;
+    color: #b2b2b2;
+}
+
+.warranty-widget .cw-item .ci-text {
+    display: table;
+    padding-left: 30px;
+}
+
+.warranty-widget .cw-item .ci-text span {
+    color: #b2b2b2;
+    font-size: 16px;
+}
+
+.warranty-widget .cw-item .ci-text p {
+    font-size: 18px;
+    color: #252525;
+    margin-bottom: 0;
+}
+
+.warranty-widget .leave-comment h4 {
+    color: #292f3b;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.warranty-widget .leave-comment p {
+    margin-bottom: 38px;
+}
+
+.warranty-widget .leave-comment .comment-form input {
+    width: 100%;
+    font-size: 16px;
+    color: #636363;
+    height: 50px;
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
+    padding-left: 20px;
+    margin-bottom: 30px;
+}
+
+.warranty-widget .leave-comment .comment-form textarea {
+    width: 100%;
+    resize: none;
+    font-size: 16px;
+    color: #636363;
+    height: 150px;
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-top: 10px;
+    margin-bottom: 35px;
+}
+
+.warranty-widget .leave-comment .comment-form .site-btn {
+    padding: 13px 35px 11px;
+}
+
+/*---------------------
   Faq Section
 -----------------------*/
 

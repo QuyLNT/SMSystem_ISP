@@ -25,7 +25,7 @@
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="img/icon-logoweb.png" alt="" width="32px" height="32px""/>
+                                    <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
                                     <span class="title-text">SMSystem</span>
                                 </h3>
                             </div>
@@ -37,15 +37,21 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="categoriesList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-list"></i>
-                                        <span class="link-text">Categories</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
                                     <a href="MainController?action=LoadProductList" class="nav-link">
                                         <i class="fa-solid fa-capsules"></i>
                                         <span class="link-text">Products</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadOrderList" class="nav-link">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span class="link-text">Order</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadPaymentList" class="nav-link">
+                                        <i class="fa-solid fa-money-bill-wave"></i>                                        
+                                        <span class="link-text">Payment</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -55,9 +61,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="MainController?action=LoadOrderList" class="nav-link">
-                                        <i class="fa-solid fa-file-invoice"></i>
-                                        <span class="link-text">Order</span>
+                                    <a href="categoriesList.jsp" class="nav-link">
+                                        <i class="fa-solid fa-list"></i>
+                                        <span class="link-text">Categories</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -69,7 +75,7 @@
                                 <li class="nav-list-item">
                                     <a href="LogoutController" class="nav-link">
                                         <i class="fa-solid fa-right-from-bracket"></i>
-                                        <span class="link-text">Log out</span>
+                                        <span class="link-text">Logout</span>
                                     </a>
                                 </li>
                             </ul>
@@ -96,17 +102,10 @@
                             List<UserDTO> shippers = null;
                             Map<Integer, Integer> shipperMap = null;
 
-                                try {
-                                    list = d.getAllOrder();
-                                    if (request.getAttribute("ORDER_LIST") != null) {
-                                        list = (List<OrderDTO>) request.getAttribute("ORDER_LIST");
-                                    }
-                                    if (request.getAttribute("ms") != null && request.getAttribute("orderId") != null) {
-                                        ms = request.getAttribute("ms").toString();
-                                        orderid = request.getAttribute("orderId").toString();
-                            %>                        
-                            <div><%= ms%> Order ID: <%= orderid%></div>
-                            <%
+                            try {
+                                list = d.getAllOrder();
+                                if (request.getAttribute("ORDER_LIST") != null) {
+                                    list = (List<OrderDTO>) request.getAttribute("ORDER_LIST");
                                 }
                                 UserDAO userDAO = new UserDAO();
                                 shippers = userDAO.getAllShippers();
@@ -120,15 +119,12 @@
                         <%
                             }
                         %>
-                        <div class="table-title">Order Table</div>
+                        <div class="table-tilte">Order Table</div>
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Order Code</th>
                                     <th>Customer</th>
-                                    <th>Street</th>
-                                    <th>District</th>
-                                    <th>City</th>
                                     <th>Discount</th>
                                     <th>Payment Method</th>
                                     <th>Shipment Method</th>
@@ -150,9 +146,6 @@
                                 <tr>
                                     <td><%= a.getOrderId()%></td>
                                     <td><%= a.getCustomer().getUserName()%></td>
-                                    <td><%= a.getStreet()%></td>
-                                    <td><%= a.getDistrict()%></td>
-                                    <td><%= a.getCity()%></td>
                                     <td><%= a.getDiscountCode()%></td>
                                     <td><%= a.getPaymentMethod()%></td>
                                     <td><%= a.getShippingMethod()%></td>
@@ -198,10 +191,19 @@
                                 </tr>
                                 <%
                                     }
+                                } else {
                                 %>
-                                </tbody>
-                            </table>
-                        </div>
+                                <tr><td colspan="11">No orders available or an error occurred.</td></tr>
+                                <%
+                                    }
+                                } catch (Exception e) {
+                                %>
+                            <div class="alert alert-danger">Error loading orders: <%= e.getMessage()%></div>
+                            <%
+                                }
+                            %>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>
