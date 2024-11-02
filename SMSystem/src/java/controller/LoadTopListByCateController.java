@@ -21,6 +21,7 @@ import model.cart.CartDAO;
 import model.cart.CartDTO;
 import model.cart.CartItems;
 import model.category.BrandDAO;
+import model.category.BrandDTO;
 import model.category.UserObjectDAO;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
@@ -60,6 +61,9 @@ public class LoadTopListByCateController extends HttpServlet {
             List<ProductDTO> menList;
             List<ProductDTO> womenList;
             List<ProductDTO> kidList;
+            List<BrandDTO> brandList;
+            brandList = brandDao.getAllBrand();
+
             menList = productDao.getTopMenList();
             womenList = productDao.getTopWomenList();
             kidList = productDao.getTopKidList();
@@ -72,7 +76,7 @@ public class LoadTopListByCateController extends HttpServlet {
             for (ProductDTO pro : kidList) {
                 pro.setListImages(imageDao.getImageByProduct(pro.getProductId()));
             }
-            
+
             CartDAO cartDao = new CartDAO();
             UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
             if (loginUser != null) {
@@ -96,6 +100,8 @@ public class LoadTopListByCateController extends HttpServlet {
                 session.setAttribute("MEN_LIST", menList);
                 session.setAttribute("WOMEN_LIST", womenList);
                 session.setAttribute("KID_LIST", kidList);
+                session.setAttribute("BRAND_LIST", brandList);
+
                 url = SUCCESS;
 
             }

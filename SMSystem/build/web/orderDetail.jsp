@@ -18,7 +18,7 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
-       <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
     </head>
@@ -30,15 +30,39 @@
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="img/icon-logoweb.png" width="32px" height="32px" alt="" />
-                                    <span class="title-text">SM System</span>
+                                    <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
+                                    <span class="title-text">SMSystem</span>
                                 </h3>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
-                                    <a href="adminHome.jsp" class="nav-link">
+                                    <a href="MainController?action=LoadManagerHomeData" class="nav-link">
                                         <i class="fa-solid fa-house"></i>
                                         <span class="link-text">Home</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadProductList" class="nav-link">
+                                        <i class="fa-solid fa-capsules"></i>
+                                        <span class="link-text">Products</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadOrderList" class="nav-link">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span class="link-text">Order</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadPaymentList" class="nav-link">
+                                        <i class="fa-solid fa-money-bill-wave"></i>                                        
+                                        <span class="link-text">Payment</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadDiscountList" class="nav-link">
+                                        <i class="fa-solid fa-percent"></i>
+                                        <span class="link-text">Discount</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -47,29 +71,16 @@
                                         <span class="link-text">Categories</span>
                                     </a>
                                 </li>
-
                                 <li class="nav-list-item">
-                                    <a href="productList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-capsules"></i>
-                                        <span class="link-text">Products</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
-                                    <a href="discountList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-percent"></i>
-                                        <span class="link-text">Discount</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
-                                    <a href="orderList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-file-invoice"></i>
-                                        <span class="link-text">Order</span>
+                                    <a href="MainController?action=LoadBrandList" class="nav-link">
+                                        <i class="fa-solid fa-tag"></i>
+                                        <span class="link-text">Brand</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
                                     <a href="LogoutController" class="nav-link">
                                         <i class="fa-solid fa-right-from-bracket"></i>
-                                        <span class="link-text">Log out</span>
+                                        <span class="link-text">Logout</span>
                                     </a>
                                 </li>
                             </ul>
@@ -97,7 +108,7 @@
                             %>
                             <div class="table-tilte"> 
                                 <a href="orderList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-arrow-left"></i>
+                                    <i class="fa-solid fa-arrow-left"></i>
                                 </a>
                                 Customer Information
                             </div>

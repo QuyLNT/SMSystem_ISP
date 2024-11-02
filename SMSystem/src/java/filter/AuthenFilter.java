@@ -101,6 +101,7 @@ public class AuthenFilter implements Filter {
         NON_AUTHEN_RESOURCE.add("product.jsp");
         NON_AUTHEN_RESOURCE.add("shop.jsp");
         NON_AUTHEN_RESOURCE.add("success.jsp");
+        NON_AUTHEN_RESOURCE.add("warrantyPage.jsp");
         NON_AUTHEN_RESOURCE.add("MainController");
         NON_AUTHEN_RESOURCE.add("LoadTopListByCateController");
     }

@@ -35,7 +35,7 @@
                             <div class="title">
                                 <h3>
                                     <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
-                                    <span class="title-text">SMS</span>
+                                    <span class="title-text">SMSystem</span>
                                 </h3>
                             </div>
                             <ul class="nav-list">
@@ -46,15 +46,21 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="categoriesList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-list"></i>
-                                        <span class="link-text">Categories</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
                                     <a href="MainController?action=LoadProductList" class="nav-link">
                                         <i class="fa-solid fa-capsules"></i>
                                         <span class="link-text">Products</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadOrderList" class="nav-link">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span class="link-text">Order</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadPaymentList" class="nav-link">
+                                        <i class="fa-solid fa-money-bill-wave"></i>                                        
+                                        <span class="link-text">Payment</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -64,9 +70,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="MainController?action=LoadOrderList" class="nav-link">
-                                        <i class="fa-solid fa-file-invoice"></i>
-                                        <span class="link-text">Order</span>
+                                    <a href="categoriesList.jsp" class="nav-link">
+                                        <i class="fa-solid fa-list"></i>
+                                        <span class="link-text">Categories</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -78,7 +84,7 @@
                                 <li class="nav-list-item">
                                     <a href="LogoutController" class="nav-link">
                                         <i class="fa-solid fa-right-from-bracket"></i>
-                                        <span class="link-text">Log out</span>
+                                        <span class="link-text">Logout</span>
                                     </a>
                                 </li>
                             </ul>
@@ -278,7 +284,7 @@
                                             for (ProductDTO product : productList) {
                                     %>
                                     <tr>
-                                        <td><img src="<%= product.getAvatarPath()%>" alt="<%= product.getName()%>" style="width: 70px; height: 70px;"></td>
+                                        <td><img src="<%= product.getAvatarPath()%>" alt="" style="width: 70px; height: 70px;"></td>
                                         <td><%= product.getName()%></td>
                                         <td><%
                                             String userObjectName = "";
@@ -436,7 +442,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        
+
                                         <td>
                                             <!-- Nút Xem Chi Tiết Sản Phẩm -->
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal<%= product.getProductId()%>">

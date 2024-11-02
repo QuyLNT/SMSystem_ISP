@@ -30,7 +30,7 @@
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
-     <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
         <link rel="stylesheet" href="css/style3.css" type="text/css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     </head>
@@ -211,6 +211,7 @@
 
                                     </ul>
                                 </li>
+                                <li><a href="warrantyPage.jsp">Warranty</a></li>
                             </ul>
                         </nav>
                         <div id="mobile-menu-wrap"></div>
