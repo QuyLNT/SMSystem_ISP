@@ -45,6 +45,7 @@ public class UserDAO {
     private static final String GET_USER_NAME = "SELECT userName FROM users WHERE userId = ? ";
     private static final String GET_EMAIL = "SELECT email FROM users WHERE email = ?";
     private static final String UPDATE_PASSWORD = "UPDATE users SET password = ? WHERE email = ?";
+    private static final String GET_SHIPPER = "SELECT userId, fullName, userName, phoneNumber, email, roleId FROM users WHERE roleId = 'SP'";
 
     public UserDTO checkLogin(String userIndentify, String password) throws SQLException, ClassNotFoundException, NamingException {
         UserDTO user = null;
@@ -489,5 +490,41 @@ public class UserDAO {
             }
         }
         return fullName;
+    }
+
+    public List<UserDTO> getAllShippers() throws ClassNotFoundException, SQLException {
+        List<UserDTO> shippers = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_SHIPPER);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    UserDTO shipper = new UserDTO();
+                    shipper.setUserId(rs.getInt("userId"));
+                    shipper.setFullName(rs.getString("fullName"));
+                    shipper.setUserName(rs.getString("userName"));
+                    shipper.setPhoneNumber(rs.getString("phoneNumber"));
+                    shipper.setEmail(rs.getString("email"));
+                    shipper.setRoleId(rs.getString("roleId"));
+                    shippers.add(shipper);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return shippers;
     }
 }

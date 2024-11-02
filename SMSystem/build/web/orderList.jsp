@@ -1,3 +1,6 @@
+<%@page import="java.util.Map"%>
+<%@page import="model.user.UserDAO"%>
+<%@page import="model.user.UserDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="model.order.OrderDTO"%>
 <%@page import="model.order.OrderDAO"%>
@@ -75,19 +78,23 @@
                 </div>
             </header>
             <section class="showcase">
-                <div class="overlay">
-                    <div class="head">
-                        <button class="toggler">
-                            <i class="fa-solid fa-bars"></i>
-                        </button>
-                    </div>
-                    <div class="container">
-                        <div class="welcome">
-                            <%
-                                String ms = "";
-                                String orderid = "";
-                                OrderDAO d = new OrderDAO();
-                                List<OrderDTO> list = null;
+                <div class="container">
+                    <div class="welcome">
+                        <%
+                            String message = (String) request.getAttribute("message");
+                            if (message != null) {
+                        %>
+                        <p><%= message%></p>
+                        <%
+                            }
+                        %>
+                        <%
+                            String ms = "";
+                            String orderid = "";
+                            OrderDAO d = new OrderDAO();
+                            List<OrderDTO> list = null;
+                            List<UserDTO> shippers = null;
+                            Map<Integer, Integer> shipperMap = null;
 
                                 try {
                                     list = d.getAllOrder();
@@ -101,72 +108,94 @@
                             <div><%= ms%> Order ID: <%= orderid%></div>
                             <%
                                 }
-                            %>
-                            <div class="table-title">Order Table</div>
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Order Code</th>
-                                        <th>Customer</th>
-                                        <th>Street</th>
-                                        <th>District</th>
-                                        <th>City</th>
-                                        <th>Discount</th>
-                                        <th>Payment Method</th>
-                                        <th>Shipment Method</th>
-                                        <th>Create At</th>
-                                        <th>Order Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <%
-                                        if (list != null && !list.isEmpty()) {
-                                            // Loop through the orderList and display each order
-                                            for (OrderDTO a : list) {
-                                    %>
-                                    <tr>
-                                        <td><%= a.getOrderId()%></td>
-                                        <td><%= a.getCustomer().getUserName()%></td>
-                                        <td><%= a.getStreet()%></td>
-                                        <td><%= a.getDistrict()%></td>
-                                        <td><%= a.getCity()%></td>
-                                        <td><%= a.getDiscountCode()%></td>
-                                        <td><%= a.getPaymentMethod()%></td>
-                                        <td><%= a.getShippingMethod()%></td>
-                                        <td><%= a.getCreatedAt()%></td>
-                                        <td>
-                                            <form action="UpdateOrderStatusController" method="POST">
-                                                <input type="hidden" name="orderId" value="<%= a.getOrderId()%>">
-                                                <select name="status" onchange="this.form.submit()">
-                                                    <option value="Accepted,waiting for Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Accepted,waiting for Delivering") ? "selected" : ""%>>Accepted,waiting for Delivering</option>
-                                                    <option value="Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Delivering") ? "selected" : ""%>>Delivering</option>
-                                                    <option value="Delivered" <%= a.getOrderStatus().equalsIgnoreCase("Delivered") ? "selected" : ""%>>Delivered</option>
-                                                    <option value="Completed" <%= a.getOrderStatus().equalsIgnoreCase("Completed") ? "selected" : ""%>>Completed</option>
-                                                    <option value="Not Completed" <%= a.getOrderStatus().equalsIgnoreCase("Not Completed") ? "selected" : ""%>>Not Completed</option>
-                                                </select>
-                                                <input type="hidden" name="action" value="UpdateStatus"/>
-                                            </form>
-                                        <td>
-                                            <form action="MainController" method="POST">
-                                                <input type="hidden" name="orderId" value="<%= a.getOrderId()%>" />
-                                                <button type="submit" class="btn btn-primary" name="action" value="View-Detail">
-                                                    <i class="fa-solid fa-eye"></i>
-                                                </button>
-                                            </form>
-                                        </td>
+                                UserDAO userDAO = new UserDAO();
+                                shippers = userDAO.getAllShippers();
+                                shipperMap = d.getShipperMap();
 
-                                    </tr>
-                                    <%
-                                        }
-                                    } else {
-                                    %>
-                                    <tr><td colspan="11">No orders available or an error occurred.</td></tr>
-                                    <%
-                                        }
-                                    } catch (Exception e) {
-                                    %>
-                                <div class="alert alert-danger">Error loading orders: <%= e.getMessage()%></div>
+                                if (request.getAttribute("ms") != null && request.getAttribute("orderId") != null) {
+                                    ms = request.getAttribute("ms").toString();
+                                    orderid = request.getAttribute("orderId").toString();
+                        %>                        
+                        <div><%= ms%> Order ID: <%= orderid%></div>
+                        <%
+                            }
+                        %>
+                        <div class="table-title">Order Table</div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Order Code</th>
+                                    <th>Customer</th>
+                                    <th>Street</th>
+                                    <th>District</th>
+                                    <th>City</th>
+                                    <th>Discount</th>
+                                    <th>Payment Method</th>
+                                    <th>Shipment Method</th>
+                                    <th>Create At</th>
+                                    <th>Order Status</th>
+                                    <th>Actions</th>
+                                    <th>Assign Shipper</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                    if (list != null && !list.isEmpty()) {
+                                        // Loop through the orderList and display each order
+                                        for (OrderDTO a : list) {
+                                            int selectedShipperId = shipperMap != null && shipperMap.containsKey(a.getOrderId())
+                                                    ? shipperMap.get(a.getOrderId())
+                                                    : -1;
+                                %>
+                                <tr>
+                                    <td><%= a.getOrderId()%></td>
+                                    <td><%= a.getCustomer().getUserName()%></td>
+                                    <td><%= a.getStreet()%></td>
+                                    <td><%= a.getDistrict()%></td>
+                                    <td><%= a.getCity()%></td>
+                                    <td><%= a.getDiscountCode()%></td>
+                                    <td><%= a.getPaymentMethod()%></td>
+                                    <td><%= a.getShippingMethod()%></td>
+                                    <td><%= a.getCreatedAt()%></td>
+                                    <td>
+                                        <form action="UpdateOrderStatusController" method="POST">
+                                            <input type="hidden" name="orderId" value="<%= a.getOrderId()%>">
+                                            <select name="status" onchange="this.form.submit()">
+                                                <option value="Accepted,waiting for Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Accepted,waiting for Delivering") ? "selected" : ""%>>Accepted,waiting for Delivering</option>
+                                                <option value="Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Delivering") ? "selected" : ""%>>Delivering</option>
+                                                <option value="Delivered" <%= a.getOrderStatus().equalsIgnoreCase("Delivered") ? "selected" : ""%>>Delivered</option>
+                                                <option value="Completed" <%= a.getOrderStatus().equalsIgnoreCase("Completed") ? "selected" : ""%>>Completed</option>
+                                                <option value="Not Completed" <%= a.getOrderStatus().equalsIgnoreCase("Not Completed") ? "selected" : ""%>>Not Completed</option>
+                                            </select>
+                                            <input type="hidden" name="action" value="UpdateStatus"/>
+                                        </form>
+                                    <td>
+                                        <form action="MainController" method="POST">
+                                            <input type="hidden" name="orderId" value="<%= a.getOrderId()%>" />
+                                            <button type="submit" class="btn btn-primary" name="action" value="View-Detail">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+
+                                    <td>
+                                        <form action="AssignShipperController" method="POST">
+                                            <input type="hidden" name="orderId" value="<%= a.getOrderId()%>">
+                                            <input type="hidden" name="ship" value="<%= a.getShippingMethod()%>">
+                                            <select name="shipperId" onchange="this.form.submit()">
+                                                <option value="">Select Shipper</option>
+                                                <% for (UserDTO shipper : shippers) {
+                                                        boolean isSelected = (shipper.getUserId() == selectedShipperId);
+                                                %>
+                                                <option value="<%= shipper.getUserId()%>" <%= isSelected ? "selected" : ""%>>
+                                                    <%= shipper.getFullName()%>
+                                                </option>
+                                                <% } %>
+                                            </select>
+                                        </form>
+                                    </td>
+
+                                </tr>
                                 <%
                                     }
                                 %>

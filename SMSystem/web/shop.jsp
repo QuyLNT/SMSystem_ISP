@@ -254,7 +254,7 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 product-sidebar-filter">
                         <div class="filter-widget">
-                            <form method="get" action="FilterServlet">
+                            <form method="get" action="MainController">
                                 <h4 class="fw-title">Brand</h4>
                                 <div class="fw-brand-check">
                                     <%
@@ -279,41 +279,85 @@
                                     %>
                                 </div>
 
+                                <!--                                <h4 class="fw-title">Color</h4>
+                                                                <div class="dropdown">
+                                                                    <div class="dropdown-header"></div>
+                                                                    <ul class="color-options">
+                                                                        <li>
+                                                                            <span class="color-circle" style="background-color: white;"></span>
+                                                                            Trắng
+                                                                        </li>
+                                                                        <li>
+                                                                            <span class="color-circle" style="background-color: #FFB6C1;"></span>
+                                                                            HỒNG
+                                                                        </li>
+                                                                        <li>
+                                                                            <span class="color-circle rainbow"></span>
+                                                                            NHIỀU MÀU
+                                                                        </li>
+                                                                        <li>
+                                                                            <span class="color-circle" style="background-color: #000;"></span>
+                                                                            Đen
+                                                                        </li>
+                                                                        <li>
+                                                                            <span class="color-circle" style="background-color: #cc2424;"></span>
+                                                                            Đỏ
+                                                                        </li>
+                                                                        <li>
+                                                                            <span class="color-circle" style="background-color: green;"></span>
+                                                                            Xanh lá cây
+                                                                        </li>
+                                                                        <li>
+                                                                            <span class="color-circle" style="background-color: blue;"></span>
+                                                                            Xanh nước biển
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>-->
                                 <h4 class="fw-title">Color</h4>
-                                <div class="dropdown">
-                                    <div class="dropdown-header"></div>
-                                    <ul class="color-options">
-                                        <li>
-                                            <span class="color-circle" style="background-color: white;"></span>
-                                            Trắng
-                                        </li>
-                                        <li>
-                                            <span class="color-circle" style="background-color: #FFB6C1;"></span>
-                                            HỒNG
-                                        </li>
-                                        <li>
-                                            <span class="color-circle rainbow"></span>
-                                            NHIỀU MÀU
-                                        </li>
-                                        <li>
-                                            <span class="color-circle" style="background-color: #000;"></span>
-                                            Đen
-                                        </li>
-                                        <li>
-                                            <span class="color-circle" style="background-color: #cc2424;"></span>
-                                            Đỏ
-                                        </li>
-                                        <li>
-                                            <span class="color-circle" style="background-color: green;"></span>
-                                            Xanh lá cây
-                                        </li>
-                                        <li>
-                                            <span class="color-circle" style="background-color: blue;"></span>
-                                            Xanh nước biển
-                                        </li>
-                                    </ul>
+                                <div class="fw-brand-check">
+                                    <div class="bc-item">
+                                        <label for="bc-white">
+                                            White
+                                            <input type="checkbox" id="bc-white" name="color" value="White"/>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="bc-item">
+                                        <label for="bc-black">
+                                            Black
+                                            <input type="checkbox" id="bc-black" name="color" value="Black"/>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="bc-item">
+                                        <label for="bc-green">
+                                            Green
+                                            <input type="checkbox" id="bc-green" name="color" value="Green"/>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="bc-item">
+                                        <label for="bc-blue">
+                                            Blue
+                                            <input type="checkbox" id="bc-blue" name="color" value="Blue"/>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="bc-item">
+                                        <label for="bc-yellow">
+                                            Yellow
+                                            <input type="checkbox" id="bc-yellow" name="color" value="Yellows"/>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="bc-item">
+                                        <label for="bc-order">
+                                            Order
+                                            <input type="checkbox" id="bc-order" name="color" value="Order"/>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
                                 </div>
-
 
                                 <h4 class="fw-title">Price</h4>
                                 <div class="filter-range-wrap">
@@ -330,7 +374,15 @@
                                         <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>  
                                     </div>
                                 </div>
-                                <input style="border: none" type="submit" class="filter-btn" value="Filter">
+                                <%
+                                    Integer cate = (Integer) session.getAttribute("CATE");
+                                    if (cate != null && cate > 0) {
+                                %>
+                                <input type="hidden" name="uOb" value="<%= cate%>"/>
+                                <%
+                                    }
+                                %>
+                                <input style="border: none" type="submit" name="action" class="filter-btn" value="Filter">
                             </form>
                         </div>
                         <div class="filter-widget">
@@ -341,15 +393,35 @@
                             <div class="row">
                                 <div class="col-lg-7 col-md-7">
                                     <div class="select-option">
+                                        <%
+                                            String selectedId = (String) session.getAttribute("ID");
+                                            if (selectedId != null) {
+                                        %>
                                         <form id="sortingForm" method="get" action="MainController">
                                             <input type="hidden" name="action" value="SortShopPage"/>
                                             <select class="sorting" name="id" onchange="document.getElementById('sortingForm').submit();">
-                                                <option value="1" ${selectedId == null || selectedId.equals("1") ? "selected" : ""}>Default Sorting</option>
-                                                <option value="2" ${selectedId != null && selectedId.equals("2") ? "selected" : ""}>On Sale</option>
-                                                <option value="3" ${selectedId != null && selectedId.equals("3") ? "selected" : ""}>Price: High - Low</option>
-                                                <option value="4" ${selectedId != null && selectedId.equals("4") ? "selected" : ""}>Price: Low - High</option>
+                                                <option value="1" <%= selectedId.equals("1") == true ? "selected":"" %>>Default Sorting</option>
+                                                <option value="2" <%= selectedId.equals("2") == true ? "selected":"" %>>On Sale</option>
+                                                <option value="3" <%= selectedId.equals("3") == true ? "selected":"" %>>Price: High - Low</option>
+                                                <option value="4" <%= selectedId.equals("4") == true ? "selected":"" %>>Price: Low - High</option>
                                             </select>
                                         </form>
+                                        <%
+                                        } else {
+                                        %>
+                                        <form id="sortingForm" method="get" action="MainController">
+                                            <input type="hidden" name="action" value="SortShopPage"/>
+                                            <select class="sorting" name="id" onchange="document.getElementById('sortingForm').submit();">
+                                                <option value="1" selected="">Default Sorting</option>
+                                                <option value="2" >On Sale</option>
+                                                <option value="3" >Price: High - Low</option>
+                                                <option value="4" >Price: Low - High</option>
+                                            </select>
+                                        </form>
+                                        <%
+                                            }
+                                        %>
+
                                     </div>
                                 </div>
 

@@ -309,7 +309,7 @@
 
                                             %>
                                         <li style="display: none">                                           
-                                            <input type="hidden" name="userId" value="<%=ele.getProduct().getUserOjectId()%>" />
+                                            <input type="hidden" name="userId" value="<%= loginUser.getUserId()%>" />
                                             <input type="hidden" name="total" value="<%= total%>"/>
                                         </li>
                                         <li class="fw-normal"><%=ele.getProduct().getName()%> x <%=ele.getQuantity()%><br>Size: US <%=ele.getSize()%><span>$<%= String.format("%.1f", ele.getPrice())%> x <%= ele.getQuantity()%></span></li>
