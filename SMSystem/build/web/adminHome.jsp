@@ -14,7 +14,7 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
         <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
-        
+
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     </head>
     <body>
@@ -24,10 +24,12 @@
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
-                                <h3>
-                                    <img src="img/icon-logoweb.png" alt="" width="100%" height="100%"/>
-                                    <span class="title-text">SMS</span>
-                                </h3>
+                                <a href="MainController?action=HomePage">
+                                    <h3>
+                                        <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
+                                        <span class="title-text">SMSystem</span>
+                                    </h3>
+                                </a>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
@@ -45,7 +47,7 @@
                                 <li class="nav-list-item">
                                     <a href="LogoutController" class="nav-link">
                                         <i class="fa-solid fa-right-from-bracket"></i>
-                                        <span class="link-text">Log out</span>
+                                        <span class="link-text">Logout</span>
                                     </a>
                                 </li>
                             </ul>

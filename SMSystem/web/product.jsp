@@ -311,14 +311,10 @@
                         <nav class="nav-menu mobile-menu">
                             <ul>
                                 <li><a href="MainController?action=HomePage">Home</a></li>
-                                <li class="active"><a href="MainController?action=ShopPage">Shop</a></li>
+                                <li><a href="MainController?action=ShopPage">Shop</a></li>
                                 <li><a href="contact.jsp">Contact</a></li>
-                                <li><a href="">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="MainController?action=ViewCart&url=product.jsp">Shopping Cart</a></li>
-
-                                    </ul>
-                                </li>
+                                <li><a href="MainController?action=ViewCart&url=product.jsp">Shopping Cart</a></li>
+                                <li><a href="warrantyPage.jsp">Warranty</a></li>
                             </ul>
                         </nav>
                         <div id="mobile-menu-wrap"></div>

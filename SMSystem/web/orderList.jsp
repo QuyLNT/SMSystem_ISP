@@ -24,10 +24,12 @@
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
-                                <h3>
-                                    <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
-                                    <span class="title-text">SMSystem</span>
-                                </h3>
+                                <a href="MainController?action=HomePage">
+                                    <h3>
+                                        <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
+                                        <span class="title-text">SMSystem</span>
+                                    </h3>
+                                </a>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
@@ -84,7 +86,34 @@
                 </div>
             </header>
             <section class="showcase">
+                <div class="head">
+                    <button class="toggler">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+
                 <div class="container">
+                    <div class="welcome">
+                        <form action="MainController">
+                            <select name="dateFilter">
+                                <option value="">View All</option>                            
+                                <option value="Today">Today</option>
+                                <option value="This Week">This Week</option>
+                                <option value="This Month">This Month</option>
+                            </select>
+
+                            <select name="statusFilter">
+                                <option value="">All Statuses</option>
+                                <option value="Waiting For Accept">Waiting For Accept</option>
+                                <option value="Delivering" >Delivering</option>
+                                <option value="Completed" >Completed</option>
+                                <option value="Not Complete" >Not Complete</option>
+                            </select>
+
+                            <button type="submit" name="action" value="FilterOrder"class="btn btn-primary">Filter</button>
+                        </form>
+                    </div>
+
                     <div class="welcome">
                         <%
                             String message = (String) request.getAttribute("message");
@@ -154,11 +183,10 @@
                                         <form action="UpdateOrderStatusController" method="POST">
                                             <input type="hidden" name="orderId" value="<%= a.getOrderId()%>">
                                             <select name="status" onchange="this.form.submit()">
-                                                <option value="Accepted,waiting for Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Accepted,waiting for Delivering") ? "selected" : ""%>>Accepted,waiting for Delivering</option>
+                                                <option value="Waiting For Accept" <%= a.getOrderStatus().equalsIgnoreCase("Waiting For Accept") ? "selected" : ""%>>Waiting For Accept</option>
                                                 <option value="Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Delivering") ? "selected" : ""%>>Delivering</option>
-                                                <option value="Delivered" <%= a.getOrderStatus().equalsIgnoreCase("Delivered") ? "selected" : ""%>>Delivered</option>
                                                 <option value="Completed" <%= a.getOrderStatus().equalsIgnoreCase("Completed") ? "selected" : ""%>>Completed</option>
-                                                <option value="Not Completed" <%= a.getOrderStatus().equalsIgnoreCase("Not Completed") ? "selected" : ""%>>Not Completed</option>
+                                                <option value="Not Complete" <%= a.getOrderStatus().equalsIgnoreCase("Not Complete") ? "selected" : ""%>>Not Complete</option>
                                             </select>
                                             <input type="hidden" name="action" value="UpdateStatus"/>
                                         </form>
