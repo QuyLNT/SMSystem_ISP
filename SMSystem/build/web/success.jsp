@@ -4,7 +4,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.product.ProductDTO"%>
 <%@page import="model.user.UserDTO"%>
-<%@page import="model.ItemDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="model.cart.CartDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

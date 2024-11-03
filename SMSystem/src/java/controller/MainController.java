@@ -140,6 +140,10 @@ public class MainController extends HttpServlet {
     private final static String ASSIGN_SHIPPER_CONTROLLER = "AssignShipperController ";
     private final static String FILTER = "Filter";
     private final static String FILTER_CONTROLLER = "FilterController";
+    private final static String LOAD_SHIPMENT = "LoadShipment";
+    private final static String LOAD_SHIPMENT_CONTROLLER = "LoadShipmentController"; 
+    private final static String UPDATE_SHIPMENT = "UpdateShipment";
+    private final static String UPDATE_SHIPMENT_CONTROLLER = "UpdateShipmentController"; 
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -255,6 +259,10 @@ public class MainController extends HttpServlet {
                 url = ASSIGN_SHIPPER_CONTROLLER;
             } else if (FILTER.equals(action)) {
                 url = FILTER_CONTROLLER;
+            } else if (LOAD_SHIPMENT.equals(action)) {
+                url = LOAD_SHIPMENT_CONTROLLER;
+            } else if (UPDATE_SHIPMENT.equals(action)) {
+                url = UPDATE_SHIPMENT_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());

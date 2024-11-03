@@ -198,17 +198,14 @@
 
                                 <div class="col-lg-12">
                                     <label for="password">password <span>*</span></label>
-                                    <% if (request.getAttribute("PASS_ERROR") != null) {%>
-                                    <p style="color: red;"><%= request.getAttribute("PASS_ERROR")%>
-                                        <% } %>
-                                        <% if (user.getPassword() == null) { %>
-                                        <input type="text" id="pass" name="pass">
-                                        <% } else {%>
+                                    <% if (user.getPassword() == null) { %>
+                                    <input type="password" id="pass" name="pass">
+                                    <% } else {%>
 
-                                            <input type="password" id="password-exist" name="pass" value="<%= user.getPassword() %>" readonly>
-                                            <button type="button" id="edit-btn-pass" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
-                                                <i class="fa fa-pencil-square-o"></i>
-                                            </button>
+                                    <input type="password" id="password-exist" name="pass" value="<%= user.getPassword()%>" readonly>
+                                    <button type="button" id="edit-btn-pass" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </button>
 
 
                                     <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
@@ -221,22 +218,33 @@
                                                 <div class="modal-body">
                                                     <div class="input-group input-group-sm mb-3">
                                                         <span class="input-group-text" id="inputGroup-sizing-sm">Current password</span>
-                                                        <input name="name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
+                                                        <input name="currentPassword" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
                                                     </div>
+                                                    <% if (request.getAttribute("CURRENT_PASS_ERROR") != null) { %>
+                                                        <span style="color:red;">
+                                                            <%= request.getAttribute("CURRENT_PASS_ERROR") %>
+                                                        </span>
+                                                    <% } %>
                                                 </div>
+
                                                 <div class="modal-body">
                                                     <div class="input-group input-group-sm mb-3">
                                                         <span class="input-group-text" id="inputGroup-sizing-sm">New Password</span>
-                                                        <input name="name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
+                                                        <input name="newPassword" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
                                                     </div>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="input-group input-group-sm mb-3">
                                                         <span class="input-group-text" id="inputGroup-sizing-sm">Confirrm new password</span>
-                                                        <input name="name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
+                                                        <input name="confirmNewPassword" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
+                                                        <div id="passwordErrorMessage" style="color:red;">
+                                                            <% if (request.getAttribute("PASS_ERROR") != null) {%>
+                                                            <%= request.getAttribute("PASS_ERROR")%>
+                                                            <% } %>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                               <div class="modal-footer1">
+                                                <div class="modal-footer1">
                                                     <button type="button" class="btn1 btn-secondary1" data-bs-dismiss="modal">Close</button>
                                                     <button type="submit" name="action" value="Update" class="btn1 btn-primary1">Update</button>
                                                 </div>
@@ -244,7 +252,7 @@
                                         </div>
                                     </div>
 
-                                    <% } %>
+                                    <% }%>
                                 </div>
 
                                 <div class="col-lg-12">
@@ -262,18 +270,24 @@
                                 </div>
 
                                 <div class="col-lg-12">
-    <label for="sex">Sex <span>*</span></label>
-    <select id="sex" name="sex" class="form-control" style="background-color: #cce7f0;">
-        <option value="" disabled selected>-- Select Gender --</option> <!-- Lựa chọn mặc định, không có giá trị -->
-        <option value="Male" <% if ("Male".equals(user.getSex())) { out.print("selected"); } %>>Male</option>
-        <option value="Female" <% if ("Female".equals(user.getSex())) { out.print("selected"); } %>>Female</option>
-        <option value="Other" <% if ("Other".equals(user.getSex())) { out.print("selected"); } %>>Other</option>
-    </select>
-    <button type="button" id="edit-btn-sex" class="edit-btn" onclick="enableSelect('sex')">
-        <i class="fa fa-pencil-square-o"></i>
-    </button>
-    <span class="text-danger"><%= request.getAttribute("SEX_ERROR") != null ? request.getAttribute("SEX_ERROR") : ""%></span>
-</div>
+                                    <label for="sex">Sex <span>*</span></label>
+                                    <select id="sex" name="sex" class="form-control" style="background-color: #cce7f0;">
+                                        <option value="" disabled selected>-- Select Gender --</option> 
+                                        <option value="Male" <% if ("Male".equals(user.getSex())) {
+                                                out.print("selected");
+                                            } %>>Male</option>
+                                        <option value="Female" <% if ("Female".equals(user.getSex())) {
+                                                out.print("selected");
+                                            } %>>Female</option>
+                                        <option value="Other" <% if ("Other".equals(user.getSex())) {
+                                                out.print("selected");
+                                            }%>>Other</option>
+                                    </select>
+                                    <button type="button" id="edit-btn-sex" class="edit-btn" onclick="enableSelect('sex')">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </button>
+                                    <span class="text-danger"><%= request.getAttribute("SEX_ERROR") != null ? request.getAttribute("SEX_ERROR") : ""%></span>
+                                </div>
 
                                 <div class="col-lg-12">
                                     <label for="email">Email Address <span>*</span></label>
@@ -315,6 +329,16 @@
                     select.focus();
                 }
             }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                var currentPasswordError = "<%= request.getAttribute("CURRENT_PASS_ERROR") != null ? request.getAttribute("CURRENT_PASS_ERROR") : "" %>";
+                var passwordError = "<%= request.getAttribute("PASS_ERROR") != null ? request.getAttribute("PASS_ERROR") : "" %>";
+
+                if (currentPasswordError.trim().length > 0 || passwordError.trim().length > 0) {
+                    var passwordModal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
+                    passwordModal.show();
+                }
+            });
         </script>
         <!-- Shopping Cart Section Begin -->
 

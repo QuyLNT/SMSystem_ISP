@@ -6,9 +6,7 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -17,9 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.cart.CartDAO;
-import model.cart.CartDTO;
-import model.cart.CartItems;
 import model.user.UserDAO;
 import model.user.UserDTO;
 
@@ -42,7 +37,7 @@ public class LoginController extends HttpServlet {
     private static final String HOME_PAGE = "LoadTopListByCateController";
     private static final String ADMIN_PAGE = "LoadAdminHomeDataController";
     private static final String MANAGER_PAGE = "LoadManagerHomeDataController";
-    private static final String SHIPPER_PAGE = "shipperHome.jsp";
+    private static final String SHIPPER_PAGE = "shipperPage.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
