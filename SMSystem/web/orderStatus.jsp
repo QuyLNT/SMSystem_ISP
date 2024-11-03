@@ -13,19 +13,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Order Status</title>
-        <title>SMSystem</title>
-        <link rel="stylesheet" href="css/orderDetail1.css" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-            />
-        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
+  <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="codelean Template">
+        <meta name="keywords" content="codelean, unica, creative, html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Home page - SMSystem</title>
+        <link rel="icon" href="img/icon-logoweb.png" type="image/png">
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
         <!-- Css Styles -->
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
@@ -33,12 +31,15 @@
         <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
         <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
         <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-        <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+        <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css"> 
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="css/style.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
-        <link rel="stylesheet" href="css/style3.css" type="text/css">
         <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
+        <link rel="stylesheet" href="css/style3.css" type="text/css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     </head>
+
     <!-- Header section begin -->
     <header class="header-section">
         <div class="header-top">
@@ -56,8 +57,8 @@
                     </div>
                 </div>
                 <%
-                UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-                if (loginUser != null) {
+                    UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                    if (loginUser != null) {
                 %>
                 <div class="ht-right">
                     <div class="login-panel" id="user-btn">
@@ -88,7 +89,7 @@
                                 </div>
                         </section>
                         <%
-                        }
+                            }
                         %>
                         <div class="lan-selector">
                             <select class="language_drop" name="countries" id="countries" style="width: 300px;">
@@ -130,12 +131,52 @@
                                 </div>
                             </form>
                         </div>
+                        <section class="step-wizard">
+                            <ul class="step-wizard-list">
+                                <li class="step-wizard-item" data-status="1">
+                                    <a href="#">
+                                        <span class="progress-count">
+                                            <i class="fa fa-hourglass-half"></i>
+                                            <span class="order-count">15</span>
+                                        </span>
+                                        <span class="progress-label">Waiting for confirmation</span>
+                                    </a>
+                                </li>
+                                <li class="step-wizard-item" data-status="2">
+                                    <a href="#">
+                                        <span class="progress-count">
+                                            <i class="fa fa-box"></i>
+                                            <span class="order-count">10</span>
+                                        </span>
+                                        <span class="progress-label">Waiting for pickup</span>
+                                    </a>
+                                </li>
+                                <li class="step-wizard-item" data-status="3">
+                                    <a href="#">
+                                        <span class="progress-count">
+                                            <i class="fa fa-truck"></i>
+                                            <span class="order-count">8</span>
+                                        </span>
+                                        <span class="progress-label">Waiting for delivery</span>
+                                    </a>
+                                </li>
+                                <li class="step-wizard-item" data-status="4">
+                                    <a href="#">
+                                        <span class="progress-count">
+                                            <i class="fa fa-clipboard-check"></i>
+                                            <span class="order-count">20</span>
+                                        </span>
+                                        <span class="progress-label">Delivered successfully</span>
+                                    </a>
+                                </li>
+                            </ul>   
+                        </section>
                         <div class="col-lg-3 col-md-3 text-right">
                             <ul class="nav-right">
                                 <%
-                                CartDTO cart = (CartDTO) session.getAttribute("CART");
-                                boolean isEmptyCart = cart == null || (cart.getCartItemsList() == null || cart.getCartItemsList().isEmpty());
-                                int itemCount = isEmptyCart ? 0 : cart.getCartItemsList().size();
+                                    CartDTO cart = (CartDTO) session.getAttribute("CART");
+                                    boolean isEmptyCart = cart == null || (cart.getCartItemsList() == null || cart.getCartItemsList().isEmpty());
+                                    int itemCount = isEmptyCart ? 0 : cart.getCartItemsList().size();
                                 %>
                                 <li class="cart-icon">
                                     <a href="#">
@@ -150,10 +191,10 @@
                                             <table>
                                                 <tbody>
                                                     <%
-                                                    List<CartItems> ls = cart.getCartItemsList();
-                                                    double total = 0;
-                                                    for (CartItems ele : ls) {
-                                                    total += (ele.getProduct().getPrice() * (1 - ele.getProduct().getSale())) * ele.getQuantity();
+                                                        List<CartItems> ls = cart.getCartItemsList();
+                                                        double total = 0;
+                                                        for (CartItems ele : ls) {
+                                                            total += (ele.getProduct().getPrice() * (1 - ele.getProduct().getSale())) * ele.getQuantity();
                                                     %>
                                                     <tr>
                                                         <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
@@ -171,7 +212,7 @@
                                                         </td>
                                                     </tr>
                                                     <% }%>
-                                                    </tbody>
+                                                </tbody>
                                             </table>
                                             <div class="select-total">
                                                 <span>total:</span>
@@ -241,12 +282,12 @@
                         <div class="welcome">
                             <%
 
-                            OrderDTO ord = new OrderDTO();
-                            if (request.getAttribute("ORDER") != null) {
-                            ord = (OrderDTO) request.getAttribute("ORDER");
-                            }
+                                OrderDTO ord = new OrderDTO();
+                                if (request.getAttribute("ORDER") != null) {
+                                    ord = (OrderDTO) request.getAttribute("ORDER");
+                                }
 
-                            if (ord != null) {
+                                if (ord != null) {
                             %>
                             <div class="table-tilte"> 
                                 <a href="myOrder.jsp" class="nav-link">
@@ -288,64 +329,64 @@
                             </div>
 
                             <%
-                            }
+                                }
                             %>     
                         </div>
                         <div class="welcome">
                             <%
-                            List<OrderDetailDTO> listOrderDetail = new ArrayList<>();
+                                List<OrderDetailDTO> listOrderDetail = new ArrayList<>();
                                 if (request.getAttribute("ORDER_DETAILS") != null) {
-                                listOrderDetail = (List<OrderDetailDTO>) request.getAttribute("ORDER_DETAILS");
-                                    }
+                                    listOrderDetail = (List<OrderDetailDTO>) request.getAttribute("ORDER_DETAILS");
+                                }
 
-                                    if (listOrderDetail != null && !listOrderDetail.isEmpty()) {
-                                    %>
-                                    <div class="table-tilte">Order Detail Table</div>
+                                if (listOrderDetail != null && !listOrderDetail.isEmpty()) {
+                            %>
+                            <div class="table-tilte">Order Detail Table</div>
 
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Picture</th>
-                                                <th>Product's Name</th>
-                                                <th>Price</th>
-                                                <th>Sale Price</th>
-                                                <th>Quantity</th>
-                                                <th>Total Price</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <%  for (OrderDetailDTO od : listOrderDetail) {
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Picture</th>
+                                        <th>Product's Name</th>
+                                        <th>Price</th>
+                                        <th>Sale Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%  for (OrderDetailDTO od : listOrderDetail) {
                                             float totalPrice = 0;
                                             totalPrice = od.getProduct().getPrice() * (1 - od.getProduct().getSale()) * od.getQuantity();
-                                            %>
+                                    %>
 
-                                            <tr>
-                                                <td class="cart-pic first-row"><img src="<%=od.getProduct().getAvatarPath()%>" style="height: 100px; width: 100px" alt=""></td>                                       
-                                                <td><%=od.getProduct().getName()%></td>
-                                                <td><%=od.getProduct().getPrice()%></td>
-                                                <td><%= String.format("%.2f", od.getProduct().getPrice() * (1 - od.getProduct().getSale()))%>$</td>
-                                                <td><%=od.getQuantity()%></td>
-                                                <td><%=String.format("%.2f", totalPrice)%>$</td>    
-                                            </tr>
-                                            <%}%>
-                                        </tbody>
-                                    </table> 
-
-
+                                    <tr>
+                                        <td class="cart-pic first-row"><img src="<%=od.getProduct().getAvatarPath()%>" style="height: 100px; width: 100px" alt=""></td>                                       
+                                        <td><%=od.getProduct().getName()%></td>
+                                        <td><%=od.getProduct().getPrice()%></td>
+                                        <td><%= String.format("%.2f", od.getProduct().getPrice() * (1 - od.getProduct().getSale()))%>$</td>
+                                        <td><%=od.getQuantity()%></td>
+                                        <td><%=String.format("%.2f", totalPrice)%>$</td>    
+                                    </tr>
                                     <%}%>
-
-                                    </div>
-
-                                    </div>
-
-                                    </div>
-
-                                    </section>
+                                </tbody>
+                            </table> 
 
 
-                                    </main>
+                            <%}%>
 
-                                    <script src="js/app.js"></script>
-                                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-                                    </body>
-                                    </html>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+        <script src="js/app.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

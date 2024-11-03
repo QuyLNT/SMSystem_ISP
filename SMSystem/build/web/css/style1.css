@@ -2710,8 +2710,9 @@ favor-add{
 
 .cart-table table {
     width: 100%;
-    min-width: 480px;
+    min-width: unset;
     border: 1px solid #ebebeb;
+    table-layout: auto;
 }
 
 .cart-table table tr th {
@@ -2720,7 +2721,7 @@ favor-add{
     font-weight: 700;
     border-bottom: 1px solid #ebebeb;
     text-align: center;
-    padding: 18px 0 19px;
+    padding: 15px 10px;
     text-transform: uppercase;
 }
 
@@ -4429,3 +4430,4 @@ favor-add{
         width: 100%;
     }
 }
+
