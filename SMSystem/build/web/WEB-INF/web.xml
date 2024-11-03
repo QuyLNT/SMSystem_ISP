@@ -260,6 +260,14 @@
         <servlet-name>FilterController</servlet-name>
         <servlet-class>controller.FilterController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadShipmentController</servlet-name>
+        <servlet-class>controller.LoadShipmentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateShipmentController</servlet-name>
+        <servlet-class>controller.UpdateShipmentController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -491,6 +499,14 @@
     <servlet-mapping>
         <servlet-name>FilterController</servlet-name>
         <url-pattern>/FilterController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadShipmentController</servlet-name>
+        <url-pattern>/LoadShipmentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateShipmentController</servlet-name>
+        <url-pattern>/UpdateShipmentController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

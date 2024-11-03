@@ -129,7 +129,7 @@ public class UserDAO {
         return userList;
     }
 
-    public boolean userAfterUpdate(UserDTO user) throws SQLException, ClassNotFoundException {
+    public boolean userAfterUpdate(UserDTO user, String newPassword) throws SQLException, ClassNotFoundException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -137,8 +137,9 @@ public class UserDAO {
         try {
             conn = DBUtils.getConnection();
             if (conn != null) {
+                String passwordToUpdate = (newPassword != null && !newPassword.isEmpty()) ? newPassword : user.getPassword();
                 ptm = conn.prepareStatement(UPDATE);
-                ptm.setString(1, user.getPassword());
+                ptm.setString(1, passwordToUpdate);
                 ptm.setString(2, user.getFullName());
                 ptm.setString(3, user.getPhoneNumber());
                 ptm.setString(4, user.getSex());
@@ -353,7 +354,7 @@ public class UserDAO {
 
         } finally {
             if (ptm != null) {
-                conn.close();
+                ptm.close();
             }
             if (conn != null) {
                 conn.close();
@@ -527,4 +528,33 @@ public class UserDAO {
         }
         return shippers;
     }
+
+    public boolean changePassword(String userName, String newPassword) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        boolean changePassword = false;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                String sql = "UPDATE users SET password = ? WHERE userName = ?";
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, newPassword);
+                ptm.setString(2, userName);
+
+                int rowsUpdated = ptm.executeUpdate();
+                if (rowsUpdated > 0) {
+                    changePassword = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (ptm != null) { ptm.close(); }
+            if (conn != null) { conn.close(); }
+        }
+        return changePassword;
+    }
+
 }
