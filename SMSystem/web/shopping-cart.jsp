@@ -20,10 +20,7 @@
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-            />
+
         <!-- Css Styles -->
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
@@ -148,13 +145,8 @@
                                 <li><a href="MainController?action=HomePage">Home</a></li>
                                 <li><a href="MainController?action=ShopPage">Shop</a></li>
                                 <li><a href="contact.jsp">Contact</a></li>
-                                <li><a href="">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="MainController?action=ViewCart&url=shopping-cart.jsp">Shopping Cart</a></li>
-                                        <li><a href="check-out.jsp">Checkout</a></li>
-
-                                    </ul>
-                                </li>
+                                <li><a href="MainController?action=ViewCart&url=check-out.jsp">Shopping Cart</a></li>
+                                <li><a href="warrantyPage.jsp">Warranty</a></li>
                             </ul>
                         </nav>
                         <div id="mobile-menu-wrap"></div>

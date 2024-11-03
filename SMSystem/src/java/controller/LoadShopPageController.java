@@ -51,21 +51,18 @@ public class LoadShopPageController extends HttpServlet {
             ProductImageDAO imageDao = new ProductImageDAO();
             ProductVariantDAO variantDao = new ProductVariantDAO();
             List<ProductDTO> productList;
-            List<BrandDTO> brandList;
             List<UserObjectDTO> uObList;
             
             productList = productDao.search("");
-            brandList = brandDao.getAllBrand();
             uObList = uObDao.getAllUserObject();
             for(ProductDTO p: productList){
                 p.setListImages(imageDao.getImageByProduct(p.getProductId()));
             }
                         
-            if(productList !=null && brandList!=null && uObList!=null){
+            if(productList !=null && uObList!=null){
                 HttpSession session = request.getSession();
                 session.setAttribute("PRODUCT_LIST", productList);
                 session.setAttribute("USER_OBJECT_LIST", uObList);
-                session.setAttribute("BRAND_LIST", brandList);
                 
                 url = SUCCESS;
 

@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.order.OrderDAO;
 import model.order.OrderDTO;
 
@@ -47,12 +48,18 @@ public class UpdateOrderStatusController extends HttpServlet {
             OrderDAO d = new OrderDAO();
             boolean check = d.updateOrderStatus(status, orderId);
             if (check) {
-                 List<OrderDTO> updatedOrderList = d.getAllOrder(); // Lấy danh sách đơn hàng cập nhật
-                request.setAttribute("ORDER_LIST", updatedOrderList); // Đặt vào request để hiển thị
+                HttpSession session = request.getSession();
+                List<OrderDTO> orderList = (List<OrderDTO>) session.getAttribute("ORDER_LIST");
+
+                for (OrderDTO o : orderList) {
+                    if(o.getOrderId()==orderId){
+                        o.setOrderStatus(status);
+                    }
+                }
+                request.setAttribute("ORDER_LIST", orderList);
                 request.setAttribute("ms", "Update Successfully");
                 request.setAttribute("orderId", orderId);
                 url = SUCCESS;
-
             } else {
                 request.setAttribute("ms", "Something wrong at sever");
             }

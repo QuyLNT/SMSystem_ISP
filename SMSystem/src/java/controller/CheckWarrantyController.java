@@ -7,43 +7,52 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.order.OrderDAO;
-import model.order.OrderDTO;
-import model.user.UserDTO;
+import model.order.OrderDetailDAO;
+import model.user.UserDAO;
 
 /**
  *
- * @author dell
+ * @author LENOVO
  */
-public class LoadMyOrderController extends HttpServlet {
+public class CheckWarrantyController extends HttpServlet {
 
-    private static final String ERROR = "myOrder.jsp";
-    private static final String SUCCESS = "myOrder.jsp";
+    private static final String ERROR = "warrantyPage.jsp";
+    private static final String SUCCESS = "warrantyPage.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        HttpSession session = request.getSession();
         try {
-            UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
-            if (user != null) {
-                OrderDAO orderDAO = new OrderDAO();
-                List<OrderDTO> orderList = orderDAO.getAllOrder(user); 
-                if (orderList != null && !orderList.isEmpty()) {
-                    session.setAttribute("ORDER_LIST", orderList);
-                    url = SUCCESS;
+            String phoneNumber = request.getParameter("phone");
+            if (phoneNumber != null) {
+                UserDAO userDao = new UserDAO();
+                boolean checkExistPhone = userDao.checkPhoneExists(phoneNumber);
+                if (checkExistPhone) {
+                    OrderDetailDAO orderDao = new OrderDetailDAO();
+                    List<Map<String, Object>> warrantyList = orderDao.checkWarrant(phoneNumber);
+                    if (warrantyList == null) {
+                        request.setAttribute("err", "No products found in warranty list.");
+                    } else {
+                        request.setAttribute("WARRANTY_LIST", warrantyList);
+                        url = SUCCESS;
+                    }
+                } else {
+                    request.setAttribute("err", "This phone number is not in the warranty list.");
+
                 }
+            } else {
+                request.setAttribute("err", "Enter your phone number to check product warranty.");
             }
-        } catch (Exception e) {
-            log("Error at LoadMyOrderController: " + e.toString());
-            e.printStackTrace();
+        } catch (ClassNotFoundException | SQLException e) {
+            log("Error at CheckWarrantyController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

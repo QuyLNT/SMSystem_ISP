@@ -1,11 +1,6 @@
 
-
-<%@page import="model.product.ProductDAO"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="model.product.ProductDTO"%>
 <%@page import="model.user.UserDTO"%>
-<%@page import="java.util.List"%>
-<%@page import="model.cart.CartDTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,10 +14,6 @@
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-            />
         <!-- Css Styles -->
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">

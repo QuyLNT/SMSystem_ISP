@@ -24,10 +24,12 @@
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
-                                <h3>
-                                    <img src="img/icon-logoweb.png" alt="" width="32px" height="32px""/>
-                                    <span class="title-text">SMSystem</span>
-                                </h3>
+                                <a href="MainController?action=HomePage">
+                                    <h3>
+                                        <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
+                                        <span class="title-text">SMSystem</span>
+                                    </h3>
+                                </a>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
@@ -37,15 +39,21 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="categoriesList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-list"></i>
-                                        <span class="link-text">Categories</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
                                     <a href="MainController?action=LoadProductList" class="nav-link">
                                         <i class="fa-solid fa-capsules"></i>
                                         <span class="link-text">Products</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadOrderList" class="nav-link">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span class="link-text">Order</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadPaymentList" class="nav-link">
+                                        <i class="fa-solid fa-money-bill-wave"></i>                                        
+                                        <span class="link-text">Payment</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -55,9 +63,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="MainController?action=LoadOrderList" class="nav-link">
-                                        <i class="fa-solid fa-file-invoice"></i>
-                                        <span class="link-text">Order</span>
+                                    <a href="categoriesList.jsp" class="nav-link">
+                                        <i class="fa-solid fa-list"></i>
+                                        <span class="link-text">Categories</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -69,7 +77,7 @@
                                 <li class="nav-list-item">
                                     <a href="LogoutController" class="nav-link">
                                         <i class="fa-solid fa-right-from-bracket"></i>
-                                        <span class="link-text">Log out</span>
+                                        <span class="link-text">Logout</span>
                                     </a>
                                 </li>
                             </ul>
@@ -78,7 +86,34 @@
                 </div>
             </header>
             <section class="showcase">
+                <div class="head">
+                    <button class="toggler">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+
                 <div class="container">
+                    <div class="welcome">
+                        <form action="MainController">
+                            <select name="dateFilter">
+                                <option value="">View All</option>                            
+                                <option value="Today">Today</option>
+                                <option value="This Week">This Week</option>
+                                <option value="This Month">This Month</option>
+                            </select>
+
+                            <select name="statusFilter">
+                                <option value="">All Statuses</option>
+                                <option value="Waiting For Accept">Waiting For Accept</option>
+                                <option value="Delivering" >Delivering</option>
+                                <option value="Completed" >Completed</option>
+                                <option value="Not Complete" >Not Complete</option>
+                            </select>
+
+                            <button type="submit" name="action" value="FilterOrder"class="btn btn-primary">Filter</button>
+                        </form>
+                    </div>
+
                     <div class="welcome">
                         <%
                             String message = (String) request.getAttribute("message");
@@ -96,17 +131,10 @@
                             List<UserDTO> shippers = null;
                             Map<Integer, Integer> shipperMap = null;
 
-                                try {
-                                    list = d.getAllOrder();
-                                    if (request.getAttribute("ORDER_LIST") != null) {
-                                        list = (List<OrderDTO>) request.getAttribute("ORDER_LIST");
-                                    }
-                                    if (request.getAttribute("ms") != null && request.getAttribute("orderId") != null) {
-                                        ms = request.getAttribute("ms").toString();
-                                        orderid = request.getAttribute("orderId").toString();
-                            %>                        
-                            <div><%= ms%> Order ID: <%= orderid%></div>
-                            <%
+                            try {
+                                list = d.getAllOrder();
+                                if (request.getAttribute("ORDER_LIST") != null) {
+                                    list = (List<OrderDTO>) request.getAttribute("ORDER_LIST");
                                 }
                                 UserDAO userDAO = new UserDAO();
                                 shippers = userDAO.getAllShippers();
@@ -120,15 +148,12 @@
                         <%
                             }
                         %>
-                        <div class="table-title">Order Table</div>
+                        <div class="table-tilte">Order Table</div>
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Order Code</th>
                                     <th>Customer</th>
-                                    <th>Street</th>
-                                    <th>District</th>
-                                    <th>City</th>
                                     <th>Discount</th>
                                     <th>Payment Method</th>
                                     <th>Shipment Method</th>
@@ -150,9 +175,6 @@
                                 <tr>
                                     <td><%= a.getOrderId()%></td>
                                     <td><%= a.getCustomer().getUserName()%></td>
-                                    <td><%= a.getStreet()%></td>
-                                    <td><%= a.getDistrict()%></td>
-                                    <td><%= a.getCity()%></td>
                                     <td><%= a.getDiscountCode()%></td>
                                     <td><%= a.getPaymentMethod()%></td>
                                     <td><%= a.getShippingMethod()%></td>
@@ -161,11 +183,10 @@
                                         <form action="UpdateOrderStatusController" method="POST">
                                             <input type="hidden" name="orderId" value="<%= a.getOrderId()%>">
                                             <select name="status" onchange="this.form.submit()">
-                                                <option value="Accepted,waiting for Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Accepted,waiting for Delivering") ? "selected" : ""%>>Accepted,waiting for Delivering</option>
+                                                <option value="Waiting For Accept" <%= a.getOrderStatus().equalsIgnoreCase("Waiting For Accept") ? "selected" : ""%>>Waiting For Accept</option>
                                                 <option value="Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Delivering") ? "selected" : ""%>>Delivering</option>
-                                                <option value="Delivered" <%= a.getOrderStatus().equalsIgnoreCase("Delivered") ? "selected" : ""%>>Delivered</option>
                                                 <option value="Completed" <%= a.getOrderStatus().equalsIgnoreCase("Completed") ? "selected" : ""%>>Completed</option>
-                                                <option value="Not Completed" <%= a.getOrderStatus().equalsIgnoreCase("Not Completed") ? "selected" : ""%>>Not Completed</option>
+                                                <option value="Not Complete" <%= a.getOrderStatus().equalsIgnoreCase("Not Complete") ? "selected" : ""%>>Not Complete</option>
                                             </select>
                                             <input type="hidden" name="action" value="UpdateStatus"/>
                                         </form>
@@ -198,10 +219,19 @@
                                 </tr>
                                 <%
                                     }
+                                } else {
                                 %>
-                                </tbody>
-                            </table>
-                        </div>
+                                <tr><td colspan="11">No orders available or an error occurred.</td></tr>
+                                <%
+                                    }
+                                } catch (Exception e) {
+                                %>
+                            <div class="alert alert-danger">Error loading orders: <%= e.getMessage()%></div>
+                            <%
+                                }
+                            %>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>

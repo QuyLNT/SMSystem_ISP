@@ -46,6 +46,7 @@ public class UserDAO {
     private static final String GET_EMAIL = "SELECT email FROM users WHERE email = ?";
     private static final String UPDATE_PASSWORD = "UPDATE users SET password = ? WHERE email = ?";
     private static final String GET_SHIPPER = "SELECT userId, fullName, userName, phoneNumber, email, roleId FROM users WHERE roleId = 'SP'";
+    private static final String IS_PHONE_EXISTS = "SELECT * FROM users WHERE phoneNumber = ?";
 
     public UserDTO checkLogin(String userIndentify, String password) throws SQLException, ClassNotFoundException, NamingException {
         UserDTO user = null;
@@ -527,6 +528,36 @@ public class UserDAO {
             }
         }
         return shippers;
+    }
+
+    public boolean checkPhoneExists(String phoneNumber) throws ClassNotFoundException, SQLException {
+        boolean checkExits = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(IS_PHONE_EXISTS);
+                ptm.setString(1, phoneNumber);
+                rs = ptm.executeQuery();{
+                if(rs.next()){
+                    checkExits = true;
+                }
+            }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                conn.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return checkExits;
     }
 
     public boolean changePassword(String userName, String newPassword) throws SQLException, ClassNotFoundException {

@@ -17,7 +17,7 @@
         
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     </head>
-    <body>
+    <body> 
         <main class="main-wrap">
             <header class="main-head">
                 <div class="main-nav">
@@ -45,7 +45,7 @@
                                 <li class="nav-list-item">
                                     <a href="LogoutController" class="nav-link">
                                         <i class="fa-solid fa-right-from-bracket"></i>
-                                        <span class="link-text">Log out</span>
+                                        <span class="link-text">Logout</span>
                                     </a>
                                 </li>
                             </ul>

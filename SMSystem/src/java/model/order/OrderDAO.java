@@ -444,4 +444,78 @@ public class OrderDAO {
         return isAssigned;
     }
 
+    public List<OrderDTO> filterOrder(String dateFilter, String statusFilter) throws ClassNotFoundException, SQLException {
+        List<OrderDTO> orders = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        StringBuilder query = new StringBuilder("SELECT o.orderId, o.customerId, o.street, o.district, o.city, dC.discountCode, sM.methodName, pM.paymentName, o.createdAt, o.orderStatus "
+                + "FROM orders o "
+                + "JOIN paymentMethods pM ON o.paymentMethodId = pM.paymentMethodId "
+                + "JOIN shippingMethods sM ON o.shippingMethodId = sM.shippingMethodId "
+                + "LEFT JOIN discountCodes dC ON o.discountId = dC.discountId"
+                + " WHERE 1=1 ");
+
+        if (dateFilter != null && !dateFilter.isEmpty()) {
+            switch (dateFilter) {
+                case "Today":
+                    query.append("AND o.createdAt >= CAST(GETDATE() AS DATE) ");
+                    break;
+                case "This Week":
+                    query.append("AND o.createdAt >= DATEADD(DAY, -(DATEPART(WEEKDAY, GETDATE()) - 1), CAST(GETDATE() AS DATE)) ");
+                    break;
+                case "This Month":
+                    query.append("AND o.createdAt >= DATEADD(DAY, -(DAY(GETDATE()) - 1), CAST(GETDATE() AS DATE)) ");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (statusFilter != null && !statusFilter.isEmpty()) {
+            query.append("AND orderStatus = ? ");
+        }
+
+        try {
+            conn = DBUtils.getConnection();
+            ps = conn.prepareStatement(query.toString());
+
+            int paramIndex = 1;
+            if (statusFilter != null && !statusFilter.isEmpty()) {
+                ps.setString(paramIndex++, statusFilter);
+            }
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int orderId = rs.getInt("orderId");
+                int customerId = rs.getInt("customerId");
+                String street = rs.getString("street");
+                String district = rs.getString("district");
+                String city = rs.getString("city");
+                String discountCode = rs.getString("discountCode");
+                String shippingMethod = rs.getString("methodName");
+                String paymentMethod = rs.getString("paymentName");
+                Date createdAt = rs.getDate("createdAt");
+                String orderStatus = rs.getString("orderStatus");
+
+                UserDAO userDao = new UserDAO();
+                UserDTO customer = userDao.getUserByName(customerId);
+
+                OrderDTO order = new OrderDTO(orderId, customer, street, district, city, discountCode, paymentMethod, shippingMethod, createdAt, orderStatus);
+                orders.add(order);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return orders;
+    }
 }

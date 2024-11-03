@@ -11,41 +11,42 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.cart.CartDAO;
-import model.cart.CartDTO;
 
 /**
  *
- * @author CHAU DUYEN
+ * @author LENOVO
  */
-public class RemoveCartController extends HttpServlet {
+public class ReturnManageHomeController extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = request.getParameter("url");
+        String url = "homePage.jsp";
         try {
-            int cartItemId = Integer.parseInt(request.getParameter("cartItemId"));
-            HttpSession session = request.getSession();
-            CartDTO cart = (CartDTO) session.getAttribute("CART");
-            CartDAO cartDAO = new CartDAO();
-            boolean deleteItem = cartDAO.deleteCartItem(cartItemId);
-            if (cart != null) {
-                if (deleteItem) {
-                    cart.removeItem(cartItemId);
-                    session.setAttribute("size", String.valueOf(cart.getSize()));
-                    cartDAO.deleteCartItem(cartItemId);
-                }
-                
+            String role = request.getParameter("role");
+            switch (role) {
+                case "MN": url = "MainController?action=LoadManagerHomeData";
+                    break;
+                case "AD": url = "MainController?action=LoadAdminHome";
+                    break;
+                case "SP": url = "shipperPage.jsp";
+                    break;
+                default:
+                    break;
             }
         } catch (Exception e) {
-            log("Error at RemoveCartController: " + e.toString());
-
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -88,8 +89,3 @@ public class RemoveCartController extends HttpServlet {
     }// </editor-fold>
 
 }
-// if (cart != null) {
-//                cart.removeItem(cartItemId); // Xóa item trong session giỏ hàng
-//                session.setAttribute("CART", cart); // Cập nhật lại giỏ hàng trong session
-//                cartDAO.deleteCartItem(cartItemId);
-//            }

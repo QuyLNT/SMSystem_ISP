@@ -32,115 +32,6 @@
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
-        <style>
-            .card {
-                width: 300px;
-                height: fit-content;
-                background: rgb(255, 255, 255);
-                border-radius: 10px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 20px;
-                padding: 30px;
-                position: fixed;
-                /* Changed from relative to fixed */
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.1);
-                z-index: 1001;
-            }
-
-            /* Optional: Add a semi-transparent background overlay behind the modal */
-            .modal-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                background: rgba(0, 0, 0, 0.5);
-                /* Semi-transparent black */
-                z-index: 1100;
-                /* Below the modal itself */
-            }
-
-            /* Existing styles for the content */
-            .card-content {
-                width: 100%;
-                height: fit-content;
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-            }
-
-            .card-heading {
-                font-size: 20px;
-                font-weight: 700;
-                color: rgb(27, 27, 27);
-            }
-
-            .card-description {
-                font-weight: 100;
-                color: rgb(102, 102, 102);
-            }
-
-            .card-button-wrapper {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 10px;
-            }
-
-            .card-button {
-                width: 50%;
-                height: 35px;
-                border-radius: 5px;
-                border: none;
-                cursor: pointer;
-                font-weight: 600;
-            }
-
-            .primary {
-                background-color: rgb(255, 114, 109);
-                color: white;
-            }
-
-            .primary:hover {
-                background-color: rgb(255, 73, 66);
-                color: white;
-            }
-
-            .secondary {
-                background-color: #ddd;
-            }
-
-            .secondary:hover {
-                background-color: rgb(197, 197, 197);
-            }
-
-            .exit-button {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border: none;
-                background-color: transparent;
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                cursor: pointer;
-            }
-
-            .exit-button:hover svg {
-                fill: black;
-            }
-
-            .exit-button svg {
-                fill: rgb(175, 175, 175);
-            }
-        </style>
         <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
     </head>
 
@@ -311,14 +202,10 @@
                         <nav class="nav-menu mobile-menu">
                             <ul>
                                 <li><a href="MainController?action=HomePage">Home</a></li>
-                                <li class="active"><a href="MainController?action=ShopPage">Shop</a></li>
+                                <li><a href="MainController?action=ShopPage">Shop</a></li>
                                 <li><a href="contact.jsp">Contact</a></li>
-                                <li><a href="">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="MainController?action=ViewCart&url=product.jsp">Shopping Cart</a></li>
-
-                                    </ul>
-                                </li>
+                                <li><a href="MainController?action=ViewCart&url=product.jsp">Shopping Cart</a></li>
+                                <li><a href="warrantyPage.jsp">Warranty</a></li>
                             </ul>
                         </nav>
                         <div id="mobile-menu-wrap"></div>
@@ -512,11 +399,11 @@
 
 
 
-                                            <% if (errorMessage != null) {%>
-                                            <div class="alert alert-danger">
-                                                <%= errorMessage%>
-                                            </div>
-                                            <% }%>
+                                        <% if (errorMessage != null) {%>
+                                        <div class="alert alert-danger">
+                                            <%= errorMessage%>
+                                        </div>
+                                        <% }%>
 
                                     </div>
                                     <% if (successMessage != null) {%>

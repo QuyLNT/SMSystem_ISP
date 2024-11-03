@@ -27,13 +27,13 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style.css" type="text/css"> 
         <link rel="stylesheet" href="css/style1.css" type="text/css">
-          <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
     </head>
 
     <body>
         <!-- Start coding here -->
         <!-- Page PreOrder -->
-        
+
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
@@ -72,8 +72,11 @@ and open the template in the editor.
         </header>
         <div class="container1">
             <div class="signin-signup">
+                <a href="MainController?action=HomePage" style="display: block; text-align: left;">
+                    Back To Shop
+                </a>
                 <div class="signin">
-                    <h2>Sign in</h2>
+                    <h2>Sign In</h2>
 
                     <form action="MainController" method="post" id="form">
                         <input type="text" placeholder="User Name or Email" name="usernameOrEmail" required />
@@ -112,22 +115,22 @@ and open the template in the editor.
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/main.js"></script>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<!--        <script>
-            window.onload = function () {
-                let isValid = false;
-                const form = document.getElementById("form");
-                const error = document.getElementById("error");
-
-                form.addEventListener("submit", function (event) {
-                    event.preventDefault();
-                    const response = grecaptcha.getResponse();
-                    if (response) {
-                        form.submit();
-                    } else {
-                        error.innerHTML = "Please check";
-                    }
-                });
-            };
-        </script>-->
+        <!--        <script>
+                    window.onload = function () {
+                        let isValid = false;
+                        const form = document.getElementById("form");
+                        const error = document.getElementById("error");
+        
+                        form.addEventListener("submit", function (event) {
+                            event.preventDefault();
+                            const response = grecaptcha.getResponse();
+                            if (response) {
+                                form.submit();
+                            } else {
+                                error.innerHTML = "Please check";
+                            }
+                        });
+                    };
+                </script>-->
     </body>
 </html>
