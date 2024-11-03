@@ -140,6 +140,12 @@ public class MainController extends HttpServlet {
     private final static String ASSIGN_SHIPPER_CONTROLLER = "AssignShipperController ";
     private final static String FILTER = "Filter";
     private final static String FILTER_CONTROLLER = "FilterController";
+    private final static String CHECK_WARRANTY = "CheckWarranty";
+    private final static String CHECK_WARRANTY_CONTROLLER = "CheckWarrantyController";
+    private final static String BACK = "Back";
+    private final static String RETURN_MANAGE_HOME = "ReturnManageHomeController";
+    private final static String FILTER_ORDER = "FilterOrder";
+    private final static String FILTER_ORDER_CONTROLLER = "FilterOrderController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -251,10 +257,16 @@ public class MainController extends HttpServlet {
                 url = SEARCH_PAYMENT_CONTROLLER;
             } else if (GET_STATUS.equals(action)) {
                 url = GET_STATUS_CONTROLLER;
-            }else if (ASSIGN_SHIPPER.equals(action)) {
+            } else if (ASSIGN_SHIPPER.equals(action)) {
                 url = ASSIGN_SHIPPER_CONTROLLER;
             } else if (FILTER.equals(action)) {
                 url = FILTER_CONTROLLER;
+            } else if (CHECK_WARRANTY.equals(action)) {
+                url = CHECK_WARRANTY_CONTROLLER;
+            } else if (BACK.equals(action)) {
+                url = RETURN_MANAGE_HOME;
+            } else if (FILTER_ORDER.equals(action)) {
+                url = FILTER_ORDER_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());

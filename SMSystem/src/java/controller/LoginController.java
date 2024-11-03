@@ -42,7 +42,7 @@ public class LoginController extends HttpServlet {
     private static final String HOME_PAGE = "LoadTopListByCateController";
     private static final String ADMIN_PAGE = "LoadAdminHomeDataController";
     private static final String MANAGER_PAGE = "LoadManagerHomeDataController";
-    private static final String SHIPPER_PAGE = "shipperHome.jsp";
+    private static final String SHIPPER_PAGE = "shipperPage.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {

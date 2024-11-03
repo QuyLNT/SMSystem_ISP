@@ -26,10 +26,12 @@
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
-                                <h3>
-                                    <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
-                                    <span class="title-text">SMS</span>
-                                </h3>
+                                <a href="MainController?action=HomePage">
+                                    <h3>
+                                        <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
+                                        <span class="title-text">SMSystem</span>
+                                    </h3>
+                                </a>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
@@ -39,15 +41,21 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="categoriesList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-list"></i>
-                                        <span class="link-text">Categories</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
                                     <a href="MainController?action=LoadProductList" class="nav-link">
                                         <i class="fa-solid fa-capsules"></i>
                                         <span class="link-text">Products</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadOrderList" class="nav-link">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span class="link-text">Order</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadPaymentList" class="nav-link">
+                                        <i class="fa-solid fa-money-bill-wave"></i>                                        
+                                        <span class="link-text">Payment</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -57,9 +65,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="MainController?action=LoadBrandList" class="nav-link">
-                                        <i class="fa-solid fa-file-invoice"></i>
-                                        <span class="link-text">Order</span>
+                                    <a href="categoriesList.jsp" class="nav-link">
+                                        <i class="fa-solid fa-list"></i>
+                                        <span class="link-text">Categories</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -71,7 +79,7 @@
                                 <li class="nav-list-item">
                                     <a href="LogoutController" class="nav-link">
                                         <i class="fa-solid fa-right-from-bracket"></i>
-                                        <span class="link-text">Log out</span>
+                                        <span class="link-text">Logout</span>
                                     </a>
                                 </li>
                             </ul>
@@ -87,46 +95,44 @@
                         </button>
                     </div>
                     <div class="content">
-                        <div class="welcome">
+                        <div class="welcome" >
+                            <%
+                                List<UserObjectDTO> categoriesList = (List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
+                                if (categoriesList != null) {
+                            %>
+                            <div class="table-tilte">Categories Table</div>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>CategoryName</th>
+                                        <th>CategoryDetail</th>
+                                        <th>Total products</th>
 
-                            <div class="welcome" >
-                                <%
-                                    List<UserObjectDTO> categoriesList = (List<UserObjectDTO>) session.getAttribute("USER_OBJECT_LIST");
-                                    if (categoriesList != null) {
-                                %>
-                                <div class="table-tilte">Categories Table</div>
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>STT</th>
-                                            <th>CategoryName</th>
-                                            <th>CategoryDetail</th>
-                                            <th>Total products</th>
+                                        <th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%
+                                        int count = 1;
+                                        for (UserObjectDTO category : categoriesList) {
+                                    %>
+                                    <tr>
+                                        <td><%= count++%></td>
+                                        <td><%= category.getUserObjectName()%></td>
+                                        <td><%= category.getDetail()%></td>
+                                        <td><%= category.getProductCount()%></td>
 
-                                            <th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%
-                                            int count = 1;
-                                            for (UserObjectDTO category : categoriesList) {
-                                        %>
-                                        <tr>
-                                            <td><%= count++%></td>
-                                            <td><%= category.getUserObjectName()%></td>
-                                            <td><%= category.getDetail()%></td>
-                                            <td><%= category.getProductCount()%></td>
-
-                                        </tr>
-                                        <%
-                                                }
+                                    </tr>
+                                    <%
                                             }
-                                        %>
-                                    </tbody>
-                                </table>
-                            </div>
+                                        }
+                                    %>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+                </div>
 
             </section>
 

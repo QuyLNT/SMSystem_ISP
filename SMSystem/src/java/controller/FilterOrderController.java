@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +19,9 @@ import model.order.OrderDTO;
 
 /**
  *
- * @author Asus
+ * @author LENOVO
  */
-public class UpdateOrderStatusController extends HttpServlet {
+public class FilterOrderController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,39 +32,25 @@ public class UpdateOrderStatusController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "orderList.jsp";
-    private static final String SUCCESS = "orderList.jsp";
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String url = ERROR;
         try {
-            String status = request.getParameter("status");
-            int orderId = Integer.parseInt(request.getParameter("orderId"));
-            OrderDAO d = new OrderDAO();
-            boolean check = d.updateOrderStatus(status, orderId);
-            if (check) {
+            String dateFilter = request.getParameter("dateFilter");
+            String statusFilter = request.getParameter("statusFilter");
+            OrderDAO orderDao = new OrderDAO();
+            List<OrderDTO> orderList = orderDao.filterOrder(dateFilter, statusFilter);
+            if(orderList!=null){
                 HttpSession session = request.getSession();
-                List<OrderDTO> orderList = (List<OrderDTO>) session.getAttribute("ORDER_LIST");
-
-                for (OrderDTO o : orderList) {
-                    if(o.getOrderId()==orderId){
-                        o.setOrderStatus(status);
-                    }
-                }
                 request.setAttribute("ORDER_LIST", orderList);
-                request.setAttribute("ms", "Update Successfully");
-                request.setAttribute("orderId", orderId);
-                url = SUCCESS;
-            } else {
-                request.setAttribute("ms", "Something wrong at sever");
+                session.setAttribute("ORDER_LIST", orderList);
+            }else{
+                request.setAttribute("ms", "No Order Found");
             }
-        } catch (SQLException e) {
-            log("Error at Update Order Controller:" + e.toString());
+        } catch (ClassNotFoundException | SQLException e) {
+            log("Error at FilterOrderController: "+ e.toString());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher("orderList.jsp").forward(request, response);
         }
     }
 
@@ -82,11 +66,7 @@ public class UpdateOrderStatusController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UpdateOrderStatusController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -100,11 +80,7 @@ public class UpdateOrderStatusController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UpdateOrderStatusController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
