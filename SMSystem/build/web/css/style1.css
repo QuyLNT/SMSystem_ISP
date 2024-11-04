@@ -773,7 +773,7 @@ favor-add{
 }
 
 .nav-item .nav-depart .depart-btn .depart-hover li a:hover {
-    color: #e7ab3c;
+    color: #273c75;
 }
 
 .nav-item .nav-menu {
@@ -4486,7 +4486,7 @@ favor-add{
 }
 .select-option-province select {
     width: 100%; /* Chiều rộng bằng 100% để đồng bộ */
-    padding: 10px 12px; /* Khoảng cách bên trong để ô chọn trông thoải mái hơn */
+    padding: 7px 10px; /* Khoảng cách bên trong để ô chọn trông thoải mái hơn */
     font-size: 16px; /* Kích thước chữ nhất quán */
     color: #333; /* Màu chữ */
     background-color: #ffffff; /* Màu nền nhẹ */

@@ -16,6 +16,7 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
         <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
+        <link rel="stylesheet" href="css/style1.css" type="text/css">
     </head>
     <body>
         <main class="main-wrap">
@@ -94,23 +95,25 @@
 
                 <div class="container">
                     <div class="welcome">
-                        <form action="MainController">
-                            <select name="dateFilter">
-                                <option value="">View All</option>                            
-                                <option value="Today">Today</option>
-                                <option value="This Week">This Week</option>
-                                <option value="This Month">This Month</option>
-                            </select>
-
-                            <select name="statusFilter">
-                                <option value="">All Statuses</option>
-                                <option value="Waiting For Accept">Waiting For Accept</option>
-                                <option value="Delivering" >Delivering</option>
-                                <option value="Completed" >Completed</option>
-                                <option value="Not Complete" >Not Complete</option>
-                            </select>
-
-                            <button type="submit" name="action" value="FilterOrder"class="btn btn-primary">Filter</button>
+                        <form action="MainController" class="d-flex row justify-content-around">
+                            <div class="select-option-province col-lg-6">
+                                <select name="dateFilter">
+                                    <option value="">View All</option>                            
+                                    <option value="Today">Today</option>
+                                    <option value="This Week">This Week</option>
+                                    <option value="This Month">This Month</option>
+                                </select>
+                            </div>
+                            <div class="select-option-province col-lg-6 mb-3">
+                                <select name="statusFilter">
+                                    <option value="">All Statuses</option>
+                                    <option value="Waiting For Accept">Waiting For Accept</option>
+                                    <option value="Delivering" >Delivering</option>
+                                    <option value="Completed" >Completed</option>
+                                    <option value="Not Complete" >Not Complete</option>
+                                </select>
+                            </div>
+                            <button type="submit" name="action" value="FilterOrder"class="btn btn-primary col-lg-3 ">Filter</button>
                         </form>
                     </div>
 
@@ -182,12 +185,14 @@
                                     <td>
                                         <form action="UpdateOrderStatusController" method="POST">
                                             <input type="hidden" name="orderId" value="<%= a.getOrderId()%>">
-                                            <select name="status" onchange="this.form.submit()">
-                                                <option value="Waiting For Accept" <%= a.getOrderStatus().equalsIgnoreCase("Waiting For Accept") ? "selected" : ""%>>Waiting For Accept</option>
-                                                <option value="Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Delivering") ? "selected" : ""%>>Delivering</option>
-                                                <option value="Completed" <%= a.getOrderStatus().equalsIgnoreCase("Completed") ? "selected" : ""%>>Completed</option>
-                                                <option value="Not Complete" <%= a.getOrderStatus().equalsIgnoreCase("Not Complete") ? "selected" : ""%>>Not Complete</option>
-                                            </select>
+                                            <div class="select-option-province">
+                                                <select name="status" onchange="this.form.submit()">
+                                                    <option value="Waiting For Accept" <%= a.getOrderStatus().equalsIgnoreCase("Waiting For Accept") ? "selected" : ""%>>Waiting For Accept</option>
+                                                    <option value="Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Delivering") ? "selected" : ""%>>Delivering</option>
+                                                    <option value="Completed" <%= a.getOrderStatus().equalsIgnoreCase("Completed") ? "selected" : ""%>>Completed</option>
+                                                    <option value="Not Complete" <%= a.getOrderStatus().equalsIgnoreCase("Not Complete") ? "selected" : ""%>>Not Complete</option>
+                                                </select>
+                                            </div>
                                             <input type="hidden" name="action" value="UpdateStatus"/>
                                         </form>
                                     <td>
@@ -203,16 +208,19 @@
                                         <form action="AssignShipperController" method="POST">
                                             <input type="hidden" name="orderId" value="<%= a.getOrderId()%>">
                                             <input type="hidden" name="ship" value="<%= a.getShippingMethod()%>">
-                                            <select name="shipperId" onchange="this.form.submit()">
-                                                <option value="">Select Shipper</option>
-                                                <% for (UserDTO shipper : shippers) {
-                                                        boolean isSelected = (shipper.getUserId() == selectedShipperId);
-                                                %>
-                                                <option value="<%= shipper.getUserId()%>" <%= isSelected ? "selected" : ""%>>
-                                                    <%= shipper.getFullName()%>
-                                                </option>
-                                                <% } %>
-                                            </select>
+                                            <div class="select-option-province">
+                                                <select name="shipperId" onchange="this.form.submit()">
+                                                    <option value="">Select Shipper</option>
+                                                    <% for (UserDTO shipper : shippers) {
+                                                            boolean isSelected = (shipper.getUserId() == selectedShipperId);
+                                                    %>
+                                                    <option value="<%= shipper.getUserId()%>" <%= isSelected ? "selected" : ""%>>
+                                                        <%= shipper.getFullName()%>
+                                                    </option>
+                                                    <% } %>
+                                                </select>
+                                            </div>
+
                                         </form>
                                     </td>
 
