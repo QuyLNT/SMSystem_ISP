@@ -34,7 +34,7 @@
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
         <link rel="stylesheet" href="css/style1.css" type="text/css">
-        <link rel="stylesheet" href="css/style2.css" type="text/css">
+        <link rel="stylesheet" href="css/style.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
     </head>
 
@@ -245,8 +245,8 @@
                                     <label for="fir">Full Name <span>*</span></label>
                                     <input type="text" id="fir" name="fullname" value="<%= loginUser.getFullName()%>">
                                 </div>
-                                <div class="col-lg-7 col-md-7">
-                                    <div class="select-option-province">
+                                <div class="col-lg-12 col-md-7">
+                                    <div class="select-option-province ">
                                         <label for="province">Province / City <span>*</span></label>
                                         <select id="province" name="province" required aria-live="polite" onchange="fetchDistricts()">
                                             <option value="" disabled selected>Select Province / City</option>
@@ -256,7 +256,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-7 col-md-7">
+                                <div class="col-lg-12 col-md-7">
                                     <div class="select-option-province">
                                         <label for="district">District <span>*</span></label>
                                         <select id="district" name="district" required aria-live="polite">

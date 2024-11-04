@@ -66,7 +66,7 @@
                         </button>
                     </div>
                     <div class="content">
-                        <div class="welcome" >
+                        <div class="welcome">
                             <%
                                 String ms = "";
                                 String err = "";

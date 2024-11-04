@@ -256,10 +256,12 @@
             </div>
         </div>
         <div class="col-lg-7 col-md-7 center-form">
-            <form action="MainController" method="get">       
-                <div class="input-group">
-                    <input style="color: black;" type="text" name="phone" placeholder="Enter your phone number">
-                    <button type="submit" name="action" value="CheckWarranty"><i class="ti-search"></i></button>
+            <form action="MainController" method="get">   
+                <div class="advanced-search">
+                    <div class="input-group">
+                        <input style="color: black;" type="text" name="phone" placeholder="Enter your phone number">
+                        <button type="submit" name="action" value="CheckWarranty"><i class="ti-search"></i></button>
+                    </div>
                 </div>
             </form>
         </div>

@@ -271,3 +271,22 @@ button.btn1.btn-primary1 {
   font-size: 20px; /* Set icon size to 20px */
   padding: 1px;
 }
+/* Tạo kiểu nút cho Manager Home */
+.manage-home a {
+    font-size: 14px;
+    color: #ffffff; /* Màu chữ trắng */
+    text-decoration: none;
+    font-weight: bold;
+    background-color: #007bff; /* Màu nền xanh dương */
+    padding: 6px 12px;
+    border-radius: 5px; /* Bo góc */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: inline-block;
+}
+
+.manage-home a:hover {
+    background-color: #0056b3; /* Màu xanh đậm khi hover */
+    color: #ffffff;
+    text-decoration: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng khi hover */
+}
