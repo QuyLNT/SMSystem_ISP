@@ -1,5 +1,3 @@
-
-
 <%@page import="java.util.List"%>
 <%@page import="model.order.OrderDetailDTO"%>
 <%@page import="model.order.OrderDTO"%>
@@ -20,7 +18,7 @@
             />
         <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-
+        
     </head>
     <body>
         <main class="main-wrap">
@@ -122,9 +120,9 @@
 
                                         <dt class="col-sm-3">Address</dt>
                                         <dd class="col-sm-9">
-                                            <p>Street: <%=ord.getStreet()%> </p>
-                                            <p>District: <%=ord.getDistrict()%> </p>
-                                            <p>City: <%=ord.getCity()%> </p>
+                                            <p><%=ord.getStreet()%> </p>
+                                            <p><%=ord.getDistrict()%> </p>
+                                            <p><%=ord.getCity()%> </p>
                                         </dd>
 
                                         <dt class="col-sm-3">Phone</dt>
@@ -132,18 +130,21 @@
 
                                         <dt class="col-sm-3">Email</dt>
                                         <dd class="col-sm-9"><%=ord.getCustomer().getEmail()%></dd>
+                                    </dl>
                                 </div>
                                 <div class="col">
-                                    <dt class="col-sm-3">Payment Method</dt>
-                                    <dd class="col-sm-9"><%=ord.getPaymentMethod()%></dd>
-                                    <dt class="col-sm-3">Shipment Method</dt>
-                                    <dd class="col-sm-9"><%=ord.getShippingMethod()%></dd>
-                                    <dt class="col-sm-3">Date</dt>
-                                    <dd class="col-sm-9"> <%=ord.getCreatedAt()%></dd>
-                                    <dt class="col-sm-3">Status</dt>
-                                    <dd class="col-sm-9"><%=ord.getOrderStatus()%></dd>
-                                    <dt class="col-sm-3">Total Price</dt>
-                                    <dd class="col-sm-9"><%= String.format("%.2f", ord.getTotalPrice())%>$</dd>  
+                                    <dl class="row">
+                                        <dt class="col-sm-3">Payment Method</dt>
+                                        <dd class="col-sm-9"><%=ord.getPaymentMethod()%></dd>
+                                        <dt class="col-sm-3">Shipment Method</dt>
+                                        <dd class="col-sm-9"><%=ord.getShippingMethod()%></dd>
+                                        <dt class="col-sm-3">Date</dt>
+                                        <dd class="col-sm-9"> <%=ord.getCreatedAt()%></dd>
+                                        <dt class="col-sm-3">Status</dt>
+                                        <dd class="col-sm-9"><%=ord.getOrderStatus()%></dd>
+                                        <dt class="col-sm-3">Total Price</dt>
+                                        <dd class="col-sm-9"><%= String.format("%.2f", ord.getTotalPrice())%>$</dd>  
+                                    </dl>
                                 </div>
                             </div>
 

@@ -44,23 +44,7 @@
             <div class="header-top">
                 <div class="container">
                     <div class="ht-left">
-                        <%
-                            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-                            if (loginUser != null) {
-                        %>
-                        <div class="mail-service">
-                            <%
-                                if (!loginUser.getRoleId().equals("CUS")) {
-                            %>
-                            <div class="login-panel">
-                                <a href="MainController?action=Back&role=<%=loginUser.getRoleId()%>" style="color: black;">
-                                    <i class="fa fa-home">  Back to your home management</i>
-                                </a>
-                            </div>
-                            <%
-                                }
-                            %>
-                        </div>
+
                         <div class="mail-service">
                             <i class="fa fa-envelope">
                                 smsystem8386@gmail.com
@@ -73,7 +57,10 @@
                         </div>
                     </div>
                     <div class="ht-right">
-
+                        <%
+                            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                            if (loginUser != null) {
+                        %>
 
                         <div class="login-panel" id="user-btn">
                             <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
@@ -82,7 +69,7 @@
                             <div class="user-setting">
                                 <div class="content">
                                     <div><a href="myAccount.jsp">My account</a></div>
-                                    <div><a href="myOrder.jsp">Order Status</a></div>
+                                    <div><a href="MainController?action=LoadMyOrder">Order Status</a></div>
                                     <div><a href="LogoutController">Logout</a></div>
                                 </div>
                         </section>
@@ -102,14 +89,20 @@
                         <%
                             }
                         %>
+                        <%
+                            if (loginUser != null) {
+                                if (!loginUser.getRoleId().equals("CUS")) {
+                        %>
                         <div class="lan-selector">
-                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
-                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
-                                    English</option>
-                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
-                                    German</option>
-                            </select>
+
+                            <a href="MainController?action=Back&role=<%=loginUser.getRoleId()%>" style="color: black;">
+                                <i class="fa fa-home">  Management</i>
+                            </a>
                         </div>
+                        <%
+                                }
+                            }
+                        %>
                         <div class="top-social">
                             <a href="#"><i class="ti-facebook"></i></a>
                             <a href="#"><i class="ti-twitter-alt"></i></a>

@@ -518,4 +518,147 @@ public class OrderDAO {
         }
         return orders;
     }
+
+    private static final String GET_ORDER_TOTAL = "SELECT SUM(p.price * (1 - p.sale) * od.quantity) AS totalAmount\n"
+            + "FROM orderDetails od\n"
+            + "JOIN products p ON od.productId = p.productId\n"
+            + "WHERE orderId = ?";
+
+    public float getOrderTotal(int orderId) throws ClassNotFoundException, SQLException {
+        float total = 0;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_ORDER_TOTAL);
+                ptm.setInt(1, orderId);
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    total = rs.getFloat("totalAmount");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return total;
+    }
+
+    public Map<String, Integer> getOrderStatusCount(int customerId) throws ClassNotFoundException, SQLException {
+        Map<String, Integer> orderStatusCount = new HashMap<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        String query = "SELECT \n"
+                + "    statuses.orderStatus,\n"
+                + "    COUNT(o.orderId) AS orderCount\n"
+                + "FROM \n"
+                + "    (SELECT 'Waiting For Accept' AS orderStatus\n"
+                + "	UNION ALL\n"
+                + "     SELECT 'Waiting For Pickup'\n"
+                + "     UNION ALL\n"
+                + "     SELECT 'Delivering'\n"
+                + "     UNION ALL\n"
+                + "     SELECT 'Completed'\n"
+                + "     UNION ALL\n"
+                + "     SELECT 'Not Complete') AS statuses\n"
+                + "LEFT JOIN \n"
+                + "    orders o ON statuses.orderStatus = o.orderStatus AND o.customerId = ?\n"
+                + "GROUP BY \n"
+                + "    statuses.orderStatus;";
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(query);
+                ptm.setInt(1, customerId);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String status = rs.getString("orderStatus");
+                    int count = rs.getInt("orderCount");
+                    orderStatusCount.put(status, count);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return orderStatusCount;
+    }
+
+    public static final String GET_ORDER_BY_STATUS
+            = "SELECT o.orderId, o.customerId, o.street, o.district, o.city, \n"
+            + "       dC.discountCode, sM.methodName, pM.paymentName, \n"
+            + "       o.createdAt, o.orderStatus \n"
+            + "FROM orders o \n"
+            + "JOIN paymentMethods pM ON o.paymentMethodId = pM.paymentMethodId \n"
+            + "JOIN shippingMethods sM ON o.shippingMethodId = sM.shippingMethodId \n"
+            + "LEFT JOIN discountCodes dC ON o.discountId = dC.discountId \n"
+            + "WHERE o.customerId = ? AND o.orderStatus LIKE ?";
+
+    public List<OrderDTO> getOrderByStatus(int userId, String status) throws ClassNotFoundException, SQLException {
+        List<OrderDTO> orderList = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_ORDER_BY_STATUS);
+                ptm.setInt(1, userId);
+                ptm.setString(2, status);
+                rs = ptm.executeQuery();
+
+                while (rs.next()) {
+                    int orderId = rs.getInt("orderId");
+                    int customerId = rs.getInt("customerId");
+                    String street = rs.getString("street");
+                    String district = rs.getString("district");
+                    String city = rs.getString("city");
+                    String discountCode = rs.getString("discountCode");
+                    String shippingMethod = rs.getString("methodName");
+                    String paymentMethod = rs.getString("paymentName");
+                    Date createdAt = rs.getDate("createdAt");
+                    String orderStatus = rs.getString("orderStatus");
+
+                    // Lấy thông tin khách hàng từ UserDAO
+                    UserDAO userDao = new UserDAO();
+                    UserDTO customer = userDao.getUserById(customerId);
+
+                    // Tạo đối tượng OrderDTO với thông tin khách hàng là UserDTO
+                    OrderDTO order = new OrderDTO(orderId, customer, street, district, city, discountCode, paymentMethod, shippingMethod, createdAt, orderStatus);
+                    orderList.add(order);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return orderList;
+    }
+
 }

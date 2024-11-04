@@ -334,13 +334,11 @@
 
 .step-wizard-list {
     background: #fff;
-    width: 90%;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
     color: #333;
     list-style-type: none;
     border-radius: 10px;
     display: flex;
-    padding: 30px 20px; 
     position: relative;
     z-index: 10;
 }

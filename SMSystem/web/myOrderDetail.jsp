@@ -1,6 +1,5 @@
 
 
-<%@page import="java.util.Map"%>
 <%@page import="model.discount.DiscountDTO"%>
 
 
@@ -176,7 +175,7 @@
                                                             </div>
                                                         </td>
                                                         <td class="si-close">
-                                                            <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=homePage.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
+                                                            <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=myOrderDetail.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
                                                                 <i class="ti-close"></i>
                                                             </a>
                                                         </td>
@@ -190,7 +189,7 @@
                                             </div>
                                             <% } %>
                                             <div class="select-button">
-                                                <a href="MainController?action=ViewCart&url=myOrder.jsp" class="primary-btn view-card">VIEW CART</a>
+                                                <a href="MainController?action=ViewCart&url=homePage.jsp" class="primary-btn view-card">VIEW CART</a>
                                             </div>
                                         </div>
                                     </div>
@@ -226,7 +225,7 @@
                             <li><a href="MainController?action=HomePage">Home</a></li>
                             <li><a href="MainController?action=ShopPage">Shop</a></li>
                             <li><a href="contact.jsp">Contact</a></li>
-                            <li><a href="MainController?action=ViewCart&url=myOrder.jsp">Shopping Cart</a></li>
+                            <li><a href="MainController?action=ViewCart&url=myOrderDetail.jsp">Shopping Cart</a></li>
                             <li><a href="warrantyPage.jsp">Warranty</a></li>
                         </ul>
                     </nav>
@@ -243,272 +242,249 @@
                     <div class="col-lg-12">
                         <div class="breadcrumb-text">
                             <a href="MainController?action=HomePage"><i class="fa fa-home"></i> Home</a>
-                            <span>My Order</span>
+                            <a href="MainController?action=LoadMyOrder"> My Orders</a>
+                            <span>Order Detail</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!--Breadcrumb Section End-->
-        <div class="wishlist-heading">My Order</div>
 
-        <%
-            Map<String, Integer> orderStatusCount = (Map<String, Integer>) session.getAttribute("STATUS_COUNT");
-            if (orderStatusCount != null) {
-        %>
-        <!-- Shopping Cart Section Begin -->
-        <div class="container">
-            <section class="step-wizard">
-                <ul class="step-wizard-list">
-                    <li class="step-wizard-item" data-status="1">
-                        <a href="MainController?action=SearchOrderByStatus&status=Waiting For Accept">
-                            <span class="progress-count">
-                                <i class="fa fa-hourglass-half"></i>
-                                <span class="order-count"><%= orderStatusCount.get("Waiting For Accept")%></span>
-                            </span>
-                            <span class="progress-label">Waiting For Accept</span>
-                        </a>
-                    </li>
-                    <li class="step-wizard-item" data-status="2">
-                        <a href="MainController?action=SearchOrderByStatus&status=Waiting For Pickup">
-                            <span class="progress-count">
-                                <i class="fa fa-box"></i>
-                                <span class="order-count"><%= orderStatusCount.get("Waiting For Pickup")%></span>
-                            </span>
-                            <span class="progress-label">Waiting For Pickup</span>
-                        </a>
-                    </li>
-                    <li class="step-wizard-item" data-status="1">
-                        <a href="MainController?action=SearchOrderByStatus&status=Delivering">
-                            <span class="progress-count">
-                                <i class="fa fa-hourglass-half"></i>
-                                <span class="order-count"><%= orderStatusCount.get("Delivering")%></span>
-                            </span>
-                            <span class="progress-label">Delivering</span>
-                        </a>
-                    </li>
-                    <li class="step-wizard-item" data-status="3">
-                        <a href="MainController?action=SearchOrderByStatus&status=Completed">
-                            <span class="progress-count">
-                                <i class="fa fa-truck"></i>
-                                <span class="order-count"><%= orderStatusCount.get("Completed")%></span>
-                            </span>
-                            <span class="progress-label">Completed</span>
-                        </a>
-                    </li>
-                    <li class="step-wizard-item" data-status="4">
-                        <a href="MainController?action=SearchOrderByStatus&status=Not Completed">
-                            <span class="progress-count">
-                                <i class="fa fa-clipboard-check"></i>
-                                <span class="order-count"><%= orderStatusCount.get("Not Complete")%></span>
-                            </span>
-                            <span class="progress-label">Not Complete</span>
-                        </a>
-                    </li>
-                </ul>   
-            </section>
-        </div>
-        <%
-            }
-        %>
-        <div class="container">
-            <section class="showcase">
-                <div class="overlay">
+        <!--Order Section Begin-->
+        <section class="showcase">
+            <div class="overlay">
+                <div class="container"> 
                     <div class="welcome">
                         <%
-                            String message = (String) session.getAttribute("ms");
-                            session.removeAttribute("ms");
+
+                            OrderDTO ord = new OrderDTO();
+                            if (request.getAttribute("ORDER") != null) {
+                                ord = (OrderDTO) request.getAttribute("ORDER");
+                            }
+
+                            if (ord != null) {
                         %>
-                        <% if (message != null) {%>
-                        <div class="alert alert-info">
-                            <%= message%>
+
+                        <div class="wishlist-heading">Order Detail</div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <dl class="row">
+                                        <dt class="col-sm-3">User Name</dt>
+                                        <dd class="col-sm-9"> <%=ord.getCustomer().getFullName()%></dd>
+                                        <dt class="col-sm-3">Address</dt>
+                                        <dd class="col-sm-9">
+                                            <p style="color: black;"><%=ord.getStreet()%> </p>
+                                            <p style="color: black;"><%=ord.getDistrict()%> </p>
+                                            <p style="color: black;"><%=ord.getCity()%> </p>
+                                        </dd>
+                                        <dt class="col-sm-3">Phone</dt>
+                                        <dd class="col-sm-9"> <%=ord.getCustomer().getPhoneNumber()%></dd>
+                                        <dt class="col-sm-3">Email</dt>
+                                        <dd class="col-sm-9"><%=ord.getCustomer().getEmail()%></dd>
+                                    </dl>
+                                </div>
+                                <div class="col">
+                                    <dl class="row">
+                                        <dt class="col-sm-4">Payment Method</dt>
+                                        <dd class="col-sm-8"><%=ord.getPaymentMethod()%></dd>
+                                        <dt class="col-sm-4">Shipment Method</dt>
+                                        <dd class="col-sm-8"><%=ord.getShippingMethod()%></dd>
+                                        <dt class="col-sm-4">Date</dt>
+                                        <dd class="col-sm-8"> <%=ord.getCreatedAt()%></dd>
+                                        <dt class="col-sm-4">Status</dt>
+                                        <dd class="col-sm-8"><%=ord.getOrderStatus()%></dd>
+                                        <dt class="col-sm-4">Total Price</dt>
+                                        <dd class="col-sm-8"><%= String.format("%.2f", ord.getTotalPrice())%>$</dd>  
+                                    </dl>
+                                </div>
+                            </div>
                         </div>
-                        <% } %>
+
+                        <%
+                            }
+                        %>     
+                    </div>
+                    <div class="welcome">
+                        <%
+                            List<OrderDetailDTO> listOrderDetail = new ArrayList<>();
+                            if (request.getAttribute("ORDER_DETAILS") != null) {
+                                listOrderDetail = (List<OrderDetailDTO>) request.getAttribute("ORDER_DETAILS");
+                            }
+
+                            if (listOrderDetail != null && !listOrderDetail.isEmpty()) {
+                        %>
+                        <div class="table-tilte">Order Detail Table</div>
+
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Order ID</th>
-                                    <th>Payment method</th>
-                                    <th>Shipping method</th>
-                                    <th>Status</th>
-                                    <th>Total</th>
-                                    <th>View</th>
+                                    <th>Picture</th>
+                                    <th>Product's Name</th>
+                                    <th>Price</th>
+                                    <th>Sale Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total Price</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <%
-                                    List<OrderDTO> ls = (List<OrderDTO>) session.getAttribute("MY_ORDERS");
-                                    if (ls == null || ls.isEmpty()) {
+                                <%  for (OrderDetailDTO od : listOrderDetail) {
+                                        float totalPrice = 0;
+                                        totalPrice = od.getProduct().getPrice() * (1 - od.getProduct().getSale()) * od.getQuantity();
                                 %>
+
                                 <tr>
-                                    <td colspan="7" style="text-align: center;">You do not have any orders</td>
+                                    <td class="cart-pic first-row"><img src="<%=od.getProduct().getAvatarPath()%>" style="height: 100px; width: 100px" alt=""></td>                                       
+                                    <td><%=od.getProduct().getName()%></td>
+                                    <td><%=od.getProduct().getPrice()%></td>
+                                    <td><%= String.format("%.2f", od.getProduct().getPrice() * (1 - od.getProduct().getSale()))%>$</td>
+                                    <td><%=od.getQuantity()%></td>
+                                    <td><%=String.format("%.2f", totalPrice)%>$</td>    
                                 </tr>
-                                <%
-                                } else {
-                                    for (OrderDTO ele : ls) {
-                                %>
-                                <tr>
-                                    <td><%= ele.getOrderId()%></td>                                       
-                                    <td>
-                                        <input type="text" style="border: none; outline: none;" value="<%= ele.getPaymentMethod()%>" readonly="">
-                                    </td>
-                                    <td>
-                                        <input type="text" style="border: none; outline: none;" value="<%= ele.getShippingMethod()%>" readonly="">
-                                    </td>
-                                    <td>
-                                        <input type="text" style="border: none; outline: none;" value="<%= ele.getOrderStatus()%>" readonly="">
-                                    </td>
-                                    <td class="p-price-wishlist first-row">$<%= String.format("%.2f", ele.getTotalPrice())%>
-                                    </td>
-                                    <td>
-                                        <form action="MainController" method="POST">
-                                            <input type="hidden" name="orderId" value="<%= ele.getOrderId()%>" />
-                                            <button type="submit" class="btn btn-primary" name="action" value="View-Detail">
-                                                <i class="fa-solid fa-eye"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <%
-                                        }
-                                    }
-                                %>
+                                <%}%>
                             </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
+                        </table> 
 
 
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-        <div class="container">
-            <div class="logo-carousel owl-carousel">
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/nike.png" width="150" height="150">
+                        <%}%>
+
                     </div>
+
                 </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/adidas.png" width="150" height="150">
+
+            </div>
+
+        </section>
+        <!--Order Section End-->
+
+        <!-- Partner Logo Section Begin -->
+        <div class="partner-logo">
+            <div class="container">
+                <div class="logo-carousel owl-carousel">
+                    <div class="logo-item">
+                        <div class="tablecell-inner">
+                            <img src="img/nike.png" width="150" height="150">
+                        </div>
                     </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/puma.png" width="150" height="150">
+                    <div class="logo-item">
+                        <div class="tablecell-inner">
+                            <img src="img/adidas.png" width="150" height="150">
+                        </div>
                     </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/asics.png" width="150" height="150">
+                    <div class="logo-item">
+                        <div class="tablecell-inner">
+                            <img src="img/puma.png" width="150" height="150">
+                        </div>
                     </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/vans.png" width="150" height="150">
+                    <div class="logo-item">
+                        <div class="tablecell-inner">
+                            <img src="img/asics.png" width="150" height="150">
+                        </div>
                     </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/newbalance.png" width="150" height="150">
+                    <div class="logo-item">
+                        <div class="tablecell-inner">
+                            <img src="img/vans.png" width="150" height="150">
+                        </div>
+                    </div>
+                    <div class="logo-item">
+                        <div class="tablecell-inner">
+                            <img src="img/newbalance.png" width="150" height="150">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-    <!-- Footer Section Begin -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="footer-left">
-                        <div class="footer-logo">
-                            <a href="homePage.jsp">
-                                <img src="img/logoweb.png" alt="">
-                            </a>
-                        </div>
-                        <ul>
-                            <li>Lô E2a-7, Đường D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh 700000</li>
-                            <li>Phone: +84 123456789</li>
-                            <li>Email: smsystem@gmail.com</li>
-                        </ul>
-                        <div class="footer-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 offset-lg-1">
-                    <div class="footer-widget">
-                        <h5>Information</h5>
-                        <ul>
-                            <li><a href="">About Us</a></li>
-                            <li><a href="">Checkout</a></li>
-                            <li><a href="">Contact</a></li>
-                            <li><a href="">Services</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="footer-widget">
-                        <h5>My Account</h5>
-                        <ul>
-                            <li><a href="">My Account</a></li>
-                            <li><a href="">Contact</a></li>
-                            <li><a href="">Shopping Cart</a></li>
-                            <li><a href="">Shop</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="newsletter-item">
-                        <h5>Join Out Newsletter Now</h5>
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <form action="#" class="subcribe-form">
-                            <input type="text" placeholder="Enter Your Email">
-                            <button type="button">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="copyright-reserved">
+        <!-- Footer Section Begin -->
+        <footer class="footer-section">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="copyright-text">
-                            Copyright ©2024 All reserved | SMSystem
+                    <div class="col-lg-3">
+                        <div class="footer-left">
+                            <div class="footer-logo">
+                                <a href="homePage.jsp">
+                                    <img src="img/logoweb.png" alt="">
+                                </a>
+                            </div>
+                            <ul>
+                                <li>Lô E2a-7, Đường D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh 700000</li>
+                                <li>Phone: +84 123456789</li>
+                                <li>Email: smsystem@gmail.com</li>
+                            </ul>
+                            <div class="footer-social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                            </div>
                         </div>
-                        <div class="payment-pic">
-                            <img src="img/payment-method.png" alt="">
+                    </div>
+                    <div class="col-lg-2 offset-lg-1">
+                        <div class="footer-widget">
+                            <h5>Information</h5>
+                            <ul>
+                                <li><a href="">About Us</a></li>
+                                <li><a href="">Checkout</a></li>
+                                <li><a href="">Contact</a></li>
+                                <li><a href="">Services</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="footer-widget">
+                            <h5>My Account</h5>
+                            <ul>
+                                <li><a href="">My Account</a></li>
+                                <li><a href="">Contact</a></li>
+                                <li><a href="">Shopping Cart</a></li>
+                                <li><a href="">Shop</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="newsletter-item">
+                            <h5>Join Out Newsletter Now</h5>
+                            <p>Get E-mail updates about our latest shop and special offers.</p>
+                            <form action="#" class="subcribe-form">
+                                <input type="text" placeholder="Enter Your Email">
+                                <button type="button">Subscribe</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
+            <div class="copyright-reserved">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="copyright-text">
+                                Copyright ©2024 All reserved | SMSystem
+                            </div>
+                            <div class="payment-pic">
+                                <img src="img/payment-method.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Footer Section End -->
 
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery.zoom.min.js"></script>
-    <script src="js/jquery.dd.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/main2.js"></script>
-    <script src="js/main3.js"></script>
+        <!-- Js Plugins -->
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/jquery.countdown.min.js"></script>
+        <script src="js/jquery.nice-select.min.js"></script>
+        <script src="js/jquery.zoom.min.js"></script>
+        <script src="js/jquery.dd.min.js"></script>
+        <script src="js/jquery.slicknav.js"></script>
+        <script src="js/owl.carousel.min.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/main2.js"></script>
+        <script src="js/main3.js"></script>
 
-</body>
+    </body>
 </html>

@@ -147,9 +147,11 @@ public class MainController extends HttpServlet {
     private final static String FILTER_ORDER = "FilterOrder";
     private final static String FILTER_ORDER_CONTROLLER = "FilterOrderController";
     private final static String LOAD_SHIPMENT = "LoadShipment";
-    private final static String LOAD_SHIPMENT_CONTROLLER = "LoadShipmentController"; 
+    private final static String LOAD_SHIPMENT_CONTROLLER = "LoadShipmentController";
     private final static String UPDATE_SHIPMENT = "UpdateShipment";
-    private final static String UPDATE_SHIPMENT_CONTROLLER = "UpdateShipmentController"; 
+    private final static String UPDATE_SHIPMENT_CONTROLLER = "UpdateShipmentController";
+    private final static String SEARCH_ORDER_BY_STATUS = "SearchOrderByStatus";
+    private final static String SEARCH_ORDER_BY_STATUS_CONTROLLER = "SearchOrderByStatusController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -275,6 +277,8 @@ public class MainController extends HttpServlet {
                 url = LOAD_SHIPMENT_CONTROLLER;
             } else if (UPDATE_SHIPMENT.equals(action)) {
                 url = UPDATE_SHIPMENT_CONTROLLER;
+            } else if (SEARCH_ORDER_BY_STATUS.equals(action)) {
+                url = SEARCH_ORDER_BY_STATUS_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());

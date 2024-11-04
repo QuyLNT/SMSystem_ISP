@@ -7,11 +7,13 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.discount.DiscountDAO;
 import model.discount.DiscountDTO;
 import model.order.OrderDAO;
@@ -19,6 +21,7 @@ import model.order.OrderDTO;
 import model.order.OrderDetailDAO;
 import model.order.OrderDetailDTO;
 import model.product.ProductImageDAO;
+import model.user.UserDTO;
 
 /**
  *
@@ -72,10 +75,17 @@ public class LoadOrderDetailController extends HttpServlet {
                 order.setTotalPrice(total);
                 request.setAttribute("ORDER", order);
                 request.setAttribute("ORDER_DETAILS", orderDetails);
-                url = SUCCESS;
+                HttpSession session = request.getSession();
+                UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                if(loginUser.getRoleId().equals("CUS")){
+                    url = "myOrderDetail.jsp";
+                }else if(loginUser.getRoleId().equals("MN")){
+                    url = "orderDetail.jsp";
+                }else{
+                    url = "homePage.jsp";
+                }   
             }
-
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
             log("Error at LoadOrderDetailController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
