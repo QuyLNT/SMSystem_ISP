@@ -48,6 +48,7 @@ public class UpdateOrderStatusController extends HttpServlet {
             OrderDAO d = new OrderDAO();
             boolean check = d.updateOrderStatus(status, orderId);
             if (check) {
+                
                 HttpSession session = request.getSession();
                 List<OrderDTO> orderList = (List<OrderDTO>) session.getAttribute("ORDER_LIST");
 

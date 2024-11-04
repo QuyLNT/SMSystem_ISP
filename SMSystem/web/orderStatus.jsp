@@ -13,7 +13,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-  <head>
+    <head>
         <meta charset="UTF-8">
         <meta name="description" content="codelean Template">
         <meta name="keywords" content="codelean, unica, creative, html">
@@ -145,7 +145,7 @@
                                 <li class="step-wizard-item" data-status="2">
                                     <a href="#">
                                         <span class="progress-count">
-                                            <i class="fa fa-box"></i>
+                                            <i class="fa fa-hourglass-half"></i>
                                             <span class="order-count">10</span>
                                         </span>
                                         <span class="progress-label">Waiting for pickup</span>
@@ -243,10 +243,10 @@
                     <nav class="nav-menu mobile-menu">
                         <ul>
                             <li><a href="MainController?action=HomePage">Home</a></li>
-                                <li><a href="MainController?action=ShopPage">Shop</a></li>
-                                <li><a href="contact.jsp">Contact</a></li>
-                                <li><a href="MainController?action=ViewCart&url=orderStatus.jsp">Shopping Cart</a></li>
-                                <li><a href="warrantyPage.jsp">Warranty</a></li>
+                            <li><a href="MainController?action=ShopPage">Shop</a></li>
+                            <li><a href="contact.jsp">Contact</a></li>
+                            <li><a href="MainController?action=ViewCart&url=orderStatus.jsp">Shopping Cart</a></li>
+                            <li><a href="warrantyPage.jsp">Warranty</a></li>
                         </ul>
                     </nav>
                     <div id="mobile-menu-wrap"></div>

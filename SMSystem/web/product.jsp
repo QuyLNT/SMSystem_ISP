@@ -110,7 +110,7 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-2">
                                 <div class="logo">
-                                    <a href="MainController?action=HomePage">
+                                    <a href="homePage.jsp">
                                         <img src="img/logoweb.png" height="65px" alt="">
                                     </a>
                                 </div>
@@ -119,6 +119,7 @@
                                 <form action="MainController" method="get">
                                     <div class="advanced-search">
                                         <button type="button" class="category-btn">All Categories</button>
+
                                         <div class="input-group">
                                             <input style="color: black;" type="text" name="text" placeholder="What do you need?">
                                             <button type="submit" name="action" value="Search"><i class="ti-search"></i></button>

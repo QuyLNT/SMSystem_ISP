@@ -255,17 +255,16 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title fs-5" id="updateModalLabel">Change password</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="input-group input-group-sm mb-3">
                                                         <span class="input-group-text" id="inputGroup-sizing-sm">Current password</span>
                                                         <input name="currentPassword" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
                                                     </div>
-                                                    <% if (request.getAttribute("CURRENT_PASS_ERROR") != null) { %>
-                                                        <span style="color:red;">
-                                                            <%= request.getAttribute("CURRENT_PASS_ERROR") %>
-                                                        </span>
+                                                    <% if (request.getAttribute("CURRENT_PASS_ERROR") != null) {%>
+                                                    <span style="color:red;">
+                                                        <%= request.getAttribute("CURRENT_PASS_ERROR")%>
+                                                    </span>
                                                     <% } %>
                                                 </div>
 
@@ -373,8 +372,8 @@
             }
 
             document.addEventListener("DOMContentLoaded", function () {
-                var currentPasswordError = "<%= request.getAttribute("CURRENT_PASS_ERROR") != null ? request.getAttribute("CURRENT_PASS_ERROR") : "" %>";
-                var passwordError = "<%= request.getAttribute("PASS_ERROR") != null ? request.getAttribute("PASS_ERROR") : "" %>";
+                var currentPasswordError = "<%= request.getAttribute("CURRENT_PASS_ERROR") != null ? request.getAttribute("CURRENT_PASS_ERROR") : ""%>";
+                var passwordError = "<%= request.getAttribute("PASS_ERROR") != null ? request.getAttribute("PASS_ERROR") : ""%>";
 
                 if (currentPasswordError.trim().length > 0 || passwordError.trim().length > 0) {
                     var passwordModal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
