@@ -108,9 +108,10 @@
                                 <select name="statusFilter">
                                     <option value="">All Statuses</option>
                                     <option value="Waiting For Accept">Waiting For Accept</option>
+                                    <option value="Waiting For Pickup">Waiting For Pickup</option>
                                     <option value="Delivering" >Delivering</option>
                                     <option value="Completed" >Completed</option>
-                                    <option value="Not Complete" >Not Complete</option>
+                                    <option value="Not Completed" >Not Completed</option>
                                 </select>
                             </div>
                             <button type="submit" name="action" value="FilterOrder"class="btn btn-primary col-lg-3 ">Filter</button>
@@ -188,9 +189,10 @@
                                             <div class="select-option-province">
                                                 <select name="status" onchange="this.form.submit()">
                                                     <option value="Waiting For Accept" <%= a.getOrderStatus().equalsIgnoreCase("Waiting For Accept") ? "selected" : ""%>>Waiting For Accept</option>
+                                                    <option value="Waiting For Pickup" <%= a.getOrderStatus().equalsIgnoreCase("Waiting For Pickup") ? "selected" : ""%>>Waiting For Pickup</option>
                                                     <option value="Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Delivering") ? "selected" : ""%>>Delivering</option>
                                                     <option value="Completed" <%= a.getOrderStatus().equalsIgnoreCase("Completed") ? "selected" : ""%>>Completed</option>
-                                                    <option value="Not Complete" <%= a.getOrderStatus().equalsIgnoreCase("Not Complete") ? "selected" : ""%>>Not Complete</option>
+                                                    <option value="Not Completed" <%= a.getOrderStatus().equalsIgnoreCase("Not Completed") ? "selected" : ""%>>Not Complete</option>
                                                 </select>
                                             </div>
                                             <input type="hidden" name="action" value="UpdateStatus"/>
@@ -220,7 +222,6 @@
                                                     <% } %>
                                                 </select>
                                             </div>
-
                                         </form>
                                     </td>
 

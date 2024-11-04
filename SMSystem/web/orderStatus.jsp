@@ -69,7 +69,7 @@
                         <div class="user-setting">
                             <div class="content">
                                 <div><a href="myAccount.jsp">My account</a></div>
-                                <div><a href="myOrder.jsp">Order Status</a></div>
+                                <div><a href="myOrder.jsp">My Order</a></div>
                                 <div><a href="LogoutController">Logout</a></div>
                             </div>
                     </section>
@@ -262,7 +262,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="homePage.jsp"><i class="fa fa-home"></i> Home</a>
-                        <span>My Order</span>
+                        <span>My Orders</span>
                     </div>
                 </div>
             </div>

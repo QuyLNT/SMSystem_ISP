@@ -360,6 +360,14 @@
         <servlet-name>UpdateShipmentController</servlet-name>
         <servlet-class>controller.UpdateShipmentController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadMyOrderController</servlet-name>
+        <servlet-class>controller.LoadMyOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchOrderByStatusController</servlet-name>
+        <servlet-class>controller.SearchOrderByStatusController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -611,6 +619,14 @@
     <servlet-mapping>
         <servlet-name>UpdateShipmentController</servlet-name>
         <url-pattern>/UpdateShipmentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadMyOrderController</servlet-name>
+        <url-pattern>/LoadMyOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchOrderByStatusController</servlet-name>
+        <url-pattern>/SearchOrderByStatusController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
