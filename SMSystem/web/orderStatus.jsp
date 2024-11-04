@@ -274,6 +274,46 @@
             <section class="showcase">
                 <div class="overlay">
                     <div class="container"> 
+                             <section class="step-wizard">
+                            <ul class="step-wizard-list">
+                                <li class="step-wizard-item" data-status="1">
+                                    <a href="#">
+                                        <span class="progress-count">
+                                            <i class="fa fa-hourglass-half"></i>
+                                            <span class="order-count">15</span>
+                                        </span>
+                                        <span class="progress-label">Waiting for confirmation</span>
+                                    </a>
+                                </li>
+                                <li class="step-wizard-item" data-status="2">
+                                    <a href="#">
+                                        <span class="progress-count">
+                                            <i class="fa fa-box"></i>
+                                            <span class="order-count">10</span>
+                                        </span>
+                                        <span class="progress-label">Waiting for pickup</span>
+                                    </a>
+                                </li>
+                                <li class="step-wizard-item" data-status="3">
+                                    <a href="#">
+                                        <span class="progress-count">
+                                            <i class="fa fa-truck"></i>
+                                            <span class="order-count">8</span>
+                                        </span>
+                                        <span class="progress-label">Waiting for delivery</span>
+                                    </a>
+                                </li>
+                                <li class="step-wizard-item" data-status="4">
+                                    <a href="#">
+                                        <span class="progress-count">
+                                            <i class="fa fa-clipboard-check"></i>
+                                            <span class="order-count">20</span>
+                                        </span>
+                                        <span class="progress-label">Delivered successfully</span>
+                                    </a>
+                                </li>
+                            </ul>   
+                        </section>
                         <div class="welcome">
                             <%
 
@@ -380,7 +420,7 @@
 
 
         </main>
-
+    </body>
         <script src="js/app.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>

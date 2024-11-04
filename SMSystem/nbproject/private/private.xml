@@ -3,6 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/myOrder.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/AssignShipperController.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/WEB-INF/web.xml</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/LoginController.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/shipList.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/LoadPaymentListController.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/CreateSizeController.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/product.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/filter/AuthenFilter.java</file>
+            <file>file:/D:/Prj302/SMSystem_ISP/SMSystem/web/css/style1.css</file>
+            <file>file:/D:/Prj302/SMSystem_ISP/SMSystem/web/forgotPassword.jsp</file>
+            <file>file:/D:/Prj302/SMSystem_ISP/SMSystem/web/homePage.jsp</file>
+            <file>file:/D:/Prj302/SMSystem_ISP/SMSystem/web/orderList.jsp</file>
+            <file>file:/D:/Prj302/SMSystem_ISP/SMSystem/web/css/style3.css</file>
+            <file>file:/D:/Prj302/SMSystem_ISP/SMSystem/web/shipList.jsp</file>
+            <file>file:/D:/Prj302/SMSystem_ISP/SMSystem/web/orderStatus.jsp</file>
+            <file>file:/D:/Prj302/SMSystem_ISP/SMSystem/web/managerHome.jsp</file>
+            <file>file:/D:/Prj302/SMSystem_ISP/SMSystem/web/css/style.css</file>
             <file>file:/D:/SMSystem_ISP/SMSystem/web/shopping-cart.jsp</file>
             <file>file:/D:/SMSystem_ISP/SMSystem/web/check-out.jsp</file>
             <file>file:/D:/SMSystem_ISP/SMSystem/web/orderList.jsp</file>

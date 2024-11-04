@@ -44,6 +44,23 @@
             <div class="header-top">
                 <div class="container">
                     <div class="ht-left">
+                        <%
+                            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                            if (loginUser != null) {
+                        %>
+                        <div class="mail-service">
+                            <%
+                                if (!loginUser.getRoleId().equals("CUS")) {
+                            %>
+                            <div class="login-panel">
+                                <a href="MainController?action=Back&role=<%=loginUser.getRoleId()%>" style="color: black;">
+                                    <i class="fa fa-home">  Back to your home management</i>
+                                </a>
+                            </div>
+                            <%
+                                }
+                            %>
+                        </div>
                         <div class="mail-service">
                             <i class="fa fa-envelope">
                                 smsystem8386@gmail.com
@@ -56,21 +73,8 @@
                         </div>
                     </div>
                     <div class="ht-right">
-                        <%
-                            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-                            if (loginUser != null) {
-                        %>
-                        <%
-                            if (!loginUser.getRoleId().equals("CUS")) {
-                        %>
-                        <div class="login-panel">
-                            <a href="MainController?action=Back&role=<%=loginUser.getRoleId()%>" style="color: black;">
-                                <i class="fa-solid fa-house">  Manage Home</i>                            
-                            </a>
-                        </div>
-                        <%
-                            }
-                        %>
+
+
                         <div class="login-panel" id="user-btn">
                             <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
                         </div>
