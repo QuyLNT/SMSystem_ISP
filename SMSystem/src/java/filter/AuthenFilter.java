@@ -53,6 +53,7 @@ public class AuthenFilter implements Filter {
         USER_RESOURCE.add("check-out.jsp");
         USER_RESOURCE.add("myOrder.jsp");
         USER_RESOURCE.add("product.jsp");
+        USER_RESOURCE.add("Add+To+Cart");
 
         ADMIN_RESOURCE = new ArrayList<>();
         ADMIN_RESOURCE.add("adminHome.jsp");
@@ -86,6 +87,9 @@ public class AuthenFilter implements Filter {
         MANAGER_RESOURCE.add("ToggleFlashSaleController");
         MANAGER_RESOURCE.add("ToggleProductStatusController");
         MANAGER_RESOURCE.add("UpdateProductController");
+        MANAGER_RESOURCE.add("LoadPaymentListController");
+        MANAGER_RESOURCE.add("AssignShipperController");
+        MANAGER_RESOURCE.add("CreateSizeController");
 
         SHIPPER_RESOURCE = new ArrayList<>();
         SHIPPER_RESOURCE.add("shipperPage.jsp");
@@ -102,6 +106,7 @@ public class AuthenFilter implements Filter {
         NON_AUTHEN_RESOURCE.add("shop.jsp");
         NON_AUTHEN_RESOURCE.add("success.jsp");
         NON_AUTHEN_RESOURCE.add("warrantyPage.jsp");
+        NON_AUTHEN_RESOURCE.add("LogoutController");
         NON_AUTHEN_RESOURCE.add("MainController");
         NON_AUTHEN_RESOURCE.add("LoadTopListByCateController");
     }
@@ -208,6 +213,7 @@ public class AuthenFilter implements Filter {
                 }
             }
         } catch (IOException | ServletException e) {
+            log(e.toString());
         }
     }
 

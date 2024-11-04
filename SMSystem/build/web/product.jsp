@@ -356,10 +356,27 @@
                                             }
                                         %>
                                     </div>
+                                    <%
+                                        String userRole = "";
+                                        if (loginUser != null) {
+                                            userRole = loginUser.getRoleId();
+                                        }
+                                    %>
+                                    <script>
+                                        var userRole = "<%= userRole%>";
+                                    </script>
+                                    <script>
+                                        function validateForm(event) {
+                                            if (userRole !== "CUS") {
+                                                event.preventDefault();
+                                                alert("Only customer can add product to cart");
+                                            }
+                                        }
+                                    </script>
                                     <div class="quantity">
                                         <c:choose>
                                             <c:when test="${not empty sessionScope.USER_ID}">
-                                                <form action="MainController" method="get">
+                                                <form action="MainController" method="get" onsubmit="validateForm(event)">
                                                     <div class="pro-qty">
                                                         <input type="text" name="qnt" value="1" min="0">
                                                     </div>
@@ -383,13 +400,10 @@
                                                 document.getElementById('modalOverlay').style.display = 'block';
                                             }
 
-
-
                                             function cancelDelete() {
                                                 document.getElementById('deleteConfirmation').style.display = 'none';
                                                 document.getElementById('modalOverlay').style.display = 'none';
                                             }
-
 
                                         </script>
                                         <%
