@@ -51,9 +51,10 @@
             <div class="header-top">
                 <div class="container">
                     <div class="ht-left">
+
                         <div class="mail-service">
                             <i class="fa fa-envelope">
-                                smsystem@gmail.com
+                                smsystem8386@gmail.com
                             </i>
                         </div>
                         <div class="phone-service">
@@ -64,34 +65,51 @@
                     </div>
                     <div class="ht-right">
                         <%
-                            UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
-                            if (user != null && user.getFullName() != null) {
+                            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                            if (loginUser != null) {
                         %>
+
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user"><%=user.getFullName()%></i>
+                            <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
                         </div>
-                        <% } else { %>
-                        <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user"></i>
-                        </div>
-                        <% } %>
                         <section class="user">
                             <div class="user-setting">
                                 <div class="content">
                                     <div><a href="myAccount.jsp">My account</a></div>
-                                    <div><a href="LoadMyOrderController">Order Status</a></div>
+                                    <div><a href="MainController?action=LoadMyOrder">Order Status</a></div>
                                     <div><a href="LogoutController">Logout</a></div>
                                 </div>
-                            </div>
                         </section>
-                        <div class="lan-selector">
-                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
-                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
-                                    English</option>
-                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
-                                    German</option>
-                            </select>
+                        <%
+                        } else {
+                        %>
+                        <div class="login-panel" id="user-btn">
+                            <i class="fa fa-user">  Guest</i>
                         </div>
+                        <section class="user">
+                            <div class="user-setting">
+                                <div class="content">
+                                    <div><a href="login.jsp">Sign In</a></div>
+                                    <div><a href="register.jsp">Sign Up</a></div>
+                                </div>
+                        </section>
+                        <%
+                            }
+                        %>
+                        <%
+                            if (loginUser != null) {
+                                if (!loginUser.getRoleId().equals("CUS")) {
+                        %>
+                        <div class="lan-selector">
+
+                            <a href="MainController?action=Back&role=<%=loginUser.getRoleId()%>" style="color: black;">
+                                <i class="fa fa-home">  Management</i>
+                            </a>
+                        </div>
+                        <%
+                                }
+                            }
+                        %>
                         <div class="top-social">
                             <a href="#"><i class="ti-facebook"></i></a>
                             <a href="#"><i class="ti-twitter-alt"></i></a>
@@ -100,7 +118,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="container">
                 <div class="inner-header">
@@ -113,13 +130,16 @@
                             </div>
                         </div>
                         <div class="col-lg-7 col-md-7">
-                            <div class="advanced-search">
-                                <button type="button" class="category-btn">All Categories</button>
-                                <div class="input-group">
-                                    <input type="text" placeholder="What do you need?">
-                                    <button type="button"><i class="ti-search"></i></button>
+                            <form action="MainController" method="get">
+                                <div class="advanced-search">
+                                    <button type="button" class="category-btn">All Categories</button>
+
+                                    <div class="input-group">
+                                        <input style="color: black;" type="text" name="text" placeholder="What do you need?">
+                                        <button type="submit" name="action" value="Search"><i class="ti-search"></i></button>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                         <div class="col-lg-3 col-md-3 text-right">
                             <ul class="nav-right">
@@ -156,7 +176,7 @@
                                                             </div>
                                                         </td>
                                                         <td class="si-close">
-                                                            <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=myOrder.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
+                                                            <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=homePage.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
                                                                 <i class="ti-close"></i>
                                                             </a>
                                                         </td>
@@ -195,9 +215,9 @@
                             <i class="ti-menu"></i>
                             <span>All Departments</span>
                             <ul class="depart-hover">
-                                <li class="active"><a href="#">Women's Clothing</a></li>
-                                <li><a href="#">a</a></li>
-                                <li><a href="#">a</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=1">Men's Clothing</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=2">Women's Clothing</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=3">Kid's Clothing</a></li>
                             </ul>
                         </div>
                     </div>
