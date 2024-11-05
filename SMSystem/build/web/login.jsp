@@ -41,7 +41,7 @@ and open the template in the editor.
                     <div class="ht-left">
                         <div class="mail-service">
                             <i class="fa fa-envelope">
-                                smsystem@gmail.con
+                                smsystem@gmail.com
                             </i>
                         </div>
                         <div class="phone-service">
@@ -72,13 +72,9 @@ and open the template in the editor.
         </header>
         <div class="container1">
             <div class="signin-signup">
-                <a href="MainController?action=HomePage" style="display: block; text-align: left;">
-                    Back To Shop
-                </a>
                 <div class="signin">
                     <h2>Sign In</h2>
-
-                    <form action="MainController" method="post" id="form">
+                    <form action="MainController" method="post" id="form">                      
                         <input type="text" placeholder="User Name or Email" name="usernameOrEmail" required />
                         <input type="password" placeholder="Password" name="pass" required />
                         <a href="ForgotPasswordController" class="forgot-password">Forgot your password?</a>
@@ -93,6 +89,7 @@ and open the template in the editor.
                     <h2>Hello, Friend!</h2>
                     <p>Enter your personal details and start journey with us</p>
                     <a href="register.jsp"><button class="btn signup-btn">Sign Up</button></a>
+                     <a  href="MainController?action=HomePage"><button class="btn signup-btn">Back to Shop</button></a>
                 </div>
             </div>
         </div>

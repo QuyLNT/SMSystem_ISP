@@ -58,33 +58,50 @@
                     </div>
                     <div class="ht-right">
                         <%
-                            UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
-                            if (user.getFullName() != null) {
+                           UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
+                           if (user != null) {
                         %>
+
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user"><%=user.getFullName()%></i>
+                            <i class="fa fa-user">  <%=user.getFullName()%></i>
                         </div>
-                        <% } else { %>
-                        <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user"></i>
-                        </div>
-                        <% } %>
                         <section class="user">
                             <div class="user-setting">
                                 <div class="content">
                                     <div><a href="myAccount.jsp">My account</a></div>
-                                    <div><a href="myOrder.jsp">Order Status</a></div>
-                                    <div><a href="LogoutController">Logout</a></div>                                    
+                                    <div><a href="MainController?action=LoadMyOrder">Order Status</a></div>
+                                    <div><a href="LogoutController">Logout</a></div>
                                 </div>
                         </section>
-                        <div class="lan-selector">
-                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
-                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
-                                    English</option>
-                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
-                                    German</option>
-                            </select>
+                        <%
+                        } else {
+                        %>
+                        <div class="login-panel" id="user-btn">
+                            <i class="fa fa-user">  Guest</i>
                         </div>
+                        <section class="user">
+                            <div class="user-setting">
+                                <div class="content">
+                                    <div><a href="login.jsp">Sign In</a></div>
+                                    <div><a href="register.jsp">Sign Up</a></div>
+                                </div>
+                        </section>
+                        <%
+                            }
+                        %>
+                        <%
+                            if (user != null) {
+                                if (!user.getRoleId().equals("CUS")) {
+                        %>
+                        <div class="lan-selector">
+                            <a href="MainController?action=Back&role=<%=user.getRoleId()%>" style="color: black;">
+                                <i class="fa fa-home">  Management</i>
+                            </a>
+                        </div>
+                        <%
+                                }
+                            }
+                        %>
                         <div class="top-social">
                             <a href="#"><i class="ti-facebook"></i></a>
                             <a href="#"><i class="ti-twitter-alt"></i></a>
@@ -255,17 +272,16 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title fs-5" id="updateModalLabel">Change password</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="input-group input-group-sm mb-3">
                                                         <span class="input-group-text" id="inputGroup-sizing-sm">Current password</span>
                                                         <input name="currentPassword" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
                                                     </div>
-                                                    <% if (request.getAttribute("CURRENT_PASS_ERROR") != null) { %>
-                                                        <span style="color:red;">
-                                                            <%= request.getAttribute("CURRENT_PASS_ERROR") %>
-                                                        </span>
+                                                    <% if (request.getAttribute("CURRENT_PASS_ERROR") != null) {%>
+                                                    <span style="color:red;">
+                                                        <%= request.getAttribute("CURRENT_PASS_ERROR")%>
+                                                    </span>
                                                     <% } %>
                                                 </div>
 
@@ -373,8 +389,8 @@
             }
 
             document.addEventListener("DOMContentLoaded", function () {
-                var currentPasswordError = "<%= request.getAttribute("CURRENT_PASS_ERROR") != null ? request.getAttribute("CURRENT_PASS_ERROR") : "" %>";
-                var passwordError = "<%= request.getAttribute("PASS_ERROR") != null ? request.getAttribute("PASS_ERROR") : "" %>";
+                var currentPasswordError = "<%= request.getAttribute("CURRENT_PASS_ERROR") != null ? request.getAttribute("CURRENT_PASS_ERROR") : ""%>";
+                var passwordError = "<%= request.getAttribute("PASS_ERROR") != null ? request.getAttribute("PASS_ERROR") : ""%>";
 
                 if (currentPasswordError.trim().length > 0 || passwordError.trim().length > 0) {
                     var passwordModal = new bootstrap.Modal(document.getElementById('changePasswordModal'));

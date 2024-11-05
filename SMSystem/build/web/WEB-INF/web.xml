@@ -6,7 +6,87 @@
     </filter>
     <filter-mapping>
         <filter-name>AuthenFilter</filter-name>
-        <url-pattern>/*Controller</url-pattern>
+        <url-pattern>/LoadUserListController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/LoadAdminHomeDataController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/DeleteUserController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/SearchUserByUserNameController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/ToggleUserRoleController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/LoadManagerHomeDataController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/CreateBrandController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/CreateProductController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/DeleteProductController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/LoadBrandListController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/LoadDiscountListController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/LoadProductController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/LoadProductListController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/SearchBrandController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/SearchProductByNameController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/ToggleDiscountStatusController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/ToggleFlashSaleController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/ToggleProductStatusController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/UpdateProductController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/LoadPaymentListController</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenFilter</filter-name>
+        <url-pattern>/AssignShipperController</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AuthenFilter</filter-name>
@@ -280,6 +360,14 @@
         <servlet-name>UpdateShipmentController</servlet-name>
         <servlet-class>controller.UpdateShipmentController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadMyOrderController</servlet-name>
+        <servlet-class>controller.LoadMyOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchOrderByStatusController</servlet-name>
+        <servlet-class>controller.SearchOrderByStatusController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -531,6 +619,14 @@
     <servlet-mapping>
         <servlet-name>UpdateShipmentController</servlet-name>
         <url-pattern>/UpdateShipmentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadMyOrderController</servlet-name>
+        <url-pattern>/LoadMyOrderController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchOrderByStatusController</servlet-name>
+        <url-pattern>/SearchOrderByStatusController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

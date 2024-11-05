@@ -13,7 +13,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-  <head>
+    <head>
         <meta charset="UTF-8">
         <meta name="description" content="codelean Template">
         <meta name="keywords" content="codelean, unica, creative, html">
@@ -69,7 +69,7 @@
                         <div class="user-setting">
                             <div class="content">
                                 <div><a href="myAccount.jsp">My account</a></div>
-                                <div><a href="myOrder.jsp">Order Status</a></div>
+                                <div><a href="myOrder.jsp">My Order</a></div>
                                 <div><a href="LogoutController">Logout</a></div>
                             </div>
                     </section>
@@ -145,7 +145,7 @@
                                 <li class="step-wizard-item" data-status="2">
                                     <a href="#">
                                         <span class="progress-count">
-                                            <i class="fa fa-box"></i>
+                                            <i class="fa fa-hourglass-half"></i>
                                             <span class="order-count">10</span>
                                         </span>
                                         <span class="progress-label">Waiting for pickup</span>
@@ -243,10 +243,10 @@
                     <nav class="nav-menu mobile-menu">
                         <ul>
                             <li><a href="MainController?action=HomePage">Home</a></li>
-                                <li><a href="MainController?action=ShopPage">Shop</a></li>
-                                <li><a href="contact.jsp">Contact</a></li>
-                                <li><a href="MainController?action=ViewCart&url=orderStatus.jsp">Shopping Cart</a></li>
-                                <li><a href="warrantyPage.jsp">Warranty</a></li>
+                            <li><a href="MainController?action=ShopPage">Shop</a></li>
+                            <li><a href="contact.jsp">Contact</a></li>
+                            <li><a href="MainController?action=ViewCart&url=orderStatus.jsp">Shopping Cart</a></li>
+                            <li><a href="warrantyPage.jsp">Warranty</a></li>
                         </ul>
                     </nav>
                     <div id="mobile-menu-wrap"></div>
@@ -262,7 +262,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="homePage.jsp"><i class="fa fa-home"></i> Home</a>
-                        <span>My Order</span>
+                        <span>My Orders</span>
                     </div>
                 </div>
             </div>
@@ -274,6 +274,46 @@
             <section class="showcase">
                 <div class="overlay">
                     <div class="container"> 
+                             <section class="step-wizard">
+                            <ul class="step-wizard-list">
+                                <li class="step-wizard-item" data-status="1">
+                                    <a href="#">
+                                        <span class="progress-count">
+                                            <i class="fa fa-hourglass-half"></i>
+                                            <span class="order-count">15</span>
+                                        </span>
+                                        <span class="progress-label">Waiting for confirmation</span>
+                                    </a>
+                                </li>
+                                <li class="step-wizard-item" data-status="2">
+                                    <a href="#">
+                                        <span class="progress-count">
+                                            <i class="fa fa-box"></i>
+                                            <span class="order-count">10</span>
+                                        </span>
+                                        <span class="progress-label">Waiting for pickup</span>
+                                    </a>
+                                </li>
+                                <li class="step-wizard-item" data-status="3">
+                                    <a href="#">
+                                        <span class="progress-count">
+                                            <i class="fa fa-truck"></i>
+                                            <span class="order-count">8</span>
+                                        </span>
+                                        <span class="progress-label">Waiting for delivery</span>
+                                    </a>
+                                </li>
+                                <li class="step-wizard-item" data-status="4">
+                                    <a href="#">
+                                        <span class="progress-count">
+                                            <i class="fa fa-clipboard-check"></i>
+                                            <span class="order-count">20</span>
+                                        </span>
+                                        <span class="progress-label">Delivered successfully</span>
+                                    </a>
+                                </li>
+                            </ul>   
+                        </section>
                         <div class="welcome">
                             <%
 
@@ -380,7 +420,7 @@
 
 
         </main>
-
+    </body>
         <script src="js/app.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
