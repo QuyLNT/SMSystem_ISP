@@ -518,4 +518,55 @@ public class OrderDAO {
         }
         return orders;
     }
+
+    public boolean returnItemsToStock(int orderId) throws SQLException, ClassNotFoundException {
+        boolean success = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBUtils.getConnection();
+            conn.setAutoCommit(false); 
+
+            String sql = "SELECT productId, size, quantity FROM orderDetails WHERE orderId = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, orderId);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int productId = rs.getInt("productId");
+                float size = rs.getFloat("size");
+                int quantity = rs.getInt("quantity");
+
+                String updateStock = "UPDATE productVariants SET stock = stock + ? WHERE productId = ? AND size = ?";
+                try (PreparedStatement ps2 = conn.prepareStatement(updateStock)) {
+                    ps2.setInt(1, quantity); 
+                    ps2.setInt(2, productId);
+                    ps2.setFloat(3, size);
+                    int rowsUpdated = ps2.executeUpdate();
+
+                    if (rowsUpdated == 0) {
+                        conn.rollback();
+                        return false;
+                    }
+                }
+            }
+
+            conn.commit();
+            success = true;
+
+        } catch (SQLException e) {
+            if (conn != null) {
+                conn.rollback();
+            }
+            throw e;
+        } finally {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (conn != null) conn.close();
+        }
+        return success;
+    }
+
 }
