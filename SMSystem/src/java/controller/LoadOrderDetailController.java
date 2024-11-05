@@ -21,6 +21,8 @@ import model.order.OrderDTO;
 import model.order.OrderDetailDAO;
 import model.order.OrderDetailDTO;
 import model.product.ProductImageDAO;
+import model.shipment.ShipmentDAO;
+import model.shipment.ShipmentDTO;
 import model.user.UserDTO;
 
 /**
@@ -38,23 +40,22 @@ public class LoadOrderDetailController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "orderDetail.jsp";
-    private static final String SUCCESS = "orderDetail.jsp";
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
+        String url = "homePage.jsp";
         try {
-
+            
             int orderId = Integer.parseInt(request.getParameter("orderId"));
             OrderDAO orderDao = new OrderDAO();
             DiscountDAO discountDAO = new DiscountDAO();
             OrderDetailDAO orderDetailDao = new OrderDetailDAO();
             ProductImageDAO imageDao = new ProductImageDAO();
-
+            ShipmentDAO shipDao = new ShipmentDAO();
+            
             OrderDTO order = orderDao.getOrderById(orderId);
             List<OrderDetailDTO> orderDetails = orderDetailDao.getOrderDetailListByOrderID(orderId);
+            ShipmentDTO ship = shipDao.getShipByOrderId(orderId);
             if (order != null && orderDetails != null) {
                 for (OrderDetailDTO detail : orderDetails) {
                     detail.getProduct().setListImages(imageDao.getImageByProduct(detail.getProduct().getProductId()));
@@ -75,15 +76,16 @@ public class LoadOrderDetailController extends HttpServlet {
                 order.setTotalPrice(total);
                 request.setAttribute("ORDER", order);
                 request.setAttribute("ORDER_DETAILS", orderDetails);
-                HttpSession session = request.getSession();
-                UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-                if(loginUser.getRoleId().equals("CUS")){
-                    url = "myOrderDetail.jsp";
-                }else if(loginUser.getRoleId().equals("MN")){
-                    url = "orderDetail.jsp";
-                }else{
-                    url = "homePage.jsp";
-                }   
+            }
+            request.setAttribute("SHIP_STATUS", ship);
+            HttpSession session = request.getSession();
+            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+            if (loginUser.getRoleId().equals("CUS")) {
+                url = "myOrderDetail.jsp";
+            } else if (loginUser.getRoleId().equals("MN")) {
+                url = "orderDetail.jsp";
+            } else {
+                url = "homePage.jsp";
             }
         } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
             log("Error at LoadOrderDetailController: " + e.toString());

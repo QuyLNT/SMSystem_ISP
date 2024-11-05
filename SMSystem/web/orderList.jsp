@@ -163,8 +163,8 @@
                                     <th>Shipment Method</th>
                                     <th>Create At</th>
                                     <th>Order Status</th>
-                                    <th>Actions</th>
                                     <th>Assign Shipper</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -197,14 +197,7 @@
                                             </div>
                                             <input type="hidden" name="action" value="UpdateStatus"/>
                                         </form>
-                                    <td>
-                                        <form action="MainController" method="POST">
-                                            <input type="hidden" name="orderId" value="<%= a.getOrderId()%>" />
-                                            <button type="submit" class="btn btn-primary" name="action" value="View-Detail">
-                                                <i class="fa-solid fa-eye"></i>
-                                            </button>
-                                        </form>
-                                    </td>
+
 
                                     <td>
                                         <form action="AssignShipperController" method="POST">
@@ -219,12 +212,19 @@
                                                     <option value="<%= shipper.getUserId()%>" <%= isSelected ? "selected" : ""%>>
                                                         <%= shipper.getFullName()%>
                                                     </option>
-                                                    <% } %>
+                                                    <% }%>
                                                 </select>
                                             </div>
                                         </form>
                                     </td>
-
+                                    <td>
+                                        <form action="MainController" method="POST">
+                                            <input type="hidden" name="orderId" value="<%= a.getOrderId()%>" />
+                                            <button type="submit" class="btn btn-primary" name="action" value="View-Detail">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 <%
                                     }

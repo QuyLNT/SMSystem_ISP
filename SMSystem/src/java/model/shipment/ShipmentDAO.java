@@ -32,6 +32,11 @@ public class ShipmentDAO {
 
     private static final String UPDATE_ESTIMATED_ARRIVAL = "UPDATE shipments SET estimatedArrival = ? WHERE shipmentId = ?";
     private static final String UPDATE_SHIPMENT_STATUS = "UPDATE shipments SET shipmentStatus = ? WHERE shipmentId = ?";
+    private static final String GET_SHIP_BY_ORDERID
+            = "SELECT s.shipmentId, s.orderId, s.shipperId, s.shippingMethodId, sm.methodName, s.shippedDate, s.estimatedArrival, s.shipmentStatus "
+            + "FROM shipments s "
+            + "JOIN shippingMethods sm ON s.shippingMethodId = sm.shippingMethodId "
+            + "WHERE s.orderId = ?";
 
     public List<ShipmentDTO> getAllShipments() throws SQLException, ClassNotFoundException {
         List<ShipmentDTO> shipments = new ArrayList<>();
@@ -149,5 +154,41 @@ public class ShipmentDAO {
                 conn.close();
             }
         }
+    }
+
+    public ShipmentDTO getShipByOrderId(int orderId) throws ClassNotFoundException, SQLException {
+        ShipmentDTO ship = new ShipmentDTO();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_SHIP_BY_ORDERID);
+                ptm.setInt(1, orderId);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    ship.setShipmentId(rs.getInt("shipmentId"));
+                    ship.setOrderId(rs.getInt("orderId"));
+                    ship.setShipperId(rs.getInt("shipperId"));
+                    ship.setShippingMethodId(rs.getInt("shippingMethodId"));
+                    ship.setMethodName(rs.getString("methodName"));
+                    ship.setShippedDate(rs.getDate("shippedDate"));
+                    ship.setShipmentStatus(rs.getString("shipmentStatus"));
+                    ship.setEstimatedArrival(rs.getDate("estimatedArrival"));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return ship;
     }
 }

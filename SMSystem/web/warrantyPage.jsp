@@ -47,7 +47,6 @@
             <div class="header-top">
                 <div class="container">
                     <div class="ht-left">
-
                         <div class="mail-service">
                             <i class="fa fa-envelope">
                                 smsystem8386@gmail.com
@@ -72,8 +71,8 @@
                             <div class="user-setting">
                                 <div class="content">
                                     <div><a href="myAccount.jsp">My account</a></div>
-                                    <div><a href="MainController?action=LoadMyOrder">Order Status</a></div>
-                                    <div><a href="LogoutController">Logout</a></div>
+                                    <div><a href="MainController?action=LoadMyOrder">My Order</a></div>
+                                    <div><a href="LogoutController">Sign Out</a></div>
                                 </div>
                         </section>
                         <%
@@ -97,10 +96,20 @@
                                 if (!loginUser.getRoleId().equals("CUS")) {
                         %>
                         <div class="lan-selector">
-
                             <a href="MainController?action=Back&role=<%=loginUser.getRoleId()%>" style="color: black;">
                                 <i class="fa fa-home">  Management</i>
                             </a>
+                        </div>
+                        <%
+                        } else {
+                        %>
+                        <div class="lan-selector">
+                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
+                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                                    English</option>
+                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
+                                    German</option>
+                            </select>
                         </div>
                         <%
                                 }
@@ -129,7 +138,6 @@
                             <form action="MainController" method="get">
                                 <div class="advanced-search">
                                     <button type="button" class="category-btn">All Categories</button>
-
                                     <div class="input-group">
                                         <input style="color: black;" type="text" name="text" placeholder="What do you need?">
                                         <button type="submit" name="action" value="Search"><i class="ti-search"></i></button>
@@ -231,44 +239,37 @@
             </div>
         </header>
 
-        <div class="warranty-widget">
-            <div class="cw-item">
-                <div class="ci-icon">
-                    <i class="ti-location-pin"></i>
-                </div>
-                <div class="ci-text">
-                    <span>Address:</span>
-                    <p>Lô E2a-7, Đường D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh 700000</p>
+        <div class="wishlist-heading">WARRANTY POLICY</div>
+
+        <div class="container">
+            <p style="color: #252525">We are committed to providing our customers with high-quality sports shoes. To ensure your satisfaction, each product has a specific warranty period. Please read the warranty policy below carefully:</p>
+
+            <h5 style="color: #252525; padding-bottom: 15px;">1. Warranty Period</h5>
+            <ul style="padding-bottom: 15px; padding-left: 50px">
+                <li>The warranty period for each product is specified in the product description or on the purchase invoice.</li>
+                <li>The warranty period begins on the date the customer receives the product.</li>
+            </ul>
+
+            <h5 style="color: #252525; padding-bottom: 15px;">2. Warranty Conditions</h5>
+            <p style="color: #252525; padding-left: 15px">Our warranty covers the following issues:</p>
+            <ul style="padding-bottom: 15px; padding-left: 50px">
+                <li>Manufacturing defects.</li>
+                <li>Material defects (e.g., fabric tears or wear) that are not caused by customer misuse.</li>
+            </ul>
+            <p style="color: #252525; padding-left: 15px"><strong>Note:</strong> We do not cover damage caused by improper usage, inadequate care, or normal wear and tear.</p>
+
+            <div class="inner-header">
+                <div class="col-lg-12 col-md-12 center-form">
+                    <form action="MainController" method="get"> 
+                        <div class="input-group">
+                            <input style="color: black;" type="text" name="phone" placeholder="Enter your phone number">
+                            <button type="submit" class="btn btn-primary"name="action" value="CheckWarranty">
+                                <i class="ti-search"></i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="cw-item">
-                <div class="ci-icon">
-                    <i class="ti-mobile"></i>
-                </div>
-                <div class="ci-text">
-                    <span>Phone:</span>
-                    <p>+84 123456789</p>
-                </div>
-            </div>
-            <div class="cw-item">
-                <div class="ci-icon">
-                    <i class="ti-email"></i>
-                </div>
-                <div class="ci-text">
-                    <span>Email:</span>
-                    <p>smsystem@gmail.com</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-7 col-md-7 center-form">
-            <form action="MainController" method="get">   
-                <div class="advanced-search">
-                    <div class="input-group">
-                        <input style="color: black;" type="text" name="phone" placeholder="Enter your phone number">
-                        <button type="submit" name="action" value="CheckWarranty"><i class="ti-search"></i></button>
-                    </div>
-                </div>
-            </form>
         </div>
         <%
             List<Map<String, Object>> warrantyList = (List<Map<String, Object>>) request.getAttribute("WARRANTY_LIST");
@@ -306,7 +307,13 @@
                                     %>
                                     <td><%= startDay.format(formatter)%></td>
                                     <td><%= endDay.format(formatter)%></td>
-                                    <td></td>
+                                    <td>
+                                        <form action="MainController" method="POST">
+                                            <button type="submit" class="btn btn-primary" name="action" value="Contact">
+                                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 <%
                                     }

@@ -40,7 +40,7 @@
                     <div class="ht-left">
                         <div class="mail-service">
                             <i class="fa fa-envelope">
-                                smsystem@gmail.com
+                                smsystem8386@gmail.com
                             </i>
                         </div>
                         <div class="phone-service">
@@ -51,40 +51,49 @@
                     </div>
                     <div class="ht-right">
                         <%
-                        UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-                        if (loginUser != null) {
-                    %>
-                    <div class="ht-right">
+                            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                            if (loginUser != null) {
+                        %>
+
                         <div class="login-panel" id="user-btn">
                             <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
-
                         </div>
                         <section class="user">
                             <div class="user-setting">
                                 <div class="content">
                                     <div><a href="myAccount.jsp">My account</a></div>
-                                    <div><a href="myOrder.jsp">Order Status</a></div>
-                                    <div><a href="LogoutController">Logout</a></div>
+                                    <div><a href="MainController?action=LoadMyOrder">My Order</a></div>
+                                    <div><a href="LogoutController">Sign Out</a></div>
                                 </div>
                         </section>
                         <%
                         } else {
                         %>
-                        <div class="ht-right">
-                            <div class="login-panel" id="user-btn">
-                                <i class="fa fa-user">GUEST</i>
-
-                            </div>
-                            <section class="user">
-                                <div class="user-setting">
-                                    <div class="content">
-                                        <div><a href="login.jsp">Sign In</a></div>
-                                        <div><a href="register.jsp">Sign Up</a></div>
-                                    </div>
-                            </section>
-                            <%
-                                }
-                            %>
+                        <div class="login-panel" id="user-btn">
+                            <i class="fa fa-user">  Guest</i>
+                        </div>
+                        <section class="user">
+                            <div class="user-setting">
+                                <div class="content">
+                                    <div><a href="login.jsp">Sign In</a></div>
+                                    <div><a href="register.jsp">Sign Up</a></div>
+                                </div>
+                        </section>
+                        <%
+                            }
+                        %>
+                        <%
+                            if (loginUser != null) {
+                                if (!loginUser.getRoleId().equals("CUS")) {
+                        %>
+                        <div class="lan-selector">
+                            <a href="MainController?action=Back&role=<%=loginUser.getRoleId()%>" style="color: black;">
+                                <i class="fa fa-home">  Management</i>
+                            </a>
+                        </div>
+                        <%
+                        } else {
+                        %>
                         <div class="lan-selector">
                             <select class="language_drop" name="countries" id="countries" style="width: 300px;">
                                 <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
@@ -93,6 +102,10 @@
                                     German</option>
                             </select>
                         </div>
+                        <%
+                                }
+                            }
+                        %>
                         <div class="top-social">
                             <a href="#"><i class="ti-facebook"></i></a>
                             <a href="#"><i class="ti-twitter-alt"></i></a>
@@ -101,10 +114,7 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
         </header>
         <!-- Header Section End -->
 

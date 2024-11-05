@@ -48,7 +48,7 @@ public class UpdateOrderStatusController extends HttpServlet {
             OrderDAO d = new OrderDAO();
             boolean check = d.updateOrderStatus(status, orderId);
             if (check) {
-                if ("Not Complete".equals(status)) {
+                if ("Not Completed".equals(status)) {
                     d.returnItemsToStock(orderId);
                 }
                 HttpSession session = request.getSession();

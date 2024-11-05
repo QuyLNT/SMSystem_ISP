@@ -5,6 +5,7 @@
  */
 package model.shipment;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -29,8 +30,21 @@ public class ShipmentDTO {
         this.shippingMethodId = 0;
         this.methodName = "";
         this.shippedDate = new Date();;
-        this.shipmentStatus = "";
+        this.shipmentStatus = "Your order is currently pending and will be delivered as soon as possible.";
         this.estimatedArrival = new Date();;
+    }
+
+    public String getFormattedShippedDate() {
+        return formatDate(shippedDate);
+    }
+
+    public String getFormattedEstimatedArrival() {
+        return formatDate(estimatedArrival);
+    }
+
+    private String formatDate(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        return formatter.format(date);
     }
 
     public ShipmentDTO(int shipmentId, int shipperId, int orderId, int shippingMethodId, String methodName, Date shippedDate, String shipmentStatus, Date estimatedArrival) {

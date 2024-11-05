@@ -152,6 +152,8 @@ public class MainController extends HttpServlet {
     private final static String UPDATE_SHIPMENT_CONTROLLER = "UpdateShipmentController";
     private final static String SEARCH_ORDER_BY_STATUS = "SearchOrderByStatus";
     private final static String SEARCH_ORDER_BY_STATUS_CONTROLLER = "SearchOrderByStatusController";
+    private final static String CONTACT = "Contact";
+    private final static String CONTACT_PAGE = "contact.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -279,6 +281,8 @@ public class MainController extends HttpServlet {
                 url = UPDATE_SHIPMENT_CONTROLLER;
             } else if (SEARCH_ORDER_BY_STATUS.equals(action)) {
                 url = SEARCH_ORDER_BY_STATUS_CONTROLLER;
+            } else if (CONTACT.equals(action)) {
+                url = CONTACT_PAGE;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());

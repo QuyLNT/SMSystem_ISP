@@ -2,10 +2,10 @@
 /* Điều chỉnh khung chứa menu người dùng */
 .header-section .ht-right .user {
     position: absolute;
-    top:  4vh;
-    right: 10vh;
+    top:  6vh;
+    right: 27vh;
     background: #273c75; /* Màu nền tối */
-    width: 12rem; /* Chiều rộng của menu */
+    width: 11rem; /* Chiều rộng của menu */
     height: auto; /* Tự điều chỉnh chiều cao theo nội dung */
     padding: 0.5rem 0; /* Tạo khoảng cách trên dưới cho nội dung */
     display: flex;
@@ -50,7 +50,8 @@
 .wishlist-heading{
     font-size: 2.5rem;
     text-align: center;
-    padding-bottom: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .p-price-wishlist{

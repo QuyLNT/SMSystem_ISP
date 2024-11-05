@@ -1,3 +1,4 @@
+<%@page import="model.shipment.ShipmentDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="model.order.OrderDetailDTO"%>
 <%@page import="model.order.OrderDTO"%>
@@ -18,7 +19,7 @@
             />
         <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-        
+
     </head>
     <body>
         <main class="main-wrap">
@@ -152,6 +153,33 @@
                                 }
                             %>     
                         </div>
+
+                        <%
+                            ShipmentDTO ship = (ShipmentDTO) request.getAttribute("SHIP_STATUS");
+                            if (ship != null) {
+                        %>
+                        <div class="welcome">
+                            <div class="table-tilte">Shipping status</div>
+                            <div class="row">
+                                <div class="col">
+                                    <dl class="row">
+                                        <dt class="col-sm-5">Expected ship date</dt>
+                                        <dd class="col-sm-5"> <%=ship.getFormattedEstimatedArrival()%></dd>
+                                    </dl>
+                                </div>
+                                <div class="col">
+                                    <dl class="row">
+                                        <dt class="col-sm-2">Status</dt>
+                                        <dd class="col-sm-10"> <%=ship.getShipmentStatus()%></dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>         
+
+                        <%
+                            }
+                        %>
+
                         <div class="welcome">
                             <%
                                 List<OrderDetailDTO> listOrderDetail = new ArrayList<>();

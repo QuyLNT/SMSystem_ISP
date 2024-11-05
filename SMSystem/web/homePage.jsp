@@ -44,7 +44,6 @@
             <div class="header-top">
                 <div class="container">
                     <div class="ht-left">
-
                         <div class="mail-service">
                             <i class="fa fa-envelope">
                                 smsystem8386@gmail.com
@@ -69,8 +68,8 @@
                             <div class="user-setting">
                                 <div class="content">
                                     <div><a href="myAccount.jsp">My account</a></div>
-                                    <div><a href="MainController?action=LoadMyOrder">Order Status</a></div>
-                                    <div><a href="LogoutController">Logout</a></div>
+                                    <div><a href="MainController?action=LoadMyOrder">My Order</a></div>
+                                    <div><a href="LogoutController">Sign Out</a></div>
                                 </div>
                         </section>
                         <%
@@ -94,10 +93,20 @@
                                 if (!loginUser.getRoleId().equals("CUS")) {
                         %>
                         <div class="lan-selector">
-
                             <a href="MainController?action=Back&role=<%=loginUser.getRoleId()%>" style="color: black;">
                                 <i class="fa fa-home">  Management</i>
                             </a>
+                        </div>
+                        <%
+                        } else {
+                        %>
+                        <div class="lan-selector">
+                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
+                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                                    English</option>
+                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
+                                    German</option>
+                            </select>
                         </div>
                         <%
                                 }
