@@ -13,6 +13,7 @@ import java.util.List;
  * @author LENOVO
  */
 public class ProductDTO {
+
     private int productId;
     private int brandId;
     private int userOjectId;
@@ -26,8 +27,8 @@ public class ProductDTO {
     private float sale;
     private int warrantyPeriod;
     private boolean productStatus;
-    private  int totalStock;
-    
+    private int totalStock;
+
     public ProductDTO() {
         this.productId = 0;
         this.brandId = 0;
@@ -71,11 +72,11 @@ public class ProductDTO {
         this.productStatus = productStatus;
     }
 
-    public ProductDTO(int productId, int brandID, int userOjectId, String detail, boolean hot, String name, String color, float price, float sale, int warrantyPeriod, boolean productStaus,ArrayList<ProductImageDTO> listImages) {
+    public ProductDTO(int productId, int brandID, int userOjectId, String detail, boolean hot, String name, String color, float price, float sale, int warrantyPeriod, boolean productStaus, ArrayList<ProductImageDTO> listImages) {
         this.productId = productId;
         this.brandId = brandID;
         this.userOjectId = userOjectId;
-        this.listImages= listImages;
+        this.listImages = listImages;
         this.detail = detail;
         this.hot = hot;
         this.name = name;
@@ -113,7 +114,7 @@ public class ProductDTO {
     public int getProductId() {
         return productId;
     }
-    
+
     public int getUserOjectId() {
         return userOjectId;
     }
@@ -154,7 +155,6 @@ public class ProductDTO {
         this.productId = productId;
     }
 
-
     public void setUserOjectId(int userOjectId) {
         this.userOjectId = userOjectId;
     }
@@ -190,33 +190,40 @@ public class ProductDTO {
     public void setProductStatus(boolean productStatus) {
         this.productStatus = productStatus;
     }
-         
-    public String getAvatarPath(){
+
+    public String getAvatarPath() {
         String avatarPath = "";
-        for(ProductImageDTO ele: this.listImages){
-            if(ele.getIsAvatar() == true){
+        for (ProductImageDTO ele : this.listImages) {
+            if (ele.getIsAvatar() == true) {
                 avatarPath = ele.getImagePath();
             }
         }
         return avatarPath;
     }
-    
-    public void setAvatarPath(String path){
+
+    public void setAvatarPath(String path) {
         this.listImages.stream().filter((ele) -> (ele.getIsAvatar() == true)).forEachOrdered((ele) -> {
             ele.setImagePath(path);
         });
     }
 
-    
-    public List<Float> getAvaiableSize(){
+    public List<ProductImageDTO> getDetailImage() {
+        List<ProductImageDTO> result = new ArrayList<>();
+        this.listImages.stream().filter((p) -> (p.isIsAvatar()==false)).forEachOrdered((p) -> {
+            result.add(p);
+        });
+        return result;
+    }
+
+    public List<Float> getAvaiableSize() {
         List<Float> avaiableSize = new ArrayList<>();
-        this.getListVariants().stream().filter((v) -> (v.getStock()>0)).forEachOrdered((v) -> {
+        this.getListVariants().stream().filter((v) -> (v.getStock() > 0)).forEachOrdered((v) -> {
             avaiableSize.add(v.getSize());
         });
         return avaiableSize;
     }
-    
-    public List<Float> getAllSize(){
+
+    public List<Float> getAllSize() {
         List<Float> avaiableSize = new ArrayList<>();
         this.getListVariants().forEach((v) -> {
             avaiableSize.add(v.getSize());

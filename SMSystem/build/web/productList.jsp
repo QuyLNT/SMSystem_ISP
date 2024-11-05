@@ -1,4 +1,5 @@
 
+<%@page import="model.product.ProductImageDTO"%>
 <%@page import="model.product.ProductVariantDTO"%>
 <%@page import="model.product.ProductError"%>
 <%@page import="java.util.Map"%>
@@ -379,7 +380,7 @@
                                                             <h1 class="modal-title fs-5" id="updateModalLabel">Update product '<%=product.getName()%>' information</h1>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-                                                        <form action="MainController" method="POST">
+                                                        <form action="MainController" method="GET">
                                                             <div class="modal-body">
                                                                 <input type="hidden" name="productId"  value="<%=product.getProductId()%>" />
                                                                 <div class="input-group input-group-sm mb-3">
@@ -440,7 +441,39 @@
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Warranty Period</span>
                                                                     <input name="warranty" type="number" step="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= product.getWarrantyPeriod()%>">
                                                                 </div>
+                                                                <% List<ProductImageDTO> imageList = product.getDetailImage();
+                                                                    if (imageList != null) {
+                                                                %>
+
+
+                                                                <%-- Lặp qua từng hình ảnh để tạo input ẩn cho mỗi imageId --%>
+                                                                <% for (ProductImageDTO image : imageList) {%>
+                                                                <input type="hidden" name="imageId" value="<%= image.getImageId()%>"/>
+                                                                <% }%>
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 1 (URL)</span>
+                                                                    <input name="productImage1" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(0).getImagePath()%>" >
+                                                                </div>
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 2 (URL)</span>
+                                                                    <input name="productImage2" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(1).getImagePath()%>">
+                                                                </div>
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 3 (URL)</span>
+                                                                    <input name="productImage3" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(2).getImagePath()%>">
+                                                                </div>
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 4 (URL)</span>
+                                                                    <input name="productImage4" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(3).getImagePath()%>">
+                                                                </div>
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 5 (URL)</span>
+                                                                    <input name="productImage5" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(4).getImagePath()%>">
+                                                                </div>
                                                             </div>
+                                                            <%
+                                                                }
+                                                            %>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                 <input type="submit" name="action" value="Update Product" class="btn btn-primary"/>
@@ -464,7 +497,7 @@
                                                             <h1 class="modal-title fs-5" id="viewModalLabel">Size product detail</h1>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>                      
-                                                        <form action="MainController" method="POST">
+                                                        <form action="MainController" method="GET">
                                                             <input type="hidden" name="productId"  value="<%=product.getProductId()%>" />
                                                             <div class="modal-body">
                                                                 <h5>Name: <%= product.getName()%></h5>
