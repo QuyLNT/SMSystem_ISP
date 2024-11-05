@@ -43,13 +43,14 @@
 }
 
 .header-top .ht-right .login-panel:hover{
-    color: #C06B3E;
+    color: #273c75;
     cursor: pointer;;
 }
 
 .wishlist-heading{
     font-size: 2.5rem;
     text-align: center;
+    padding-bottom: 30px;
 }
 
 .p-price-wishlist{
@@ -334,13 +335,11 @@
 
 .step-wizard-list {
     background: #fff;
-    width: 90%;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
     color: #333;
     list-style-type: none;
     border-radius: 10px;
     display: flex;
-    padding: 30px 20px; 
     position: relative;
     z-index: 10;
 }
@@ -588,4 +587,3 @@
 .exit-button svg {
     fill: rgb(175, 175, 175);
 }
-

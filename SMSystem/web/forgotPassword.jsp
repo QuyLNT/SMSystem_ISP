@@ -63,32 +63,43 @@
     <body>
         <div class="container1">
             <div class="signin-signup">
+                <% String ms = (String) request.getAttribute("ms"); %>
+                <% String err = (String) request.getAttribute("err"); %>
+
                 <div class="signin">
                     <h2>Forgot Password</h2>                 
                     <form action="ForgotPasswordController" method="post" id="form">
-                            <input type="email" name="email" placeholder="Enter your registered email" required />
-                            <input type="submit" class="btn signin-btn" value="Submit" />
+                        <input type="email" name="email" placeholder="Enter your registered email" required />
+                        <input type="submit" class="btn signin-btn" value="Submit" />
                     </form>        
                 </div>
+
+                <% if (err != null) {%>
+                <p style="color: red"><%=err%></p>
+                <% } %>
+
+                <% if (ms != null) {%>
+                <p style="color: red"><%=ms%></p>
+                <% }%>
             </div>
-                    <div class="overlay">
-                        <div class="overlay-content">
-                            <h2>Hello, Friend!</h2>
-                            <p>Enter your personal details and start journey with us</p>
-                            <a href="login.jsp" ><button class="btn signup-btn">Back to Login</button></a>
-                        </div>
-                    </div>
+            <div class="overlay">
+                <div class="overlay-content">
+                    <h2>Hello, Friend!</h2>
+                    <p>Enter your personal details and start journey with us</p>
+                    <a href="login.jsp" ><button class="btn signup-btn">Back to Login</button></a>
                 </div>
-                <!-- Js Plugins -->
-                <script src="js/jquery-3.3.1.min.js"></script>
-                <script src="js/bootstrap.min.js"></script>
-                <script src="js/jquery-ui.min.js"></script>
-                <script src="js/jquery.countdown.min.js"></script>
-                <script src="js/jquery.nice-select.min.js"></script>
-                <script src="js/jquery.zoom.min.js"></script>
-                <script src="js/jquery.dd.min.js"></script>
-                <script src="js/jquery.slicknav.js"></script>
-                <script src="js/owl.carousel.min.js"></script>
-                <script src="js/main.js"></script>
-                </body>
-                </html>
+            </div>
+        </div>
+        <!-- Js Plugins -->
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/jquery.countdown.min.js"></script>
+        <script src="js/jquery.nice-select.min.js"></script>
+        <script src="js/jquery.zoom.min.js"></script>
+        <script src="js/jquery.dd.min.js"></script>
+        <script src="js/jquery.slicknav.js"></script>
+        <script src="js/owl.carousel.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

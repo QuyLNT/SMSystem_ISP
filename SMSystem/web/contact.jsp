@@ -34,7 +34,7 @@
         <link rel="stylesheet" href="css/style.css" type="text/css"> 
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
-             <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
     </head>
 
     <body>
@@ -112,19 +112,22 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-2">
                                 <div class="logo">
-                                    <a href="index.jsp">
+                                    <a href="homePage.jsp">
                                         <img src="img/logoweb.png" height="65px" alt="">
                                     </a>
                                 </div>
                             </div>
                             <div class="col-lg-7 col-md-7">
-                                <div class="advanced-search">
-                                    <button type="button" class="category-btn">All Categories</button>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="What do you need?">
-                                        <button type="button"><i class="ti-search"></i></button>
+                                <form action="MainController" method="get">
+                                    <div class="advanced-search">
+                                        <button type="button" class="category-btn">All Categories</button>
+
+                                        <div class="input-group">
+                                            <input style="color: black;" type="text" name="text" placeholder="What do you need?">
+                                            <button type="submit" name="action" value="Search"><i class="ti-search"></i></button>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                             <div class="col-lg-3 col-md-3 text-right">
                                 <ul class="nav-right">

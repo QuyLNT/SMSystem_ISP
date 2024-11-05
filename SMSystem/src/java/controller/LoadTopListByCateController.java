@@ -101,7 +101,6 @@ public class LoadTopListByCateController extends HttpServlet {
                 session.setAttribute("WOMEN_LIST", womenList);
                 session.setAttribute("KID_LIST", kidList);
                 session.setAttribute("BRAND_LIST", brandList);
-
                 url = SUCCESS;
 
             }

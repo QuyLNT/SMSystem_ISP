@@ -8,9 +8,8 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +21,19 @@ import model.user.UserDTO;
 
 /**
  *
- * @author dell
+ * @author LENOVO
  */
-public class LoadMyOrderController extends HttpServlet {
+public class SearchOrderByStatusController extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     private static final String ERROR = "myOrder.jsp";
     private static final String SUCCESS = "myOrder.jsp";
 
@@ -34,23 +42,24 @@ public class LoadMyOrderController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
+        OrderDAO orderDao = new OrderDAO();
+
         try {
-            UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
-            if (user != null) {
-                OrderDAO orderDAO = new OrderDAO();
-                List<OrderDTO> orderList = orderDAO.getAllOrder(user);
-                Map<String, Integer> orderStatusCount = orderDAO.getOrderStatusCount(user.getUserId());
-                if (orderList != null && !orderList.isEmpty() && orderStatusCount != null) {
-                    for (OrderDTO d : orderList) {
-                        d.setTotalPrice(orderDAO.getOrderTotal(d.getOrderId()));
-                    }
-                    session.setAttribute("STATUS_COUNT", orderStatusCount);
-                    session.setAttribute("MY_ORDERS", orderList);
-                    url = SUCCESS;
+            String status = request.getParameter("status");
+            List<OrderDTO> orderList;
+            orderList = orderDao.getOrderByStatus(user.getUserId(), status);
+            if (orderList != null) {
+                for(OrderDTO d: orderList){
+                    d.setTotalPrice(orderDao.getOrderTotal(d.getOrderId()));
                 }
+                session.setAttribute("MY_ORDERS", orderList);
+                url = SUCCESS;
+            }else{
+                request.setAttribute("ms", "There are no orders in ' "+status+" ' status. ");
             }
         } catch (ClassNotFoundException | SQLException e) {
-            log("Error at LoadMyOrderController: " + e.toString());
+            log("Error at SearchOrderController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
