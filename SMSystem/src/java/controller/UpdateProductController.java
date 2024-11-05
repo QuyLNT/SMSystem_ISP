@@ -130,8 +130,9 @@ public class UpdateProductController extends HttpServlet {
             for (int i = 0; i < imageUrls.length; i++) {
                 String imageUrl = imageUrls[i];
                 if (imageUrl != null && !imageUrl.isEmpty()) {
-                    if (!imageUrl.matches("^http.*\\.(jpg|jpeg|png|webp)$")) {
-                        hasInvalidImages = true; // Đánh dấu có ảnh không hợp lệ
+                    if (!imageUrl.matches("^https?://.*(jpg|jpeg|png|webp|image).*")) {
+                        hasInvalidImages = true;
+                            errorMessages.append("Image ").append(i + 1).append(" is wrong with format! "); 
                     } else {
                         while (imageIdIndex < imageIds.length) {
                             int imageId = Integer.parseInt(imageIds[imageIdIndex]);
@@ -142,18 +143,14 @@ public class UpdateProductController extends HttpServlet {
                                 detailImage.setImageId(imageId);
                                 detailImage.setImagePath(imageUrl);
                                 images.add(detailImage);
-                                break; // Thoát vòng lặp sau khi thêm ảnh hợp lệ
+                                break; 
                             }
                         }
                     }
                 } else {
-                    errorMessages.append("Image ").append(i + 1).append(" cannot be empty! "); // Thêm thông báo lỗi cho ảnh trống
+                    errorMessages.append("Image ").append(i + 1).append(" cannot be empty! "); 
                 }
 
-            }
-
-            if (hasInvalidImages) {
-                errorMessages.append("Some images have wrong format (only accept jpg, jpeg, png, webp). ");
             }
 
             ProductDTO updatedProduct = new ProductDTO(productId, brandID, userObjectID, detail, hot, name, color, price, sale, warrantyPeriod, status);
