@@ -315,13 +315,13 @@ public class ProductVariantDAO {
             }
         } finally {
             if (ptm != null) {
-                ptm.close(); // Đóng PreparedStatement
+                ptm.close(); 
             }
             if (conn != null) {
-                conn.close(); // Đóng kết nối
+                conn.close(); 
             }
         }
-        return check; // Trả về kết quả cập nhật
+        return check; 
     }
 
     public boolean checkValidateStock(int productId, float size, int newQuantity) throws ClassNotFoundException, SQLException {
