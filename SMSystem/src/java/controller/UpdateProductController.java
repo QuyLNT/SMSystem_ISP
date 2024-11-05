@@ -130,7 +130,7 @@ public class UpdateProductController extends HttpServlet {
             for (int i = 0; i < imageUrls.length; i++) {
                 String imageUrl = imageUrls[i];
                 if (imageUrl != null && !imageUrl.isEmpty()) {
-                    if (!imageUrl.matches("^https?://.*(jpg|jpeg|png|webp|image).*")) {
+                    if (!imageUrl.matches("^https?://.*(jpg|jpeg|png|webp|images?).*")) {
                         hasInvalidImages = true;
                             errorMessages.append("Image ").append(i + 1).append(" is wrong with format! "); 
                     } else {
