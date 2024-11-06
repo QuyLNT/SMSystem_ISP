@@ -26,6 +26,7 @@
         <title>My Order</title>
 
         <!-- Google Font -->
+
         <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
         <!-- Css Styles -->
@@ -52,14 +53,10 @@
                 <div class="container">
                     <div class="ht-left">
                         <div class="mail-service">
-                            <i class="fa fa-envelope">
-                                smsystem8386@gmail.com
-                            </i>
+                            <i class="fa fa-envelope"></i>smsystem8386@gmail.com
                         </div>
                         <div class="phone-service">
-                            <i class="fa fa-phone">
-                                +84 123456789
-                            </i>
+                            <i class="fa fa-phone"></i>+84 123456789
                         </div>
                     </div>
                     <div class="ht-right">
@@ -69,7 +66,7 @@
                         %>
 
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
+                            <i class="fa fa-user"></i><%=loginUser.getFullName()%>
                         </div>
                         <section class="user">
                             <div class="user-setting">
@@ -83,7 +80,7 @@
                         } else {
                         %>
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  Guest</i>
+                            <i class="fa fa-user"></i>Guest
                         </div>
                         <section class="user">
                             <div class="user-setting">
@@ -116,7 +113,18 @@
                             </select>
                         </div>
                         <%
-                                }
+                            }
+                        } else {
+                        %>
+                        <div class="lan-selector">
+                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
+                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                                    English</option>
+                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
+                                    German</option>
+                            </select>
+                        </div>
+                        <%
                             }
                         %>
                         <div class="top-social">
@@ -275,7 +283,7 @@
                                 <i class="fa fa-hourglass-half"></i>
                                 <span class="order-count"><%= orderStatusCount.get("Waiting For Accept")%></span>
                             </span>
-                            <span class="progress-label">Waiting For Accept</span>
+                            <span class="progress-label" style="color: #273c75;">Waiting For Accept</span>
                         </a>
                     </li>
                     <li class="step-wizard-item" data-status="2">
@@ -284,34 +292,34 @@
                                 <i class="fa fa-box"></i>
                                 <span class="order-count"><%= orderStatusCount.get("Waiting For Pickup")%></span>
                             </span>
-                            <span class="progress-label">Waiting For Pickup</span>
+                            <span class="progress-label" style="color: #273c75;">Waiting For Pickup</span>
                         </a>
                     </li>
                     <li class="step-wizard-item" data-status="1">
                         <a href="MainController?action=SearchOrderByStatus&status=Delivering">
                             <span class="progress-count">
-                                <i class="fa fa-hourglass-half"></i>
+                                <i class="fa fa-truck"></i>
                                 <span class="order-count"><%= orderStatusCount.get("Delivering")%></span>
                             </span>
-                            <span class="progress-label">Delivering</span>
+                            <span class="progress-label" style="color: #273c75;">Delivering</span>
                         </a>
                     </li>
                     <li class="step-wizard-item" data-status="3">
                         <a href="MainController?action=SearchOrderByStatus&status=Completed">
                             <span class="progress-count">
-                                <i class="fa fa-truck"></i>
+                                <i class="fa-solid fa-circle-check"></i>
                                 <span class="order-count"><%= orderStatusCount.get("Completed")%></span>
                             </span>
-                            <span class="progress-label">Completed</span>
+                            <span class="progress-label" style="color: #273c75;">Completed</span>
                         </a>
                     </li>
                     <li class="step-wizard-item" data-status="4">
                         <a href="MainController?action=SearchOrderByStatus&status=Not Completed">
                             <span class="progress-count">
-                                <i class="fa fa-clipboard-check"></i>
+                                <i class="fa-solid fa-circle-xmark"></i>                                
                                 <span class="order-count"><%= orderStatusCount.get("Not Complete")%></span>
                             </span>
-                            <span class="progress-label">Not Complete</span>
+                            <span class="progress-label" style="color: #273c75;">Not Complete</span>
                         </a>
                     </li>
                 </ul>   
@@ -367,7 +375,7 @@
                                     <td>
                                         <input type="text" style="border: none; outline: none;" value="<%= ele.getOrderStatus()%>" readonly="">
                                     </td>
-                                    <td class="p-price-wishlist first-row">$<%= String.format("%.2f", ele.getTotalPrice())%>
+                                    <td class="p-price-wishlist first-row">$<%= String.format("%.1f", ele.getTotalPrice())%>
                                     </td>
                                     <td>
                                         <form action="MainController" method="POST">
@@ -518,6 +526,7 @@
     <script src="js/main.js"></script>
     <script src="js/main2.js"></script>
     <script src="js/main3.js"></script>
+    <script src="js/app.js"></script>
 
 </body>
 </html>

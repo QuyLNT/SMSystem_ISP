@@ -70,7 +70,7 @@ public class LoadOrderDetailController extends HttpServlet {
                 if (order.getDiscountCode() != null) {
                     DiscountDTO dc = discountDAO.getDiscountByCode(order.getDiscountCode());
                     if (dc != null) {
-                        total = total * (1 - dc.getDiscountAmount());
+                        total = total - dc.getDiscountAmount();
                     }
                 }
                 order.setTotalPrice(total);

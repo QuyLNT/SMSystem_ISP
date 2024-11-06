@@ -224,7 +224,7 @@ public class ProductVariantDAO {
             }
         }
     }
-    
+
     public ProductVariantDTO createNewSize(ProductVariantDTO variant) throws Exception {
         boolean check = false;
         Connection conn = null;
@@ -294,8 +294,6 @@ public class ProductVariantDAO {
         return exists;
     }
 
-   
-    
     public boolean updateStock(List<ProductVariantDTO> variants) throws SQLException, ClassNotFoundException {
         boolean check = false;
         Connection conn = null;
@@ -315,13 +313,13 @@ public class ProductVariantDAO {
             }
         } finally {
             if (ptm != null) {
-                ptm.close(); 
+                ptm.close();
             }
             if (conn != null) {
-                conn.close(); 
+                conn.close();
             }
         }
-        return check; 
+        return check;
     }
 
     public boolean checkValidateStock(int productId, float size, int newQuantity) throws ClassNotFoundException, SQLException {
@@ -352,7 +350,7 @@ public class ProductVariantDAO {
         return check;
     }
 
-    public boolean getStatus(CartItems item) throws ClassNotFoundException, SQLException  {
+    public boolean getStatus(CartItems item) throws ClassNotFoundException, SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -366,7 +364,7 @@ public class ProductVariantDAO {
                 rs = ptm.executeQuery();
                 if (rs.next()) {
                     check = rs.getBoolean("status");
-                    if(!check){
+                    if (!check) {
                         CartDAO cartDao = new CartDAO();
                         cartDao.updateSelectedItem(item.getCartItemId(), false);
                     }
@@ -381,6 +379,35 @@ public class ProductVariantDAO {
             }
         }
         return check;
+    }
+
+    public int getStockByProduct(int pId) throws SQLException, ClassNotFoundException {
+        int stock = 0;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(VARIANTS_BY_PRODUCTID);
+                ptm.setInt(1, pId);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    stock += rs.getInt("stock");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return stock;
     }
 
 }

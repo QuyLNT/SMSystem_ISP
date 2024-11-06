@@ -129,9 +129,7 @@
                                 if (ms != null || err != null) {
 
                             %>
-                            <div class="mes-suc">
-                                <%=ms%> <%=err%>
-                            </div>                          
+                            <p style="color: black; padding-top: 15px"><%=ms%> <%=err%></p>                        
                             <%}%>
                             <!-- Modal Add -->
 
@@ -251,10 +249,42 @@
                                     searchProductName = "";
                                 }
                             %>
-                            <div class="search-form">
-                                <form action="MainController" method="POST">
-                                    Search Product: <input type="text" name="searchProductName" placeholder="Enter product name" value="<%= searchProductName%>"/>
-                                    <button type="submit" name="action" value="SearchProductName">Search</button>
+                            <div class="welcome">
+                                <div class="search-form">
+                                    <form action="MainController" method="POST">
+                                        Search Product: <input type="text" name="searchProductName" placeholder="Enter product name" value="<%= searchProductName%>"/>
+                                        <button type="submit" name="action" value="SearchProductName" >Search</button>
+                                    </form>
+                                </div>
+                            </div>
+                                        <%
+                                            String cate = request.getParameter("CateFilter");
+                                            String brandFilter = request.getParameter("BrandFilter");
+                                            if(cate == null) cate = "";
+                                            if(brandFilter==null) brandFilter = "0";
+                                            int brandId = Integer.parseInt(brandFilter);
+                                        %>
+                            <div class="welcome">
+                                <form action="MainController" class="d-flex row justify-content-around">
+                                    <div class="select-option-province col-lg-6">
+                                        <select name="CateFilter">
+                                            <option value="" <%= cate.equals("")==true ? "selected":""%>>All Categories</option>                            
+                                            <option value="1" <%= cate.equals("1")==true ? "selected":""%>>Men Shoes</option>
+                                            <option value="2" <%= cate.equals("2")==true ? "selected":""%>>Women Shoes</option>
+                                            <option value="3"<%= cate.equals("3")==true ? "selected":""%>>Kids Shoes</option>
+                                        </select>
+                                    </div>
+                                    <div class="select-option-province col-lg-6 mb-3">
+                                        <select name="BrandFilter">
+                                            <option value="" <%= brandFilter.equals("0")==true ? "selected":""%>>All Brand</option>
+                                            <%
+                                                for (BrandDTO brand : brandList) {
+                                            %>
+                                            <option value="<%= brand.getBrandId()%>" <%= brandId == brand.getBrandId() == true ? "selected":""%>><%= brand.getBrandName()%></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                    <button type="submit" name="action" value="FilterProduct"class="btn btn-primary col-lg-3 ">Filter</button>
                                 </form>
                             </div>
                         </div>
@@ -275,7 +305,6 @@
                                         <th>Brand</th>
                                         <th>Price</th>
                                         <th>Sale</th>
-                                        <th>Sale Price</th>
                                         <th>Is Hot       </th>
                                         <th>Stock</th>
                                         <th>Warranty Period</th>
@@ -322,9 +351,6 @@
                                             <%= String.format("%.0f%%", roundedSalePercentage)%>
                                         </td>
                                         <td>
-                                            <%= String.format("%.2f", salePrice)%>$
-                                        </td>
-                                        <td>
                                             <form action="MainController" method="POST">
                                                 <input type="hidden" name="productId" value="<%= product.getProductId()%>"/>
                                                 <input type="hidden" name="action" value="toggleFlashSale"/>
@@ -347,7 +373,6 @@
                                                         }
                                                     }
                                                 }
-
                                             %>
                                             <%=stock%>
                                         </td>
@@ -517,7 +542,6 @@
                                                                         <tr>
                                                                             <td><%= variant.getSize()%></td>
                                                                             <td>
-                                                                                <!-- Thêm input để người dùng có thể nhập số lượng tồn kho mới -->
                                                                                 <input type="hidden" name="variantId"  value="<%=variant.getVariantId()%>" />
                                                                                 <input type="number" name="stock" value="<%= variant.getStock()%>" min="0" required=""
                                                                                        style="border: none; outline: none;"/>

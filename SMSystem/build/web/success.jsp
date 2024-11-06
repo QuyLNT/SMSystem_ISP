@@ -14,6 +14,10 @@
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+            />
         <!-- Css Styles -->
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
@@ -39,14 +43,10 @@
                 <div class="container">
                     <div class="ht-left">
                         <div class="mail-service">
-                            <i class="fa fa-envelope">
-                                smsystem8386@gmail.com
-                            </i>
+                            <i class="fa fa-envelope"></i>smsystem8386@gmail.com
                         </div>
                         <div class="phone-service">
-                            <i class="fa fa-phone">
-                                +84 123456789
-                            </i>
+                            <i class="fa fa-phone"></i>+84 123456789
                         </div>
                     </div>
                     <div class="ht-right">
@@ -56,7 +56,7 @@
                         %>
 
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
+                            <i class="fa fa-user"></i><%=loginUser.getFullName()%>
                         </div>
                         <section class="user">
                             <div class="user-setting">
@@ -70,7 +70,7 @@
                         } else {
                         %>
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  Guest</i>
+                            <i class="fa fa-user"></i>Guest
                         </div>
                         <section class="user">
                             <div class="user-setting">
@@ -103,7 +103,18 @@
                             </select>
                         </div>
                         <%
-                                }
+                            }
+                        } else {
+                        %>
+                        <div class="lan-selector">
+                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
+                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                                    English</option>
+                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
+                                    German</option>
+                            </select>
+                        </div>
+                        <%
                             }
                         %>
                         <div class="top-social">
@@ -118,27 +129,48 @@
         </header>
         <!-- Header Section End -->
 
-        <!--  -->
-
-
+        <%
+            String status = request.getParameter("status");
+            if (status.equals("1")) {
+        %>
         <div class="wishlist-heading tk">Thank you for Buying</div>
         <div id="tick-img">
-            <img src="img/tick.png">
+            <img src="img/happy-face.png">
         </div>
-
         <div class="back">
-            <div> Press here to go back</div>
-            <i class="fa-solid fa-arrow-right"></i>
-            <a href="MainController?action=HomePage"> <i class="fa-solid fa-house"></i></a>
+            <i class="fa-solid fa-arrow-right">  </i>
+            <a href="MainController?action=HomePage" style="color: black;"> Click here to go back</a>
+        </div>  
+        <%
+        } else {
+        %>
+        <div class="wishlist-heading tk">Thank you for Buying</div>
+        <div class="wishlist-heading">But there was an Error during your payment process.</div>
+
+        <div id="tick-img">
+            <img src="img/sad-face.png">
         </div>
+        <p style="color: black; text-align: center; font-size: 30px">If you would like to continue purchasing the product, please repeat the purchase process.</p>
+        <div class="back">
+            <i class="fa-solid fa-arrow-right">  </i>
+            <a href="MainController?action=HomePage" style="color: black;"> Click here to go back</a>
+        </div>  
+        <%
+            }
+        %>
 
         <style>
-            #tick-img{
+            #tick-img {
                 display: flex;
-                justify-content: center;
-                align-items: center;
-                margin: 2rem 0;
+                align-items: center;  /* Center vertically */
+                justify-content: center;  /* Center horizontally */
             }
+
+            #tick-img img {
+                width: 250px; /* Set desired image width */
+                height: 250px; /* Set desired image height */
+            }
+
             .tk{
                 margin-top: 2rem;
             }
@@ -284,6 +316,7 @@
         <script src="js/main.js"></script>
         <script src="js/main2.js"></script>
         <script src="js/main3.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     </body>
 </html>

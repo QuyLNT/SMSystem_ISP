@@ -92,26 +92,33 @@
                         <i class="fa-solid fa-bars"></i>
                     </button>
                 </div>
-
+                <%
+                    String dateFilter = request.getParameter("dateFilter");
+                    String statusFilter = request.getParameter("statusFilter");
+                    if (dateFilter == null && statusFilter == null) {
+                        dateFilter = "";
+                        statusFilter = "";
+                    }
+                %>
                 <div class="container">
                     <div class="welcome">
                         <form action="MainController" class="d-flex row justify-content-around">
                             <div class="select-option-province col-lg-6">
                                 <select name="dateFilter">
-                                    <option value="">View All</option>                            
-                                    <option value="Today">Today</option>
-                                    <option value="This Week">This Week</option>
-                                    <option value="This Month">This Month</option>
+                                    <option value="" <%= dateFilter.equals("") == true ? "selected" : ""%>>View All</option>                            
+                                    <option value="Today"<%= dateFilter.equals("Today") == true ? "selected" : ""%>>Today</option>
+                                    <option value="This Week"<%= dateFilter.equals("This Week") == true ? "selected" : ""%>>This Week</option>
+                                    <option value="This Month"<%= dateFilter.equals("This Month") == true ? "selected" : ""%>>This Month</option>
                                 </select>
                             </div>
                             <div class="select-option-province col-lg-6 mb-3">
                                 <select name="statusFilter">
-                                    <option value="">All Statuses</option>
-                                    <option value="Waiting For Accept">Waiting For Accept</option>
-                                    <option value="Waiting For Pickup">Waiting For Pickup</option>
-                                    <option value="Delivering" >Delivering</option>
-                                    <option value="Completed" >Completed</option>
-                                    <option value="Not Completed" >Not Completed</option>
+                                    <option value="" <%= statusFilter.equals("") == true ? "selected" : ""%>>All Statuses</option>
+                                    <option value="Waiting For Accept"<%= statusFilter.equals("Waiting For Accept") == true ? "selected" : ""%>>Waiting For Accept</option>
+                                    <option value="Waiting For Pickup"<%= statusFilter.equals("Waiting For Pickup") == true ? "selected" : ""%>>Waiting For Pickup</option>
+                                    <option value="Delivering" <%= statusFilter.equals("Delivering") == true ? "selected" : ""%>>Delivering</option>
+                                    <option value="Completed" <%= statusFilter.equals("Completed") == true ? "selected" : ""%>>Completed</option>
+                                    <option value="Not Completed" <%= statusFilter.equals("Not Completed") == true ? "selected" : ""%>>Not Completed</option>
                                 </select>
                             </div>
                             <button type="submit" name="action" value="FilterOrder"class="btn btn-primary col-lg-3 ">Filter</button>
@@ -123,7 +130,7 @@
                             String message = (String) request.getAttribute("message");
                             if (message != null) {
                         %>
-                        <p><%= message%></p>
+                        <p style="color: black"><%= message%></p>
                         <%
                             }
                         %>
@@ -148,7 +155,7 @@
                                     ms = request.getAttribute("ms").toString();
                                     orderid = request.getAttribute("orderId").toString();
                         %>                        
-                        <div><%= ms%> Order ID: <%= orderid%></div>
+                        <div style="color: red"><%= ms%> Order ID: <%= orderid%></div>
                         <%
                             }
                         %>

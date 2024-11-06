@@ -46,24 +46,20 @@
                 <div class="container">
                     <div class="ht-left">
                         <div class="mail-service">
-                            <i class="fa fa-envelope">
-                                smsystem8386@gmail.com
-                            </i>
+                            <i class="fa fa-envelope"></i>smsystem8386@gmail.com
                         </div>
                         <div class="phone-service">
-                            <i class="fa fa-phone">
-                                +84 123456789
-                            </i>
+                            <i class="fa fa-phone"></i>+84 123456789
                         </div>
                     </div>
                     <div class="ht-right">
                         <%
-                            UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
-                            if (user != null) {
+                            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                            if (loginUser != null) {
                         %>
 
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  <%=user.getFullName()%></i>
+                            <i class="fa fa-user"></i><%=loginUser.getFullName()%>
                         </div>
                         <section class="user">
                             <div class="user-setting">
@@ -77,7 +73,7 @@
                         } else {
                         %>
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  Guest</i>
+                            <i class="fa fa-user"></i>Guest
                         </div>
                         <section class="user">
                             <div class="user-setting">
@@ -90,11 +86,11 @@
                             }
                         %>
                         <%
-                            if (user != null) {
-                                if (!user.getRoleId().equals("CUS")) {
+                            if (loginUser != null) {
+                                if (!loginUser.getRoleId().equals("CUS")) {
                         %>
                         <div class="lan-selector">
-                            <a href="MainController?action=Back&role=<%=user.getRoleId()%>" style="color: black;">
+                            <a href="MainController?action=Back&role=<%=loginUser.getRoleId()%>" style="color: black;">
                                 <i class="fa fa-home">  Management</i>
                             </a>
                         </div>
@@ -110,7 +106,18 @@
                             </select>
                         </div>
                         <%
-                                }
+                            }
+                        } else {
+                        %>
+                        <div class="lan-selector">
+                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
+                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                                    English</option>
+                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
+                                    German</option>
+                            </select>
+                        </div>
+                        <%
                             }
                         %>
                         <div class="top-social">
@@ -263,16 +270,16 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label for="userName">userName <span>*</span></label>
-                                    <input type="text" id="userName-exist" name="userName" value="<%=user.getUserName()%>" readonly class="form-control">
+                                    <input type="text" id="userName-exist" name="userName" value="<%=loginUser.getUserName()%>" readonly class="form-control">
                                 </div>
 
                                 <div class="col-lg-12">
                                     <label for="password">password <span>*</span></label>
-                                    <% if (user.getPassword() == null) { %>
+                                    <% if (loginUser.getPassword() == null) { %>
                                     <input type="password" id="pass" name="pass">
                                     <% } else {%>
 
-                                    <input type="password" id="password-exist" name="pass" value="<%= user.getPassword()%>" readonly>
+                                    <input type="password" id="password-exist" name="pass" value="<%= loginUser.getPassword()%>" readonly>
                                     <button type="button" id="edit-btn-pass" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
                                         <i class="fa fa-pencil-square-o"></i>
                                     </button>
@@ -326,14 +333,14 @@
 
                                 <div class="col-lg-12">
                                     <label for="fullName">Full Name <span>*</span></label>
-                                    <input type="text" id="fullName-exist" name="fullName" value="<%=user.getFullName()%>" readonly class="form-control">
+                                    <input type="text" id="fullName-exist" name="fullName" value="<%=loginUser.getFullName()%>" readonly class="form-control">
                                     <button type="button" id="edit-btn-fullName" class="edit-btn" onclick="enableField('fullName-exist')"><i class="fa fa-pencil-square-o"></i></button>
                                     <span class="text-danger"><%= request.getAttribute("FULLNAME_ERROR") != null ? request.getAttribute("FULLNAME_ERROR") : ""%></span>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <label for="phone">Phone <span>*</span></label>
-                                    <input type="text" id="phone-exist" name="phone" value="<%=user.getPhoneNumber()%>" readonly class="form-control">
+                                    <input type="text" id="phone-exist" name="phone" value="<%=loginUser.getPhoneNumber()%>" readonly class="form-control">
                                     <button type="button" id="edit-btn-phone" class="edit-btn" onclick="enableField('phone-exist')"><i class="fa fa-pencil-square-o"></i></button>
                                     <span class="text-danger"><%= request.getAttribute("PHONE_ERROR") != null ? request.getAttribute("PHONE_ERROR") : ""%></span>
                                 </div>
@@ -342,13 +349,13 @@
                                     <label for="sex">Sex <span>*</span></label>
                                     <select id="sex" name="sex" class="form-control" style="background-color: #cce7f0;">
                                         <option value="" disabled selected>-- Select Gender --</option> 
-                                        <option value="Male" <% if ("Male".equals(user.getSex())) {
+                                        <option value="Male" <% if ("Male".equals(loginUser.getSex())) {
                                                 out.print("selected");
                                             } %>>Male</option>
-                                        <option value="Female" <% if ("Female".equals(user.getSex())) {
+                                        <option value="Female" <% if ("Female".equals(loginUser.getSex())) {
                                                 out.print("selected");
                                             } %>>Female</option>
-                                        <option value="Other" <% if ("Other".equals(user.getSex())) {
+                                        <option value="Other" <% if ("Other".equals(loginUser.getSex())) {
                                                 out.print("selected");
                                             }%>>Other</option>
                                     </select>
@@ -360,7 +367,7 @@
 
                                 <div class="col-lg-12">
                                     <label for="email">Email Address <span>*</span></label>
-                                    <input type="email" id="email-exist" name="email" value="<%=user.getEmail()%>" readonly class="form-control">
+                                    <input type="email" id="email-exist" name="email" value="<%=loginUser.getEmail()%>" readonly class="form-control">
                                     <button type="button" id="edit-btn-email" class="edit-btn" onclick="enableField('email-exist')"><i class="fa fa-pencil-square-o"></i></button>
                                     <span class="text-danger"><%= request.getAttribute("EMAIL_ERROR") != null ? request.getAttribute("EMAIL_ERROR") : ""%></span>
                                 </div>

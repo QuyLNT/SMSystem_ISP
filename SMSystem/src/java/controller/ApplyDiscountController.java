@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,26 +34,29 @@ public class ApplyDiscountController extends HttpServlet {
             DiscountDAO dao = new DiscountDAO();
             DiscountDTO discount = dao.ApplyCode(discountCode);
             String msg = "";
+            String ms = "";
 
             HttpSession session = request.getSession();
 
             if (discount != null) {
                 if ("Expired".equals(discount.getStatus())) {
-                    msg = "This discount code has expired."; 
+                    msg = "This discount code has expired.";
+                    request.setAttribute("err_discount", msg);
                 } else if (discount.getUsed() >= discount.getUsageLimit()) {
                     msg = "This discount code has reached its usage limit.";
+                    request.setAttribute("err_discount", msg);
                 } else {
-                    msg = "Code valid, your bill will be reduced by $" + discount.getDiscountAmount() + ".";
+                    ms = "Code valid, your bill will be reduced by $" + discount.getDiscountAmount() + ".";
                     session.setAttribute("code", discount);
+                    request.setAttribute("ms_discount", ms);
                     dao.updateUsage(discountCode);
                 }
             } else {
-                msg = "Invalid code."; 
+                msg = "Invalid code.";
+                request.setAttribute("err_discount", msg);
             }
-
-            request.setAttribute("msg", msg);
             url = SUCCESS;
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             log("Error at ApplyDiscountController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

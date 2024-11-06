@@ -719,7 +719,7 @@ public class ProductDAO {
                 // Thiết lập giá trị cho Color
                 if (colors != null && colors.length > 0) {
                     for (String color : colors) {
-                        ps.setString(paramIndex++, "%"+color+"%");
+                        ps.setString(paramIndex++, "%" + color + "%");
                     }
                 }
 
@@ -761,6 +761,68 @@ public class ProductDAO {
             }
         }
         return ls;
+    }
+
+    public List<ProductDTO> getFilterList(int cateFilter, int brandFilter) throws SQLException, ClassNotFoundException {
+        List<ProductDTO> products = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = DBUtils.getConnection();
+            if (con != null) {
+                String query = "SELECT * FROM products WHERE 1=1";
+
+                if (cateFilter!=0) {
+                    query += " AND userObjectId = ?";
+                }
+
+                if (brandFilter != 0) {
+                    query += " AND brandId = ?";
+                }
+
+                ps = con.prepareStatement(query);
+                int paramIndex = 1;
+                if (cateFilter != 0) {
+                    ps.setInt(paramIndex++, cateFilter);
+                }
+                if (brandFilter != 0) {
+                    ps.setInt(paramIndex++, brandFilter);
+                }
+                rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    int productId = rs.getInt("productId");
+                    int brandId = rs.getInt("brandId");
+                    int userObjectId = rs.getInt("userObjectId");
+                    String detail = rs.getString("detail");
+                    boolean hot = rs.getBoolean("hot");
+                    String productName = rs.getString("name");
+                    float price = rs.getFloat("price");
+                    String color = rs.getString("color");
+                    float sale = rs.getFloat("sale");
+                    int warrantPeriod = rs.getInt("warrantPeriod");
+                    boolean productStatus = rs.getBoolean("productStatus");
+
+                    ProductDTO product = new ProductDTO(productId, brandId, userObjectId, detail, hot, productName, color, price, sale, warrantPeriod, productStatus);
+                    products.add(product);
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return products;
     }
 
 }

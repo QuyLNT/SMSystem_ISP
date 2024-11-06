@@ -413,7 +413,7 @@ public class OrderDAO {
         boolean isAssigned = false;
         String checkSql = "SELECT COUNT(*) FROM shipments WHERE orderId = ?";
         String insertSql = "INSERT INTO shipments (orderId, shipperId, shippingMethodId, shipmentStatus)\n"
-                + "SELECT ?, ?, sm.shippingMethodId, 'Assigned'\n"
+                + "SELECT ?, ?, sm.shippingMethodId, 'Order assigned to shipper'\n"
                 + "FROM shippingMethods sm\n"
                 + "WHERE sm.methodName = ?";
         String updateSql = "UPDATE shipments SET shipperId = ?, shipmentStatus = 'Assigned' WHERE orderId = ?";
@@ -519,10 +519,21 @@ public class OrderDAO {
         return orders;
     }
 
-    private static final String GET_ORDER_TOTAL = "SELECT SUM(p.price * (1 - p.sale) * od.quantity) AS totalAmount\n"
-            + "FROM orderDetails od\n"
-            + "JOIN products p ON od.productId = p.productId\n"
-            + "WHERE orderId = ?";
+    private static final String GET_ORDER_TOTAL = "SELECT \n"
+            + "    SUM(p.price * (1 - p.sale) * od.quantity) \n"
+            + "    - COALESCE(MAX(d.discountAmount), 0) AS totalAmount\n"
+            + "FROM \n"
+            + "    orderDetails od\n"
+            + "JOIN \n"
+            + "    products p ON od.productId = p.productId\n"
+            + "JOIN \n"
+            + "    orders o ON od.orderId = o.orderId\n"
+            + "LEFT JOIN \n"
+            + "    discountCodes d ON d.discountId = o.discountId\n"
+            + "WHERE \n"
+            + "    od.orderId = ?\n"
+            + "GROUP BY \n"
+            + "    od.orderId;";
 
     public float getOrderTotal(int orderId) throws ClassNotFoundException, SQLException {
         float total = 0;
@@ -661,7 +672,6 @@ public class OrderDAO {
         return orderList;
     }
 
-
     public boolean returnItemsToStock(int orderId) throws SQLException, ClassNotFoundException {
         boolean success = false;
         Connection conn = null;
@@ -670,7 +680,7 @@ public class OrderDAO {
 
         try {
             conn = DBUtils.getConnection();
-            conn.setAutoCommit(false); 
+            conn.setAutoCommit(false);
 
             String sql = "SELECT productId, size, quantity FROM orderDetails WHERE orderId = ?";
             ps = conn.prepareStatement(sql);
@@ -684,7 +694,7 @@ public class OrderDAO {
 
                 String updateStock = "UPDATE productVariants SET stock = stock + ? WHERE productId = ? AND size = ?";
                 try (PreparedStatement ps2 = conn.prepareStatement(updateStock)) {
-                    ps2.setInt(1, quantity); 
+                    ps2.setInt(1, quantity);
                     ps2.setInt(2, productId);
                     ps2.setFloat(3, size);
                     int rowsUpdated = ps2.executeUpdate();
@@ -705,9 +715,15 @@ public class OrderDAO {
             }
             throw e;
         } finally {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            if (conn != null) conn.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return success;
     }

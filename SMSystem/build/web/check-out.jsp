@@ -23,6 +23,10 @@
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+            />
         <!-- Css Styles -->
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
@@ -48,14 +52,10 @@
                 <div class="container">
                     <div class="ht-left">
                         <div class="mail-service">
-                            <i class="fa fa-envelope">
-                                smsystem8386@gmail.com
-                            </i>
+                            <i class="fa fa-envelope"></i>smsystem8386@gmail.com
                         </div>
                         <div class="phone-service">
-                            <i class="fa fa-phone">
-                                +84 123456789
-                            </i>
+                            <i class="fa fa-phone"></i>+84 123456789
                         </div>
                     </div>
                     <div class="ht-right">
@@ -65,7 +65,7 @@
                         %>
 
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
+                            <i class="fa fa-user"></i><%=loginUser.getFullName()%>
                         </div>
                         <section class="user">
                             <div class="user-setting">
@@ -79,7 +79,7 @@
                         } else {
                         %>
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  Guest</i>
+                            <i class="fa fa-user"></i>Guest
                         </div>
                         <section class="user">
                             <div class="user-setting">
@@ -112,7 +112,18 @@
                             </select>
                         </div>
                         <%
-                                }
+                            }
+                        } else {
+                        %>
+                        <div class="lan-selector">
+                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
+                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                                    English</option>
+                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
+                                    German</option>
+                            </select>
+                        </div>
+                        <%
                             }
                         %>
                         <div class="top-social">
@@ -193,7 +204,6 @@
                                             <% }%>
                                             <div class="select-button">
                                                 <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
-                                                <a href="check-out.jsp" class="primary-btn checkout-btn">CHECK OUT</a>
                                             </div>
                                         </div>
                                     </div>
@@ -263,7 +273,6 @@
                                         <label for="province">Province / City <span>*</span></label>
                                         <select id="province" name="province" required aria-live="polite" onchange="fetchDistricts()">
                                             <option value="" disabled selected>Select Province / City</option>
-                                            <!-- Các tùy chọn tỉnh/thành phố sẽ được thêm ở đây -->
                                         </select>
                                         <input type="hidden" id="provinceName" name="provinceName">
                                     </div>
@@ -274,14 +283,13 @@
                                         <label for="district">District <span>*</span></label>
                                         <select id="district" name="district" required aria-live="polite">
                                             <option value="" disabled selected>Select District</option>
-                                            <!-- Các tùy chọn quận/huyện sẽ được thêm ở đây -->
                                         </select>
                                         <input type="hidden" id="districtName" name="districtName">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="street">Street Address <span>*</span></label>
-                                    <input type="text" id="street" name="street" required="" class="street-first">
+                                    <input type="text" id="street" name="street" required="" placeholder="House Number, Street Name"class="street-first">
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="email">Email Address<span>*</span></label>
@@ -579,5 +587,7 @@
         </script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     </body>
 </html>

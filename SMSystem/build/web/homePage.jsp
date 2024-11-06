@@ -45,14 +45,10 @@
                 <div class="container">
                     <div class="ht-left">
                         <div class="mail-service">
-                            <i class="fa fa-envelope">
-                                smsystem8386@gmail.com
-                            </i>
+                            <i class="fa fa-envelope"></i>smsystem8386@gmail.com
                         </div>
                         <div class="phone-service">
-                            <i class="fa fa-phone">
-                                +84 123456789
-                            </i>
+                            <i class="fa fa-phone"></i>+84 123456789
                         </div>
                     </div>
                     <div class="ht-right">
@@ -62,7 +58,7 @@
                         %>
 
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
+                            <i class="fa fa-user"></i><%=loginUser.getFullName()%>
                         </div>
                         <section class="user">
                             <div class="user-setting">
@@ -76,7 +72,7 @@
                         } else {
                         %>
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  Guest</i>
+                            <i class="fa fa-user"></i>Guest
                         </div>
                         <section class="user">
                             <div class="user-setting">
@@ -109,7 +105,18 @@
                             </select>
                         </div>
                         <%
-                                }
+                            }
+                        } else {
+                        %>
+                        <div class="lan-selector">
+                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
+                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                                    English</option>
+                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
+                                    German</option>
+                            </select>
+                        </div>
+                        <%
                             }
                         %>
                         <div class="top-social">

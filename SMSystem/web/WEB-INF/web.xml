@@ -368,6 +368,10 @@
         <servlet-name>SearchOrderByStatusController</servlet-name>
         <servlet-class>controller.SearchOrderByStatusController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FilterProductController</servlet-name>
+        <servlet-class>controller.FilterProductController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -627,6 +631,10 @@
     <servlet-mapping>
         <servlet-name>SearchOrderByStatusController</servlet-name>
         <url-pattern>/SearchOrderByStatusController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterProductController</servlet-name>
+        <url-pattern>/FilterProductController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

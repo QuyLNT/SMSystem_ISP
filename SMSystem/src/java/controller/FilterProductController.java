@@ -7,63 +7,66 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.order.OrderDAO;
-import model.order.OrderDTO;
-import model.user.UserDAO;
-import model.user.UserDTO;
+import javax.servlet.http.HttpSession;
+import model.product.ProductDAO;
+import model.product.ProductDTO;
+import model.product.ProductImageDAO;
+import model.product.ProductVariantDAO;
 
 /**
  *
- * @author dell
+ * @author LENOVO
  */
-public class AssignShipperController extends HttpServlet {
+public class FilterProductController extends HttpServlet {
 
-    private static final String ERROR = "orderList.jsp";
-    private static final String SUCCESS = "orderList.jsp";
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
-
         try {
-            int orderId = Integer.parseInt(request.getParameter("orderId"));
-            int shipperId = Integer.parseInt(request.getParameter("shipperId"));
-            String ship = request.getParameter("ship");
-
-            OrderDAO orderDAO = new OrderDAO();
-            boolean isAssigned = orderDAO.assignShipperToOrder(orderId, shipperId, ship);
-
-            UserDAO userDAO = new UserDAO();
-            UserDTO shipper = userDAO.getUserById(shipperId);
-            String shipperName = (shipper != null) ? shipper.getFullName() : "Unknown Shipper";
-
-            if (isAssigned) {
-                request.setAttribute("message", "Shipper " + shipperName + " has been successfully assigned to Order ID " + orderId + ".");
-
-                List<OrderDTO> orderList = orderDAO.getAllOrders();
-                Map<Integer, Integer> shipperMap = orderDAO.getShipperMap();
-
-                List<UserDTO> shippers = userDAO.getAllShippers();
-
-                request.setAttribute("SHIPPER_LIST", shippers);
-                request.setAttribute("SHIPPER_MAP", shipperMap);
-
-                url = SUCCESS;
+            String cateStr = request.getParameter("CateFilter");
+            String brandStr = request.getParameter("BrandFilter");
+            int cate;
+            int brand;
+            if (!"".equals(cateStr)) {
+                cate = Integer.parseInt(cateStr);
             } else {
-                request.setAttribute("message", "Assign failed shipper to Order ID " + orderId + ".");
+                cate = 0;
+            }
+            if (!"".equals(brandStr)) {
+                brand = Integer.parseInt(brandStr);
+            } else {
+                brand = 0;
+            }
+            ProductDAO productdao = new ProductDAO();
+            ProductImageDAO imageDao = new ProductImageDAO();
+            ProductVariantDAO variantDao = new ProductVariantDAO();
+            List<ProductDTO> list = productdao.getFilterList(cate, brand);
+            if(list!=null){
+                for(ProductDTO p : list){
+                    p.setListImages(imageDao.getImageByProduct(p.getProductId()));
+                    p.setListVariants(variantDao.getVariantByProduct(p.getProductId()));
+                }
+                HttpSession session = request.getSession();
+                session.setAttribute("PRODUCT_LIST", list);
+                
             }
         } catch (Exception e) {
-            log("Error at AssignShipperController: " + e.toString());
         } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher("productList.jsp").forward(request, response);
         }
     }
 

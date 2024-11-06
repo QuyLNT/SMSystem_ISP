@@ -44,14 +44,10 @@
                 <div class="container">
                     <div class="ht-left">
                         <div class="mail-service">
-                            <i class="fa fa-envelope">
-                                smsystem8386@gmail.com
-                            </i>
+                            <i class="fa fa-envelope"></i>smsystem8386@gmail.com
                         </div>
                         <div class="phone-service">
-                            <i class="fa fa-phone">
-                                +84 123456789
-                            </i>
+                            <i class="fa fa-phone"></i>+84 123456789
                         </div>
                     </div>
                     <div class="ht-right">
@@ -61,7 +57,7 @@
                         %>
 
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
+                            <i class="fa fa-user"></i><%=loginUser.getFullName()%>
                         </div>
                         <section class="user">
                             <div class="user-setting">
@@ -75,7 +71,7 @@
                         } else {
                         %>
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  Guest</i>
+                            <i class="fa fa-user"></i>Guest
                         </div>
                         <section class="user">
                             <div class="user-setting">
@@ -108,7 +104,18 @@
                             </select>
                         </div>
                         <%
-                                }
+                            }
+                        } else {
+                        %>
+                        <div class="lan-selector">
+                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
+                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                                    English</option>
+                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
+                                    German</option>
+                            </select>
+                        </div>
+                        <%
                             }
                         %>
                         <div class="top-social">
@@ -258,7 +265,8 @@
                                         <%
                                             if (!status) {
                                         %>
-                                        <p style="color: red; font-weight: bold;">Sorry, this size is out of stock</p>
+                                        <div class="alert alert-danger"> Sorry, this size is out of stock</div>
+
                                         <%
                                             }
                                         %>
@@ -321,8 +329,15 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <p style="color: red">${requestScope.err}</p>
+                            <%
+                                String err = (String) request.getAttribute("err");
+                                if (err != null) {
+                            %>
+                            <div class="alert alert-danger"><%= err%></div>
 
+                            <%
+                                }
+                            %>
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="cart-buttons">
@@ -337,10 +352,17 @@
 
                                         <%
                                             DiscountDTO c = (DiscountDTO) session.getAttribute("code");
-                                            String ms = (String) request.getAttribute("msg");
-                                            if (ms != null) {
+                                            String err_discount = (String) request.getAttribute("err_discount");
+                                            String ms_discount = (String) request.getAttribute("ms_discount");
+                                            if (err_discount != null) {
                                         %>
-                                        <p style="color: red"><%=ms%></p>
+                                        <div class="alert alert-danger"><%=err_discount%></div>
+                                        <%
+                                            }
+                                        %>
+                                        <%if (ms_discount != null) {
+                                        %>
+                                        <div class="alert alert-success"><%=ms_discount%></div>
                                         <%
                                             }
                                         %>
@@ -373,8 +395,13 @@
                                         </ul>
                                         <a href="MainController?action=ProceedCheckOut" class="proceed-btn">PROCEED TO CHECKOUT</a>
                                     </div>
-                                    <p style="color: red">${requestScope.STOCK_ERR}</p>
-                                    <p style="color: red">${requestScope.EMPTY_CART_ERROR}</p>
+                                    <% if (request.getAttribute("STOCK_ERR") != null) {%>
+                                    <div class="alert alert-danger"><%= request.getAttribute("STOCK_ERR")%></div>
+                                    <% } %>
+
+                                    <% if (request.getAttribute("EMPTY_CART_ERROR") != null) {%>
+                                    <div class="alert alert-danger"><%= request.getAttribute("EMPTY_CART_ERROR")%></div>
+                                    <% } %>
                                 </div>
                                 <%}
                                 %>

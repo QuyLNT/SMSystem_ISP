@@ -56,14 +56,10 @@
                 <div class="container">
                     <div class="ht-left">
                         <div class="mail-service">
-                            <i class="fa fa-envelope">
-                                smsystem8386@gmail.com
-                            </i>
+                            <i class="fa fa-envelope"></i>smsystem8386@gmail.com
                         </div>
                         <div class="phone-service">
-                            <i class="fa fa-phone">
-                                +84 123456789
-                            </i>
+                            <i class="fa fa-phone"></i>+84 123456789
                         </div>
                     </div>
                     <div class="ht-right">
@@ -73,7 +69,7 @@
                         %>
 
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
+                            <i class="fa fa-user"></i><%=loginUser.getFullName()%>
                         </div>
                         <section class="user">
                             <div class="user-setting">
@@ -87,7 +83,7 @@
                         } else {
                         %>
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  Guest</i>
+                            <i class="fa fa-user"></i>Guest
                         </div>
                         <section class="user">
                             <div class="user-setting">
@@ -120,7 +116,18 @@
                             </select>
                         </div>
                         <%
-                                }
+                            }
+                        } else {
+                        %>
+                        <div class="lan-selector">
+                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
+                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                                    English</option>
+                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
+                                    German</option>
+                            </select>
+                        </div>
+                        <%
                             }
                         %>
                         <div class="top-social">
@@ -316,7 +323,7 @@
                                                                 <dt class="col-sm-4">Status</dt>
                                                                 <dd class="col-sm-8"><%=ord.getOrderStatus()%></dd>
                                                                 <dt class="col-sm-4">Total Price</dt>
-                                                                <dd class="col-sm-8"><%= String.format("%.2f", ord.getTotalPrice())%>$</dd>  
+                                                                <dd class="col-sm-8"><%= String.format("%.1f", ord.getTotalPrice())%>$</dd>  
                                                             </dl>
                                                         </div>
                                                     </div>
@@ -367,7 +374,7 @@
                         <%
                             }
                         %>
-                        
+
                         <%
                             List<OrderDetailDTO> listOrderDetail = new ArrayList<>();
                             if (request.getAttribute("ORDER_DETAILS") != null) {
@@ -385,9 +392,8 @@
                                     <th>Picture</th>
                                     <th>Product's Name</th>
                                     <th>Price</th>
-                                    <th>Sale Price</th>
                                     <th>Quantity</th>
-                                    <th>Total Price</th>
+                                    <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -399,10 +405,9 @@
                                 <tr>
                                     <td class="cart-pic first-row"><img src="<%=od.getProduct().getAvatarPath()%>" style="height: 100px; width: 100px" alt=""></td>                                       
                                     <td><%=od.getProduct().getName()%></td>
-                                    <td><%=od.getProduct().getPrice()%></td>
-                                    <td><%= String.format("%.2f", od.getProduct().getPrice() * (1 - od.getProduct().getSale()))%>$</td>
+                                    <td>$<%= String.format("%.1f", od.getProduct().getPrice() * (1 - od.getProduct().getSale()))%></td>
                                     <td><%=od.getQuantity()%></td>
-                                    <td><%=String.format("%.2f", totalPrice)%>$</td>    
+                                    <td>$<%=String.format("%.1f", totalPrice)%></td>    
                                 </tr>
                                 <%}%>
                             </tbody>

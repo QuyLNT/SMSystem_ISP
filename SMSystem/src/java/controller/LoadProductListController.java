@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import model.category.BrandDAO;
 import model.category.BrandDTO;
 import model.category.UserObjectDAO;
+import model.category.UserObjectDTO;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
 import model.product.ProductImageDAO;
@@ -54,16 +55,19 @@ public class LoadProductListController extends HttpServlet {
             List<BrandDTO> brandList;
             productList = productDao.getAllProduct();
             brandList = brandDao.getAllBrand();
+            List<UserObjectDTO> uObList;
+            uObList = uObDao.getAllUserObject();
+
             for (ProductDTO p : productList) {
                 p.setListImages(imageDao.getImageByProduct(p.getProductId()));
                 List<ProductVariantDTO> productVariants = variantDao.getVariantByProduct(p.getProductId());
                 p.setListVariants(productVariants);
             }
-
             if (productList != null && brandList != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("PRODUCT_LIST", productList);
                 session.setAttribute("BRAND_LIST", brandList);
+                session.setAttribute("USER_OBJECT_LIST", uObList);
                 url = SUCCESS;
 
             }
