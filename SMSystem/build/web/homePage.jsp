@@ -165,7 +165,7 @@
                                     <div class="cart-hover">
                                         <div class="select-items">
                                             <% if (isEmptyCart) { %>
-                                            <p>No product in cart. Buy more</p>
+                                            <p style="color: #4C4C4C">No product in cart. Buy more</p>
                                             <% } else { %>
                                             <table>
                                                 <tbody>
@@ -245,153 +245,336 @@
         </header>
         <!-- Header Section End -->
 
-
-
-
-        <!--  -->
-        <!-- Hero Section Begin -->
-        <section class="hero-section">
-            <div class="hero-items owl-carousel">
-                <div class="single-hero-items set-bg" data-setbg="https://wwd.com/wp-content/uploads/2020/07/sport-hub.jpg?w=1000&h=563&crop=1">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-5">
-                                <span>Bag,kids</span>
-                                <h1 style="color: #007bff">Summer Event</h1>
-                                <p style="color: white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores corrupti fuga ratione.
-                                    Voluptates voluptatibus illo quaerat? Ea et, dignissimos dolor, dolore impedit odio
-                                    officia ullam eaque obcaecati eligendi ipsam placeat?</p>
-                                <a href="MainController?action=ShopPage" class="primary-btn">Shop Now</a>
+            <!--  -->
+            <!-- Hero Section Begin -->
+            <section class="hero-section">
+                <div class="hero-items owl-carousel">
+                    <div class="single-hero-items set-bg" data-setbg="https://wwd.com/wp-content/uploads/2020/07/sport-hub.jpg?w=1000&h=563&crop=1">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <span>Bag,kids</span>
+                                    <h1 style="color: #007bff">Summer Event</h1>
+                                    <p style="color: white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores corrupti fuga ratione.
+                                        Voluptates voluptatibus illo quaerat? Ea et, dignissimos dolor, dolore impedit odio
+                                        officia ullam eaque obcaecati eligendi ipsam placeat?</p>
+                                    <a href="MainController?action=ShopPage" class="primary-btn">Shop Now</a>
+                                </div>
+                            </div>
+                            <div class="off-card">
+                                <h2>Sale <span>30%</span></h2>
                             </div>
                         </div>
-                        <div class="off-card">
-                            <h2>Sale <span>30%</span></h2>
+                    </div>
+                    <div class="single-hero-items set-bg" data-setbg="https://xwatch.vn/upload_images/images/2023/01/09/slogan-nike.jpg">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <span>Bag,kids</span>
+                                    <h1 style="color: #007bff">Summer Event</h1>
+                                    <p style="color: white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores corrupti fuga ratione.
+                                        Voluptates voluptatibus illo quaerat? Ea et, dignissimos dolor, dolore impedit odio
+                                        officia ullam eaque obcaecati eligendi ipsam placeat?</p>
+                                    <a href="MainController?action=ShopPage" class="primary-btn">Shop Now</a>
+                                </div>
+                            </div>
+                            <div class="off-card">
+                                <h2>Sale <span>30%</span></h2>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="single-hero-items set-bg" data-setbg="https://xwatch.vn/upload_images/images/2023/01/09/slogan-nike.jpg">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-5">
-                                <span>Bag,kids</span>
-                                <h1 style="color: #007bff">Summer Event</h1>
-                                <p style="color: white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores corrupti fuga ratione.
-                                    Voluptates voluptatibus illo quaerat? Ea et, dignissimos dolor, dolore impedit odio
-                                    officia ullam eaque obcaecati eligendi ipsam placeat?</p>
-                                <a href="MainController?action=ShopPage" class="primary-btn">Shop Now</a>
-                            </div>
-                        </div>
-                        <div class="off-card">
-                            <h2>Sale <span>30%</span></h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Hero Section End -->
+            </section>
+            <!-- Hero Section End -->
 
-        <!-- Banner Section Begin -->
-        <div class="banner-section spad">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="single-banner">
-                            <img src="https://i.pinimg.com/564x/c9/7b/8d/c97b8d8f1c6aa4c0df304167347bc3e8.jpg" alt="">
-                            <div class="inner-text">
-                                <a href="MainController?action=SearchCategories&type=1"><h4>Men's</h4></a>
+            <!-- Banner Section Begin -->
+            <div class="banner-section spad">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="single-banner">
+                                <img src="https://i.pinimg.com/564x/c9/7b/8d/c97b8d8f1c6aa4c0df304167347bc3e8.jpg" alt="">
+                                <div class="inner-text">
+                                    <a href="MainController?action=SearchCategories&type=1"><h4>Men's</h4></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="single-banner">
-                            <img src="https://i.pinimg.com/564x/f7/38/25/f7382542648a417ae5f4a222c25bd962.jpg" alt="">
-                            <div class="inner-text">
-                                <a href="MainController?action=SearchCategories&type=2"><h4>Women's</h4></a>
+                        <div class="col-lg-4">
+                            <div class="single-banner">
+                                <img src="https://i.pinimg.com/564x/f7/38/25/f7382542648a417ae5f4a222c25bd962.jpg" alt="">
+                                <div class="inner-text">
+                                    <a href="MainController?action=SearchCategories&type=2"><h4>Women's</h4></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="single-banner">
-                            <img src="https://i.pinimg.com/564x/ce/22/b3/ce22b33873f87e269fa4afc86a7c704e.jpg" style="height: 333px" alt="">
-                            <div class="inner-text">
-                                <a href="MainController?action=SearchCategories&type=3"><h4>Kid's</h4></a>
+                        <div class="col-lg-4">
+                            <div class="single-banner">
+                                <img src="https://i.pinimg.com/564x/ce/22/b3/ce22b33873f87e269fa4afc86a7c704e.jpg" style="height: 333px" alt="">
+                                <div class="inner-text">
+                                    <a href="MainController?action=SearchCategories&type=3"><h4>Kid's</h4></a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Banner Section End -->
+            <!-- Banner Section End -->
 
-        <!-- Women Banner Section Begin -->
-        <section class="women-banner spad">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="product-large set-bg" data-setbg="https://i.pinimg.com/564x/13/f5/64/13f5644533af0b5ac27069eeaf5c1a61.jpg">
-                            <h2>Women's</h2>
-                            <a href="MainController?action=SearchCategories&type=2">Discover More</a>
+            <!-- Women Banner Section Begin -->
+            <section class="women-banner spad">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="product-large set-bg" data-setbg="https://i.pinimg.com/564x/13/f5/64/13f5644533af0b5ac27069eeaf5c1a61.jpg">
+                                <h2>Women's</h2>
+                                <a href="MainController?action=SearchCategories&type=2">Discover More</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-8 offset-lg-1">
-                        <div class="filter-control">
-                            <ul>
-                                <li class="active">Shoes</li>
-                            </ul>
-                        </div>
-                        <div class="product-slider owl-carousel">
-                            <%
-                                List<ProductDTO> ls1 = (List<ProductDTO>) session.getAttribute("WOMEN_LIST");
-                                if (ls1 != null) {
+                        <div class="col-lg-8 offset-lg-1">
+                            <div class="filter-control">
+                                <ul>
+                                    <li class="active">Shoes</li>
+                                </ul>
+                            </div>
+                            <div class="product-slider owl-carousel">
+                                <%
+                                    List<ProductDTO> ls1 = (List<ProductDTO>) session.getAttribute("WOMEN_LIST");
+                                    if (ls1 != null) {
 
-                                    for (ProductDTO ele : ls1) {
-                            %>
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img src="<%=ele.getAvatarPath()%>" alt="">
-                                    <%
-                                        if (ele.getSale() != 0) {
-                                    %>
-                                    <div class="sale">Sale</div>
-                                    <%
-                                        }
-                                    %>
-                                    <form action="InsertWishlist" method="post"> 
+                                        for (ProductDTO ele : ls1) {
+                                %>
+                                <div class="product-item">
+                                    <div class="pi-pic">
+                                        <img src="<%=ele.getAvatarPath()%>" alt="">
+                                        <%
+                                            if (ele.getSale() != 0) {
+                                        %>
+                                        <div class="sale">Sale</div>
+                                        <%
+                                            }
+                                        %>
+                                        <form action="InsertWishlist" method="post"> 
 
-                                        <div class="icon">
-                                            <button id="btn-icon" type="submit">
-                                                <input type="hidden" name="id" value="<%= ele.getProductId()%>">
-                                                <input type="hidden" name="url" value="homePage.jsp">
-                                                <i class="icon_heart_alt"></i>
-                                            </button>
-                                        </div>
-
-                                    </form>
-                                    <ul>
-                                        <form action="MainController" method="post">
-                                            <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
-<!--                                            <li class="w-icon active"><a href="AddToCart?pId=<%/*=ele.getProductId()*/%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>-->
-                                            <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: #ffffff;
-                                                                                                font-weight: bold;
-                                                                                                border: none;" name="action" value="View"></a></li>
+                                            <div class="icon">
+                                                <button id="btn-icon" type="submit">
+                                                    <input type="hidden" name="id" value="<%= ele.getProductId()%>">
+                                                    <input type="hidden" name="url" value="homePage.jsp">
+                                                    <i class="icon_heart_alt"></i>
+                                                </button>
+                                            </div>
 
                                         </form>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Shoes</div>
-                                    <a href="">
-                                        <h5><%=ele.getName()%></h5>
-                                    </a>
-                                    <%
-                                        if (ele.getSale() != 0) {
-                                    %>
+                                        <ul>
+                                            <form action="MainController" method="post">
+                                                <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
+    <!--                                            <li class="w-icon active"><a href="AddToCart?pId=<%/*=ele.getProductId()*/%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>-->
+                                                <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: #ffffff;
+                                                                                                    font-weight: bold;
+                                                                                                    border: none;" name="action" value="View"></a></li>
 
-                                    <div class="product-price">
-                                        $<%= String.format("%.1f", ele.getPrice() * (1 - ele.getSale()))%>
-                                        <span>$<%=ele.getPrice()%></span>
+                                            </form>
+                                        </ul>
                                     </div>
+                                    <div class="pi-text">
+                                        <div class="catagory-name">Shoes</div>
+                                        <a href="">
+                                            <h5><%=ele.getName()%></h5>
+                                        </a>
+                                        <%
+                                            if (ele.getSale() != 0) {
+                                        %>
 
+                                        <div class="product-price">
+                                            $<%= String.format("%.1f", ele.getPrice() * (1 - ele.getSale()))%>
+                                            <span>$<%=ele.getPrice()%></span>
+                                        </div>
+
+                                        <%
+                                        } else {
+                                        %>
+                                        <div class="product-price">
+                                            $<%=ele.getPrice()%> 
+                                        </div>
+                                        <%
+                                            }
+                                        %>
+                                    </div>
+                                </div>
+                                <%
+                                        }
+                                    }
+
+                                %>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Women Banner Section End -->
+
+            <!-- Man Banner Section Begin -->
+            <section class="man-banner spad">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="filter-control">
+                                <ul>
+                                    <li class="active">Shoes</li>
+                                </ul>
+                            </div>
+                            <div class="product-slider owl-carousel">
+                                <%                                List<ProductDTO> ls = (List<ProductDTO>) session.getAttribute("MEN_LIST");
+                                    for (ProductDTO ob : ls) {
+
+                                %>
+                                <div class="product-item">
+                                    <div class="pi-pic">
+                                        <img src="<%=ob.getAvatarPath()%>" alt="">
+                                        <%if (ob.getSale() != 0) {
+                                        %>
+                                        <div class="sale">Sale</div>
+                                        <%
+                                            }
+                                        %>
+                                        <form action="InsertWishlist" method="post"> 
+
+                                            <div class="icon">
+                                                <button id="btn-icon" type="submit">
+                                                    <input type="hidden" name="id" value="<%= ob.getProductId()%>">
+                                                    <input type="hidden" name="url" value="homePage.jsp">
+                                                    <i class="icon_heart_alt"></i>
+                                                </button>
+                                            </div>
+
+                                        </form>
+                                        <ul>
+                                            <form action="MainController" method="post">
+                                                <input type="hidden" name="productId" value="<%=ob.getProductId()%>">
+    <!--                                            <li class="w-icon active"><a href="AddToCart?pId=<%/*=ob.getProductId()*/%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>-->
+                                                <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: white;
+                                                                                                    font-weight: bold;
+                                                                                                    border: none;" name="action" value="View"></a></li>
+
+                                            </form>
+                                        </ul>
+                                    </div>
+                                    <div class="pi-text">
+                                        <div class="catagory-name">SHOES</div>
+                                        <a href="">
+                                            <h5><%=ob.getName()%></h5>
+                                        </a>
+                                        <%
+                                            if (ob.getSale() != 0) {
+                                        %>
+                                        <div class="product-price">
+                                            $<%= String.format("%.1f", ob.getPrice() * (1 - ob.getSale()))%>
+                                            <span>$<%=ob.getPrice()%></span>
+                                        </div>
+                                        <%
+                                        } else {
+                                        %>
+                                        <div class="product-price">
+                                            $<%=ob.getPrice()%> 
+                                        </div>
+                                        <%
+                                            }
+                                        %>
+                                    </div>
+                                </div>
+                                <%                                  }
+                                %>
+                                <script>
+                                    function doDelete(name, event) {
+                                        if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
+                                        } else {
+                                            event.preventDefault();
+                                        }
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 offset-lg-1">
+                            <div class="product-large set-bg" data-setbg="https://i.pinimg.com/564x/3b/89/4d/3b894d8d394ad4dfa667bec6b073cf04.jpg">
+                                <h2>Men's</h2>
+                                <a href="MainController?action=SearchCategories&type=1">Discover More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            <!-- Man Banner Section End -->
+
+            <!-- Kid Banner Section Begin -->
+
+            <section class="women-banner spad">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="product-large set-bg" data-setbg="https://assets.adidas.com/images/w_940,f_auto,q_auto/e1de913ec5f94fbdb4f7af8801289871_9366/IC3030_23_hover_model.jpg">
+                                <h2>Kid's</h2>
+                                <a href="MainController?action=SearchCategories&type=3">Discover More</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 offset-lg-1">
+                            <div class="filter-control">
+                                <ul>
+                                    <li class="active">Shoes</li>
+                                </ul>
+                            </div>
+                            <div class="product-slider owl-carousel">
+                                <%
+                                    List<ProductDTO> ls2 = (List<ProductDTO>) session.getAttribute("KID_LIST");
+                                    for (ProductDTO ele : ls2) {
+                                %>
+                                <div class="product-item">
+                                    <div class="pi-pic">
+                                        <img src="<%=ele.getAvatarPath()%>" alt="">
+                                        <%
+                                            if (ele.getSale() != 0) {
+                                        %>
+                                        <div class="sale">Sale</div>
+                                        <%
+                                            }
+                                        %>
+                                        <form action="InsertWishlist" method="post"> 
+
+                                            <div class="icon">
+                                                <button id="btn-icon" type="submit">
+                                                    <input type="hidden" name="id" value="<%= ele.getProductId()%>">
+                                                    <input type="hidden" name="url" value="homePage.jsp">
+                                                    <i class="icon_heart_alt"></i>
+                                                </button>
+                                            </div>
+
+                                        </form>
+                                        <ul>
+                                            <form action="MainController" method="post">
+                                                <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
+    <!--                                            <li class="w-icon active"><a href="AddToCart?pId=<%/*=ele.getProductId()*/%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>-->
+                                                <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: #ffffff;
+                                                                                                    font-weight: bold;
+                                                                                                    border: none;" name="action" value="View"></a></li>
+
+                                            </form>
+                                        </ul>
+                                    </div>
+                                    <div class="pi-text">
+                                        <div class="catagory-name">Shoes</div>
+                                        <a href="">
+                                            <h5><%=ele.getName()%></h5>
+                                        </a>
+                                        <%
+                                            if (ele.getSale() != 0) {
+                                        %>
+                                        <div class="product-price">
+                                            $<%= String.format("%.1f", ele.getPrice() * (1 - ele.getSale()))%>
+                                            <span>$<%=ele.getPrice()%></span>
+                                        </div>
+
+
+                                    </div>
                                     <%
                                     } else {
                                     %>
@@ -402,199 +585,14 @@
                                         }
                                     %>
                                 </div>
-                            </div>
-                            <%
-                                    }
-                                }
-
-                            %>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Women Banner Section End -->
-
-        <!-- Man Banner Section Begin -->
-        <section class="man-banner spad">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="filter-control">
-                            <ul>
-                                <li class="active">Shoes</li>
-                            </ul>
-                        </div>
-                        <div class="product-slider owl-carousel">
-                            <%                                List<ProductDTO> ls = (List<ProductDTO>) session.getAttribute("MEN_LIST");
-                                for (ProductDTO ob : ls) {
-
-                            %>
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img src="<%=ob.getAvatarPath()%>" alt="">
-                                    <%if (ob.getSale() != 0) {
-                                    %>
-                                    <div class="sale">Sale</div>
-                                    <%
-                                        }
-                                    %>
-                                    <form action="InsertWishlist" method="post"> 
-
-                                        <div class="icon">
-                                            <button id="btn-icon" type="submit">
-                                                <input type="hidden" name="id" value="<%= ob.getProductId()%>">
-                                                <input type="hidden" name="url" value="homePage.jsp">
-                                                <i class="icon_heart_alt"></i>
-                                            </button>
-                                        </div>
-
-                                    </form>
-                                    <ul>
-                                        <form action="MainController" method="post">
-                                            <input type="hidden" name="productId" value="<%=ob.getProductId()%>">
-<!--                                            <li class="w-icon active"><a href="AddToCart?pId=<%/*=ob.getProductId()*/%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>-->
-                                            <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: white;
-                                                                                                font-weight: bold;
-                                                                                                border: none;" name="action" value="View"></a></li>
-
-                                        </form>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">SHOES</div>
-                                    <a href="">
-                                        <h5><%=ob.getName()%></h5>
-                                    </a>
-                                    <%
-                                        if (ob.getSale() != 0) {
-                                    %>
-                                    <div class="product-price">
-                                        $<%= String.format("%.1f", ob.getPrice() * (1 - ob.getSale()))%>
-                                        <span>$<%=ob.getPrice()%></span>
-                                    </div>
-                                    <%
-                                    } else {
-                                    %>
-                                    <div class="product-price">
-                                        $<%=ob.getPrice()%> 
-                                    </div>
-                                    <%
-                                        }
-                                    %>
-                                </div>
-                            </div>
-                            <%                                  }
-                            %>
-                            <script>
-                                function doDelete(name, event) {
-                                    if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
-                                    } else {
-                                        event.preventDefault();
-                                    }
-                                }
-                            </script>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 offset-lg-1">
-                        <div class="product-large set-bg" data-setbg="https://i.pinimg.com/564x/3b/89/4d/3b894d8d394ad4dfa667bec6b073cf04.jpg">
-                            <h2>Men's</h2>
-                            <a href="MainController?action=SearchCategories&type=1">Discover More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Man Banner Section End -->
-
-        <!-- Kid Banner Section Begin -->
-
-        <section class="women-banner spad">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="product-large set-bg" data-setbg="https://assets.adidas.com/images/w_940,f_auto,q_auto/e1de913ec5f94fbdb4f7af8801289871_9366/IC3030_23_hover_model.jpg">
-                            <h2>Kid's</h2>
-                            <a href="MainController?action=SearchCategories&type=3">Discover More</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 offset-lg-1">
-                        <div class="filter-control">
-                            <ul>
-                                <li class="active">Shoes</li>
-                            </ul>
-                        </div>
-                        <div class="product-slider owl-carousel">
-                            <%
-                                List<ProductDTO> ls2 = (List<ProductDTO>) session.getAttribute("KID_LIST");
-                                for (ProductDTO ele : ls2) {
-                            %>
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img src="<%=ele.getAvatarPath()%>" alt="">
-                                    <%
-                                        if (ele.getSale() != 0) {
-                                    %>
-                                    <div class="sale">Sale</div>
-                                    <%
-                                        }
-                                    %>
-                                    <form action="InsertWishlist" method="post"> 
-
-                                        <div class="icon">
-                                            <button id="btn-icon" type="submit">
-                                                <input type="hidden" name="id" value="<%= ele.getProductId()%>">
-                                                <input type="hidden" name="url" value="homePage.jsp">
-                                                <i class="icon_heart_alt"></i>
-                                            </button>
-                                        </div>
-
-                                    </form>
-                                    <ul>
-                                        <form action="MainController" method="post">
-                                            <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
-<!--                                            <li class="w-icon active"><a href="AddToCart?pId=<%/*=ele.getProductId()*/%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>-->
-                                            <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: #ffffff;
-                                                                                                font-weight: bold;
-                                                                                                border: none;" name="action" value="View"></a></li>
-
-                                        </form>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Shoes</div>
-                                    <a href="">
-                                        <h5><%=ele.getName()%></h5>
-                                    </a>
-                                    <%
-                                        if (ele.getSale() != 0) {
-                                    %>
-                                    <div class="product-price">
-                                        $<%= String.format("%.1f", ele.getPrice() * (1 - ele.getSale()))%>
-                                        <span>$<%=ele.getPrice()%></span>
-                                    </div>
-
-
-                                </div>
-                                <%
-                                } else {
-                                %>
-                                <div class="product-price">
-                                    $<%=ele.getPrice()%> 
-                                </div>
-                                <%
-                                    }
+                                <%                                }
                                 %>
                             </div>
-                            <%                                }
-                            %>
+
                         </div>
 
                     </div>
-
                 </div>
-            </div>
         </div>
     </section>
     <!-- Instagram Section Begin -->
@@ -637,251 +635,250 @@
         </div>
     </div>
     <!-- Instagram Section End -->
-
-    <!-- Latest Blog Section Begin -->
-    <section class="latest-blog spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <h2>From The BLog</h2>
+<!-- Latest Blog Section Begin -->
+<section class="latest-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>From The BLog</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="single-latest-blog">
+                    <img src="img/latest-1.jpg" alt="">
+                    <div class="latest-text">
+                        <div class="tag-list">
+                            <div class="tag-item">
+                                <i class="fa fa-calendar-o"></i>
+                                June 11,2024
+                            </div>
+                            <div class="tag-item">
+                                <i class="fa fa-comment-o"></i>
+                                7
+                            </div>
+                        </div>
+                        <a href="">
+                            <h4>The Best Street Style From London SMSystem Week</h4>
+                        </a>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam aut quisquam
+                            blanditiis quidem exercitationem ipsam repellendus.</p>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-latest-blog">
-                        <img src="img/latest-1.jpg" alt="">
-                        <div class="latest-text">
-                            <div class="tag-list">
-                                <div class="tag-item">
-                                    <i class="fa fa-calendar-o"></i>
-                                    June 11,2024
-                                </div>
-                                <div class="tag-item">
-                                    <i class="fa fa-comment-o"></i>
-                                    7
-                                </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="single-latest-blog">
+                    <img src="img/latest-2.jpg" alt="">
+                    <div class="latest-text">
+                        <div class="tag-list">
+                            <div class="tag-item">
+                                <i class="fa fa-calendar-o"></i>
+                                June 08,2024
                             </div>
-                            <a href="">
-                                <h4>The Best Street Style From London SMSystem Week</h4>
-                            </a>
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam aut quisquam
-                                blanditiis quidem exercitationem ipsam repellendus.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-latest-blog">
-                        <img src="img/latest-2.jpg" alt="">
-                        <div class="latest-text">
-                            <div class="tag-list">
-                                <div class="tag-item">
-                                    <i class="fa fa-calendar-o"></i>
-                                    June 08,2024
-                                </div>
-                                <div class="tag-item">
-                                    <i class="fa fa-comment-o"></i>
-                                    15
-                                </div>
+                            <div class="tag-item">
+                                <i class="fa fa-comment-o"></i>
+                                15
                             </div>
-                            <a href="">
-                                <h4>Vogue's Ultimate Guide To Autumn/Winter 2024 Shoes</h4>
-                            </a>
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam aut quisquam
-                                blanditiis quidem exercitationem ipsam repellendus.</p>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-latest-blog">
-                        <img src="img/latest-3.jpg" alt="">
-                        <div class="latest-text">
-                            <div class="tag-list">
-                                <div class="tag-item">
-                                    <i class="fa fa-calendar-o"></i>
-                                    June 16,2024
-                                </div>
-                                <div class="tag-item">
-                                    <i class="fa fa-comment-o"></i>
-                                    40
-                                </div>
-                            </div>
-                            <a href="">
-                                <h4>How To Brighten Your Wardrobe With A Dash Of Lime</h4>
-                            </a>
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam aut quisquam
-                                blanditiis quidem exercitationem ipsam repellendus.</p>
-                        </div>
+                        <a href="">
+                            <h4>Vogue's Ultimate Guide To Autumn/Winter 2024 Shoes</h4>
+                        </a>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam aut quisquam
+                            blanditiis quidem exercitationem ipsam repellendus.</p>
                     </div>
                 </div>
             </div>
-            <div class="benefit-items">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="single-benefit">
-                            <div class="sb-icon">
-                                <img src="img/icon-1.png" alt="">
+            <div class="col-lg-4 col-md-6">
+                <div class="single-latest-blog">
+                    <img src="img/latest-3.jpg" alt="">
+                    <div class="latest-text">
+                        <div class="tag-list">
+                            <div class="tag-item">
+                                <i class="fa fa-calendar-o"></i>
+                                June 16,2024
                             </div>
-                            <div class="sb-text">
-                                <h6>Free Shipping</h6>
-                                <p>For all orders over 99$</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="single-benefit">
-                            <div class="sb-icon">
-                                <img src="img/icon-2.png" alt="">
-                            </div>
-                            <div class="sb-text">
-                                <h6>Delivery on time</h6>
-                                <p>Whenever in work time</p>
+                            <div class="tag-item">
+                                <i class="fa fa-comment-o"></i>
+                                40
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="single-benefit">
-                            <div class="sb-icon">
-                                <img src="img/icon-3.png" alt="">
-                            </div>
-                            <div class="sb-text">
-                                <h6>Secure Payment</h6>
-                                <p>100% secure payment</p>
-                            </div>
-                        </div>
+                        <a href="">
+                            <h4>How To Brighten Your Wardrobe With A Dash Of Lime</h4>
+                        </a>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam aut quisquam
+                            blanditiis quidem exercitationem ipsam repellendus.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Latest Blog Section End -->
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-        <div class="container">
-            <div class="logo-carousel owl-carousel">
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/nike.png" width="150" height="150">
+        <div class="benefit-items">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="single-benefit">
+                        <div class="sb-icon">
+                            <img src="img/icon-1.png" alt="">
+                        </div>
+                        <div class="sb-text">
+                            <h6>Free Shipping</h6>
+                            <p>For all orders over 99$</p>
+                        </div>
                     </div>
                 </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/adidas.png" width="150" height="150">
+                <div class="col-lg-4">
+                    <div class="single-benefit">
+                        <div class="sb-icon">
+                            <img src="img/icon-2.png" alt="">
+                        </div>
+                        <div class="sb-text">
+                            <h6>Delivery on time</h6>
+                            <p>Whenever in work time</p>
+                        </div>
                     </div>
                 </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/puma.png" width="150" height="150">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/asics.png" width="150" height="150">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/vans.png" width="150" height="150">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/newbalance.png" width="150" height="150">
+                <div class="col-lg-4">
+                    <div class="single-benefit">
+                        <div class="sb-icon">
+                            <img src="img/icon-3.png" alt="">
+                        </div>
+                        <div class="sb-text">
+                            <h6>Secure Payment</h6>
+                            <p>100% secure payment</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Partner Logo Section End -->
+</section>
+<!-- Latest Blog Section End -->
+<!-- Partner Logo Section Begin -->
+<div class="partner-logo">
+    <div class="container">
+        <div class="logo-carousel owl-carousel">
+            <div class="logo-item">
+                <div class="tablecell-inner">
+                    <img src="img/nike.png" width="150" height="150">
+                </div>
+            </div>
+            <div class="logo-item">
+                <div class="tablecell-inner">
+                    <img src="img/adidas.png" width="150" height="150">
+                </div>
+            </div>
+            <div class="logo-item">
+                <div class="tablecell-inner">
+                    <img src="img/puma.png" width="150" height="150">
+                </div>
+            </div>
+            <div class="logo-item">
+                <div class="tablecell-inner">
+                    <img src="img/asics.png" width="150" height="150">
+                </div>
+            </div>
+            <div class="logo-item">
+                <div class="tablecell-inner">
+                    <img src="img/vans.png" width="150" height="150">
+                </div>
+            </div>
+            <div class="logo-item">
+                <div class="tablecell-inner">
+                    <img src="img/newbalance.png" width="150" height="150">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Partner Logo Section End -->
 
-    <!-- Footer Section Begin -->
-    <footer class="footer-section">
+<!-- Footer Section Begin -->
+<footer class="footer-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="footer-left">
+                    <div class="footer-logo">
+                        <a href="homePage.jsp">
+                            <img src="img/logoweb.png" alt="">
+                        </a>
+                    </div>
+                    <ul>
+                        <li>Lô E2a-7, Đường D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh 700000</li>
+                        <li>Phone: +84 123456789</li>
+                        <li>Email: smsystem@gmail.com</li>
+                    </ul>
+                    <div class="footer-social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 offset-lg-1">
+                <div class="footer-widget">
+                    <h5>Information</h5>
+                    <ul>
+                        <li><a href="">About Us</a></li>
+                        <li><a href="">Checkout</a></li>
+                        <li><a href="">Contact</a></li>
+                        <li><a href="">Services</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="footer-widget">
+                    <h5>My Account</h5>
+                    <ul>
+                        <li><a href="">My Account</a></li>
+                        <li><a href="">Contact</a></li>
+                        <li><a href="">Shopping Cart</a></li>
+                        <li><a href="">Shop</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="newsletter-item">
+                    <h5>Join Out Newsletter Now</h5>
+                    <p>Get E-mail updates about our latest shop and special offers.</p>
+                    <form action="#" class="subcribe-form">
+                        <input type="text" placeholder="Enter Your Email">
+                        <button type="button">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyright-reserved">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
-                    <div class="footer-left">
-                        <div class="footer-logo">
-                            <a href="homePage.jsp">
-                                <img src="img/logoweb.png" alt="">
-                            </a>
-                        </div>
-                        <ul>
-                            <li>Lô E2a-7, Đường D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh 700000</li>
-                            <li>Phone: +84 123456789</li>
-                            <li>Email: smsystem@gmail.com</li>
-                        </ul>
-                        <div class="footer-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
+                <div class="col-lg-12">
+                    <div class="copyright-text">
+                        Copyright ©2024 All reserved | SMSystem
                     </div>
-                </div>
-                <div class="col-lg-2 offset-lg-1">
-                    <div class="footer-widget">
-                        <h5>Information</h5>
-                        <ul>
-                            <li><a href="">About Us</a></li>
-                            <li><a href="">Checkout</a></li>
-                            <li><a href="">Contact</a></li>
-                            <li><a href="">Services</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="footer-widget">
-                        <h5>My Account</h5>
-                        <ul>
-                            <li><a href="">My Account</a></li>
-                            <li><a href="">Contact</a></li>
-                            <li><a href="">Shopping Cart</a></li>
-                            <li><a href="">Shop</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="newsletter-item">
-                        <h5>Join Out Newsletter Now</h5>
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <form action="#" class="subcribe-form">
-                            <input type="text" placeholder="Enter Your Email">
-                            <button type="button">Subscribe</button>
-                        </form>
+                    <div class="payment-pic">
+                        <img src="img/payment-method.png" alt="">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="copyright-reserved">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="copyright-text">
-                            Copyright ©2024 All reserved | SMSystem
-                        </div>
-                        <div class="payment-pic">
-                            <img src="img/payment-method.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
+    </div>
+</footer>
+<!-- Footer Section End -->
 
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery.zoom.min.js"></script>
-    <script src="js/jquery.dd.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/main2.js"></script>
-    <script src="js/main3.js"></script>
+<!-- Js Plugins -->
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/jquery.countdown.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/jquery.zoom.min.js"></script>
+<script src="js/jquery.dd.min.js"></script>
+<script src="js/jquery.slicknav.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/main2.js"></script>
+<script src="js/main3.js"></script>
 </body>
 </html>

@@ -26,8 +26,12 @@
         <title>My Order</title>
 
         <!-- Google Font -->
-
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+            />
         <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
         <!-- Css Styles -->
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -173,7 +177,7 @@
                                     <div class="cart-hover">
                                         <div class="select-items">
                                             <% if (isEmptyCart) { %>
-                                            <p>No product in cart. Buy more</p>
+                                            <p style="color: #4C4C4C">No product in cart. Buy more</p>
                                             <% } else { %>
                                             <table>
                                                 <tbody>
@@ -187,7 +191,7 @@
                                                         <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
                                                         <td class="si-text">
                                                             <div class="product-selected">
-                                                                <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
+                                                                <p style="color: #4C4C4C">$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
                                                                 <h6><%= ele.getProduct().getName()%></h6>
                                                                 <h6>Size <%= ele.getSize()%></h6>
                                                             </div>
@@ -380,8 +384,8 @@
                                     <td>
                                         <form action="MainController" method="POST">
                                             <input type="hidden" name="orderId" value="<%= ele.getOrderId()%>" />
-                                            <button type="submit" class="btn btn-primary" name="action" value="View-Detail">
-                                                <i class="fa-solid fa-eye"></i>
+                                            <button style="background: #273c75" type="submit" class="btn btn-primary" name="action" value="View-Detail">
+                                                <i class="fa-solid fa-eye" style="background: #273c75"></i>
                                             </button>
                                         </form>
                                     </td>
@@ -527,6 +531,7 @@
     <script src="js/main2.js"></script>
     <script src="js/main3.js"></script>
     <script src="js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

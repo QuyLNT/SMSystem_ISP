@@ -176,7 +176,7 @@
                                     <div class="cart-hover">
                                         <div class="select-items">
                                             <% if (isEmptyCart) { %>
-                                            <p>No product in cart. Buy more</p>
+                                            <p style="color: #4C4C4C">No product in cart. Buy more</p>
                                             <% } else { %>
                                             <table>
                                                 <tbody>
@@ -190,7 +190,7 @@
                                                         <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
                                                         <td class="si-text">
                                                             <div class="product-selected">
-                                                                <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
+                                                                <p style="color: #4C4C4C">$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
                                                                 <h6><%= ele.getProduct().getName()%></h6>
                                                                 <h6>Size <%= ele.getSize()%></h6>
                                                             </div>

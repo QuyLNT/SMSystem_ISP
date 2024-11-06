@@ -165,7 +165,7 @@
                                     <div class="cart-hover">
                                         <div class="select-items">
                                             <% if (isEmptyCart) { %>
-                                            <p>No product in cart. Buy more</p>
+                                            <p style="color: #4C4C4C">No product in cart. Buy more</p>
                                             <% } else { %>
                                             <table>
                                                 <tbody>
@@ -179,7 +179,7 @@
                                                         <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
                                                         <td class="si-text">
                                                             <div class="product-selected">
-                                                                <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
+                                                                <p style="color: #4C4C4C">$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
                                                                 <h6><%= ele.getProduct().getName()%></h6>
                                                                 <h6>Size <%= ele.getSize()%></h6>
                                                             </div>
@@ -282,10 +282,10 @@
                         <div class="cw-item">
                             <div class="contact-title">
                                 <h4>Contact Us</h4>
-                                <p>Contact Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero, similique
-                                    illo
-                                    mollitia quam earum rerum adipisci. Aliquam, officia tenetur. Autem omnis distinctio
-                                    quaerat qui quod dolorum sit officiis delectus laudantium?</p>
+                                <p style="color: #4C4C4C">Have questions or need assistance? Our team is here to help! You can reach us by visiting 
+                                    
+                               our location, giving us a call, or sending us an email. We’re committed
+                               to providing prompt support to make sure you have the best experience possible.</p>
                             </div>
                             <div class="contact-widget">
                                 <div class="cw-item">
@@ -294,7 +294,7 @@
                                     </div>
                                     <div class="ci-text">
                                         <span>Address:</span>
-                                        <p>Lô E2a-7, Đường D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh 700000</p>
+                                        <p style="color: #4C4C4C">Lô E2a-7, Đường D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh 700000</p>
                                     </div>
                                 </div>
                                 <div class="cw-item">
@@ -303,7 +303,7 @@
                                     </div>
                                     <div class="ci-text">
                                         <span>Phone:</span>
-                                        <p>+84 123456789</p>
+                                        <p style="color: #4C4C4C">+84 123456789</p>
                                     </div>
                                 </div>
                                 <div class="cw-item">
@@ -312,7 +312,7 @@
                                     </div>
                                     <div class="ci-text">
                                         <span>Email:</span>
-                                        <p>smsystem@gmail.com</p>
+                                        <p style="color: #4C4C4C">smsystem8386@gmail.com</p>
                                     </div>
                                 </div>
                             </div>
@@ -322,7 +322,7 @@
                         <div class="contact-form">
                             <div class="leave-comment">
                                 <h4>Leave A Comment</h4>
-                                <p>Our Staff will call back later.</p>
+                                <p style="color: #4C4C4C">Our Staff will call back later.</p>
                                 <form action="#" class="comment-form">
                                     <div class="row">
                                         <div class="col-lg-6">

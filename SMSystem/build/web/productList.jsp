@@ -260,8 +260,8 @@
                                         <%
                                             String cate = request.getParameter("CateFilter");
                                             String brandFilter = request.getParameter("BrandFilter");
-                                            if(cate == null) cate = "";
-                                            if(brandFilter==null) brandFilter = "0";
+                                            if(cate == null ) cate = "";
+                                            if(brandFilter==null || brandFilter == "") brandFilter = "0";
                                             int brandId = Integer.parseInt(brandFilter);
                                         %>
                             <div class="welcome">
