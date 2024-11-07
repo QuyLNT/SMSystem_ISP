@@ -136,7 +136,7 @@ public class DiscountDAO {
         return discount;
     }
 
-    public void updateUsage(String discountCode) throws SQLException, ClassNotFoundException {
+    public void updateUsage(int dicountId) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement ps = null;
 
@@ -144,9 +144,9 @@ public class DiscountDAO {
             con = DBUtils.getConnection();
             String sql = "UPDATE discountCodes "
                     + "SET usage = usage + 1 "
-                    + "WHERE discountCode = ? AND discountStatus = 'Active' AND usageLimit > usage";
+                    + "WHERE discountId = ? AND usageLimit > usage";
             ps = con.prepareStatement(sql);
-            ps.setString(1, discountCode);
+            ps.setInt(1, dicountId);
             ps.executeUpdate();
         } finally {
             if (ps != null) {

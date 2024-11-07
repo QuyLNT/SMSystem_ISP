@@ -114,7 +114,7 @@ form input[type="password"] {
 }
 
 .forgot-password:hover {
-  color: blue; /* Màu xanh khi kê chuột vào */
+  color: #273c75; /* Màu xanh khi kê chuột vào */
 }
 
 .btn {

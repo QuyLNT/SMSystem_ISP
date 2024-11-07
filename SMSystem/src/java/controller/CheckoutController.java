@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import model.cart.CartDAO;
 import model.cart.CartDTO;
 import model.cart.CartItems;
+import model.discount.DiscountDAO;
 import model.discount.DiscountDTO;
 import model.order.OrderDAO;
 import model.order.OrderDTO;
@@ -84,11 +85,14 @@ public class CheckoutController extends HttpServlet {
                     order.setDistrict(district);
                     order.setCity(city);
                     if (code != null) {
+                        DiscountDAO dao = new DiscountDAO();
+                        dao.updateUsage(discount);
                         order.setDiscountCode(code.getDiscountCode());
                     }
                     order.setTotalPrice(Float.parseFloat(formattedNumber));
                     request.setAttribute("ORDER", order);
                 }
+
                 boolean checkDelete = cartDao.removeSelectedItem(cart.getCartId());
             }
 

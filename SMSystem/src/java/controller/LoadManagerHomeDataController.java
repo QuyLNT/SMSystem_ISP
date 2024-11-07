@@ -48,34 +48,39 @@ public class LoadManagerHomeDataController extends HttpServlet {
             ProductVariantDAO variantDao = new ProductVariantDAO();
             UserObjectDAO uObDao = new UserObjectDAO();
             OrderDAO ordDAO = new OrderDAO();
-            List<ProductDTO> productList;
             List<ProductDTO> stockOfProduct;
             List<UserObjectDTO> uObList;
             List<OrderDTO> ordList;
 
-            productList = productDao.getAllProduct();
             stockOfProduct = variantDao.getStockByProduct();
             uObList = uObDao.getAllUserObject();
+
+            ordList = ordDAO.getAllOrder();
+            int allOrder = ordList.size();
+            int compelteCount = 0;
+            int notCompleteCount = 0;
+            for (OrderDTO o : ordList) {
+                if (o.getOrderStatus().equalsIgnoreCase("Completed")) {
+                    compelteCount++;
+                }
+                if (o.getOrderStatus().equalsIgnoreCase("Not Completed")) {
+                    notCompleteCount++;
+                }
+            }
+
             int allStock = 0;
             for (ProductDTO p : stockOfProduct) {
                 allStock += p.getTotalStock();
             }
+            HttpSession session = request.getSession();
+            session.setAttribute("TOTAL_ORDER", allOrder);
+            session.setAttribute("COMP_ORDER", compelteCount);
+            session.setAttribute("NOT_COMP_ORDER", notCompleteCount);
+            session.setAttribute("ALL_QUANTITY", allStock);
+            session.setAttribute("STOCK_OF_PRODUCT", stockOfProduct);
+            session.setAttribute("USER_OBJECT_LIST", uObList);
 
-            ordList = ordDAO.getAllOrder();
-            int allOrder = ordList.size();
-            for(OrderDTO o :ordList){
-                allOrder +=o.getTotalOrder();
-            }
-
-            if (productList != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("TOTAL_ORDER", allOrder);
-                session.setAttribute("ALL_QUANTITY", allStock);
-                session.setAttribute("STOCK_OF_PRODUCT", stockOfProduct);
-                session.setAttribute("USER_OBJECT_LIST", uObList);
-
-                url = SUCCESS;
-            }
+            url = SUCCESS;
 
         } catch (ClassNotFoundException | SQLException e) {
             log("Error at LoadProductController: " + e.toString());

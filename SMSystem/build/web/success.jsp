@@ -131,6 +131,9 @@
 
         <%
             String status = request.getParameter("status");
+            if (status != null) {
+        %>
+        <%
             if (status.equals("1")) {
         %>
         <div class="wishlist-heading tk">Thank you for Buying</div>
@@ -158,6 +161,21 @@
         <%
             }
         %>
+        <%
+        } else {
+        %>
+        <div class="wishlist-heading tk">Thank you for Buying</div>
+        <div id="tick-img">
+            <img src="img/happy-face.png">
+        </div>
+        <div class="back">
+            <i class="fa-solid fa-arrow-right">  </i>
+            <a href="MainController?action=HomePage" style="color: black;"> Click here to go back</a>
+        </div> 
+        <%
+            }
+        %>
+
 
         <style>
             #tick-img {

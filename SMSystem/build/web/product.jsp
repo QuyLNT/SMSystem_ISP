@@ -177,13 +177,14 @@
                                                         <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
                                                         <td class="si-text">
                                                             <div class="product-selected">
-                                                                <p style="color: #4C4C4C">$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
                                                                 <h6><%= ele.getProduct().getName()%></h6>
                                                                 <h6>Size <%= ele.getSize()%></h6>
+                                                                <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
+
                                                             </div>
                                                         </td>
                                                         <td class="si-close">
-                                                            <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=product.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
+                                                            <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=homePage.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
                                                                 <i class="ti-close"></i>
                                                             </a>
                                                         </td>
@@ -453,10 +454,12 @@
                                     <% }%>
                                     <ul class="pd-tags">
                                         <li><span>CATEGORIES</span>: More Shoes</li>
-                                        <li><span>TAGS</span>: Men, LifeStyle, Running</li>
+                                        <li><span>TAGS</span>: LifeStyle, Running</li>
                                     </ul>
                                     <div class="pd-share">
-                                        <div class="p-code">Sku: 00012</div>
+                                        <div class="p-code">Sku: </div>
+                                        <div class="p-code">SNK00<%=product.getProductId()%></div>
+
                                         <div class="pd-social">
                                             <a href="#"><i class="ti-facebook"></i></a>
                                             <a href="#"><i class="ti-twitter-alt"></i></a>
@@ -483,21 +486,17 @@
                         <div class="product-tab">
                             <div class="tab-item">
                                 <ul class="nav" role="tablist">
-                                    <li><a class="active" href="#tab-1" data-toggle="tab" role="tab">DESCRIPTION</a></li>
+                                    <li><a class="active" href="#tab-1" data-toggle="tab" role="tab" >SIZE CHART</a></li>
                                     <li><a href="#tab-2" data-toggle="tab" role="tab">SPECIFICATIONS</a></li>
                                     <li><a href="#tab-3" data-toggle="tab" role="tab">Customer Reviews(06)</a></li>
                                 </ul>
-                            </div>
+                            </div
                             <div class="tab-item-content">
                                 <div class="tab-content">
                                     <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
                                         <div class="product-content">
-                                            <div class="row">
-                                                <div class="col-lg-7">
-                                                    <h5>Features</h5>
-                                                    <p style="color: #4C4C4C"><%=product.getDetail()%></p>
-                                                </div>
-                                                <div class="col-lg-5">
+                                            <div class="row" style="display: flex; justify-content: center;">
+                                                <div class="col-lg-8" >
                                                     <img src="img/size.jpg" alt="" width="500px" height="450px">
                                                 </div>
                                             </div>

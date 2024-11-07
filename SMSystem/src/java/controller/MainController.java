@@ -156,6 +156,10 @@ public class MainController extends HttpServlet {
     private final static String CONTACT_PAGE = "contact.jsp";
     private final static String FILTER_PRODUCT = "FilterProduct";
     private final static String FILTER_PRODUCT_CONTROLLER = "FilterProductController";
+    private final static String SEND_MAIL = "SendMail";
+    private final static String SEND_MAIL_CONTROLLER = "SendMailController";
+    private final static String DELETE_BRAND = "DeleteBrand";
+    private final static String DELETE_BRAND_CONTROLLER = "DeleteBrandController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -287,6 +291,10 @@ public class MainController extends HttpServlet {
                 url = CONTACT_PAGE;
             } else if (FILTER_PRODUCT.equals(action)) {
                 url = FILTER_PRODUCT_CONTROLLER;
+            } else if (SEND_MAIL.equals(action)) {
+                url = SEND_MAIL_CONTROLLER;
+            } else if (DELETE_BRAND.equals(action)) {
+                url = DELETE_BRAND_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());

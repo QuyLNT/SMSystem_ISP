@@ -34,21 +34,27 @@ public class SearchBrandController extends HttpServlet {
      */
     private static final String ERROR = "brandList.jsp";
     private static final String SUCCES = "brandList.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String url= ERROR;
+        String url = ERROR;
         try {
             String searchTerm = request.getParameter("searchBrandName");
             BrandDAO brandDao = new BrandDAO();
             List<BrandDTO> brandList = brandDao.getBrandByName(searchTerm);
-            if(brandList!=null){
-                HttpSession session = request.getSession();
-                session.setAttribute("BRAND_LIST",brandList);
+            if (brandList != null && !brandList.isEmpty()) {
+                for (BrandDTO b : brandList) {
+                    b.setProductCount(brandDao.getProductCountByBrand(b.getBrandId()));
+                }
+            } else {
+                request.setAttribute("err_search", "No Brand Found");
             }
+            HttpSession session = request.getSession();
+            session.setAttribute("BRAND_LIST", brandList);
         } catch (SQLException | ClassNotFoundException e) {
-            request.setAttribute("err", "Failed to search for products: " + e.getMessage());
-        }finally{
+            request.setAttribute("err_search", "Failed to search for products: " + e.getMessage());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

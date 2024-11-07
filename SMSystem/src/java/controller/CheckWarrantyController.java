@@ -25,6 +25,7 @@ public class CheckWarrantyController extends HttpServlet {
 
     private static final String ERROR = "warrantyPage.jsp";
     private static final String SUCCESS = "warrantyPage.jsp";
+    private static final String PHONE_REGEX = "^(?:\\+84|0)(3[2-9]|5[6|8|9]|7[0|6|7|8|9]|8[1-9]|9[0-9])[0-9]{7}$";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -32,21 +33,27 @@ public class CheckWarrantyController extends HttpServlet {
         String url = ERROR;
         try {
             String phoneNumber = request.getParameter("phone");
-            if (phoneNumber != null) {
+            if (phoneNumber != "") {
                 UserDAO userDao = new UserDAO();
-                boolean checkExistPhone = userDao.checkPhoneExists(phoneNumber);
-                if (checkExistPhone) {
-                    OrderDetailDAO orderDao = new OrderDetailDAO();
-                    List<Map<String, Object>> warrantyList = orderDao.checkWarrant(phoneNumber);
-                    if (warrantyList == null) {
-                        request.setAttribute("err", "No products found in warranty list.");
+                boolean checkValidation = true;
+                if (!phoneNumber.matches(PHONE_REGEX)) {
+                    request.setAttribute("err", "This phone number is invalid");
+                    checkValidation = false;
+                }
+                if (checkValidation) {
+                    boolean checkExistPhone = userDao.checkPhoneExists(phoneNumber);
+                    if (checkExistPhone) {
+                        OrderDetailDAO orderDao = new OrderDetailDAO();
+                        List<Map<String, Object>> warrantyList = orderDao.checkWarrant(phoneNumber);
+                        if (warrantyList == null) {
+                            request.setAttribute("err", "No products found in warranty list.");
+                        } else {
+                            request.setAttribute("WARRANTY_LIST", warrantyList);
+                            url = SUCCESS;
+                        }
                     } else {
-                        request.setAttribute("WARRANTY_LIST", warrantyList);
-                        url = SUCCESS;
+                        request.setAttribute("err", "This phone number is not in the warranty list.");
                     }
-                } else {
-                    request.setAttribute("err", "This phone number is not in the warranty list.");
-
                 }
             } else {
                 request.setAttribute("err", "Enter your phone number to check product warranty.");
