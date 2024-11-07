@@ -67,22 +67,6 @@
                     </div>
                     <div class="content">
                         <div class="welcome">
-                            <%
-                                String ms = "";
-                                String err = "";
-                                if (request.getAttribute("ms") != null) {
-                                    ms = (String) request.getAttribute("ms");
-                                }
-                                if (request.getAttribute("err") != null) {
-                                    err = (String) request.getAttribute("err");
-                                }
-                                if (ms != null || err != null) {
-                            %>
-                            <div class="mes-suc">
-                                <%=ms%> <%=err%>
-                            </div>   
-                            <%}%>
-
                             <!-- Search -->                            
                             <%
                                 String searchUserName = request.getParameter("searchUserName");
@@ -96,6 +80,12 @@
                                     <button type="submit" name="action" value="SearchUserName">Search</button>
                                 </form>
                             </div>
+                            <% if (request.getAttribute("ms") != null) {%>
+                            <div class="alert alert-danger"><%= request.getAttribute("ms")%></div>
+                            <% }%>
+                            <% if (request.getAttribute("err") != null) {%>
+                            <div class="alert alert-danger"><%= request.getAttribute("err")%></div>
+                            <% }%>
                         </div>
 
                         <div class="welcome">
@@ -217,9 +207,6 @@
                                                 </div>
                                             </div>
 
-
-
-
                                             <!-- Nút Xóa -->
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= user.getUserId()%>">
                                                 <i class="fas fa-trash"></i>
@@ -255,7 +242,9 @@
                                             }
                                         }
                                     %>
+
                                 </tbody>
+
                             </table>
                         </div>
                     </div>

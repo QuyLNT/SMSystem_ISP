@@ -460,17 +460,6 @@
                                     <%
                                         }
                                     %>
-                                    <form action="InsertWishlist" method="post"> 
-
-                                        <div class="icon">
-                                            <button id="btn-icon" type="submit">
-                                                <input type="hidden" name="id" value="<%= p.getProductId()%>">
-                                                <input type="hidden" name="url" value="shop.jsp">
-                                                <i class="icon_heart_alt"></i>
-                                            </button>
-                                        </div>
-
-                                    </form>
                                     <ul>
                                         <form action="MainController" method="post">
                                             <input type="hidden" name="productId" value="<%=p.getProductId()%>">

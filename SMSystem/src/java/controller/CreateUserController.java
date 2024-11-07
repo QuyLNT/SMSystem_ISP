@@ -31,7 +31,7 @@ public class CreateUserController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private static final String ERROR = "register.jsp";
-    private static final String SUCCESS = "login.jsp";
+    private static final String SUCCESS = "register.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -82,6 +82,7 @@ public class CreateUserController extends HttpServlet {
                 // Gọi phương thức createUser trong UserDAO để tạo mới user
                 boolean result = userDAO.createUser(user);
                 if (result) {
+                    request.setAttribute("ms", "Your account is ready. Enjoy your experience!.");
                     url = SUCCESS;
                 } else {
                     request.setAttribute("USER_ERROR", userError);
@@ -93,9 +94,9 @@ public class CreateUserController extends HttpServlet {
                 request.setAttribute("err", "Email or phone number is exits");
             }
 
-        }finally{
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
-           
+
         }
     }
 

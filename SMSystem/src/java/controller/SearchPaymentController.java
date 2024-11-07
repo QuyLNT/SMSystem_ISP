@@ -40,19 +40,25 @@ public class SearchPaymentController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
+            HttpSession session = request.getSession();
             String search = request.getParameter("search");
             OnlinePaymentDAO payDao = new OnlinePaymentDAO();
+            List<OnlinePaymentDTO> payList;
             if (!search.equalsIgnoreCase("")) {
-                List<OnlinePaymentDTO> payList = payDao.searchPaymentByOrder(Integer.parseInt(search));
-
-                if (payList != null) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("PAY_LIST", payList);
-                    url = SUCCESS;
-                }
+                payList = payDao.searchPaymentByOrder(Integer.parseInt(search));
+            } else {
+                payList = payDao.getAll();
             }
+            if (payList.isEmpty()) {
+                request.setAttribute("err", "No Payment Found.");
+            }
+            session.setAttribute("PAY_LIST", payList);
+            url = SUCCESS;
 
         } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
+            if (e.toString().contains("input String")) {
+                request.setAttribute("err", "Order ID format is Integer, try again.");
+            }
             log("Eror at SearchPaymentController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

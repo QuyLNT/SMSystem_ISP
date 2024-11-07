@@ -181,7 +181,6 @@
 
                             %>
                             <div class="table-tilte">Discount Table</div>
-                            <form action="MainController" method="POST">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
@@ -235,13 +234,20 @@
                                                         <i class="fa-solid fa-delete-left"></i>     
                                                     </button>
                                                 </form>
+                                            </td>
+                                            <td>
+                                                <form action="MainController" method="POST">
+                                                    <input type="hidden" name="discountId"  value="<%=discount.getDiscountId()%>" />
 
+                                                    <button type="submit" class="btn btn-primary" name="action" value="SendMail">
+                                                        <i class="fa-solid fa-delete-left"></i>     
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr> 
                                         <%}%>
                                     </tbody>
                                 </table> 
-                            </form>
                             <%}%>
 
                         </div>

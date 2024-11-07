@@ -6,8 +6,11 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +23,7 @@ import model.category.BrandDTO;
  *
  * @author LENOVO
  */
-public class CreateBrandController extends HttpServlet {
+public class DeleteBrandController extends HttpServlet {
 
     private static final String ERROR = "brandList.jsp";
     private static final String SUCCESS = "brandList.jsp";
@@ -29,29 +32,44 @@ public class CreateBrandController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        HttpSession session = request.getSession();
-
+        BrandDAO brandDao = new BrandDAO();
+        boolean checkDelete = false;
+        boolean flag = false;
         try {
-            String name = request.getParameter("Name");
-            BrandDAO brandDao = new BrandDAO();
-            BrandDTO brand = brandDao.insertNewBrand(name);
-            if (brand != null) {
-                List<BrandDTO> brandList = (List<BrandDTO>) session.getAttribute("BRAND_LIST");
-                brandList.add(brand);
-                session.setAttribute("BRAND_LIST", brandList);
-                request.setAttribute("ms_create", "Create Successfully");
+            HttpSession session = request.getSession();
+            List<BrandDTO> list = (List<BrandDTO>) session.getAttribute("BRAND_LIST");
+            int brandId = Integer.parseInt(request.getParameter("brandId"));
+            for (BrandDTO b : list) {
+                if (b.getBrandId() == brandId) {
+                    flag = b.getProductCount() == 0;
+                    break;
+                }
+            }
+            if (flag) {
+                checkDelete = brandDao.deleteBrand(brandId);
+
+                if (checkDelete) {
+                    for (BrandDTO b : list) {
+                        if (b.getBrandId() == brandId) {
+                            list.remove(b);
+                            break;
+                        }
+                    }
+                    session.setAttribute("BRAND_LIST", list);
+                    request.setAttribute("ms", "Brand deleted successfully!");
+                } else {
+                    request.setAttribute("err", "Failed to delete brand.");
+                }
                 url = SUCCESS;
             } else {
-                request.setAttribute("err_create", "Create failed");
+                request.setAttribute("err", "Cannot delete brand when product exists.");
             }
-        } catch (ClassNotFoundException | SQLException e) {
 
-            log(e.toString());
-
+        } catch (SQLException | ClassNotFoundException | NumberFormatException e) {
+            log("Error at DeleteProductController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -333,7 +333,7 @@
                                 String err = (String) request.getAttribute("err");
                                 if (err != null) {
                             %>
-                            <div class="alert alert-danger"><%= err%></div>
+                                <div class="alert alert-danger"><%= err%></div>
 
                             <%
                                 }
