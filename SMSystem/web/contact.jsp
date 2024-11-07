@@ -278,14 +278,14 @@
         <section class="contact-section spad">
             <section class="container">
                 <div class="row">
-                    <div class="col-lg-5">
+                    <div class="col-lg-12">
                         <div class="cw-item">
                             <div class="contact-title">
                                 <h4>Contact Us</h4>
                                 <p style="color: #4C4C4C">Have questions or need assistance? Our team is here to help! You can reach us by visiting 
-                                    
-                               our location, giving us a call, or sending us an email. We’re committed
-                               to providing prompt support to make sure you have the best experience possible.</p>
+
+                                    our location, giving us a call, or sending us an email. We’re committed
+                                    to providing prompt support to make sure you have the best experience possible.</p>
                             </div>
                             <div class="contact-widget">
                                 <div class="cw-item">
@@ -318,28 +318,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 offset-lg-1">
-                        <div class="contact-form">
-                            <div class="leave-comment">
-                                <h4>Leave A Comment</h4>
-                                <p style="color: #4C4C4C">Our Staff will call back later.</p>
-                                <form action="#" class="comment-form">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <input type="text" placeholder="Your name">
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <input type="text" placeholder="Your email">
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <textarea placeholder="Your message"></textarea>
-                                            <button type="submit" class="site-btn">Send message</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </section>
         </section>
@@ -390,8 +369,8 @@
                     <div class="col-lg-3">
                         <div class="footer-left">
                             <div class="footer-logo">
-                                <a href="index.jsp">
-                                    <img src="favicon_io/android-chrome-192x192.png" alt="">
+                                <a href="homePage.jsp">
+                                    <img src="img/logoweb.png" alt="">
                                 </a>
                             </div>
                             <ul>

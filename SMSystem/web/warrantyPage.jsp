@@ -278,15 +278,17 @@
                 </div>
             </div>
         </div>
-        <%
-            List<Map<String, Object>> warrantyList = (List<Map<String, Object>>) request.getAttribute("WARRANTY_LIST");
-            if (warrantyList != null) {
-        %>
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="welcome">
+                        <%
+                            List<Map<String, Object>> warrantyList = (List<Map<String, Object>>) request.getAttribute("WARRANTY_LIST");
+                            if (warrantyList != null) {
+                        %>
                         <div class="table-tilte">Product Table</div>
+
                         <table class="table table-hover">  
                             <thead>
                                 <tr>
@@ -326,17 +328,21 @@
                                     }
                                 %>
                             </tbody>
+                            <%
+                            } else {
+                            %>
+                            <% if (request.getAttribute("err") != null) {%>
+                            <div class="alert alert-danger"><%= request.getAttribute("err")%></div>
+                            <% }%>
+                            <%
+                                }
+                            %>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <%
-        } else {
-        %>
-        <%
-            }
-        %>
+
 
 
         <!-- Partner Logo Section Begin -->

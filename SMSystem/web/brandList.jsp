@@ -106,19 +106,55 @@
                             <%
                                 String ms = "";
                                 String err = "";
+                                String ms_create = "";
+                                String err_create = "";
                                 if (request.getAttribute("ms") != null) {
                                     ms = (String) request.getAttribute("ms");
                                 }
                                 if (request.getAttribute("err") != null) {
                                     err = (String) request.getAttribute("err");
                                 }
-                                if (ms != null || err != null) {
+                                if (request.getAttribute("ms_create") != null) {
+                                    ms = (String) request.getAttribute("ms_create");
+                                }
+                                if (request.getAttribute("err_create") != null) {
+                                    err = (String) request.getAttribute("err_create");
+                                }
+                                if (err != "") {
 
                             %>
-                            <div class="mes-suc">
-                                <%=ms%> <%=err%>
-                            </div>                          
+                            <div class="alert alert-danger">
+                                <%=err%>
+                            </div>    
                             <%}%>
+                            <%
+                                if (ms != "") {
+                            %>
+                            <div class="alert alert-success">
+                                <%=ms%>
+                            </div> 
+                            <%
+                                }
+                            %>
+                            <%
+                                if (ms_create != "") {
+                            %>
+
+                            <div class="alert alert-success">
+                                <%=ms_create%>
+                            </div> 
+                            <%
+                                }
+                            %>
+                            <%
+                                if (err_create != "") {
+                            %>
+                            <div class="alert alert-danger">
+                                <%=err_create%>
+                            </div> 
+                            <%
+                                }
+                            %>
                             <%
                                 String searchBrandName = request.getParameter("searchBrandName");
                                 if (searchBrandName == null) {
@@ -133,6 +169,11 @@
                                             <h1 class="modal-title fs-5" id="addModalLabel">Create new brand </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
+                                        <div class="modal-header">
+                                            
+                                            
+                                        </div>
+
                                         <form action="MainController" method="POST">
                                             <div class="modal-body">
                                                 <div class="input-group input-group-sm mb-3">
@@ -157,20 +198,22 @@
                             </div>
                         </div>
                         <div class="welcome" >
-                            <%
-                                List<BrandDTO> brandList = (List<BrandDTO>) session.getAttribute("BRAND_LIST");
-                                if (brandList != null) {
-                            %>
+
                             <div class="table-tilte">Brand Table</div>
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>STT</th>
                                         <th>Brand Name</th>
-                                        <th>Total products</th>                                      
+                                        <th>Total products</th>    
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>   
+                                    <%
+                                        List<BrandDTO> brandList = (List<BrandDTO>) session.getAttribute("BRAND_LIST");
+                                        if (brandList != null && !brandList.isEmpty()) {
+                                    %>
                                     <%
                                         int count = 1;
                                         for (BrandDTO b : brandList) {
@@ -179,11 +222,47 @@
                                         <td> <%=count++%></td>    
                                         <td> <%=b.getBrandName()%></td> 
                                         <td> <%=b.getProductCount()%></td> 
+                                        <td> <!-- Nút Xóa -->
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= b.getBrandId()%>">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+
+                                            <!-- Modal Xóa -->
+                                            <div class="modal fade" id="deleteModal<%= b.getBrandId()%>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="deleteModalLabel">Confirm User deletion</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form action="MainController" method="POST">
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="userId" value="<%= b.getBrandId()%>" />
+                                                                Are you sure you want to delete the user '<%= b.getBrandName()%>'?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                                                <input type="hidden" name="brandId" value="<%= b.getBrandId()%>" />
+                                                                <button type="submit" name="action" value="DeleteBrand" class="btn btn-danger">Delete</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>  
                                     <%
-                                            }
                                         }
-                                    %>                                
+                                    } else {
+                                    %>
+                                    <% if (request.getAttribute("err_search") != null) {%>
+                                <div class="alert alert-danger"><%= request.getAttribute("err_search")%></div>
+                                <% }%>
+                                <%
+
+                                    }
+                                %>                                
                                 </tbody>
                             </table>
                         </div>

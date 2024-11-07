@@ -92,13 +92,6 @@
                 </div>
                 <div class="container">
                     <div class="welcome">
-                        <form action="MainController" method="POST">
-                            <input type="hidden" name="action" value="LoadPaymentList"/>
-                            <button type="submit" class="btn btn-primary">
-                                View All
-                            </button>
-                        </form>
-
                         <%
                             String search = request.getParameter("search");
                             if (search == null) {
@@ -115,7 +108,7 @@
                         </div>
                     </div>
                     <div class="welcome">
-                        <div class="table-title">Payment Table</div>
+                        <div class="table-tilte">Payment Table</div>
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -129,14 +122,15 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <%
-                                List<OnlinePaymentDTO> payList = (List<OnlinePaymentDTO>) session.getAttribute("PAY_LIST");
-                                if (payList != null) {
-                                    for (OnlinePaymentDTO pay : payList) {
 
-
-                            %>
                             <tbody>
+                                <%
+                                    List<OnlinePaymentDTO> payList = (List<OnlinePaymentDTO>) session.getAttribute("PAY_LIST");
+                                    if (payList != null && !payList.isEmpty()) {
+                                        for (OnlinePaymentDTO pay : payList) {
+
+
+                                %>
                                 <tr>
                                     <td><%= pay.getPaymentId()%></td>
                                     <td><%= pay.getOrderId()%></td>
@@ -157,17 +151,17 @@
                                         </form>
                                     </td>
                                 </tr>
+                                <%
+                                    }
+                                } else {
+                                %>
+                                <% if (request.getAttribute("err") != null) {%>
+                            <div class="alert alert-danger"><%= request.getAttribute("err")%></div>
+                            <% }%>                            
+                            <%
+                                }
+                            %>
                             </tbody>
-                            <%
-                                }
-                            } else {
-                            %>
-                            ${requestScope.err}
-                            <%
-                                }
-                            %>
-
-
                         </table>
                     </div>
                 </div>

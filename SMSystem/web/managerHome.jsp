@@ -140,9 +140,6 @@
                                                     <img src="https://i.pinimg.com/564x/e9/fe/65/e9fe6586390ead07047dcc4dea84769a.jpg" class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <%
-
-                                                    %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Order</h5>   
                                                         <p class="card-text">${sessionScope.TOTAL_ORDER}</p>
@@ -157,11 +154,9 @@
                                                     <img src="img/tick.png"  class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <%
-                                                    %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Order completed</h5>
-                                                        <p class="card-text"><%=999%></p>
+                                                        <p class="card-text">${sessionScope.COMP_ORDER}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -172,13 +167,9 @@
                                                     <img src="img/x-icon.png" class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <%
-
-
-                                                    %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Order not completed</h5>
-                                                        <p class="card-text"><%=999%></p>
+                                                        <p class="card-text">${sessionScope.NOT_COMP_ORDER}</p>
 
                                                     </div>
                                                 </div>
