@@ -282,8 +282,7 @@
                         <div class="cw-item">
                             <div class="contact-title">
                                 <h4>Contact Us</h4>
-                                <p style="color: #4C4C4C">Have questions or need assistance? Our team is here to help! You can reach us by visiting 
-                                    
+                                <p style="color: #4C4C4C">Have questions or need assistance? Our team is here to help! You can reach us by visiting                                   
                                our location, giving us a call, or sending us an email. We’re committed
                                to providing prompt support to make sure you have the best experience possible.</p>
                             </div>
@@ -390,8 +389,8 @@
                     <div class="col-lg-3">
                         <div class="footer-left">
                             <div class="footer-logo">
-                                <a href="index.jsp">
-                                    <img src="favicon_io/android-chrome-192x192.png" alt="">
+                                <a href="MainController?action=HomePage">
+                                    <img src="img/logoweb.png" alt="">
                                 </a>
                             </div>
                             <ul>

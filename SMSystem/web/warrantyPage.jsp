@@ -266,13 +266,17 @@
             <p style="color: #252525; padding-left: 15px"><strong>Note:</strong> We do not cover damage caused by improper usage, inadequate care, or normal wear and tear.</p>
 
             <div class="inner-header">
+                
                 <div class="col-lg-12 col-md-12 center-form">
                     <form action="MainController" method="get"> 
                         <div class="input-group">
                             <input style="color: black;" type="text" name="phone" placeholder="Enter your phone number">
+                            ${requestScope.err}
                             <button type="submit" class="btn btn-primary"name="action" value="CheckWarranty">
                                 CHECK WARRANTY PERIOD   
                             </button>
+                            
+                            
                         </div>
                     </form>
                 </div>

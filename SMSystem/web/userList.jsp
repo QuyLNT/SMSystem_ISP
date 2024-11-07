@@ -43,7 +43,7 @@
                                 </li>
                                 <li class="nav-list-item">
                                     <a href="MainController?action=LoadUserList" class="nav-link">
-                                        <i class="fa-solid fa-user"></i>
+                                        <i class="fa-solid fa-truck"></i>
                                         <span class="link-text">Accounts</span>
                                     </a>
                                 </li>
@@ -93,7 +93,7 @@
                             <div class="search-form">
                                 <form action="MainController" method="POST">
                                     Search User: <input type="text" name="searchUserName" placeholder="Enter user name" value="<%= searchUserName%>"/>
-                                    <button type="submit" name="action" value="SearchUserName">Search</button>
+                                    <button type="submit" name="action" value="SearchUserName"class="btn btn-primary">Search</button>
                                 </form>
                             </div>
                         </div>
