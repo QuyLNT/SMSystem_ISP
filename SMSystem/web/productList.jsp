@@ -252,8 +252,9 @@
                             <div class="welcome">
                                 <div class="search-form">
                                     <form action="MainController" method="POST">
+                                       
                                         Search Product: <input type="text" name="searchProductName" placeholder="Enter product name" value="<%= searchProductName%>"/>
-                                        <button type="submit" name="action" value="SearchProductName" >Search</button>
+                                        <button type="submit" name="action" value="SearchProductName" class="btn btn-primary">Search</button>
                                     </form>
                                 </div>
                             </div>

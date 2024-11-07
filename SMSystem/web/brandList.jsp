@@ -193,7 +193,7 @@
                             <div class="search-form">
                                 <form action="MainController" method="POST">
                                     Search Brand: <input type="text" name="searchBrandName" placeholder="Enter brand name" value="<%= searchBrandName%>"/>
-                                    <button type="submit" name="action" value="SearchBrandName">Search</button>
+                                    <button type="submit" name="action" value="SearchBrandName" class="btn btn-primary">Search</button>
                                 </form>
                             </div>
                         </div>
@@ -268,10 +268,7 @@
                         </div>
                     </div>
                 </div>
-
             </section>
-
-
         </main>
 
         <script src="js/app.js"></script>

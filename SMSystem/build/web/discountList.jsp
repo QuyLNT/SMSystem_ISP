@@ -218,12 +218,12 @@
                                             <td>
                                                 <form action="MainController" method="POST">
                                                     <input type="hidden" name="discountId" value="<%= discount.getDiscountId()%>"/>
-                                                    <input type="hidden" name="action" value="toggleDiscountStatus"/>
-                                                    <select name="status" onchange="this.form.submit()">
-                                                        <option value="Active" <%= discount.getStatus().equalsIgnoreCase("Active") ? "selected" : ""%>>Active</option>
-                                                        <option value="Expired" <%= discount.getStatus().equalsIgnoreCase("Expired") ? "selected" : ""%>>Expired</option>
-                                                        <option value="Limit Use" <%= discount.getStatus().equalsIgnoreCase("Limit Use") ? "selected" : ""%>>Limit Use</option>
-                                                    </select>
+                                                    <input type="hidden" name="action" value="toggleDiscountStatus"/>                                                   
+                                                         <select name="status" onchange="this.form.submit()">
+                                                            <option value="Active" <%= discount.getStatus().equalsIgnoreCase("Active") ? "selected" : ""%>>Active</option>
+                                                            <option value="Expired" <%= discount.getStatus().equalsIgnoreCase("Expired") ? "selected" : ""%>>Expired</option>
+                                                            <option value="Limit Use" <%= discount.getStatus().equalsIgnoreCase("Limit Use") ? "selected" : ""%>>Limit Use</option>
+                                                        </select>
                                                 </form>
                                             </td>
                                             <td>

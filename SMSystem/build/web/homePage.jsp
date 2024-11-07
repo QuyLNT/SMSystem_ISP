@@ -133,7 +133,7 @@
                     <div class="row">
                         <div class="col-lg-2 col-md-2">
                             <div class="logo">
-                                <a href="homePage.jsp">
+                                <a href="MainController?action=HomePage">
                                     <img src="img/logoweb.png" height="65px" alt="">
                                 </a>
                             </div>
