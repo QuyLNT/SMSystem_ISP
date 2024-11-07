@@ -49,7 +49,6 @@ public class ApplyDiscountController extends HttpServlet {
                     ms = "Code valid, your bill will be reduced by $" + discount.getDiscountAmount() + ".";
                     session.setAttribute("code", discount);
                     request.setAttribute("ms_discount", ms);
-                    dao.updateUsage(discountCode);
                 }
             } else {
                 msg = "Invalid code.";

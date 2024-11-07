@@ -266,27 +266,33 @@
             <p style="color: #252525; padding-left: 15px"><strong>Note:</strong> We do not cover damage caused by improper usage, inadequate care, or normal wear and tear.</p>
 
             <div class="inner-header">
+                
                 <div class="col-lg-12 col-md-12 center-form">
                     <form action="MainController" method="get"> 
                         <div class="input-group">
                             <input style="color: black;" type="text" name="phone" placeholder="Enter your phone number">
+                            ${requestScope.err}
                             <button type="submit" class="btn btn-primary"name="action" value="CheckWarranty">
                                 CHECK WARRANTY PERIOD   
                             </button>
+                            
+                            
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        <%
-            List<Map<String, Object>> warrantyList = (List<Map<String, Object>>) request.getAttribute("WARRANTY_LIST");
-            if (warrantyList != null) {
-        %>
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="welcome">
+                        <%
+                            List<Map<String, Object>> warrantyList = (List<Map<String, Object>>) request.getAttribute("WARRANTY_LIST");
+                            if (warrantyList != null) {
+                        %>
                         <div class="table-tilte">Product Table</div>
+
                         <table class="table table-hover">  
                             <thead>
                                 <tr>
@@ -326,17 +332,21 @@
                                     }
                                 %>
                             </tbody>
+                            <%
+                            } else {
+                            %>
+                            <% if (request.getAttribute("err") != null) {%>
+                            <div class="alert alert-danger"><%= request.getAttribute("err")%></div>
+                            <% }%>
+                            <%
+                                }
+                            %>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <%
-        } else {
-        %>
-        <%
-            }
-        %>
+
 
 
         <!-- Partner Logo Section Begin -->

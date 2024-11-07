@@ -133,7 +133,7 @@
                     <div class="row">
                         <div class="col-lg-2 col-md-2">
                             <div class="logo">
-                                <a href="homePage.jsp">
+                                <a href="MainController?action=HomePage">
                                     <img src="img/logoweb.png" height="65px" alt="">
                                 </a>
                             </div>
@@ -353,17 +353,7 @@
                                         <%
                                             }
                                         %>
-                                        <form action="InsertWishlist" method="post"> 
-
-                                            <div class="icon">
-                                                <button id="btn-icon" type="submit">
-                                                    <input type="hidden" name="id" value="<%= ele.getProductId()%>">
-                                                    <input type="hidden" name="url" value="homePage.jsp">
-                                                    <i class="icon_heart_alt"></i>
-                                                </button>
-                                            </div>
-
-                                        </form>
+                                        
                                         <ul>
                                             <form action="MainController" method="post">
                                                 <input type="hidden" name="productId" value="<%=ele.getProductId()%>">
@@ -437,17 +427,7 @@
                                         <%
                                             }
                                         %>
-                                        <form action="InsertWishlist" method="post"> 
-
-                                            <div class="icon">
-                                                <button id="btn-icon" type="submit">
-                                                    <input type="hidden" name="id" value="<%= ob.getProductId()%>">
-                                                    <input type="hidden" name="url" value="homePage.jsp">
-                                                    <i class="icon_heart_alt"></i>
-                                                </button>
-                                            </div>
-
-                                        </form>
+                                       
                                         <ul>
                                             <form action="MainController" method="post">
                                                 <input type="hidden" name="productId" value="<%=ob.getProductId()%>">
@@ -538,17 +518,7 @@
                                         <%
                                             }
                                         %>
-                                        <form action="InsertWishlist" method="post"> 
-
-                                            <div class="icon">
-                                                <button id="btn-icon" type="submit">
-                                                    <input type="hidden" name="id" value="<%= ele.getProductId()%>">
-                                                    <input type="hidden" name="url" value="homePage.jsp">
-                                                    <i class="icon_heart_alt"></i>
-                                                </button>
-                                            </div>
-
-                                        </form>
+                                       
                                         <ul>
                                             <form action="MainController" method="post">
                                                 <input type="hidden" name="productId" value="<%=ele.getProductId()%>">

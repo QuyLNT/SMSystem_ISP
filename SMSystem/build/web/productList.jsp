@@ -208,9 +208,9 @@
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Warrant Period (Month)</span>
-                                                    <input name="warrantyPeriod" type="number" step="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
+                                                    <input name="warrantyPeriod" type="number" step="1" min="0" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
                                                 </div>
-                                                <div class="input-group input-group-sm mb-3">
+                                                <div class="input-group input-group-sm mb-3">   
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Detail</span>
                                                     <textarea name="detail" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" ></textarea>
                                                 </div>
@@ -252,8 +252,9 @@
                             <div class="welcome">
                                 <div class="search-form">
                                     <form action="MainController" method="POST">
+                                       
                                         Search Product: <input type="text" name="searchProductName" placeholder="Enter product name" value="<%= searchProductName%>"/>
-                                        <button type="submit" name="action" value="SearchProductName" >Search</button>
+                                        <button type="submit" name="action" value="SearchProductName" class="btn btn-primary">Search</button>
                                     </form>
 
                                     <%
@@ -269,29 +270,33 @@
                                 </div>
                             </div>
                             <%
-                                            String cate = request.getParameter("CateFilter");
-                                            String brandFilter = request.getParameter("BrandFilter");
-                                            if(cate == null ) cate = "";
-                                            if(brandFilter==null || brandFilter == "") brandFilter = "0";
-                                            int brandId = Integer.parseInt(brandFilter);
-                                        %>
+                                String cate = request.getParameter("CateFilter");
+                                String brandFilter = request.getParameter("BrandFilter");
+                                if (cate == null) {
+                                    cate = "";
+                                }
+                                if (brandFilter == null || brandFilter == "") {
+                                    brandFilter = "0";
+                                }
+                                int brandId = Integer.parseInt(brandFilter);
+                            %>
                             <div class="welcome">
                                 <form action="MainController" class="d-flex row justify-content-around">
                                     <div class="select-option-province col-lg-6">
                                         <select name="CateFilter">
-                                            <option value="" <%= cate.equals("")==true ? "selected":""%>>All Categories</option>                            
-                                            <option value="1" <%= cate.equals("1")==true ? "selected":""%>>Men Shoes</option>
-                                            <option value="2" <%= cate.equals("2")==true ? "selected":""%>>Women Shoes</option>
-                                            <option value="3"<%= cate.equals("3")==true ? "selected":""%>>Kids Shoes</option>
+                                            <option value="" <%= cate.equals("") == true ? "selected" : ""%>>All Categories</option>                            
+                                            <option value="1" <%= cate.equals("1") == true ? "selected" : ""%>>Men Shoes</option>
+                                            <option value="2" <%= cate.equals("2") == true ? "selected" : ""%>>Women Shoes</option>
+                                            <option value="3"<%= cate.equals("3") == true ? "selected" : ""%>>Kids Shoes</option>
                                         </select>
                                     </div>
                                     <div class="select-option-province col-lg-6 mb-3">
                                         <select name="BrandFilter">
-                                            <option value="" <%= brandFilter.equals("0")==true ? "selected":""%>>All Brand</option>
+                                            <option value="" <%= brandFilter.equals("0") == true ? "selected" : ""%>>All Brand</option>
                                             <%
                                                 for (BrandDTO brand : brandList) {
                                             %>
-                                            <option value="<%= brand.getBrandId()%>" <%= brandId == brand.getBrandId() == true ? "selected":""%>><%= brand.getBrandName()%></option>
+                                            <option value="<%= brand.getBrandId()%>" <%= brandId == brand.getBrandId() == true ? "selected" : ""%>><%= brand.getBrandName()%></option>
                                             <% } %>
                                         </select>
                                     </div>
@@ -611,6 +616,37 @@
                                                 </div>
                                             </div>
 
+
+                                            <!-- Nút Xóa -->
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= product.getProductId()%>">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+
+                                            <!-- Modal Xóa -->
+                                            <div class="modal fade" id="deleteModal<%= product.getProductId()%>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="deleteModalLabel">Confirm product deletion</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form action="DeleteProductController" method="POST">
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="productId" value="<%= product.getProductId()%>" />
+                                                                Are you sure you want to delete the product '<%= product.getName()%>' and all related images?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                                                <input type="hidden" name="productId" value="<%= product.getProductId()%>" />
+                                                                <input type="hidden" name="action" value="DeleteProduct" />
+                                                                <button type="submit" class="btn btn-danger">Delete</button>
+
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     <%

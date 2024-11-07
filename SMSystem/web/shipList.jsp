@@ -24,8 +24,8 @@
                         <div class="navbar-nav">
                             <div class="title">
                                 <h3>
-                                    <img src="img/icon-logoweb.png" alt="Logo" width="32px" height="32px" />
-                                    <span class="title-text">SM System</span>
+                                    <img src="img/icon-logoweb.png" alt="" width="100%" height="100%"/>
+                                    <span class="title-text">SMS</span>
                                 </h3>
                             </div>
                             <ul class="nav-list">
@@ -37,7 +37,7 @@
                                 </li>
                                 <li class="nav-list-item">
                                     <a href="MainController?action=LoadShipment" class="nav-link">
-                                        <i class="fa-solid fa-user"></i>
+                                       <i class="fa-solid fa-truck"></i>
                                         <span class="link-text">Shipment</span>
                                     </a>
                                 </li>
@@ -83,7 +83,7 @@
                             <div class="search-form">
                                 <form action="MainController" method="POST">
                                     Search Order: <input type="text" name="searchOrder" placeholder="Enter order ID" value="<%= searchUserName%>"/>
-                                    <button type="submit" name="action" value="SearchUserName">Search</button>
+                                    <button type="submit" name="action" value="SearchUserName" class="btn btn-primary">Search</button>
                                 </form>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
                                         <td>
                                             <form id="updateForm<%= shipment.getShipmentId()%>" action="UpdateShipmentController" method="POST">
                                                 <input type="hidden" name="shipmentId" value="<%= shipment.getShipmentId()%>"/>
-                                                <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                                <button type="submit" class="btn btn-primary">Update</button>
                                             </form>
                                         </td>
                                     </tr>

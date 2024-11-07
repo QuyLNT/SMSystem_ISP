@@ -181,7 +181,6 @@
 
                             %>
                             <div class="table-tilte">Discount Table</div>
-                            <form action="MainController" method="POST">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
@@ -219,12 +218,12 @@
                                             <td>
                                                 <form action="MainController" method="POST">
                                                     <input type="hidden" name="discountId" value="<%= discount.getDiscountId()%>"/>
-                                                    <input type="hidden" name="action" value="toggleDiscountStatus"/>
-                                                    <select name="status" onchange="this.form.submit()">
-                                                        <option value="Active" <%= discount.getStatus().equalsIgnoreCase("Active") ? "selected" : ""%>>Active</option>
-                                                        <option value="Expired" <%= discount.getStatus().equalsIgnoreCase("Expired") ? "selected" : ""%>>Expired</option>
-                                                        <option value="Limit Use" <%= discount.getStatus().equalsIgnoreCase("Limit Use") ? "selected" : ""%>>Limit Use</option>
-                                                    </select>
+                                                    <input type="hidden" name="action" value="toggleDiscountStatus"/>                                                   
+                                                         <select name="status" onchange="this.form.submit()">
+                                                            <option value="Active" <%= discount.getStatus().equalsIgnoreCase("Active") ? "selected" : ""%>>Active</option>
+                                                            <option value="Expired" <%= discount.getStatus().equalsIgnoreCase("Expired") ? "selected" : ""%>>Expired</option>
+                                                            <option value="Limit Use" <%= discount.getStatus().equalsIgnoreCase("Limit Use") ? "selected" : ""%>>Limit Use</option>
+                                                        </select>
                                                 </form>
                                             </td>
                                             <td>
@@ -235,13 +234,20 @@
                                                         <i class="fa-solid fa-delete-left"></i>     
                                                     </button>
                                                 </form>
+                                            </td>
+                                            <td>
+                                                <form action="MainController" method="POST">
+                                                    <input type="hidden" name="discountId"  value="<%=discount.getDiscountId()%>" />
 
+                                                    <button type="submit" class="btn btn-primary" name="action" value="SendMail">
+                                                        <i class="fa-solid fa-delete-left"></i>     
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr> 
                                         <%}%>
                                     </tbody>
                                 </table> 
-                            </form>
                             <%}%>
 
                         </div>

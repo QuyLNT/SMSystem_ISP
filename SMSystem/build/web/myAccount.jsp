@@ -380,7 +380,7 @@
                                 }
                             %>
                             <h4 style="color:red "> <%= message%> </h4> 
-                            <input type="submit" id="UpdateUser" name="action" value="Update">
+                            <input type="submit" id="UpdateUser" name="action" value="Update" class="btn signin-btn">
                         </div>
                     </div>
                 </form>

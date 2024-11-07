@@ -2921,7 +2921,7 @@ favor-add{
     font-size: 14px;
     font-weight: 700;
     color: #ffffff;
-    background: #252525;
+    background: #273c75;
     text-transform: uppercase;
     padding: 15px 25px 14px 25px;
     display: block;
@@ -3126,7 +3126,7 @@ favor-add{
 
 .checkout-form .place-order .order-total .order-btn .place-btn {
     padding: 13px 40px 11px;
-    background: #000000;
+    background: #273c75;
     border-color: #000000;
 }
 

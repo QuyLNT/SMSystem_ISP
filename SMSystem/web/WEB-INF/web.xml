@@ -372,6 +372,14 @@
         <servlet-name>FilterProductController</servlet-name>
         <servlet-class>controller.FilterProductController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SendMailController</servlet-name>
+        <servlet-class>controller.SendMailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteBrandController</servlet-name>
+        <servlet-class>controller.DeleteBrandController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -635,6 +643,14 @@
     <servlet-mapping>
         <servlet-name>FilterProductController</servlet-name>
         <url-pattern>/FilterProductController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendMailController</servlet-name>
+        <url-pattern>/SendMailController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteBrandController</servlet-name>
+        <url-pattern>/DeleteBrandController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
