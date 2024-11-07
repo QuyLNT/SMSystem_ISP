@@ -8,8 +8,9 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,15 +39,17 @@ public class CreateDiscountController extends HttpServlet {
     private static final String SUCCESS = "discountList.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException{
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
 
         try {
             String code = request.getParameter("code");
             String detail = request.getParameter("detail");
-            float amount = Float.parseFloat(request.getParameter("amount"));
-            int limit = Integer.parseInt(request.getParameter("limit"));
+            String amountStr = request.getParameter("amount");
+            String limitStr = request.getParameter("limit");
+            float amount = 0;
+            int limit = 0;
             String startDayStr = request.getParameter("startDay");
             String endDayStr = request.getParameter("endDay");
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -57,24 +60,48 @@ public class CreateDiscountController extends HttpServlet {
 
             DiscountDAO discountDAO = new DiscountDAO();
             boolean checkValidation = false;
-            if (code.length() < 10 || code.length() > 50) {
+
+            if (code == null || code.isEmpty()) {
+                request.setAttribute("err", "Code can't be blank!");
+                checkValidation = true;
+            } else if (code.length() < 10 || code.length() > 50) {
                 request.setAttribute("err", "Code name must be between 10 and 50 characters.");
-                checkValidation = false;
+                checkValidation = true;
             }
 
-            if (detail.length() < 10 || detail.length() > 100) {
+            if (detail == null || detail.isEmpty()) {
+                request.setAttribute("err", "Deatil can't be blank!");
+                checkValidation = true;
+            } else if (detail.length() < 10 || detail.length() > 100) {
                 request.setAttribute("err", "Deatil must be between 10 and 100 characters.");
                 checkValidation = true;
             }
 
-            if (amount < 0.1 || amount > 1.0) {
-                request.setAttribute("err", "Amount must be between 0.1 and 1.0");
-                checkValidation = false;
+            if (amountStr == null || amountStr.trim().isEmpty()) {
+                request.setAttribute("err", "Amount can't be blank!");
+                checkValidation = true;
+            } else {
+                amount = Float.parseFloat(amountStr);
+                if (amount < 0.1 || amount > 1.0) {
+                    request.setAttribute("err", "Amount must be between 0.1 and 1.0");
+                    checkValidation = true;
+                }
             }
 
-            if (limit < 0) {
-                request.setAttribute("err", "Limit must be greater than 0.");
+            if (endDay.before(startDay)) {
+                request.setAttribute("err", "End date cannot be before start date.");
                 checkValidation = true;
+            }
+
+            if (limitStr == null || limitStr.trim().isEmpty()) {
+                request.setAttribute("err", "Limit can't be blank!");
+                checkValidation = true;
+            } else {
+                limit = Integer.parseInt(limitStr);
+                if (limit < 1) {
+                    request.setAttribute("err", "Limit must be greater than 0.");
+                    checkValidation = true;
+                }
             }
 
             if (!checkValidation) {
@@ -93,7 +120,7 @@ public class CreateDiscountController extends HttpServlet {
                 }
             }
 
-        } catch (Exception e) {
+        } catch (ClassNotFoundException| ParseException|SQLException e) {
             log("Error at CreateDiscountController: " + e.toString());
             if (e.toString().contains("duplicate")) {
                 request.setAttribute("err", "Discount code already exits");

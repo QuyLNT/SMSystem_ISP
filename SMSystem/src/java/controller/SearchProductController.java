@@ -37,34 +37,35 @@ public class SearchProductController extends HttpServlet {
     private static final String ERROR = "shop.jsp";
     private static final String SUCCESS = "shop.jsp";
 
-  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    response.setContentType("text/html;charset=UTF-8");
-    String url= ERROR;
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String url = ERROR;
         try {
             String searchTerm = request.getParameter("text");
             ProductDAO productDao = new ProductDAO();
             ProductImageDAO imageDao = new ProductImageDAO();
             List<ProductDTO> products = productDao.search(searchTerm);
-            for(ProductDTO p: products){
+            for (ProductDTO p : products) {
                 p.setListImages(imageDao.getImageByProduct(p.getProductId()));
             }
             if (products.isEmpty()) {
                 request.setAttribute("NO_RESULTS", "No search results");
+                HttpSession session = request.getSession();
+                session.removeAttribute("PRODUCT_LIST");
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("PRODUCT_LIST", products);
                 url = SUCCESS;
             }
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             request.setAttribute("err", "Failed to search for products: " + e.getMessage());
-        }finally{
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
 
-}
-
+    }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
