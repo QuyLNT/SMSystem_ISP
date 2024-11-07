@@ -211,7 +211,10 @@
                                             <input type="hidden" name="orderId" value="<%= a.getOrderId()%>">
                                             <input type="hidden" name="ship" value="<%= a.getShippingMethod()%>">
                                             <div class="select-option-province">
-                                                <select name="shipperId" onchange="this.form.submit()">
+                                                <select name="shipperId" onchange="this.form.submit()" 
+                                                        <%= ("Delivering".equalsIgnoreCase(a.getOrderStatus())
+                                                                || "Completed".equalsIgnoreCase(a.getOrderStatus())
+                                                                || "Not Completed".equalsIgnoreCase(a.getOrderStatus())) ? "disabled" : ""%>>
                                                     <option value="">Select Shipper</option>
                                                     <% for (UserDTO shipper : shippers) {
                                                             boolean isSelected = (shipper.getUserId() == selectedShipperId);
