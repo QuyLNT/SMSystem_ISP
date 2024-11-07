@@ -181,13 +181,14 @@
                                                         <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
                                                         <td class="si-text">
                                                             <div class="product-selected">
-                                                                <p style="color: #4C4C4C">$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
                                                                 <h6><%= ele.getProduct().getName()%></h6>
                                                                 <h6>Size <%= ele.getSize()%></h6>
+                                                                <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
+
                                                             </div>
                                                         </td>
                                                         <td class="si-close">
-                                                            <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=warrantyPage.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
+                                                            <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=homePage.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
                                                                 <i class="ti-close"></i>
                                                             </a>
                                                         </td>
@@ -266,7 +267,7 @@
             <p style="color: #252525; padding-left: 15px"><strong>Note:</strong> We do not cover damage caused by improper usage, inadequate care, or normal wear and tear.</p>
 
             <div class="inner-header">
-                
+
                 <div class="col-lg-12 col-md-12 center-form">
                     <form action="MainController" method="get"> 
                         <div class="input-group">
@@ -275,8 +276,8 @@
                             <button type="submit" class="btn btn-primary"name="action" value="CheckWarranty">
                                 CHECK WARRANTY PERIOD   
                             </button>
-                            
-                            
+
+
                         </div>
                     </form>
                 </div>
