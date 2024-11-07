@@ -55,6 +55,7 @@ public class UpdateProductController extends HttpServlet {
 
             String name = request.getParameter("name");
             if (name == null || name.isEmpty()) {
+                errorMessages.append("<br>Product name cannot be empty.");
                 name = currentProduct.getName();
             }
 
@@ -77,14 +78,22 @@ public class UpdateProductController extends HttpServlet {
             float price;
             String priceStr = request.getParameter("price");
             if (priceStr == null || priceStr.isEmpty()) {
+                errorMessages.append("<br>Price cannot be empty.");
                 price = currentProduct.getPrice();
             } else {
                 price = Float.parseFloat(priceStr);
             }
 
+            if (price == 0) {
+                errorMessages.append("<br>Price must be greater than 0. ");
+            } else if (price < 0) {
+                errorMessages.append("<br>Price cannot be negative. ");
+            }
+
             float sale;
             String saleStr = request.getParameter("sale");
             if (saleStr == null || saleStr.isEmpty()) {
+                errorMessages.append("<br>Sale cannot be empty.");
                 sale = currentProduct.getSale();
             } else {
                 sale = Float.parseFloat(saleStr);
@@ -93,21 +102,26 @@ public class UpdateProductController extends HttpServlet {
             String avatar = request.getParameter("avatar");
             if (avatar == null || avatar.isEmpty()) {
                 avatar = currentProduct.getAvatarPath();
+            } else if (!avatar.matches("^https?://.*(jpg|jpeg|png|webp|images?).*")) {
+                errorMessages.append("<br>Avatar image format is invalid! Only jpg, jpeg, png, and webp formats are allowed. ");
             }
 
             String color = request.getParameter("color");
             if (color == null || color.isEmpty()) {
+                errorMessages.append("<br>Color cannot be empty.");
                 color = currentProduct.getColor();
             }
 
             String detail = request.getParameter("detail");
             if (detail == null || detail.isEmpty()) {
+                errorMessages.append("<br>Detail cannot be empty.");
                 detail = currentProduct.getDetail();
             }
 
             int warrantyPeriod;
             String warrantyPeriodStr = request.getParameter("warranty");
             if (warrantyPeriodStr == null || warrantyPeriodStr.isEmpty()) {
+                errorMessages.append("<br>Warranty Period cannot be empty.");
                 warrantyPeriod = currentProduct.getWarrantyPeriod();
             } else {
                 warrantyPeriod = Integer.parseInt(warrantyPeriodStr);
@@ -132,7 +146,7 @@ public class UpdateProductController extends HttpServlet {
                 if (imageUrl != null && !imageUrl.isEmpty()) {
                     if (!imageUrl.matches("^https?://.*(jpg|jpeg|png|webp|images?).*")) {
                         hasInvalidImages = true;
-                            errorMessages.append("Image ").append(i + 1).append(" is wrong with format! "); 
+                        errorMessages.append("<br>Image ").append(i + 1).append(" is wrong with format! ");
                     } else {
                         while (imageIdIndex < imageIds.length) {
                             int imageId = Integer.parseInt(imageIds[imageIdIndex]);
@@ -143,14 +157,13 @@ public class UpdateProductController extends HttpServlet {
                                 detailImage.setImageId(imageId);
                                 detailImage.setImagePath(imageUrl);
                                 images.add(detailImage);
-                                break; 
+                                break;
                             }
                         }
                     }
                 } else {
-                    errorMessages.append("Image ").append(i + 1).append(" cannot be empty! "); 
+                    errorMessages.append("<br>Image ").append(i + 1).append(" cannot be empty! ");
                 }
-
             }
 
             ProductDTO updatedProduct = new ProductDTO(productId, brandID, userObjectID, detail, hot, name, color, price, sale, warrantyPeriod, status);
