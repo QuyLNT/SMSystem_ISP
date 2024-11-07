@@ -774,7 +774,7 @@ public class ProductDAO {
             if (con != null) {
                 String query = "SELECT * FROM products WHERE 1=1";
 
-                if (cateFilter!=0) {
+                if (cateFilter != 0) {
                     query += " AND userObjectId = ?";
                 }
 
@@ -825,4 +825,35 @@ public class ProductDAO {
         return products;
     }
 
+    public boolean isProductNameExists(String name) throws SQLException, ClassNotFoundException {
+        boolean exists = false;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            if (con != null) {
+                String query = "SELECT COUNT(productId) FROM products WHERE name = ?";
+                ps = con.prepareStatement(query);
+                ps.setString(1, name);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    exists = rs.getInt(1) > 0;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return exists;
+    }
+
+    
 }

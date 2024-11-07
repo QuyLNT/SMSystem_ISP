@@ -57,7 +57,7 @@ public class CreateProductController extends HttpServlet {
                 productError.setDetailError("Product detail must be between 5 and 500 characters");
                 checkValidation = false;
             }
-            if (price < 0) {
+            if (price <= 0) {
                 productError.setPriceError("Price must be a positive number");
                 checkValidation = false;
             }
@@ -65,7 +65,13 @@ public class CreateProductController extends HttpServlet {
                 productError.setSaleError("Sale must be a positive number and not greater than the price");
                 checkValidation = false;
             }
-
+            
+            
+            if (productDAO.isProductNameExists(name)) {
+                productError.setNameError("Product already exists.");
+                checkValidation = false;
+            }
+            
             if (checkValidation) {
                 ProductDTO product = new ProductDTO(0, brandId, userObjectId, detail, false, name, color, price, sale, warrantyPeriod, true);
                 product = productDAO.addProduct(product);
