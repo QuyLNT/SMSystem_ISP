@@ -520,13 +520,13 @@
                                 </div>
                             </div>
                             <%
-                                }
-                            } else {
+                                    }
+                                }else{
                             %>
-                            <p>No products available.</p>
-                            <%
-                                }
-                            %>
+                            <div>
+                                <%= request.getAttribute("NO_RESULTS") != null ? request.getAttribute("NO_RESULTS") : "No products found."%>
+                            </div>
+                            <% }%>
                         </div>
                     </div>
                 </div>

@@ -110,24 +110,13 @@
                                 List<DiscountDTO> discountList = (List<DiscountDTO>) session.getAttribute("DISCOUNT_LIST");
                                 if (discountList == null) {
                                     discountList = new ArrayList<>();
-                                }
-                                String ms = "";
-                                String err = "";
-                                if (request.getAttribute("ms") != null) {
-                                    ms = (String) request.getAttribute("ms");
-                                }
-                                if (request.getAttribute("err") != null) {
-                                    err = (String) request.getAttribute("err");
-                                }
-                                if (ms != null || err != null) {
-
-
-                            %>
-                            <div class="mes-suc">
-                                <%=ms%>
-                                <%=err%>
-                            </div> 
-                            <%}%>
+                                }%>
+                            <% if (request.getAttribute("ms") != null) {%>
+                            <div class="alert alert-success"><%= request.getAttribute("ms")%></div>
+                            <% }%>
+                            <% if (request.getAttribute("err") != null) {%>
+                            <div class="alert alert-danger"><%= request.getAttribute("err")%></div>
+                            <% }%>
                             <!-- Modal Add -->
 
                             <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
