@@ -255,9 +255,20 @@
                                         Search Product: <input type="text" name="searchProductName" placeholder="Enter product name" value="<%= searchProductName%>"/>
                                         <button type="submit" name="action" value="SearchProductName" >Search</button>
                                     </form>
+
+                                    <%
+                                        String noResultsMessage = (String) request.getAttribute("NO_RESULTS");
+                                        if (noResultsMessage != null) {
+                                    %>
+                                    <div class="alert alert-warning" style="margin-top: 10px;">
+                                        <%= noResultsMessage%>
+                                </div>
+                                        <%
+                                        }
+                                    %>
                                 </div>
                             </div>
-                                        <%
+                            <%
                                             String cate = request.getParameter("CateFilter");
                                             String brandFilter = request.getParameter("BrandFilter");
                                             if(cate == null ) cate = "";

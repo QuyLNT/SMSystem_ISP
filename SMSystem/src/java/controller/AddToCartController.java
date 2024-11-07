@@ -68,34 +68,35 @@ public class AddToCartController extends HttpServlet {
                     }
                 }
 
-                CartItems existingItem = cart.getItemByProductIdAndSize(productId, size);
-                if (existingItem != null) {
-                    existingItem.setQuantity(existingItem.getQuantity() + quantity);
-                    request.setAttribute("ms", "Quantity updated successfully!");
+                if (selectedVariant == null) {
+                    request.setAttribute("err", "This size is not available for the selected product.");
+                } else if (quantity > selectedVariant.getStock()) {
+                    request.setAttribute("err", "Out of stock for this size. Only " + selectedVariant.getStock() + " items available.");
                 } else {
-                    if (selectedVariant == null) {
-                        request.setAttribute("err", "This size is not available for the selected product.");
-                    } else if (quantity > selectedVariant.getStock()) {
-                        request.setAttribute("err", "Out of stock for this size. Only " + selectedVariant.getStock() + " items available.");
+                    CartItems existingItem = cart.getItemByProductIdAndSize(productId, size);
+                    if (existingItem != null) {
+                        int newQuantity = existingItem.getQuantity() + quantity;
+                        if (newQuantity > selectedVariant.getStock()) {
+                            request.setAttribute("err", "Out of stock for this size. Only " + selectedVariant.getStock() + " items available.");
+                        } else {
+                            existingItem.setQuantity(newQuantity);
+                            request.setAttribute("ms", "Quantity updated successfully!");
+                        }
+                    } else {
+                        CartDAO cartDao = new CartDAO();
+                        int cartId = cartDao.createCartIfNotExists(customerId);
+                        cartDao.addCartItem(cartId, productId, quantity, size);
+                        cart = cartDao.getCartByUserId(customerId);
+                        for (CartItems c : cart.getCartItemsList()) {
+                            c.getProduct().setListImages(imageDao.getImageByProduct(c.getProduct().getProductId()));
+                            c.getProduct().setListVariants(variantDao.getVariantByProduct(c.getProduct().getProductId()));
+                        }
+                        session.setAttribute("CART", cart);
+                        session.setAttribute("size", String.valueOf(cart.getSize()));
+                        request.setAttribute("ms", "Product added to cart successfully!");
                     }
+                    url = SUCCESS;
                 }
-
-                CartDAO cartDao = new CartDAO();
-                int cartId = cartDao.createCartIfNotExists(customerId);
-                if (existingItem != null) {
-                    cartDao.updateCartItemQuantity(cartId, productId, size, existingItem.getQuantity());
-                } else {
-                    cartDao.addCartItem(cartId, productId, quantity, size);
-                    CartDTO newCart = new CartDTO();
-                    cart = cartDao.getCartByUserId(customerId);
-                    for (CartItems c : cart.getCartItemsList()) {
-                        c.getProduct().setListImages(imageDao.getImageByProduct(c.getProduct().getProductId()));
-                        c.getProduct().setListVariants(variantDao.getVariantByProduct(c.getProduct().getProductId()));
-                    }
-                    session.setAttribute("CART", cart);
-                    session.setAttribute("size", String.valueOf(cart.getSize()));
-                }
-                url = SUCCESS;
             } else {
                 url = "login.jsp";
             }
