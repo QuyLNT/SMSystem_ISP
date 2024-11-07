@@ -116,7 +116,7 @@ public class PaymentController extends HttpServlet {
 
             String app_trans_id = getCurrentTimeString("yyMMdd") + "_" + random_id;
             String description = "SMSystem - Payment for the order #" + userOrder.getOrderId();
-            float amount = userOrder.getTotalPrice() * 100;
+            float amount = userOrder.getTotalPrice() * 24000;
             OnlinePaymentDTO payment = new OnlinePaymentDTO();
             payment.setAmount(amount);
             payment.setPaymentId(app_trans_id);
@@ -127,7 +127,7 @@ public class PaymentController extends HttpServlet {
 
             final Map embed_data = new HashMap() {
                 {
-                    put("redirecturl", "https://3d5a-118-69-69-187.ngrok-free.app/SMSystem/success.jsp");
+                    put("redirecturl", "https://74a8-27-78-75-19.ngrok-free.app/SMSystem/success.jsp");
                 }
             };
 
@@ -147,7 +147,7 @@ public class PaymentController extends HttpServlet {
                     put("amount", (long) amount);
                     put("description", description);
                     put("bank_code", "");
-                    put("callback_url", "https://3d5a-118-69-69-187.ngrok-free.app/SMSystem/ZaloPayCallbackController");
+                    put("callback_url", "https://74a8-27-78-75-19.ngrok-free.app/SMSystem/ZaloPayCallbackController");
                     put("item", new JSONArray(item).toString());
                     put("embed_data", new JSONObject(embed_data).toString());
                 }
