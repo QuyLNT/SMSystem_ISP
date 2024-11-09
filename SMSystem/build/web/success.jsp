@@ -1,22 +1,6 @@
-<%-- 
-    Document   : index
-    Created on : Jun 13, 2024, 11:03:48 PM
-    Author     : Luu Minh Quan
---%>
 
-<%-- 
-    Document   : wishlist
-    Created on : Jun 22, 2024, 7:08:51 PM
-    Author     : Luu Minh Quan
---%>
-
-<%@page import="model.ProductDAO"%>
+<%@page import="model.user.UserDTO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.ProductDTO"%>
-<%@page import="model.UserDTO"%>
-<%@page import="model.ItemDTO"%>
-<%@page import="java.util.List"%>
-<%@page import="model.CartDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -46,52 +30,70 @@
         <link rel="stylesheet" href="css/style.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
-        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
     </head>
 
     <body>
         <!-- Start coding here -->
         <!-- Page PreOrder -->
-     
+
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
                 <div class="container">
                     <div class="ht-left">
                         <div class="mail-service">
-                            <i class="fa fa-envelope">
-                                smsystem@gmail.com
-                            </i>
+                            <i class="fa fa-envelope"></i>smsystem8386@gmail.com
                         </div>
                         <div class="phone-service">
-                            <i class="fa fa-phone">
-                                +84 123456789
-                            </i>
+                            <i class="fa fa-phone"></i>+84 123456789
                         </div>
                     </div>
                     <div class="ht-right">
                         <%
-                            UserDTO user = (UserDTO) session.getAttribute("user");
-                            if (user.getFullName() != null) {
+                            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                            if (loginUser != null) {
                         %>
+
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user"><%=user.getFullName()%></i>
+                            <i class="fa fa-user"></i><%=loginUser.getFullName()%>
                         </div>
-                        <% } else { %>
-                        <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user"></i>
-                        </div>
-                        <% }%>
                         <section class="user">
                             <div class="user-setting">
                                 <div class="content">
                                     <div><a href="myAccount.jsp">My account</a></div>
-                                    <div><a href="myOrder.jsp">Order Status</a></div>
-                                    <div><a href="LogoutController">Logout</a></div>
-
-                                    </ul>
+                                    <div><a href="MainController?action=LoadMyOrder">My Order</a></div>
+                                    <div><a href="LogoutController">Sign Out</a></div>
                                 </div>
                         </section>
+                        <%
+                        } else {
+                        %>
+                        <div class="login-panel" id="user-btn">
+                            <i class="fa fa-user"></i>Guest
+                        </div>
+                        <section class="user">
+                            <div class="user-setting">
+                                <div class="content">
+                                    <div><a href="login.jsp">Sign In</a></div>
+                                    <div><a href="register.jsp">Sign Up</a></div>
+                                </div>
+                        </section>
+                        <%
+                            }
+                        %>
+                        <%
+                            if (loginUser != null) {
+                                if (!loginUser.getRoleId().equals("CUS")) {
+                        %>
+                        <div class="lan-selector">
+                            <a href="MainController?action=Back&role=<%=loginUser.getRoleId()%>" style="color: black;">
+                                <i class="fa fa-home">  Management</i>
+                            </a>
+                        </div>
+                        <%
+                        } else {
+                        %>
                         <div class="lan-selector">
                             <select class="language_drop" name="countries" id="countries" style="width: 300px;">
                                 <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
@@ -100,6 +102,21 @@
                                     German</option>
                             </select>
                         </div>
+                        <%
+                            }
+                        } else {
+                        %>
+                        <div class="lan-selector">
+                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
+                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                                    English</option>
+                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
+                                    German</option>
+                            </select>
+                        </div>
+                        <%
+                            }
+                        %>
                         <div class="top-social">
                             <a href="#"><i class="ti-facebook"></i></a>
                             <a href="#"><i class="ti-twitter-alt"></i></a>
@@ -108,34 +125,70 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
         </header>
         <!-- Header Section End -->
 
-        <!--  -->
-
-
+        <%
+            String status = request.getParameter("status");
+            if (status != null) {
+        %>
+        <%
+            if (status.equals("1")) {
+        %>
         <div class="wishlist-heading tk">Thank you for Buying</div>
         <div id="tick-img">
-            <img src="img/tick.jpg">
+            <img src="img/happy-face.png">
         </div>
-
         <div class="back">
-            <div> Press here to go back</div>
-            <i class="fa-solid fa-arrow-right"></i>
-            <a href="homePage.jsp"> <i class="fa-solid fa-house"></i></a>
+            <i class="fa-solid fa-arrow-right">  </i>
+            <a href="MainController?action=HomePage" style="color: black;"> Click here to go back</a>
+        </div>  
+        <%
+        } else {
+        %>
+        <div class="wishlist-heading tk">Thank you for Buying</div>
+        <div class="wishlist-heading">But there was an Error during your payment process.</div>
+
+        <div id="tick-img">
+            <img src="img/sad-face.png">
         </div>
+        <p style="color: black; text-align: center; font-size: 30px">If you would like to continue purchasing the product, please repeat the purchase process.</p>
+        <div class="back">
+            <i class="fa-solid fa-arrow-right">  </i>
+            <a href="MainController?action=HomePage" style="color: black;"> Click here to go back</a>
+        </div>  
+        <%
+            }
+        %>
+        <%
+        } else {
+        %>
+        <div class="wishlist-heading tk">Thank you for Buying</div>
+        <div id="tick-img">
+            <img src="img/happy-face.png">
+        </div>
+        <div class="back">
+            <i class="fa-solid fa-arrow-right">  </i>
+            <a href="MainController?action=HomePage" style="color: black;"> Click here to go back</a>
+        </div> 
+        <%
+            }
+        %>
+
 
         <style>
-            #tick-img{
+            #tick-img {
                 display: flex;
-                justify-content: center;
-                align-items: center;
-                margin: 2rem 0;
+                align-items: center;  /* Center vertically */
+                justify-content: center;  /* Center horizontally */
             }
+
+            #tick-img img {
+                width: 250px; /* Set desired image width */
+                height: 250px; /* Set desired image height */
+            }
+
             .tk{
                 margin-top: 2rem;
             }
@@ -281,6 +334,7 @@
         <script src="js/main.js"></script>
         <script src="js/main2.js"></script>
         <script src="js/main3.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     </body>
 </html>

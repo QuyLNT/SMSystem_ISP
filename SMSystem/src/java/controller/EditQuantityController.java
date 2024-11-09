@@ -16,6 +16,7 @@ import model.cart.CartDAO;
 import model.cart.CartDTO;
 import model.cart.CartItems;
 import model.product.ProductDTO;
+import model.product.ProductVariantDAO;
 
 /**
  *
@@ -49,26 +50,29 @@ public class EditQuantityController extends HttpServlet {
 
             if (cart != null) {
                 CartDAO dao = new CartDAO();
+                ProductVariantDAO variantDao = new ProductVariantDAO();
                 // Duyệt qua các items trong giỏ hàng
                 for (CartItems item : cart.getCartItemsList()) {
                     if (item.getCartItemId() == cartItemId) { // So sánh cartItemId
                         int newQuantity = item.getQuantity() + num; // Tăng hoặc giảm số lượng
-
                         // Đảm bảo số lượng mới không âm
                         if (newQuantity > 0) {
-                            item.setQuantity(newQuantity);
-
                             // Cập nhật số lượng mới vào database bằng CartDAO
-                            boolean updated = dao.editQuantity(item.getCartItemId(), newQuantity);
-
-                            if (updated) {
-                                dao.editQuantity(item.getCartItemId(), newQuantity);
-                                session.setAttribute("CART", cart); // Cập nhật lại giỏ hàng trong session
-                                url = SUCCESS;
+                            boolean checkValidate = variantDao.checkValidateStock(item.getProduct().getProductId(),
+                                    item.getSize(), newQuantity);
+                            if (checkValidate) {
+                                boolean updated = dao.editQuantity(item.getCartItemId(), newQuantity);
+                                if (updated) {
+                                    item.setQuantity(newQuantity);
+                                    session.setAttribute("CART", cart); // Cập nhật lại giỏ hàng trong session
+                                    url = SUCCESS;
+                                }
+                            } else {
+                                request.setAttribute("err", "Sorry, our stock quantity is insufficient to add the requested amount.");
                             }
                         }
-                        break;
                     }
+                    break;
                 }
             }
         } catch (Exception e) {
@@ -78,49 +82,43 @@ public class EditQuantityController extends HttpServlet {
         }
     }
 
-        // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-        /**
-         * Handles the HTTP <code>GET</code> method.
-         *
-         * @param request servlet request
-         * @param response servlet response
-         * @throws ServletException if a servlet-specific error occurs
-         * @throws IOException if an I/O error occurs
-         */
-        @Override
-        protected void doGet
-        (HttpServletRequest request, HttpServletResponse response)
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            processRequest(request, response);
-        }
-
-        /**
-         * Handles the HTTP <code>POST</code> method.
-         *
-         * @param request servlet request
-         * @param response servlet response
-         * @throws ServletException if a servlet-specific error occurs
-         * @throws IOException if an I/O error occurs
-         */
-        @Override
-        protected void doPost
-        (HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-            processRequest(request, response);
-        }
-
-        /**
-         * Returns a short description of the servlet.
-         *
-         * @return a String containing servlet description
-         */
-        @Override
-        public String getServletInfo
-        
-        
-            () {
-        return "Short description";
-        }// </editor-fold>
-
-    
+        processRequest(request, response);
     }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}

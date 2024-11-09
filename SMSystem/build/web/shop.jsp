@@ -34,7 +34,7 @@
         <link rel="stylesheet" href="css/style.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
-        <link rel="icon" href="favicon_io (1)/favicon.ico" type="img/x-icon">
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
 
     </head>
 
@@ -47,186 +47,203 @@
                 <div class="container">
                     <div class="ht-left">
                         <div class="mail-service">
-                            <i class="fa fa-envelope">
-                                smsystem@gmail.com
-                            </i>
+                            <i class="fa fa-envelope"></i>smsystem8386@gmail.com
                         </div>
                         <div class="phone-service">
-                            <i class="fa fa-phone">
-                                +84 123456789
-                            </i>
+                            <i class="fa fa-phone"></i>+84 123456789
                         </div>
                     </div>
-                    <%
-                        UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-                        if (loginUser != null) {
-                    %>
                     <div class="ht-right">
-                        <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user">  <%=loginUser.getFullName()%></i>
+                        <%
+                            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                            if (loginUser != null) {
+                        %>
 
+                        <div class="login-panel" id="user-btn">
+                            <i class="fa fa-user"></i><%=loginUser.getFullName()%>
                         </div>
                         <section class="user">
                             <div class="user-setting">
                                 <div class="content">
                                     <div><a href="myAccount.jsp">My account</a></div>
-                                    <div><a href="myOrder.jsp">Order Status</a></div>
-                                    <div><a href="LogoutController">Logout</a></div>
+                                    <div><a href="MainController?action=LoadMyOrder">My Order</a></div>
+                                    <div><a href="LogoutController">Sign Out</a></div>
                                 </div>
                         </section>
                         <%
                         } else {
                         %>
-                        <div class="ht-right">
-                            <div class="login-panel" id="user-btn">
-                                <i class="fa fa-user">  GUEST</i>
-                            </div>
-                            <section class="user">
-                                <div class="user-setting">
-                                    <div class="content">
-                                        <div><a href="login.jsp">Sign In</a></div>
-                                        <div><a href="register.jsp">Sign Up</a></div>
-                                    </div>
-                            </section>
-                            <%
-                                }
-                            %>
-                            <div class="lan-selector">
-                                <select class="language_drop" name="countries" id="countries" style="width: 300px;">
-                                    <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
-                                        English</option>
-                                    <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
-                                        German</option>
-                                </select>
-                            </div>
-                            <div class="top-social">
-                                <a href="#"><i class="ti-facebook"></i></a>
-                                <a href="#"><i class="ti-twitter-alt"></i></a>
-                                <a href="#"><i class="ti-linkedin"></i></a>
-                                <a href="#"><i class="ti-pinterest"></i></a>
-                            </div>
+                        <div class="login-panel" id="user-btn">
+                            <i class="fa fa-user"></i>Guest
+                        </div>
+                        <section class="user">
+                            <div class="user-setting">
+                                <div class="content">
+                                    <div><a href="login.jsp">Sign In</a></div>
+                                    <div><a href="register.jsp">Sign Up</a></div>
+                                </div>
+                        </section>
+                        <%
+                            }
+                        %>
+                        <%
+                            if (loginUser != null) {
+                                if (!loginUser.getRoleId().equals("CUS")) {
+                        %>
+                        <div class="lan-selector">
+                            <a href="MainController?action=Back&role=<%=loginUser.getRoleId()%>" style="color: black;">
+                                <i class="fa fa-home">  Management</i>
+                            </a>
+                        </div>
+                        <%
+                        } else {
+                        %>
+                        <div class="lan-selector">
+                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
+                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                                    English</option>
+                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
+                                    German</option>
+                            </select>
+                        </div>
+                        <%
+                            }
+                        } else {
+                        %>
+                        <div class="lan-selector">
+                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
+                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                                    English</option>
+                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
+                                    German</option>
+                            </select>
+                        </div>
+                        <%
+                            }
+                        %>
+                        <div class="top-social">
+                            <a href="#"><i class="ti-facebook"></i></a>
+                            <a href="#"><i class="ti-twitter-alt"></i></a>
+                            <a href="#"><i class="ti-linkedin"></i></a>
+                            <a href="#"><i class="ti-pinterest"></i></a>
                         </div>
                     </div>
-
                 </div>
-                <div class="container">
-                    <div class="inner-header">
-                        <div class="row">
-                            <div class="col-lg-2 col-md-2">
-                                <div class="logo">
-                                    <a href="MainController?action=ShopPage">
-                                        <img src="img/logoweb.png" height="65px" alt="">
-                                    </a>
-                                </div>
+            </div>
+            <div class="container">
+                <div class="inner-header">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2">
+                            <div class="logo">
+                                <a href="MainController?action=ShopPage">
+                                    <img src="img/logoweb.png" height="65px" alt="">
+                                </a>
                             </div>
-                            <div class="col-lg-7 col-md-7">
-                                <form action="MainController" method="get">
-                                    <div class="advanced-search">
-                                        <button type="button" class="category-btn">All Categories</button>
-                                        <div class="input-group">
-                                            <input style="color: black;" type="text" name="text" placeholder="What do you need?">
-                                            <button type="submit" name="action" value="Search"><i class="ti-search"></i></button>
-                                        </div>
+                        </div>
+                        <div class="col-lg-7 col-md-7">
+                            <form action="MainController" method="get">
+                                <div class="advanced-search">
+                                    <button type="button" class="category-btn">All Categories</button>
+                                    <div class="input-group">
+                                        <input style="color: black;" type="text" name="text" placeholder="What do you need?">
+                                        <button type="submit" name="action" value="Search"><i class="ti-search"></i></button>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="col-lg-3 col-md-3 text-right">
-                                <ul class="nav-right">
-                                    <%
-                                        CartDTO cart = (CartDTO) session.getAttribute("CART");
-                                        boolean isEmptyCart = cart == null || (cart.getCartItemsList() == null || cart.getCartItemsList().isEmpty());
-                                        int itemCount = isEmptyCart ? 0 : cart.getCartItemsList().size();
-                                    %>
-                                    <li class="cart-icon">
-                                        <a href="#">
-                                            <i class="icon_bag_alt"></i>
-                                            <span><%= itemCount%></span>
-                                        </a>
-                                        <div class="cart-hover">
-                                            <div class="select-items">
-                                                <% if (isEmptyCart) { %>
-                                                <p>No product in cart. Buy more</p>
-                                                <% } else { %>
-                                                <table>
-                                                    <tbody>
-                                                        <%
-                                                            List<CartItems> ls = cart.getCartItemsList();
-                                                            double total = 0;
-                                                            for (CartItems ele : ls) {
-                                                                total += (ele.getProduct().getPrice() * (1 - ele.getProduct().getSale())) * ele.getQuantity();
-                                                        %>
-                                                        <tr>
-                                                            <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
-                                                            <td class="si-text">
-                                                                <div class="product-selected">
-                                                                    <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
-                                                                    <h6><%= ele.getProduct().getName()%></h6>
-                                                                    <h6>Size <%= ele.getSize()%></h6>
-                                                                </div>
-                                                            </td>
-                                                            <td class="si-close">
-                                                                <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=shop.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
-                                                                    <i class="ti-close"></i>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                        <% }%>
-                                                    </tbody>
-                                                </table>
-                                                <div class="select-total">
-                                                    <span>total:</span>
-                                                    <h5>$<%= String.format("%.1f", total)%></h5>
-                                                </div>
-                                                <% } %>
-                                                <div class="select-button">
-                                                    <a href="shopping-cart.jsp" class="primary-btn view-card">VIEW CART</a>
-                                                </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-3 col-md-3 text-right">
+                            <ul class="nav-right">
+                                <%
+                                    CartDTO cart = (CartDTO) session.getAttribute("CART");
+                                    boolean isEmptyCart = cart == null || (cart.getCartItemsList() == null || cart.getCartItemsList().isEmpty());
+                                    int itemCount = isEmptyCart ? 0 : cart.getCartItemsList().size();
+                                %>
+                                <li class="cart-icon">
+                                    <a href="#">
+                                        <i class="icon_bag_alt"></i>
+                                        <span><%= itemCount%></span>
+                                    </a>
+                                    <div class="cart-hover">
+                                        <div class="select-items">
+                                            <% if (isEmptyCart) { %>
+                                            <p style="color: #4C4C4C">No product in cart. Buy more</p>
+                                            <% } else { %>
+                                            <table>
+                                                <tbody>
+                                                    <%
+                                                        List<CartItems> ls = cart.getCartItemsList();
+                                                        double total = 0;
+                                                        for (CartItems ele : ls) {
+                                                            total += (ele.getProduct().getPrice() * (1 - ele.getProduct().getSale())) * ele.getQuantity();
+                                                    %>
+                                                    <tr>
+                                                        <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
+                                                        <td class="si-text">
+                                                            <div class="product-selected">
+                                                                <h6><%= ele.getProduct().getName()%></h6>
+                                                                <h6>Size <%= ele.getSize()%></h6>
+                                                                <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
+
+                                                            </div>
+                                                        </td>
+                                                        <td class="si-close">
+                                                            <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=homePage.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
+                                                                <i class="ti-close"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <% }%>
+                                                </tbody>
+                                            </table>
+                                            <div class="select-total">
+                                                <span>total:</span>
+                                                <h5>$<%= String.format("%.1f", total)%></h5>
+                                            </div>
+                                            <% } %>
+                                            <div class="select-button">
+                                                <a href="MainController?action=ViewCart&url=shop.jsp" class="primary-btn view-card">VIEW CART</a>
                                             </div>
                                         </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <script>
-                    function doDelete(name, event) {
-                        if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
-                        } else {
-                            event.preventDefault();
-                        }
-                    }
-                </script>
-                <div class="nav-item">
-                    <div class="container">
-                        <div class="nav-depart">
-                            <div class="depart-btn">
-                                <i class="ti-menu"></i>
-                                <span>All Departments</span>
-                                <ul class="depart-hover">
-                                    <li><a href="MainController?action=SearchCategories&type=1">Men's Clothing</a></li>
-                                    <li><a href="MainController?action=SearchCategories&type=2">Women's Clothing</a></li>
-                                    <li><a href="MainController?action=SearchCategories&type=3">Kid's Clothing</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <nav class="nav-menu mobile-menu">
-                            <ul>
-                                <li><a href="MainController?action=HomePage">Home</a></li>
-                                <li><a href="MainController?action=ShopPage">Shop</a></li>
-                                <li><a href="contact.jsp">Contact</a></li>
-                                <li><a href="">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
-                                        <li><a href="check-out.jsp">Checkout</a></li>
-
-                                    </ul>
+                                    </div>
                                 </li>
                             </ul>
-                        </nav>
-                        <div id="mobile-menu-wrap"></div>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <script>
+                function doDelete(name, event) {
+                    if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
+                    } else {
+                        event.preventDefault();
+                    }
+                }
+            </script>
+            <div class="nav-item">
+                <div class="container">
+                    <div class="nav-depart">
+                        <div class="depart-btn">
+                            <i class="ti-menu"></i>
+                            <span>All Departments</span>
+                            <ul class="depart-hover">
+                                <li><a href="MainController?action=SearchCategories&type=1">Men's Shoes</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=2">Women's Shoes</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=3">Kid's Shoes</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <nav class="nav-menu mobile-menu">
+                        <ul>
+                            <li><a href="MainController?action=HomePage">Home</a></li>
+                            <li><a href="MainController?action=ShopPage">Shop</a></li>
+                            <li><a href="contact.jsp">Contact</a></li>
+                            <li><a href="MainController?action=ViewCart&url=shop.jsp">Shopping Cart</a></li>
+                            <li><a href="warrantyPage.jsp">Warranty</a></li>
+                        </ul>
+                    </nav>
+                    <div id="mobile-menu-wrap"></div>
+                </div>
+            </div>
         </header>
         <!-- Header Section End -->
 
@@ -253,18 +270,20 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 product-sidebar-filter">
                         <div class="filter-widget">
-                            <form method="get" action="FilterServlet">
+                            <form method="get" action="MainController">
                                 <h4 class="fw-title">Brand</h4>
                                 <div class="fw-brand-check">
                                     <%
                                         List<BrandDTO> brandList = (List<BrandDTO>) session.getAttribute("BRAND_LIST");
+                                        List<Integer> selectedBrands = (List<Integer>) session.getAttribute("SELECTED_BRANDS");
                                         if (brandList != null) {
                                             for (BrandDTO b : brandList) {
+                                                boolean isChecked = selectedBrands != null && selectedBrands.contains(b.getBrandId());
                                     %>
                                     <div class="bc-item">
                                         <label for="bc-<%=b.getBrandId()%>">
                                             <%=b.getBrandName()%>
-                                            <input type="checkbox" id="bc-<%=b.getBrandId()%>" name="brand" value="<%=b.getBrandId()%>"/>
+                                            <input type="checkbox" id="bc-<%=b.getBrandId()%>" name="brand" value="<%=b.getBrandId()%>" <%= isChecked ? "checked" : ""%>/>
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -277,49 +296,32 @@
                                         }
                                     %>
                                 </div>
-
                                 <h4 class="fw-title">Color</h4>
-                                <div class="dropdown">
-                                    <div class="dropdown-header"></div>
-                                    <ul class="color-options">
-                                        <li>
-                                            <span class="color-circle" style="background-color: white;"></span>
-                                            Trắng
-                                        </li>
-                                        <li>
-                                            <span class="color-circle" style="background-color: #FFB6C1;"></span>
-                                            HỒNG
-                                        </li>
-                                        <li>
-                                            <span class="color-circle rainbow"></span>
-                                            NHIỀU MÀU
-                                        </li>
-                                        <li>
-                                            <span class="color-circle" style="background-color: #000;"></span>
-                                            Đen
-                                        </li>
-                                        <li>
-                                            <span class="color-circle" style="background-color: #cc2424;"></span>
-                                            Đỏ
-                                        </li>
-                                        <li>
-                                            <span class="color-circle" style="background-color: green;"></span>
-                                            Xanh lá cây
-                                        </li>
-                                        <li>
-                                            <span class="color-circle" style="background-color: blue;"></span>
-                                            Xanh nước biển
-                                        </li>
-                                    </ul>
+                                <div class="fw-brand-check">
+                                    <%
+                                        List<String> selectedColors = (List<String>) session.getAttribute("SELECTED_COLORS");
+                                        String[] colors = {"White", "Black", "Green", "Blue", "Brown", "Pink"};
+                                        for (String color : colors) {
+                                            boolean isChecked = selectedColors != null && selectedColors.contains(color);
+                                    %>
+                                    <div class="bc-item">
+                                        <label for="bc-<%=color.toLowerCase()%>">
+                                            <%=color%>
+                                            <input type="checkbox" id="bc-<%=color.toLowerCase()%>" name="color" value="<%=color%>" <%= isChecked ? "checked" : ""%>/>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <% }%>
                                 </div>
-
 
                                 <h4 class="fw-title">Price</h4>
                                 <div class="filter-range-wrap">
                                     <div class="range-slider">
                                         <div class="price-input">
-                                            $<input type="text" id="minamount" name="minPrice">
-                                            $<input type="text" id="maxamount" name="maxPrice">
+                                            $<input type="text" id="minamount" name="minPrice" 
+                                                    value="<%= session.getAttribute("MIN_PRICE") != null ? session.getAttribute("MIN_PRICE") : ""%>">
+                                            $<input type="text" id="maxamount" name="maxPrice" 
+                                                    value="<%= session.getAttribute("MAX_PRICE") != null ? session.getAttribute("MAX_PRICE") : ""%>">
                                         </div>
                                     </div>
                                     <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget-content"
@@ -329,7 +331,15 @@
                                         <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>  
                                     </div>
                                 </div>
-                                <input style="border: none" type="submit" class="filter-btn" value="Filter">
+                                <%
+                                    Integer cate = (Integer) session.getAttribute("CATE");
+                                    if (cate != null && cate > 0) {
+                                %>
+                                <input type="hidden" name="uOb" value="<%= cate%>"/>
+                                <%
+                                    }
+                                %>
+                                <input style="border: none" type="submit" name="action" class="filter-btn" value="Filter">
                             </form>
                         </div>
                         <div class="filter-widget">
@@ -340,15 +350,35 @@
                             <div class="row">
                                 <div class="col-lg-7 col-md-7">
                                     <div class="select-option">
+                                        <%
+                                            String selectedId = (String) session.getAttribute("ID");
+                                            if (selectedId != null) {
+                                        %>
                                         <form id="sortingForm" method="get" action="MainController">
                                             <input type="hidden" name="action" value="SortShopPage"/>
                                             <select class="sorting" name="id" onchange="document.getElementById('sortingForm').submit();">
-                                                <option value="1" ${selectedId == null || selectedId.equals("1") ? "selected" : ""}>Default Sorting</option>
-                                                <option value="2" ${selectedId != null && selectedId.equals("2") ? "selected" : ""}>On Sale</option>
-                                                <option value="3" ${selectedId != null && selectedId.equals("3") ? "selected" : ""}>Price: High - Low</option>
-                                                <option value="4" ${selectedId != null && selectedId.equals("4") ? "selected" : ""}>Price: Low - High</option>
+                                                <option value="1" <%= selectedId.equals("1") == true ? "selected" : ""%>>Default Sorting</option>
+                                                <option value="2" <%= selectedId.equals("2") == true ? "selected" : ""%>>On Sale</option>
+                                                <option value="3" <%= selectedId.equals("3") == true ? "selected" : ""%>>Price: High - Low</option>
+                                                <option value="4" <%= selectedId.equals("4") == true ? "selected" : ""%>>Price: Low - High</option>
                                             </select>
                                         </form>
+                                        <%
+                                        } else {
+                                        %>
+                                        <form id="sortingForm" method="get" action="MainController">
+                                            <input type="hidden" name="action" value="SortShopPage"/>
+                                            <select class="sorting" name="id" onchange="document.getElementById('sortingForm').submit();">
+                                                <option value="1" selected="">Default Sorting</option>
+                                                <option value="2" >On Sale</option>
+                                                <option value="3" >Price: High - Low</option>
+                                                <option value="4" >Price: Low - High</option>
+                                            </select>
+                                        </form>
+                                        <%
+                                            }
+                                        %>
+
                                     </div>
                                 </div>
 
@@ -372,17 +402,6 @@
                                     <%
                                         }
                                     %>
-                                    <form action="InsertWishlist" method="post"> 
-
-                                        <div class="icon">
-                                            <button id="btn-icon" type="submit">
-                                                <input type="hidden" name="id" value="<%= p.getProductId()%>">
-                                                <input type="hidden" name="url" value="shop.jsp">
-                                                <i class="icon_heart_alt"></i>
-                                            </button>
-                                        </div>
-
-                                    </form>
                                     <ul>
                                         <form action="MainController" method="post">
                                             <input type="hidden" name="productId" value="<%=p.getProductId()%>">
@@ -435,10 +454,10 @@
                                 }
                             } else {
                             %>
-                            <p>No products available.</p>
-                            <%
-                                }
-                            %>
+                            <div>
+                                <%= request.getAttribute("NO_RESULTS") != null ? request.getAttribute("NO_RESULTS") : "No products found."%>
+                            </div>
+                            <% }%>
                         </div>
                     </div>
                 </div>
@@ -573,23 +592,28 @@
         <script src="js/main.js"></script>
         <script src="js/main2.js"></script>
         <script src="js/main3.js"></script>
-        <script> var rangeSlider = $(".price-range"),
-                                                        minamount = $("#minamount"),
-                                                        maxamount = $("#maxamount"),
-                                                        minPrice = rangeSlider.data('min'),
-                                                        maxPrice = rangeSlider.data('max');
-                                                rangeSlider.slider({
-                                                    range: true,
-                                                    min: minPrice,
-                                                    max: maxPrice,
-                                                    values: [minPrice, maxPrice],
-                                                    slide: function (event, ui) {
-                                                        minamount.val(ui.values[0]);
-                                                        maxamount.val(ui.values[1]);
-                                                    }
+        <script>
+                                                $(document).ready(function () {
+                                                    var rangeSlider = $(".price-range"),
+                                                            minamount = $("#minamount"),
+                                                            maxamount = $("#maxamount"),
+                                                            minPrice = rangeSlider.data('min') || 50, // Giá trị khởi tạo từ data-min
+                                                            maxPrice = rangeSlider.data('max') || 300; // Giá trị khởi tạo từ data-max
+
+                                                    rangeSlider.slider({
+                                                        range: true,
+                                                        min: 50,
+                                                        max: 300,
+                                                        values: [minPrice, maxPrice],
+                                                        slide: function (event, ui) {
+                                                            minamount.val(ui.values[0]);
+                                                            maxamount.val(ui.values[1]);
+                                                        }
+                                                    });
+
+                                                    minamount.val(minPrice);
+                                                    maxamount.val(maxPrice);
                                                 });
-                                                minamount.val(rangeSlider.slider("values", 0));
-                                                maxamount.val(rangeSlider.slider("values", 1));
         </script>
     </body>
 </html>

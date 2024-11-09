@@ -1,6 +1,7 @@
 package controller;
+
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,14 +29,14 @@ public class SearchUserByUserNameController extends HttpServlet {
             UserDAO dao = new UserDAO();
             List<UserDTO> listUser = dao.getAllUser(searchUser);
             if (listUser.size() > 0) {
-                 HttpSession session = request.getSession();
-                session.setAttribute("USER_LIST", listUser);
+                HttpSession session = request.getSession();
+                request.setAttribute("USER_LIST", listUser);
+                url = SUCCESS;
             } else {
+                request.setAttribute("ms", "No search results");
                 url = ERROR;
-                request.setAttribute("MESSAGE", "No search results");
-
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             log("Error at MainController:" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

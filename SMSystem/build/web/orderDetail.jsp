@@ -1,26 +1,23 @@
-<%-- 
-    Document   : index
-    Created on : Jun 18, 2024, 10:17:29 PM
-    Author     : DELL
---%>
-
-<%@page import="admin.sample.order.AdminOrderDetailDTO"%>
-<%@page import="admin.sample.order.AdminOrderDTO"%>
+<%@page import="model.shipment.ShipmentDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="model.order.OrderDetailDTO"%>
+<%@page import="model.order.OrderDTO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="admin.sample.order.AdminOrderDAO"%>
+<%@page import="model.order.OrderDAO"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>OrderDetail</title>
-        <title>Kẻ kiểm soát thông tin</title>
+        <title>Order Detail</title>
+        <title>SMSystem</title>
         <link rel="stylesheet" href="css/orderDetail1.css" />
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
-        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
     </head>
@@ -31,16 +28,42 @@
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
-                                <h3>
-                                    <img src="img/logoweb.png" width="32px" height="32px" alt="" />
-                                    <span class="title-text">SM System</span>
-                                </h3>
+                                <a href="MainController?action=HomePage">
+                                    <h3>
+                                        <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
+                                        <span class="title-text">SMSystem</span>
+                                    </h3>
+                                </a>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
-                                    <a href="adminHome.jsp" class="nav-link">
+                                    <a href="MainController?action=LoadManagerHomeData" class="nav-link">
                                         <i class="fa-solid fa-house"></i>
                                         <span class="link-text">Home</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadProductList" class="nav-link">
+                                        <i class="fa-solid fa-capsules"></i>
+                                        <span class="link-text">Products</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadOrderList" class="nav-link">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span class="link-text">Order</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadPaymentList" class="nav-link">
+                                        <i class="fa-solid fa-money-bill-wave"></i>                                        
+                                        <span class="link-text">Payment</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadDiscountList" class="nav-link">
+                                        <i class="fa-solid fa-percent"></i>
+                                        <span class="link-text">Discount</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -49,29 +72,16 @@
                                         <span class="link-text">Categories</span>
                                     </a>
                                 </li>
-
                                 <li class="nav-list-item">
-                                    <a href="productList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-capsules"></i>
-                                        <span class="link-text">Products</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
-                                    <a href="discountList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-percent"></i>
-                                        <span class="link-text">Discount</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
-                                    <a href="orderList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-file-invoice"></i>
-                                        <span class="link-text">Order</span>
+                                    <a href="MainController?action=LoadBrandList" class="nav-link">
+                                        <i class="fa-solid fa-tag"></i>
+                                        <span class="link-text">Brand</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
                                     <a href="LogoutController" class="nav-link">
                                         <i class="fa-solid fa-right-from-bracket"></i>
-                                        <span class="link-text">Log out</span>
+                                        <span class="link-text">Logout</span>
                                     </a>
                                 </li>
                             </ul>
@@ -90,64 +100,97 @@
                         <div class="welcome">
                             <%
 
-                                AdminOrderDTO a = new AdminOrderDTO();
-                                if (request.getAttribute("Order") != null) {
-                                    a = (AdminOrderDTO) request.getAttribute("Order");
+                                OrderDTO ord = new OrderDTO();
+                                if (request.getAttribute("ORDER") != null) {
+                                    ord = (OrderDTO) request.getAttribute("ORDER");
                                 }
 
-                                if (a != null) {
-
+                                if (ord != null) {
                             %>
-                            <div class="table-tilte">Customer Information</div>
+                            <div class="table-tilte"> 
+                                <a href="orderList.jsp" class="nav-link">
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                </a>
+                                Customer Information
+                            </div>
                             <div class="row">
                                 <div class="col">
                                     <dl class="row">
                                         <dt class="col-sm-3">User Name</dt>
-                                        <dd class="col-sm-9"> <%=a.getFullName()%></dd>
+                                        <dd class="col-sm-9"> <%=ord.getCustomer().getFullName()%></dd>
 
                                         <dt class="col-sm-3">Address</dt>
                                         <dd class="col-sm-9">
-                                            <p>Street: <%=a.getStreet()%> </p>
-                                            <p>District: <%=a.getDistrict()%> </p>
-                                            <p>City: <%=a.getCity()%> </p>
+                                            <p><%=ord.getStreet()%> </p>
+                                            <p><%=ord.getDistrict()%> </p>
+                                            <p><%=ord.getCity()%> </p>
                                         </dd>
 
                                         <dt class="col-sm-3">Phone</dt>
-                                        <dd class="col-sm-9"> <%=a.getPhone()%></dd>
+                                        <dd class="col-sm-9"> <%=ord.getCustomer().getPhoneNumber()%></dd>
 
                                         <dt class="col-sm-3">Email</dt>
-                                        <dd class="col-sm-9"><%=a.getEmail()%></dd>
+                                        <dd class="col-sm-9"><%=ord.getCustomer().getEmail()%></dd>
+                                    </dl>
                                 </div>
                                 <div class="col">
-                                    <dt class="col-sm-3">Payment Method</dt>
-                                    <dd class="col-sm-9"><%=a.getPayMethod()%></dd>
-                                    <dt class="col-sm-3">Shipment Method</dt>
-                                    <dd class="col-sm-9"><%=a.getShipMethod()%></dd>
-                                    <dt class="col-sm-3">Total Price</dt>
-                                    <dd class="col-sm-9"><%=a.getTotalPrice()%></dd>
-                                    <dt class="col-sm-3">Date</dt>
-                                    <dd class="col-sm-9"> <%=a.getCreateAt()%></dd>
-                                    <dt class="col-sm-3">Status</dt>
-                                    <dd class="col-sm-9"><%=a.getStatus()%></dd>  
+                                    <dl class="row">
+                                        <dt class="col-sm-4">Payment Method</dt>
+                                        <dd class="col-sm-8"><%=ord.getPaymentMethod()%></dd>
+                                        <dt class="col-sm-4">Shipment Method</dt>
+                                        <dd class="col-sm-8"><%=ord.getShippingMethod()%></dd>
+                                        <dt class="col-sm-4">Date</dt>
+                                        <dd class="col-sm-8"> <%=ord.getCreatedAt()%></dd>
+                                        <dt class="col-sm-4">Status</dt>
+                                        <dd class="col-sm-8"><%=ord.getOrderStatus()%></dd>
+                                        <dt class="col-sm-9">
+                                            <div class="table-tilte">
+                                            </div>
+                                        </dt>
+                                        <dt class="col-sm-4">Total Price</dt>
+                                        <dd class="col-sm-8" style="font-size: 25px"><%= String.format("%.2f", ord.getTotalPrice())%>$</dd>  
+                                    </dl>
                                 </div>
                             </div>
 
-
-                            </dl>
-                            <%}%>                       
+                            <%
+                                }
+                            %>     
                         </div>
+                        <%
+                            ShipmentDTO ship = (ShipmentDTO) request.getAttribute("SHIP_STATUS");
+                            if (ship != null) {
+                        %>
+                        <div class="welcome">
+                            <div class="table-tilte">Shipping status</div>
+                            <div class="row">
+                                <div class="col">
+                                    <dl class="row">
+                                        <dt class="col-sm-5">Expected ship date</dt>
+                                        <dd class="col-sm-5"> <%=ship.getFormattedEstimatedArrival()%></dd>
+                                    </dl>
+                                </div>
+                                <div class="col">
+                                    <dl class="row">
+                                        <dt class="col-sm-2">Status</dt>
+                                        <dd class="col-sm-10"> <%=ship.getShipmentStatus()%></dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>         
+
+                        <%
+                            }
+                        %>
+
                         <div class="welcome">
                             <%
-                                ArrayList<AdminOrderDetailDTO> listOrderDetail = new ArrayList<>();
-
-                                if (request.getAttribute(
-                                        "listOrderDetail") != null) {
-                                    listOrderDetail = (ArrayList<AdminOrderDetailDTO>) request.getAttribute("listOrderDetail");
+                                List<OrderDetailDTO> listOrderDetail = new ArrayList<>();
+                                if (request.getAttribute("ORDER_DETAILS") != null) {
+                                    listOrderDetail = (List<OrderDetailDTO>) request.getAttribute("ORDER_DETAILS");
                                 }
 
-                                if (listOrderDetail
-                                        != null) {
-
+                                if (listOrderDetail != null && !listOrderDetail.isEmpty()) {
                             %>
                             <div class="table-tilte">Order Detail Table</div>
 
@@ -163,26 +206,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <%                                        for (AdminOrderDetailDTO od : listOrderDetail) {
+                                    <%  for (OrderDetailDTO od : listOrderDetail) {
                                             float totalPrice = 0;
-                                            totalPrice = od.getSalePrice() * od.getQuantity();
-
+                                            totalPrice = od.getProduct().getPrice() * (1 - od.getProduct().getSale()) * od.getQuantity();
                                     %>
 
                                     <tr>
-                                        <td><img src="<%=od.getPathImg()%>" class="img-thumbnail img-items" alt="..."></td>                                       
-                                        <td><%=od.getProductName()%></td>
-                                        <td><%=od.getUnitPrice()%></td>
-                                         <td><%=od.getSalePrice()%></td>
+                                        <td class="cart-pic first-row"><img src="<%=od.getProduct().getAvatarPath()%>" style="height: 100px; width: 100px" alt=""></td>                                       
+                                        <td><%=od.getProduct().getName()%></td>
+                                        <td><%=od.getProduct().getPrice()%></td>
+                                        <td><%= String.format("%.2f", od.getProduct().getPrice() * (1 - od.getProduct().getSale()))%>$</td>
                                         <td><%=od.getQuantity()%></td>
-                                        <td>
-                                            <%=totalPrice%>                                           
-                                        </td>
-
+                                        <td><%=String.format("%.2f", totalPrice)%>$</td>    
                                     </tr>
                                     <%}%>
                                 </tbody>
                             </table> 
+
 
                             <%}%>
 

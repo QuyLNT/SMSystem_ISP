@@ -6,11 +6,7 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +36,11 @@ public class UpdateUserController extends HttpServlet {
             String phone = request.getParameter("phone");
             String sex = request.getParameter("sex");
             String email = request.getParameter("email");
+
+            String currentPassword = request.getParameter("currentPassword");
+            String newPassword = request.getParameter("newPassword");
+            String confirmNewPassword = request.getParameter("confirmNewPassword");
+
             HttpSession session = request.getSession();
             UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
             String userName = user.getUserName();
@@ -55,47 +56,62 @@ public class UpdateUserController extends HttpServlet {
                 hasError = true;
             }
 
-            if (pass == null || pass.isEmpty()) {
-                request.setAttribute("PASS_ERROR", "Can't be blank ");
-                hasError = true;
-            }
-            if (!pass.isEmpty() && pass.length() < 3) {
-                request.setAttribute("PASS_ERROR", "Must be at least 3 characters long!");
-                hasError = true;
+            if (newPassword != null && !newPassword.isEmpty()) {
+                // Kiểm tra mật khẩu hiện tại
+                if (currentPassword == null || !currentPassword.equals(user.getPassword())) {
+                    request.setAttribute("CURRENT_PASS_ERROR", "Current password is incorrect.");
+                    hasError = true;
+                }
+
+                // Kiểm tra xác nhận mật khẩu mới
+                if (!newPassword.equals(confirmNewPassword)) {
+                    request.setAttribute("PASS_ERROR", "New password does not match confirmation.");
+                    hasError = true;
+                } else if (newPassword.length() < 3) {
+                    request.setAttribute("PASS_ERROR", "New password must be at least 3 characters long.");
+                    hasError = true;
+                }
             }
 
             if (phone == null || phone.isEmpty()) {
                 request.setAttribute("PHONE_ERROR", "Can't be blank!");
                 hasError = true;
             }
-            if (!phone.isEmpty() && !phone.matches("^\\d{10,15}$")) {
-                request.setAttribute("PHONE_ERROR", "Invalid phone number! Must contain only digits and be between 10 to 15 characters.");
+            if (!phone.isEmpty() && !phone.matches("^(09|08|07|05|03)\\d{8}$")) {
+                request.setAttribute("PHONE_ERROR", "Phone number must be 10 digits and start with 09, 08, 07, 05, or 03.");
                 hasError = true;
             }
 
             if (sex == null || sex.isEmpty()) {
-                request.setAttribute("SEX_ERROR", "Can't be blank!");
+                request.setAttribute("SEX_ERROR", "Please select your gender!");
+                hasError = true;
+            } else if (sex.equals("")) {
+                request.setAttribute("SEX_ERROR", "Please select your gender!");
                 hasError = true;
             }
+
             if (email == null || email.isEmpty()) {
                 request.setAttribute("EMAIL_ERROR", "Can't be blank!");
                 hasError = true;
-            }
-            if (!email.isEmpty() && !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-                request.setAttribute("EMAIL_ERROR", "Invalid email format!");
+            } else if (!email.isEmpty() && !email.matches("^(?=.*[a-zA-Z])[a-zA-Z0-9._%+-]{6,}@gmail\\.com$")) {
+                request.setAttribute("EMAIL_ERROR", "Email must be at least 6 characters before @gmail.com and contain letters (not just numbers).");
                 hasError = true;
             }
 
             if (!hasError) {
-                boolean checkUserAfter = dao.userAfterUpdate(userInput);
-                if (checkUserAfter) {
+                UserDTO updatedUser = new UserDTO(userName, fullName, user.getPassword(), phone, sex, email);
+                boolean isUpdated = dao.userAfterUpdate(updatedUser, newPassword);
+
+                if (isUpdated) {
                     url = SUCCESS;
                     request.setAttribute("MESSAGE", "Update Successfully");
                     user.setFullName(fullName);
-                    user.setPassword(pass);
                     user.setPhoneNumber(phone);
                     user.setSex(sex);
                     user.setEmail(email);
+                    if (newPassword != null && !newPassword.isEmpty()) {
+                        user.setPassword(newPassword);
+                    }
                 }
             } else {
                 url = ERROR;

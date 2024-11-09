@@ -6,26 +6,20 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.category.BrandDAO;
-import model.category.BrandDTO;
 import model.category.UserObjectDAO;
 import model.category.UserObjectDTO;
-import model.discount.DiscountDAO;
-import model.discount.DiscountDTO;
+import model.order.OrderDAO;
+import model.order.OrderDTO;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
-import model.product.ProductImageDAO;
 import model.product.ProductVariantDAO;
-import model.product.ProductVariantDTO;
 
 /**
  *
@@ -53,29 +47,40 @@ public class LoadManagerHomeDataController extends HttpServlet {
             ProductDAO productDao = new ProductDAO();
             ProductVariantDAO variantDao = new ProductVariantDAO();
             UserObjectDAO uObDao = new UserObjectDAO();
-
-            List<ProductDTO> productList;
+            OrderDAO ordDAO = new OrderDAO();
             List<ProductDTO> stockOfProduct;
             List<UserObjectDTO> uObList;
+            List<OrderDTO> ordList;
 
-            productList = productDao.getAllProduct();
             stockOfProduct = variantDao.getStockByProduct();
             uObList = uObDao.getAllUserObject();
+
+            ordList = ordDAO.getAllOrder();
+            int allOrder = ordList.size();
+            int compelteCount = 0;
+            int notCompleteCount = 0;
+            for (OrderDTO o : ordList) {
+                if (o.getOrderStatus().equalsIgnoreCase("Completed")) {
+                    compelteCount++;
+                }
+                if (o.getOrderStatus().equalsIgnoreCase("Not Completed")) {
+                    notCompleteCount++;
+                }
+            }
 
             int allStock = 0;
             for (ProductDTO p : stockOfProduct) {
                 allStock += p.getTotalStock();
             }
+            HttpSession session = request.getSession();
+            session.setAttribute("TOTAL_ORDER", allOrder);
+            session.setAttribute("COMP_ORDER", compelteCount);
+            session.setAttribute("NOT_COMP_ORDER", notCompleteCount);
+            session.setAttribute("ALL_QUANTITY", allStock);
+            session.setAttribute("STOCK_OF_PRODUCT", stockOfProduct);
+            session.setAttribute("USER_OBJECT_LIST", uObList);
 
-            if (productList != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("ALL_QUANTITY", allStock);
-                session.setAttribute("STOCK_OF_PRODUCT", stockOfProduct);
-                session.setAttribute("USER_OBJECT_LIST", uObList);
-
-                url = SUCCESS;
-
-            }
+            url = SUCCESS;
 
         } catch (ClassNotFoundException | SQLException e) {
             log("Error at LoadProductController: " + e.toString());

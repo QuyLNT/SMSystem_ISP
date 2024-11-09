@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
 import model.product.ProductImageDAO;
+import model.product.ProductVariantDAO;
 
 /**
  *
@@ -35,33 +36,38 @@ public class SearchProductByNameController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private static final String ERROR = "productList.jsp";
-    private static final String SUCCES = "productList.jsp";
+    private static final String SUCCESS = "productList.jsp";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url= ERROR;
+        String url = ERROR;
         try {
             String searchTerm = request.getParameter("searchProductName");
             ProductDAO productDao = new ProductDAO();
             ProductImageDAO imageDao = new ProductImageDAO();
+            ProductVariantDAO variantDao = new ProductVariantDAO();
             List<ProductDTO> products = productDao.searchProductsByName(searchTerm);
-            for(ProductDTO p: products){
-                p.setListImages(imageDao.getImageByProduct(p.getProductId()));
-            }
+            
             if (products.isEmpty()) {
                 request.setAttribute("NO_RESULTS", "No search results");
-            } else {
                 HttpSession session = request.getSession();
-                session.setAttribute("PRODUCT_LIST", products);
-                url = SUCCES;
+                session.removeAttribute("PRODUCT_LIST");
+            } else {
+                for (ProductDTO p : products) {
+                    p.setListImages(imageDao.getImageByProduct(p.getProductId()));
+                    p.setListVariants(variantDao.getVariantByProduct(p.getProductId()));
+                }
+                HttpSession session = request.getSession();
+                session.setAttribute("PRODUCT_LIST", products); // Lưu vào session
+                url = SUCCESS;
             }
             
         } catch (SQLException | ClassNotFoundException e) {
             request.setAttribute("err", "Failed to search for products: " + e.getMessage());
-        }finally{
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-
         
     }
 

@@ -1,9 +1,6 @@
-<%-- 
-    Document   : index
-    Created on : Jun 18, 2024, 10:17:29 PM
-    Author     : DELL
---%>
 
+<%@page import="model.product.ProductImageDTO"%>
+<%@page import="model.product.ProductVariantDTO"%>
 <%@page import="model.product.ProductError"%>
 <%@page import="java.util.Map"%>
 <%@page import="model.product.ProductDAO"%>
@@ -26,8 +23,10 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
-        <!--        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />-->
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style1.css" type="text/css">
+
 
     </head>
     <body>
@@ -37,10 +36,12 @@
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
-                                <h3>
-                                    <img src="img/logoweb.png" alt="" width="32px" height="32px"/>
-                                    <span class="title-text">SMS</span>
-                                </h3>
+                                <a href="MainController?action=HomePage">
+                                    <h3>
+                                        <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
+                                        <span class="title-text">SMSystem</span>
+                                    </h3>
+                                </a>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
@@ -50,15 +51,21 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="categoriesList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-list"></i>
-                                        <span class="link-text">Categories</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
                                     <a href="MainController?action=LoadProductList" class="nav-link">
                                         <i class="fa-solid fa-capsules"></i>
                                         <span class="link-text">Products</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadOrderList" class="nav-link">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span class="link-text">Order</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadPaymentList" class="nav-link">
+                                        <i class="fa-solid fa-money-bill-wave"></i>                                        
+                                        <span class="link-text">Payment</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -68,9 +75,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="MainController?action=LoadBrandList" class="nav-link">
-                                        <i class="fa-solid fa-file-invoice"></i>
-                                        <span class="link-text">Order</span>
+                                    <a href="categoriesList.jsp" class="nav-link">
+                                        <i class="fa-solid fa-list"></i>
+                                        <span class="link-text">Categories</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -82,7 +89,7 @@
                                 <li class="nav-list-item">
                                     <a href="LogoutController" class="nav-link">
                                         <i class="fa-solid fa-right-from-bracket"></i>
-                                        <span class="link-text">Log out</span>
+                                        <span class="link-text">Logout</span>
                                     </a>
                                 </li>
                             </ul>
@@ -122,9 +129,7 @@
                                 if (ms != null || err != null) {
 
                             %>
-                            <div class="mes-suc">
-                                <%=ms%> <%=err%>
-                            </div>                          
+                            <p style="color: black; padding-top: 15px"><%=ms%> <%=err%></p>                        
                             <%}%>
                             <!-- Modal Add -->
 
@@ -203,9 +208,9 @@
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Warrant Period (Month)</span>
-                                                    <input name="warrantyPeriod" type="number" step="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
+                                                    <input name="warrantyPeriod" type="number" step="1" min="0" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
                                                 </div>
-                                                <div class="input-group input-group-sm mb-3">
+                                                <div class="input-group input-group-sm mb-3">   
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Detail</span>
                                                     <textarea name="detail" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" ></textarea>
                                                 </div>
@@ -244,10 +249,47 @@
                                     searchProductName = "";
                                 }
                             %>
-                            <div class="search-form">
-                                <form action="MainController" method="POST">
-                                    Search Product: <input type="text" name="searchProductName" placeholder="Enter product name" value="<%= searchProductName%>"/>
-                                    <button type="submit" name="action" value="SearchProductName">Search</button>
+                            <div class="welcome">
+                                <div class="search-form">
+                                    <form action="MainController" method="POST">
+
+                                        Search Product: <input type="text" name="searchProductName" placeholder="Enter product name" value="<%= searchProductName%>"/>
+                                        <button type="submit" name="action" value="SearchProductName" class="btn btn-primary">Search</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <%
+                                String cate = request.getParameter("CateFilter");
+                                String brandFilter = request.getParameter("BrandFilter");
+                                if (cate == null) {
+                                    cate = "";
+                                }
+                                if (brandFilter == null || brandFilter == "") {
+                                    brandFilter = "0";
+                                }
+                                int brandId = Integer.parseInt(brandFilter);
+                            %>
+                            <div class="welcome">
+                                <form action="MainController" class="d-flex row justify-content-around">
+                                    <div class="select-option-province col-lg-6">
+                                        <select name="CateFilter">
+                                            <option value="" <%= cate.equals("") == true ? "selected" : ""%>>All Categories</option>                            
+                                            <option value="1" <%= cate.equals("1") == true ? "selected" : ""%>>Men Shoes</option>
+                                            <option value="2" <%= cate.equals("2") == true ? "selected" : ""%>>Women Shoes</option>
+                                            <option value="3"<%= cate.equals("3") == true ? "selected" : ""%>>Kids Shoes</option>
+                                        </select>
+                                    </div>
+                                    <div class="select-option-province col-lg-6 mb-3">
+                                        <select name="BrandFilter">
+                                            <option value="" <%= brandFilter.equals("0") == true ? "selected" : ""%>>All Brand</option>
+                                            <%
+                                                for (BrandDTO brand : brandList) {
+                                            %>
+                                            <option value="<%= brand.getBrandId()%>" <%= brandId == brand.getBrandId() == true ? "selected" : ""%>><%= brand.getBrandName()%></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                    <button type="submit" name="action" value="FilterProduct"class="btn btn-primary col-lg-3 ">Filter</button>
                                 </form>
                             </div>
                         </div>
@@ -268,8 +310,7 @@
                                         <th>Brand</th>
                                         <th>Price</th>
                                         <th>Sale</th>
-                                        <th>Sale Price</th>
-                                        <th>Hot</th>
+                                        <th>Is Hot</th>
                                         <th>Stock</th>
                                         <th>Warranty Period</th>
                                         <th>Status</th>
@@ -282,7 +323,7 @@
                                             for (ProductDTO product : productList) {
                                     %>
                                     <tr>
-                                        <td><img src="<%= product.getAvatarPath()%>" alt="<%= product.getName()%>" style="width: 70px; height: 70px;"></td>
+                                        <td><img src="<%= product.getAvatarPath()%>" alt="" style="width: 70px; height: 70px;"></td>
                                         <td><%= product.getName()%></td>
                                         <td><%
                                             String userObjectName = "";
@@ -315,16 +356,15 @@
                                             <%= String.format("%.0f%%", roundedSalePercentage)%>
                                         </td>
                                         <td>
-                                            <%= String.format("%.2f", salePrice)%>$
-                                        </td>
-                                        <td>
                                             <form action="MainController" method="POST">
                                                 <input type="hidden" name="productId" value="<%= product.getProductId()%>"/>
                                                 <input type="hidden" name="action" value="toggleFlashSale"/>
-                                                <select name="Hot" onchange="this.form.submit()">
-                                                    <option value="1" <%= product.isHot() == true ? "selected" : ""%>>Active</option>
-                                                    <option value="0" <%= product.isHot() == false ? "selected" : ""%>>Inactive</option>
-                                                </select>
+                                                <div class="select-option-province">
+                                                    <select name="Hot" onchange="this.form.submit()">
+                                                        <option value="1" <%= product.isHot() == true ? "selected" : ""%>>Active</option>
+                                                        <option value="0" <%= product.isHot() == false ? "selected" : ""%>>Inactive</option>
+                                                    </select>
+                                                </div>
                                             </form>
                                         </td>
                                         <td>
@@ -338,7 +378,6 @@
                                                         }
                                                     }
                                                 }
-
                                             %>
                                             <%=stock%>
                                         </td>
@@ -349,10 +388,12 @@
                                             <form action="MainController" method="POST">
                                                 <input type="hidden" name="productId" value="<%= product.getProductId()%>"/>
                                                 <input type="hidden" name="action" value="toggleProductStatus"/>
-                                                <select name="Product_Status" onchange="this.form.submit()">
-                                                    <option value="1" <%= product.isProductStatus() == true ? "selected" : ""%>>Active</option>
-                                                    <option value="0" <%= product.isProductStatus() == false ? "selected" : ""%>>Inactive</option>
-                                                </select>
+                                                <div class="select-option-province">
+                                                    <select name="Product_Status" onchange="this.form.submit()">
+                                                        <option value="1" <%= product.isProductStatus() == true ? "selected" : ""%>>Active</option>
+                                                        <option value="0" <%= product.isProductStatus() == false ? "selected" : ""%>>Inactive</option>
+                                                    </select>
+                                                </div>
                                             </form>
                                         </td>
                                         <td>
@@ -369,7 +410,7 @@
                                                             <h1 class="modal-title fs-5" id="updateModalLabel">Update product '<%=product.getName()%>' information</h1>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-                                                        <form action="MainController" method="POST">
+                                                        <form action="MainController" method="GET">
                                                             <div class="modal-body">
                                                                 <input type="hidden" name="productId"  value="<%=product.getProductId()%>" />
                                                                 <div class="input-group input-group-sm mb-3">
@@ -430,7 +471,39 @@
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Warranty Period</span>
                                                                     <input name="warranty" type="number" step="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= product.getWarrantyPeriod()%>">
                                                                 </div>
+                                                                <% List<ProductImageDTO> imageList = product.getDetailImage();
+                                                                    if (imageList != null) {
+                                                                %>
+
+
+                                                                <%-- Lặp qua từng hình ảnh để tạo input ẩn cho mỗi imageId --%>
+                                                                <% for (ProductImageDTO image : imageList) {%>
+                                                                <input type="hidden" name="imageId" value="<%= image.getImageId()%>"/>
+                                                                <% }%>
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 1 (URL)</span>
+                                                                    <input name="productImage1" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(0).getImagePath()%>" >
+                                                                </div>
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 2 (URL)</span>
+                                                                    <input name="productImage2" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(1).getImagePath()%>">
+                                                                </div>
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 3 (URL)</span>
+                                                                    <input name="productImage3" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(2).getImagePath()%>">
+                                                                </div>
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 4 (URL)</span>
+                                                                    <input name="productImage4" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(3).getImagePath()%>">
+                                                                </div>
+                                                                <div class="input-group input-group-sm mb-3">
+                                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 5 (URL)</span>
+                                                                    <input name="productImage5" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(4).getImagePath()%>">
+                                                                </div>
                                                             </div>
+                                                            <%
+                                                                }
+                                                            %>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                 <input type="submit" name="action" value="Update Product" class="btn btn-primary"/>
@@ -439,54 +512,74 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td>
-
-
+                                      
                                             <!-- Nút Xem Chi Tiết Sản Phẩm -->
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal<%= product.getProductId()%>">
-                                                <i class="fas fa-eye"></i>
+                                                <i class="fas fa-eye"></i> 
                                             </button>
-
                                             <!-- Modal Chi Tiết Sản Phẩm (View Modal) -->
-                                            <div class="modal fade" id="viewModal<%= product.getProductId()%>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="viewModal<%= product.getProductId()%>" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="deleteModalLabel">Size product detail</h1>
+                                                            <h1 class="modal-title fs-5" id="viewModalLabel">Size product detail</h1>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <form action="DeleteProductController" method="POST">
+                                                        </div>                      
+                                                        <form action="MainController" method="GET">
+                                                            <input type="hidden" name="productId"  value="<%=product.getProductId()%>" />
                                                             <div class="modal-body">
-                                                                Name: 
-                                                                <div class="row">
-                                                                    <div class="col-sm-6">Size</div>
-                                                                    <div class="col-sm-6">Stock</div>
+                                                                <h5>Name: <%= product.getName()%></h5>
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Size</th>
+                                                                            <th>Stock</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <%
+                                                                            List<ProductVariantDTO> productVariants = product.getListVariants();
+                                                                            if (productVariants != null && !productVariants.isEmpty()) {
+                                                                                for (ProductVariantDTO variant : productVariants) {
+                                                                        %>
+                                                                        <tr>
+                                                                            <td><%= variant.getSize()%></td>
+                                                                            <td>
+                                                                                <input type="hidden" name="variantId"  value="<%=variant.getVariantId()%>" />
+                                                                                <input type="number" name="stock" value="<%= variant.getStock()%>" min="0" required=""
+                                                                                       style="border: none; outline: none;"/>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <%
+                                                                                }
+                                                                            }
+                                                                        %>
+                                                                    </tbody>
+                                                                </table>
+                                                                <div class="modal-footer">
+                                                                    <!-- Nút mở Modal Add new Brand -->
+                                                                    <input type="submit" name="action" value="Update Stock" class="btn btn-primary" />
+                                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSizeModal<%= product.getProductId()%>">
+                                                                        <i class="fa-solid fa-plus"></i> Add new Size
+                                                                    </button>
+                                                                    <!-- Nút đóng modal hiện tại -->
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                 </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <!-- Nút mở Modal Add new Brand -->
-                                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
-                                                                    <i class="fa-solid fa-plus"></i> Add new Size
-                                                                </button>
-
-                                                                <!-- Nút đóng modal hiện tại -->
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                             </div>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <!-- Modal Add New Brand để thêm Size và Stock -->
-                                            <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="addSizeModal<%= product.getProductId()%>" tabindex="-1" aria-labelledby="addSizeModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">  
-                                                            <h1 class="modal-title fs-5" id="addModalLabel">Add Size and Stock</h1>
+                                                            <h1 class="modal-title fs-5" id="addSizeModalLabel">Add Size and Stock</h1>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-                                                        <form action="MainController" method="POST">
+                                                        <form action="MainController" method="POST">                                            
+                                                            <input type="hidden" name="productId"  value="<%=product.getProductId()%>" />
                                                             <div class="modal-body">
                                                                 <!-- Input cho Size -->
                                                                 <div class="input-group input-group-sm mb-3">
@@ -500,7 +593,9 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary-grey" data-bs-toggle="modal" data-bs-target="#viewModal<%= product.getProductId()%>">
+                                                                    Back
+                                                                </button>                                                                
                                                                 <input type="submit" name="action" value="Add Size and Stock" class="btn btn-primary"/>
                                                             </div>
                                                         </form>
@@ -508,6 +603,37 @@
                                                 </div>
                                             </div>
 
+
+                                            <!-- Nút Xóa -->
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= product.getProductId()%>">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+
+                                            <!-- Modal Xóa -->
+                                            <div class="modal fade" id="deleteModal<%= product.getProductId()%>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="deleteModalLabel">Confirm product deletion</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form action="DeleteProductController" method="POST">
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="productId" value="<%= product.getProductId()%>" />
+                                                                Are you sure you want to delete the product '<%= product.getName()%>' and all related images?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                                                <input type="hidden" name="productId" value="<%= product.getProductId()%>" />
+                                                                <input type="hidden" name="action" value="DeleteProduct" />
+                                                                <button type="submit" class="btn btn-danger">Delete</button>
+
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     <%
@@ -517,15 +643,21 @@
                                 </tbody>
                             </table>
                             <% } else { %>
-                            <p>No products found.</p>
-                            <% }%>
+                            <%
+                                String noResultsMessage = (String) request.getAttribute("NO_RESULTS");
+                                if (noResultsMessage != null) {
+                            %>
+                            <div class="alert alert-danger" style="margin-top: 10px;">
+                                <%= noResultsMessage%>
+                            </div>
+                            <%
+                                }
+                            %>                            <% }%>
                         </div>
                     </div>
-
                 </div>
 
             </section>
-
 
         </main>
 

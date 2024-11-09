@@ -1,8 +1,4 @@
-<%-- 
-    Document   : index
-    Created on : Jun 18, 2024, 10:17:29 PM
-    Author     : DELL
---%>
+
 
 <%@page import="model.product.ProductDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,12 +7,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SM Shop</title>
-        
+        <title></title>
         <link rel="stylesheet" type="text/css" href="css/home.css"/>
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
+
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     </head>
     <body>
@@ -26,10 +24,12 @@
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
-                                <h3>
-                                    <img src="img/logoweb.png" alt="" width="100%" height="100%"/>
-                                    <span class="title-text">SMS</span>
-                                </h3>
+                                <a href="MainController?action=HomePage">
+                                    <h3>
+                                        <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
+                                        <span class="title-text">SMSystem</span>
+                                    </h3>
+                                </a>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
@@ -47,7 +47,7 @@
                                 <li class="nav-list-item">
                                     <a href="LogoutController" class="nav-link">
                                         <i class="fa-solid fa-right-from-bracket"></i>
-                                        <span class="link-text">Log out</span>
+                                        <span class="link-text">Logout</span>
                                     </a>
                                 </li>
                             </ul>
@@ -80,7 +80,7 @@
                                     </div>
                                 </div>
                             </div>
-            
+
                             <!-- Right Table for Other Metrics -->
                             <div class="col-md-4">
                                 <div class="row">
@@ -110,7 +110,7 @@
                                                         <p class="card-text">${requestScope.MANAGER_ACCOUNT}</p>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
 
@@ -132,7 +132,7 @@
                                                         <p class="card-text">${requestScope.CUSTOMER_ACCOUNT}</p>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
 
@@ -147,7 +147,7 @@
                                                         <p class="card-text">${requestScope.SHIPPER_ACCOUNT}</p>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
 
@@ -159,7 +159,7 @@
                     </div>
                 </div>
             </section>
-            
+
         </main>
 
         <script src="js/app.js"></script>

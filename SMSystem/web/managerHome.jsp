@@ -1,8 +1,4 @@
-<%-- 
-    Document   : index
-    Created on : Jun 18, 2024, 10:17:29 PM
-    Author     : DELL
---%>
+
 
 <%@page import="java.util.List"%>
 <%@page import="model.product.ProductVariantDTO"%>
@@ -13,13 +9,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SM Shop</title>
-        
+
         <link rel="stylesheet" type="text/css" href="css/home.css"/>
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
-        <link rel="icon" href="img/logoweb.png" type="img/x-icon" />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     </head>
     <body>
@@ -29,10 +25,12 @@
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
-                                <h3>
-                                    <img src="img/logoweb.png" alt="" width="100%" height="100%"/>
-                                    <span class="title-text">SMS</span>
-                                </h3>
+                                <a href="MainController?action=HomePage">
+                                    <h3>
+                                        <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
+                                        <span class="title-text">SMSystem</span>
+                                    </h3>
+                                </a>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
@@ -42,15 +40,21 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="categoriesList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-list"></i>
-                                        <span class="link-text">Categories</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
                                     <a href="MainController?action=LoadProductList" class="nav-link">
                                         <i class="fa-solid fa-capsules"></i>
                                         <span class="link-text">Products</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadOrderList" class="nav-link">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span class="link-text">Order</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadPaymentList" class="nav-link">
+                                        <i class="fa-solid fa-money-bill-wave"></i>                                        
+                                        <span class="link-text">Payment</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -60,9 +64,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="MainController?action=LoadBrandList" class="nav-link">
-                                        <i class="fa-solid fa-file-invoice"></i>
-                                        <span class="link-text">Order</span>
+                                    <a href="categoriesList.jsp" class="nav-link">
+                                        <i class="fa-solid fa-list"></i>
+                                        <span class="link-text">Categories</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -74,7 +78,7 @@
                                 <li class="nav-list-item">
                                     <a href="LogoutController" class="nav-link">
                                         <i class="fa-solid fa-right-from-bracket"></i>
-                                        <span class="link-text">Log out</span>
+                                        <span class="link-text">Logout</span>
                                     </a>
                                 </li>
                             </ul>
@@ -90,9 +94,6 @@
                         </button>
                     </div>
                     <div class=" container">
-
-
-
                         <div class="welcome">
                             <div class="container text-center">
                                 <div class="row">
@@ -116,7 +117,7 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <%
-                                                        
+
                                                     %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Revenue</h5>
@@ -125,7 +126,7 @@
                                                 </div>
                                             </div>
                                         </div></div>
-                                                            
+
                                 </div>
                             </div>
                         </div>
@@ -139,13 +140,9 @@
                                                     <img src="https://i.pinimg.com/564x/e9/fe/65/e9fe6586390ead07047dcc4dea84769a.jpg" class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <%
-
-                                                    %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Order</h5>   
-                                                        <p></p>                             
-                                                        <p class="card-text"><%=999%></p>
+                                                        <p class="card-text">${sessionScope.TOTAL_ORDER}</p>
                                                         <p></p>
                                                     </div>
                                                 </div>
@@ -157,12 +154,9 @@
                                                     <img src="img/tick.png"  class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <%
-
-                                                    %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Order completed</h5>
-                                                        <p class="card-text"><%=999%></p>
+                                                        <p class="card-text">${sessionScope.COMP_ORDER}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -173,13 +167,9 @@
                                                     <img src="img/x-icon.png" class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <%
-
-
-                                                    %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Order not completed</h5>
-                                                        <p class="card-text"><%=999%></p>
+                                                        <p class="card-text">${sessionScope.NOT_COMP_ORDER}</p>
 
                                                     </div>
                                                 </div>
@@ -194,7 +184,6 @@
 
 
         </main>
-
         <script src="js/app.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>

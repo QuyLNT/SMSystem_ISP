@@ -20,21 +20,23 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             />
-        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
     </head>
     <body>
         <main class="main-wrap">
-             <header class="main-head">
+            <header class="main-head">
                 <div class="main-nav">
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
-                                <h3>
-                                    <img src="img/logoweb.png" alt="" width="32px" height="32px"/>
-                                    <span class="title-text">SMS</span>
-                                </h3>
+                                <a href="MainController?action=HomePage">
+                                    <h3>
+                                        <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
+                                        <span class="title-text">SMSystem</span>
+                                    </h3>
+                                </a>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
@@ -44,15 +46,21 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="categoriesList.jsp" class="nav-link">
-                                        <i class="fa-solid fa-list"></i>
-                                        <span class="link-text">Categories</span>
-                                    </a>
-                                </li>
-                                <li class="nav-list-item">
                                     <a href="MainController?action=LoadProductList" class="nav-link">
                                         <i class="fa-solid fa-capsules"></i>
                                         <span class="link-text">Products</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadOrderList" class="nav-link">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span class="link-text">Order</span>
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a href="MainController?action=LoadPaymentList" class="nav-link">
+                                        <i class="fa-solid fa-money-bill-wave"></i>                                        
+                                        <span class="link-text">Payment</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -62,9 +70,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
-                                    <a href="MainController?action=LoadBrandList" class="nav-link">
-                                        <i class="fa-solid fa-file-invoice"></i>
-                                        <span class="link-text">Order</span>
+                                    <a href="categoriesList.jsp" class="nav-link">
+                                        <i class="fa-solid fa-list"></i>
+                                        <span class="link-text">Categories</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
@@ -76,7 +84,7 @@
                                 <li class="nav-list-item">
                                     <a href="LogoutController" class="nav-link">
                                         <i class="fa-solid fa-right-from-bracket"></i>
-                                        <span class="link-text">Log out</span>
+                                        <span class="link-text">Logout</span>
                                     </a>
                                 </li>
                             </ul>
@@ -99,23 +107,16 @@
                                 <i class="fa-solid fa-plus"></i> Add new Discount Code
                             </button>
                             <%
-                                String ms = "";
-                                String err = "";
-                                if (request.getAttribute("ms") != null) {
-                                    ms = (String) request.getAttribute("ms");
-                                }
-                                if (request.getAttribute("err") != null) {
-                                    err = (String) request.getAttribute("err");
-                                }
-                                if (ms != null || err != null) {
-
-
-                            %>
-                            <div class="mes-suc">
-                                <%=ms%>
-                                <%=err%>
-                            </div> 
-                            <%}%>
+                                List<DiscountDTO> discountList = (List<DiscountDTO>) session.getAttribute("DISCOUNT_LIST");
+                                if (discountList == null) {
+                                    discountList = new ArrayList<>();
+                                }%>
+                            <% if (request.getAttribute("ms") != null) {%>
+                            <div class="alert alert-success"><%= request.getAttribute("ms")%></div>
+                            <% }%>
+                            <% if (request.getAttribute("err") != null) {%>
+                            <div class="alert alert-danger"><%= request.getAttribute("err")%></div>
+                            <% }%>
                             <!-- Modal Add -->
 
                             <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
@@ -164,16 +165,11 @@
                         </div>
                         <div class="welcome">
                             <%
-                                List<DiscountDTO> discountList = (List<DiscountDTO>) session.getAttribute("DISCOUNT_LIST");
-                                if (discountList == null) {
-                                    discountList = new ArrayList<>();
-                               }
 
                                 if (discountList != null) {
 
                             %>
                             <div class="table-tilte">Discount Table</div>
-                            <form action="MainController" method="POST">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
@@ -190,57 +186,51 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%
-                                            int count=1 ;
+                                        <%                                            int count = 1;
                                             for (DiscountDTO discount : discountList) {
                                         %>
 
                                         <tr>
-                                        <td><%=count++%></td>
-                                        <td><%=discount.getDiscountCode()%></td>
-                                        <td><%=discount.getDetail()%></td>                                       
-                                        <td><%
-                                                double discountAmount =discount.getDiscountAmount() * 100;
-                                                double roundedPercentage = Math.ceil(discountAmount * 100) / 100.0;
-                                            %>
-                                            <%= String.format("%.0f%%", roundedPercentage)%>
-                                        </td>
-                                        <td><%=discount.getStartDay()%></td>
-                                        <td><%=discount.getEndDay()%></td>
-                                        <td><%=discount.getUsageLimit()%></td>
-                                        <td><%=discount.getUsed()%></td>                                                                                
-                                        <td>
-                                            <form action="MainController" method="POST">
-                                                <input type="hidden" name="discountId" value="<%= discount.getDiscountId()%>"/>
-                                                <input type="hidden" name="action" value="toggleDiscountStatus"/>
-                                                <select name="status" onchange="this.form.submit()">
-                                                    <option value="Active" <%= discount.getStatus().equalsIgnoreCase("Active")? "selected" : ""%>>Active</option>
-                                                    <option value="Expired" <%= discount.getStatus().equalsIgnoreCase("Expired")? "selected" : ""%>>Expired</option>
-                                                    <option value="Limit Use" <%= discount.getStatus().equalsIgnoreCase("Limit Use")? "selected" : ""%>>Limit Use</option>
-                                                </select>
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <form action="MainController" method="POST">
-                                                <input type="hidden" name="code"  value="<%=discount.getDiscountCode()%>" />
+                                            <td><%=count++%></td>
+                                            <td><%=discount.getDiscountCode()%></td>
+                                            <td><%=discount.getDetail()%></td>                                       
+                                            <td>
+                                                <%= discount.getDiscountAmount()%>$
+                                            </td>
+                                            <td><%=discount.getStartDay()%></td>
+                                            <td><%=discount.getEndDay()%></td>
+                                            <td><%=discount.getUsageLimit()%></td>
+                                            <td><%=discount.getUsed()%></td>                                                                                
+                                            <td>
+                                                <form action="MainController" method="POST">
+                                                    <input type="hidden" name="discountId" value="<%= discount.getDiscountId()%>"/>
+                                                    <input type="hidden" name="action" value="toggleDiscountStatus"/>                                                   
+                                                         <select name="status" onchange="this.form.submit()">
+                                                            <option value="Active" <%= discount.getStatus().equalsIgnoreCase("Active") ? "selected" : ""%>>Active</option>
+                                                            <option value="Expired" <%= discount.getStatus().equalsIgnoreCase("Expired") ? "selected" : ""%>>Expired</option>
+                                                            <option value="Limit Use" <%= discount.getStatus().equalsIgnoreCase("Limit Use") ? "selected" : ""%>>Limit Use</option>
+                                                        </select>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form action="MainController" method="POST">
+                                                    <input type="hidden" name="discountId"  value="<%=discount.getDiscountId()%>" />
 
-                                                <button type="submit" class="btn btn-primary" name="action" value="Remove">
-                                                    <i class="fa-solid fa-delete-left"></i>     
-                                                </button>
-                                            </form>
-                                        
-                                        </td>
-                                    </tr> 
-                                    <%}%>
+                                                    <button type="submit" class="btn btn-primary" name="action" value="Remove">
+                                                        <i class="fa-solid fa-delete-left"></i>     
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr> 
+                                        <%}%>
                                     </tbody>
                                 </table> 
-                            </form>
                             <%}%>
 
                         </div>
 
                     </div>
-
+                </div>
             </section>
 
 

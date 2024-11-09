@@ -10,13 +10,14 @@ package model.product;
  * @author Asus
  */
 public class ProductVariantDTO {
+
     private int variantId;
     private int productId;
-    private double size;
+    private float size;
     private int stock;
 
     // Constructor
-    public ProductVariantDTO(int variantId, int productId, double size, int stock) {
+    public ProductVariantDTO(int variantId, int productId, float size, int stock) {
         this.variantId = variantId;
         this.productId = productId;
         this.size = size;
@@ -28,11 +29,17 @@ public class ProductVariantDTO {
         this.stock = stock;
     }
 
+    public ProductVariantDTO(int productId, float size, int stock) {
+        this.productId = productId;
+        this.size = size;
+        this.stock = stock;
+    }
+
     // Default constructor
     public ProductVariantDTO() {
         this.variantId = 0;
         this.productId = 0;
-        this.size = 0.0;
+        this.size = 0;
         this.stock = 0;
     }
 
@@ -53,11 +60,11 @@ public class ProductVariantDTO {
         this.productId = productId;
     }
 
-    public double getSize() {
+    public float getSize() {
         return size;
     }
 
-    public void setSize(double size) {
+    public void setSize(float size) {
         this.size = size;
     }
 

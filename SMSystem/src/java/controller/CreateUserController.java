@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,7 +31,7 @@ public class CreateUserController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private static final String ERROR = "register.jsp";
-    private static final String SUCCESS = "login.jsp";
+    private static final String SUCCESS = "register.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -49,7 +48,7 @@ public class CreateUserController extends HttpServlet {
             String phoneNumber = request.getParameter("phoneNumber");
             String email = request.getParameter("email");
             String confirmPass = request.getParameter("confirmPass");
-            String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+            String emailRegex = "^(?=.*[a-zA-Z])[a-zA-Z0-9._%+-]{6,}@gmail\\.com$";
             boolean isEmailValid = email.matches(emailRegex);
 
             // Validate form parameters
@@ -68,10 +67,10 @@ public class CreateUserController extends HttpServlet {
                 request.setAttribute("err", "Phone number cannot be empty.");
                 checkValidation = false;
             } else {
-                String phoneRegex = "^[0-9]{10}$"; // Only allow exactly 10 digits
+                String phoneRegex = "^(09|08|07|05|03)\\d{8}$"; // Only allow exactly 10 digits
                 boolean isPhoneValid = phoneNumber.matches(phoneRegex);
                 if (!isPhoneValid) {
-                    request.setAttribute("err", "Phone number must be exactly 10 digits.");
+                    request.setAttribute("err", "Phone number must be 10 digits and start with 09, 08, 07, 05, or 03.");
                     checkValidation = false;
 
                 }
@@ -83,6 +82,7 @@ public class CreateUserController extends HttpServlet {
                 // Gọi phương thức createUser trong UserDAO để tạo mới user
                 boolean result = userDAO.createUser(user);
                 if (result) {
+                    request.setAttribute("ms", "Your account is ready. Enjoy your experience!.");
                     url = SUCCESS;
                 } else {
                     request.setAttribute("USER_ERROR", userError);
@@ -94,9 +94,9 @@ public class CreateUserController extends HttpServlet {
                 request.setAttribute("err", "Email or phone number is exits");
             }
 
-        }finally{
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
-           
+
         }
     }
 

@@ -6,9 +6,7 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +17,6 @@ import model.category.BrandDAO;
 import model.category.BrandDTO;
 import model.category.UserObjectDAO;
 import model.category.UserObjectDTO;
-import model.discount.DiscountDAO;
-import model.discount.DiscountDTO;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
 import model.product.ProductImageDAO;
@@ -42,40 +38,43 @@ public class LoadProductListController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR="productList.jsp";
-    private static final String SUCCESS="productList.jsp";
+    private static final String ERROR = "productList.jsp";
+    private static final String SUCCESS = "productList.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String url = ERROR;
-        try{
+        String url = ERROR;
+        try {
             ProductDAO productDao = new ProductDAO();
             BrandDAO brandDao = new BrandDAO();
-            UserObjectDAO uObDao= new UserObjectDAO();
+            UserObjectDAO uObDao = new UserObjectDAO();
             ProductVariantDAO variantDao = new ProductVariantDAO();
             ProductImageDAO imageDao = new ProductImageDAO();
             List<ProductDTO> productList;
             List<BrandDTO> brandList;
-            
             productList = productDao.getAllProduct();
             brandList = brandDao.getAllBrand();
-            for(ProductDTO p: productList){
+            List<UserObjectDTO> uObList;
+            uObList = uObDao.getAllUserObject();
+
+            for (ProductDTO p : productList) {
                 p.setListImages(imageDao.getImageByProduct(p.getProductId()));
+                List<ProductVariantDTO> productVariants = variantDao.getVariantByProduct(p.getProductId());
+                p.setListVariants(productVariants);
             }
-                        
-            if(productList !=null && brandList!=null){
+            if (productList != null && brandList != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("PRODUCT_LIST", productList);
                 session.setAttribute("BRAND_LIST", brandList);
-                
+                session.setAttribute("USER_OBJECT_LIST", uObList);
                 url = SUCCESS;
 
             }
-            
-            
-        }catch(ClassNotFoundException | SQLException e){
-           log("Error at LoadProductController: " +e.toString());
-        }finally{           
+
+        } catch (ClassNotFoundException | SQLException e) {
+            log("Error at LoadProductController: " + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

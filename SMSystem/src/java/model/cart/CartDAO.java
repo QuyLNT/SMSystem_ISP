@@ -22,15 +22,18 @@ import utils.DBUtils;
  */
 public class CartDAO {
 
-    private static final String DELETE_ITEM = "DELETE FROM cart_items WHERE cartItemId = ?";
+    private static final String DELETE_ITEM = "DELETE FROM cartItems WHERE cartItemId = ?";
     private static final String INSERT_CART = "INSERT INTO carts (customerId) VALUES (?)";
-    private static final String INSERT_CART_ITEM = "INSERT INTO cart_items (cartId, productId, quantity, size) VALUES (?, ?, ?, ?)";
+    private static final String INSERT_CART_ITEM = "INSERT INTO cartItems (cartId, productId, quantity, size) VALUES (?, ?, ?, ?)";
     private static final String GET_CART_ID = "SELECT cartId FROM carts WHERE customerId = ?";
-    private static final String GET_CART_ITEMS = "SELECT cartItemId, productId, quantity, size FROM cart_items WHERE cartId = ?";
-    private static final String UPDATE_CART_ITEM_QUANTITY = "UPDATE cart_items SET quantity = ? WHERE cartId = ? AND productId = ? AND size = ?";
-    private static final String EXISTS_CART_ITEMS = "SELECT cartItemId FROM cart_items WHERE cartId = ? AND productId = ? AND size = ?";
-    private static final String UPDATE_QUANTITY = "UPDATE cart_items SET quantity = ? WHERE cartItemId = ? ";
-    private static final String UPDATE_SIZE = "UPDATE cart_items SET size = ? WHERE cartItemId = ?";
+    private static final String GET_CART_ITEMS = "SELECT cartItemId, productId, quantity, size, isSelected FROM cartItems WHERE cartId = ?";
+    private static final String UPDATE_CART_ITEM_QUANTITY = "UPDATE cartItems SET quantity = ? WHERE cartId = ? AND productId = ? AND size = ?";
+    private static final String EXISTS_CART_ITEMS = "SELECT cartItemId FROM cartItems WHERE cartId = ? AND productId = ? AND size = ?";
+    private static final String UPDATE_QUANTITY = "UPDATE cartItems SET quantity = ? WHERE cartItemId = ? ";
+    private static final String UPDATE_SIZE = "UPDATE cartItems SET size = ? WHERE cartItemId = ?";
+    private static final String UPDATE_IS_SELECTED = "UPDATE cartItems SET isSelected = ? WHERE cartItemId = ?";
+    private static final String GET_SELECTED_ITEMS = "SELECT cartItemId, productId, quantity, size, isSelected FROM cartItems WHERE cartId = ? AND isSelected = 1";
+    private static final String DELETE_SELECTED_ITEM = "DELETE FROM cartItems WHERE cartId = ? AND isSelected = 1";
 
     public boolean deleteCartItem(int cartItemId) throws SQLException, ClassNotFoundException {
         Connection conn = null;
@@ -128,18 +131,18 @@ public class CartDAO {
                 if (rs.next()) {
                     int cartId = rs.getInt("cartId");
 
-                    // Lấy các sản phẩm từ bảng cart_items
+                    // Lấy các sản phẩm từ bảng cartItems
                     ps = conn.prepareStatement(GET_CART_ITEMS);
                     ps.setInt(1, cartId);
                     rs = ps.executeQuery();
 
                     List<CartItems> cartItemsList = new ArrayList<>();
                     while (rs.next()) {
-                        int productId = rs.getInt("productId");
                         int cartItemId = rs.getInt("cartItemId");
+                        int productId = rs.getInt("productId");
                         int quantity = rs.getInt("quantity");
                         float size = rs.getFloat("size");
-
+                        boolean isSelected = rs.getBoolean("isSelected");
                         // Khởi tạo ProductDTO theo productId nếu cần
                         ProductDTO product = new ProductDAO().getProductById(productId);
 
@@ -148,7 +151,9 @@ public class CartDAO {
                         item.setProduct(product);
                         item.setQuantity(quantity);
                         item.setSize(size);
+                        item.setIsSelected(isSelected);
                         cartItemsList.add(item);
+
                     }
 
                     // Khởi tạo CartDTO và set thông tin
@@ -360,6 +365,116 @@ public class CartDAO {
             }
         }
         return rowUpdated; // Trả về true nếu cập nhật thành công
+    }
+
+    public boolean updateSelectedItem(int cartItemId, boolean selected) throws ClassNotFoundException, SQLException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        boolean check = false;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(UPDATE_IS_SELECTED);
+                ptm.setBoolean(1, selected);
+                ptm.setInt(2, cartItemId);
+                check = ptm.executeUpdate() > 0;
+            }
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public CartDTO getSelectedCartByUser(int userId) throws ClassNotFoundException, SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        CartDTO cart = null;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                // Lấy cartId từ bảng carts
+                ps = conn.prepareStatement(GET_CART_ID);
+                ps.setInt(1, userId);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    int cartId = rs.getInt("cartId");
+
+                    // Lấy các sản phẩm từ bảng cartItems
+                    ps = conn.prepareStatement(GET_SELECTED_ITEMS);
+                    ps.setInt(1, cartId);
+                    rs = ps.executeQuery();
+
+                    List<CartItems> cartItemsList = new ArrayList<>();
+                    while (rs.next()) {
+                        int cartItemId = rs.getInt("cartItemId");
+                        int productId = rs.getInt("productId");
+                        int quantity = rs.getInt("quantity");
+                        float size = rs.getFloat("size");
+                        boolean isSelected = rs.getBoolean("isSelected");
+                        // Khởi tạo ProductDTO theo productId nếu cần
+                        ProductDTO product = new ProductDAO().getProductById(productId);
+
+                        CartItems item = new CartItems();
+                        item.setCartItemId(cartItemId);
+                        item.setProduct(product);
+                        item.setQuantity(quantity);
+                        item.setSize(size);
+                        item.setIsSelected(isSelected);
+                        cartItemsList.add(item);
+
+                    }
+
+                    // Khởi tạo CartDTO và set thông tin
+                    cart = new CartDTO();
+                    cart.setCartId(cartId);
+                    cart.setCustomerId(userId);
+                    cart.setCartItemsList((ArrayList<CartItems>) cartItemsList);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return cart;
+    }
+
+    public boolean removeSelectedItem(int cartId) throws ClassNotFoundException, SQLException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        boolean result = false;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(DELETE_SELECTED_ITEM);
+                ptm.setInt(1, cartId);
+                result = ptm.executeUpdate() > 0;
+
+            }
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return result;
     }
 
 }

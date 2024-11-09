@@ -1,8 +1,4 @@
-<%-- 
-    Document   : wishlist
-    Created on : Otc 8, 2024, 11:09:49 PM
-    Author     : LENOVO
---%>
+
 
 <%@page import="model.product.ProductDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -37,52 +33,70 @@
         <link rel="stylesheet" href="css/style.css" type="text/css">
         <link rel="stylesheet" href="css/style1.css" type="text/css">
         <link rel="stylesheet" href="css/style3.css" type="text/css">
-        <link rel="icon" href="favicon_io/favicon.ico" type="img/x-icon" />
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
     </head>
 
     <body>
         <!-- Start coding here -->
         <!-- Page PreOrder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
+
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
                 <div class="container">
                     <div class="ht-left">
                         <div class="mail-service">
-                            <i class="fa fa-envelope">
-                                smsystem@gmail.com
-                            </i>
+                            <i class="fa fa-envelope"></i>smsystem8386@gmail.com
                         </div>
                         <div class="phone-service">
-                            <i class="fa fa-phone">
-                                +84 123456789
-                            </i>
+                            <i class="fa fa-phone"></i>+84 123456789
                         </div>
                     </div>
                     <div class="ht-right">
                         <%
-                            UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
-                            if (user.getFullName() != null) {
+                            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+                            if (loginUser != null) {
                         %>
+
                         <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user"><%=user.getFullName()%></i>
+                            <i class="fa fa-user"></i><%=loginUser.getFullName()%>
                         </div>
-                        <% } else { %>
-                        <div class="login-panel" id="user-btn">
-                            <i class="fa fa-user"></i>
-                        </div>
-                        <% } %>
                         <section class="user">
                             <div class="user-setting">
                                 <div class="content">
                                     <div><a href="myAccount.jsp">My account</a></div>
-                                    <div><a href="myOrder.jsp">Order Status</a></div>
-                                    <div><a href="LogoutController">Logout</a></div>                                    
+                                    <div><a href="MainController?action=LoadMyOrder">My Order</a></div>
+                                    <div><a href="LogoutController">Sign Out</a></div>
                                 </div>
                         </section>
+                        <%
+                        } else {
+                        %>
+                        <div class="login-panel" id="user-btn">
+                            <i class="fa fa-user"></i>Guest
+                        </div>
+                        <section class="user">
+                            <div class="user-setting">
+                                <div class="content">
+                                    <div><a href="login.jsp">Sign In</a></div>
+                                    <div><a href="register.jsp">Sign Up</a></div>
+                                </div>
+                        </section>
+                        <%
+                            }
+                        %>
+                        <%
+                            if (loginUser != null) {
+                                if (!loginUser.getRoleId().equals("CUS")) {
+                        %>
+                        <div class="lan-selector">
+                            <a href="MainController?action=Back&role=<%=loginUser.getRoleId()%>" style="color: black;">
+                                <i class="fa fa-home">  Management</i>
+                            </a>
+                        </div>
+                        <%
+                        } else {
+                        %>
                         <div class="lan-selector">
                             <select class="language_drop" name="countries" id="countries" style="width: 300px;">
                                 <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
@@ -91,6 +105,21 @@
                                     German</option>
                             </select>
                         </div>
+                        <%
+                            }
+                        } else {
+                        %>
+                        <div class="lan-selector">
+                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
+                                <option value="yt" data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">
+                                    English</option>
+                                <option value="yu" data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="German">
+                                    German</option>
+                            </select>
+                        </div>
+                        <%
+                            }
+                        %>
                         <div class="top-social">
                             <a href="#"><i class="ti-facebook"></i></a>
                             <a href="#"><i class="ti-twitter-alt"></i></a>
@@ -122,23 +151,81 @@
                         <div class="col-lg-3 col-md-3 text-right">
                             <ul class="nav-right">
                                 <%
-                                    String sizeWishlist = (String) session.getAttribute("sizeWishlist");
-                                    if (sizeWishlist == null) {
-                                        sizeWishlist = "0";
-                                    }
-
+                                    CartDTO cart = (CartDTO) session.getAttribute("CART");
+                                    boolean isEmptyCart = cart == null || (cart.getCartItemsList() == null || cart.getCartItemsList().isEmpty());
+                                    int itemCount = isEmptyCart ? 0 : cart.getCartItemsList().size();
                                 %>
-                                <li class="heart-icon">
-                                    <a href="wishlist.jsp">
-                                        <i class="icon_heart_alt"></i>
-                                        <span><%= sizeWishlist%></span>
+                                <li class="cart-icon">
+                                    <a href="#">
+                                        <i class="icon_bag_alt"></i>
+                                        <span><%= itemCount%></span>
                                     </a>
+                                    <div class="cart-hover">
+                                        <div class="select-items">
+                                            <% if (isEmptyCart) { %>
+                                            <p style="color: #4C4C4C">No product in cart. Buy more</p>
+                                            <% } else { %>
+                                            <table>
+                                                <tbody>
+                                                    <%
+                                                        List<CartItems> ls = cart.getCartItemsList();
+                                                        double total = 0;
+                                                        for (CartItems ele : ls) {
+                                                            total += (ele.getProduct().getPrice() * (1 - ele.getProduct().getSale())) * ele.getQuantity();
+                                                    %>
+                                                    <tr>
+                                                        <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
+                                                        <td class="si-text">
+                                                    <tr>
+                                                        <td class="si-pic"><img src="<%= ele.getProduct().getAvatarPath()%>" style="height: 76px"></td>
+                                                        <td class="si-text">
+                                                            <div class="product-selected">
+                                                                <h6><%= ele.getProduct().getName()%></h6>
+                                                                <h6>Size <%= ele.getSize()%></h6>
+                                                                <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
+
+                                                            </div>
+                                                        </td>
+                                                        <td class="si-close">
+                                                            <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=homePage.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
+                                                                <i class="ti-close"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                        </td>
+                                                        <td class="si-close">
+                                                            <a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=myAccount.jsp" onclick="doDelete('<%= ele.getProduct().getName()%>', event)">
+                                                                <i class="ti-close"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <% }%>
+                                                </tbody>
+                                            </table>
+                                            <div class="select-total">
+                                                <span>total:</span>
+                                                <h5>$<%= String.format("%.1f", total)%></h5>
+                                            </div>
+                                            <% }%>
+                                            <div class="select-button">
+                                                <a href="MainController?action=ViewCart&url=myAccount.jsp" class="primary-btn view-card">VIEW CART</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
+            <script>
+                function doDelete(name, event) {
+                    if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
+                    } else {
+                        event.preventDefault();
+                    }
+                }
+            </script>
             <div class="nav-item">
                 <div class="container">
                     <div class="nav-depart">
@@ -146,24 +233,19 @@
                             <i class="ti-menu"></i>
                             <span>All Departments</span>
                             <ul class="depart-hover">
-                                <li class="active"><a href="#">Women's Clothing</a></li>
-                                <li><a href="#">a</a></li>
-                                <li><a href="#">a</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=1">Men's Shoes</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=2">Women's Shoes</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=3">Kid's Shoes</a></li>
                             </ul>
                         </div>
                     </div>
                     <nav class="nav-menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="homePage.jsp">Home</a></li>
-                            <li><a href="shop.jsp">Shop</a></li>
-
+                            <li><a href="MainController?action=HomePage">Home</a></li>
+                            <li><a href="MainController?action=ShopPage">Shop</a></li>
                             <li><a href="contact.jsp">Contact</a></li>
-                            <li><a href="">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="shopping-cart.jsp">Shopping Cart</a></li>
-
-                                </ul>
-                            </li>
+                            <li><a href="MainController?action=ViewCart&url=myAccount.jsp">Shopping Cart</a></li>
+                            <li><a href="warrantyPage.jsp">Warranty</a></li>
                         </ul>
                     </nav>
                     <div id="mobile-menu-wrap"></div>
@@ -173,7 +255,6 @@
         <!-- Header Section End -->
 
         <!--  -->
-
         <!--Breadcrumb Section Begin-->
         <div class="breadcrumb-section">
             <div class="container">
@@ -200,94 +281,109 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label for="userName">userName <span>*</span></label>
-                                    <% if (user.getUserName() == null) { %>
-                                    <input type="text" id="userName" name="userName">
-                                    <% } else {%>
-                                    <input type="text" id="userName-exist" name="userName" value="<%=user.getUserName()%>" readonly>
-                                    <button type="button" id="edit-btn-userName">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </button>
-                                    <% } %>
+                                    <input type="text" id="userName-exist" name="userName" value="<%=loginUser.getUserName()%>" readonly class="form-control">
                                 </div>
+
                                 <div class="col-lg-12">
                                     <label for="password">password <span>*</span></label>
-                                    <% if (request.getAttribute("PASS_ERROR") != null) {%>
-                                    <p style="color: red;"><%= request.getAttribute("PASS_ERROR")%>
-                                    <% } %>
-                                    <% if (user.getPassword() == null) { %>
-                                    <input type="text" id="pass" name="pass">
+                                    <% if (loginUser.getPassword() == null) { %>
+                                    <input type="password" id="pass" name="pass">
                                     <% } else {%>
 
-                                    <input type="text" id="password-exist" name="pass" value="<%=user.getPassword()%>" readonly>
-                                    <button type="button" id="edit-btn-pass">
+                                    <input type="password" id="password-exist" name="pass" value="<%= loginUser.getPassword()%>" readonly>
+                                    <button type="button" id="edit-btn-pass" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
                                         <i class="fa fa-pencil-square-o"></i>
                                     </button>
-                                    <% } %>
+
+
+                                    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title fs-5" id="updateModalLabel">Change password</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <span class="input-group-text" id="inputGroup-sizing-sm">Current password</span>
+                                                        <input name="currentPassword" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
+                                                    </div>
+                                                    <% if (request.getAttribute("CURRENT_PASS_ERROR") != null) {%>
+                                                    <span style="color:red;">
+                                                        <%= request.getAttribute("CURRENT_PASS_ERROR")%>
+                                                    </span>
+                                                    <% } %>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <span class="input-group-text" id="inputGroup-sizing-sm">New Password</span>
+                                                        <input name="newPassword" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="input-group input-group-sm mb-3">
+                                                        <span class="input-group-text" id="inputGroup-sizing-sm">Confirrm new password</span>
+                                                        <input name="confirmNewPassword" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
+                                                        <div id="passwordErrorMessage" style="color:red;">
+                                                            <% if (request.getAttribute("PASS_ERROR") != null) {%>
+                                                            <%= request.getAttribute("PASS_ERROR")%>
+                                                            <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer1">
+                                                    <button type="button" class="btn1 btn-secondary1" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" name="action" value="Update" class="btn1 btn-primary1">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <% }%>
                                 </div>
+
                                 <div class="col-lg-12">
                                     <label for="fullName">Full Name <span>*</span></label>
-                                    <% if (request.getAttribute("FULLNAME_ERROR") != null) {%>
-                                    <p style="color: red;"><%= request.getAttribute("FULLNAME_ERROR")%>
-                                    <% } %> 
-                                    <% if (user.getFullName() == null) { %> 
-                                    <input type="text" id="fullName" name="fullName">
-                                    <% } else {%>
-                                    <input type="text" id="fullName-exist" name="fullName" value="<%=user.getFullName()%>" readonly>
-                                    <button type="button" id="edit-btn-fullName">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </button>
-                                    <% } %>
+                                    <input type="text" id="fullName-exist" name="fullName" value="<%=loginUser.getFullName()%>" readonly class="form-control">
+                                    <button type="button" id="edit-btn-fullName" class="edit-btn" onclick="enableField('fullName-exist')"><i class="fa fa-pencil-square-o"></i></button>
+                                    <span class="text-danger"><%= request.getAttribute("FULLNAME_ERROR") != null ? request.getAttribute("FULLNAME_ERROR") : ""%></span>
                                 </div>
-                                <div class="col-lg-12">
-                                    <label for="phone">Phone <span>*</span></label> 
-                                    <% if (request.getAttribute("PHONE_ERROR") != null) {%>
-                                    <p style="color: red;"><%= request.getAttribute("PHONE_ERROR")%>
-                                        <% } %>
-                                    <% if (user.getPhoneNumber() == null) { %>
-                                    <input type="text" id="phone" name="phone" >
-                                    <% } else {%>
-                                    <input type="text" id="phone-exist" name="phone" value="<%=user.getPhoneNumber()%>" readonly>
-                                    <button type="button" id="edit-btn-phone">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </button>
-                                    <% } %>
 
+                                <div class="col-lg-12">
+                                    <label for="phone">Phone <span>*</span></label>
+                                    <input type="text" id="phone-exist" name="phone" value="<%=loginUser.getPhoneNumber()%>" readonly class="form-control">
+                                    <button type="button" id="edit-btn-phone" class="edit-btn" onclick="enableField('phone-exist')"><i class="fa fa-pencil-square-o"></i></button>
+                                    <span class="text-danger"><%= request.getAttribute("PHONE_ERROR") != null ? request.getAttribute("PHONE_ERROR") : ""%></span>
                                 </div>
+
                                 <div class="col-lg-12">
                                     <label for="sex">Sex <span>*</span></label>
-                                    <% if (request.getAttribute("SEX_ERROR") != null) {%>
-                                    <p style="color: red;"><%= request.getAttribute("SEX_ERROR")%>
-                                    <% } %>
-                                    <% if (user.getSex() == null) { %>
-                                    <select id="sex" name="sex">
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="other">Other</option>
+                                    <select id="sex" name="sex" class="form-control" style="background-color: #cce7f0;">
+                                        <option value="" disabled selected>-- Select Gender --</option> 
+                                        <option value="Male" <% if ("Male".equals(loginUser.getSex())) {
+                                                out.print("selected");
+                                            } %>>Male</option>
+                                        <option value="Female" <% if ("Female".equals(loginUser.getSex())) {
+                                                out.print("selected");
+                                            } %>>Female</option>
+                                        <option value="Other" <% if ("Other".equals(loginUser.getSex())) {
+                                                out.print("selected");
+                                            }%>>Other</option>
                                     </select>
-                                    <% } else {%>
-                                    <input type="text" id="sex-exist" name="sex" value="<%=user.getSex()%>" readonly>
-                                    <button type="button" id="edit-btn-sex">
+                                    <button type="button" id="edit-btn-sex" class="edit-btn" onclick="enableSelect('sex')">
                                         <i class="fa fa-pencil-square-o"></i>
                                     </button>
-                                    <% } %>
+                                    <span class="text-danger"><%= request.getAttribute("SEX_ERROR") != null ? request.getAttribute("SEX_ERROR") : ""%></span>
                                 </div>
+
                                 <div class="col-lg-12">
                                     <label for="email">Email Address <span>*</span></label>
-                                    <% if (request.getAttribute("EMAIL_ERROR") != null) {%>
-                                    <p style="color: red;"><%= request.getAttribute("EMAIL_ERROR")%>
-                                    <% } %>
-                                    <% if (user.getEmail() == null) { %>
-                                    <input type="email" id="email" name="email">
-                                    <% } else {%>
-
-                                    <input type="email" id="email-exist" name="email" value="<%=user.getEmail()%>" readonly>
-                                    <button type="button" id="edit-btn-email">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </button>
-
-                                    <% } %>
+                                    <input type="email" id="email-exist" name="email" value="<%=loginUser.getEmail()%>" readonly class="form-control">
+                                    <button type="button" id="edit-btn-email" class="edit-btn" onclick="enableField('email-exist')"><i class="fa fa-pencil-square-o"></i></button>
+                                    <span class="text-danger"><%= request.getAttribute("EMAIL_ERROR") != null ? request.getAttribute("EMAIL_ERROR") : ""%></span>
                                 </div>
                             </div>
+                            <!--                            <input type="submit" id="UpdateUser" name="action" value="Update" class="btn btn-primary">-->
                             <%
                                 String message = (String) request.getAttribute("MESSAGE");
                                 if (message == null) {
@@ -295,13 +391,42 @@
                                 }
                             %>
                             <h4 style="color:red "> <%= message%> </h4> 
-                            <input type="submit" id="UpdateUser" name="action" value="Update">
+                            <input type="submit" id="UpdateUser" name="action" value="Update" class="btn signin-btn">
                         </div>
                     </div>
                 </form>
             </div>
         </div>
 
+        <script>
+            function enableField(fieldId) {
+                var field = document.getElementById(fieldId);
+                if (field) {
+                    field.readOnly = false;
+                    field.style.backgroundColor = "white";
+                    field.focus();
+                }
+            }
+
+            function enableSelect(selectId) {
+                var select = document.getElementById(selectId);
+                if (select) {
+                    select.disabled = false;
+                    select.style.backgroundColor = "white";
+                    select.focus();
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                var currentPasswordError = "<%= request.getAttribute("CURRENT_PASS_ERROR") != null ? request.getAttribute("CURRENT_PASS_ERROR") : ""%>";
+                var passwordError = "<%= request.getAttribute("PASS_ERROR") != null ? request.getAttribute("PASS_ERROR") : ""%>";
+
+                if (currentPasswordError.trim().length > 0 || passwordError.trim().length > 0) {
+                    var passwordModal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
+                    passwordModal.show();
+                }
+            });
+        </script>
         <!-- Shopping Cart Section Begin -->
 
         <!-- Partner Logo Section Begin -->
@@ -432,6 +557,7 @@
         <script src="js/main.js"></script>
         <script src="js/main2.js"></script>
         <script src="js/main3.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     </body>
 </html>

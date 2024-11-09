@@ -21,6 +21,7 @@ import model.cart.CartDAO;
 import model.cart.CartDTO;
 import model.cart.CartItems;
 import model.category.BrandDAO;
+import model.category.BrandDTO;
 import model.category.UserObjectDAO;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
@@ -60,6 +61,9 @@ public class LoadTopListByCateController extends HttpServlet {
             List<ProductDTO> menList;
             List<ProductDTO> womenList;
             List<ProductDTO> kidList;
+            List<BrandDTO> brandList;
+            brandList = brandDao.getAllBrand();
+
             menList = productDao.getTopMenList();
             womenList = productDao.getTopWomenList();
             kidList = productDao.getTopKidList();
@@ -72,8 +76,7 @@ public class LoadTopListByCateController extends HttpServlet {
             for (ProductDTO pro : kidList) {
                 pro.setListImages(imageDao.getImageByProduct(pro.getProductId()));
             }
-                        List<Float> availableleSize=null;
-                        List<Float> allSize=null;
+
             CartDAO cartDao = new CartDAO();
             UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
             if (loginUser != null) {
@@ -81,9 +84,7 @@ public class LoadTopListByCateController extends HttpServlet {
                 if (cart != null) {
                     for (CartItems c : cart.getCartItemsList()) {
                         c.getProduct().setListImages(imageDao.getImageByProduct(c.getProduct().getProductId()));
-
-                        availableleSize = variantDao.getAvailableSize(c.getProduct().getProductId());
-                        allSize = variantDao.getAllSize(c.getProduct().getProductId());
+                        c.getProduct().setListVariants(variantDao.getVariantByProduct(c.getProduct().getProductId()));
                     }
                     session.setAttribute("CART", cart); // Load cart có sẵn
                 } else {
@@ -99,8 +100,7 @@ public class LoadTopListByCateController extends HttpServlet {
                 session.setAttribute("MEN_LIST", menList);
                 session.setAttribute("WOMEN_LIST", womenList);
                 session.setAttribute("KID_LIST", kidList);
-                session.setAttribute("ALL_SIZE", allSize);
-                session.setAttribute("AVAILABLE_SIZE", availableleSize);
+                session.setAttribute("BRAND_LIST", brandList);
                 url = SUCCESS;
 
             }

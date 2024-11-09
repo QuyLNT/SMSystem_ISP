@@ -3,38 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/css/style1.css</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/css_1/style1.css</file>
-=======
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/check-out.jsp</file>
->>>>>>> origin/develop
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/discountList.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/shop.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/shopping-cart.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/contact.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/wishlist.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/adminHome.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/css/home.css</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/orderDetail.jsp</file>
-<<<<<<< HEAD
-=======
-            <file>file:/C:/Project_ISP/v4/SMSystem_ISP/SMSystem/web/homePage.jsp</file>
->>>>>>> Stashed changes
-=======
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/css/style1.css</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/product.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/css_1/style1.css</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/shipperPage.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/success.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/login.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/css/style.css</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/homePage.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/productList.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/userList.jsp</file>
-            <file>file:/D:/Github_PN/SMSystem_ISP/SMSystem/web/orderList.jsp</file>
->>>>>>> origin/develop
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/model/shipment/ShipmentDTO.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/shipList.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/shipmentDetail.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/FilterShipController.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/UpdateShipmentController.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/LoadShipmentController.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/model/shipment/ShipmentDAO.java</file>
         </group>
     </open-files>
 </project-private>

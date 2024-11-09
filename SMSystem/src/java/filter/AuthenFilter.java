@@ -48,18 +48,23 @@ public class AuthenFilter implements Filter {
     private FilterConfig filterConfig = null;
 
     public AuthenFilter() {
-        USER_RESOURCE= new ArrayList<>();
+        USER_RESOURCE = new ArrayList<>();
         USER_RESOURCE.add("shopping-cart.jsp");
         USER_RESOURCE.add("check-out.jsp");
         USER_RESOURCE.add("myOrder.jsp");
-        USER_RESOURCE.add("success.jsp");
         USER_RESOURCE.add("product.jsp");
-        
-        ADMIN_RESOURCE=new ArrayList<>();
+        USER_RESOURCE.add("Add+To+Cart");
+
+        ADMIN_RESOURCE = new ArrayList<>();
         ADMIN_RESOURCE.add("adminHome.jsp");
         ADMIN_RESOURCE.add("userList.jsp");
-          
-        MANAGER_RESOURCE=new ArrayList<>();
+        ADMIN_RESOURCE.add("LoadAdminHomeDataController");
+        ADMIN_RESOURCE.add("DeleteUserController");
+        ADMIN_RESOURCE.add("LoadUserListController");
+        ADMIN_RESOURCE.add("SearchUserByUserNameController");
+        ADMIN_RESOURCE.add("ToggleUserRoleController");
+
+        MANAGER_RESOURCE = new ArrayList<>();
         MANAGER_RESOURCE.add("managerHome.jsp");
         MANAGER_RESOURCE.add("brandList.jsp");
         MANAGER_RESOURCE.add("discountList.jsp");
@@ -67,9 +72,28 @@ public class AuthenFilter implements Filter {
         MANAGER_RESOURCE.add("categoriesList.jsp");
         MANAGER_RESOURCE.add("orderDetail.jsp");
         MANAGER_RESOURCE.add("productList.jsp");
-        
-        SHIPPER_RESOURCE=new ArrayList<>();
+        MANAGER_RESOURCE.add("productList.jsp");
+        MANAGER_RESOURCE.add("LoadManagerHomeDataController");
+        MANAGER_RESOURCE.add("CreateBrandController");
+        MANAGER_RESOURCE.add("CreateProductController");
+        MANAGER_RESOURCE.add("DeleteProductController");
+        MANAGER_RESOURCE.add("LoadBrandListController");
+        MANAGER_RESOURCE.add("LoadDiscountListController");
+        MANAGER_RESOURCE.add("LoadProductController");
+        MANAGER_RESOURCE.add("LoadProductListController");
+        MANAGER_RESOURCE.add("SearchBrandController");
+        MANAGER_RESOURCE.add("SearchProductByNameController");
+        MANAGER_RESOURCE.add("ToggleDiscountStatusController");
+        MANAGER_RESOURCE.add("ToggleFlashSaleController");
+        MANAGER_RESOURCE.add("ToggleProductStatusController");
+        MANAGER_RESOURCE.add("UpdateProductController");
+        MANAGER_RESOURCE.add("LoadPaymentListController");
+        MANAGER_RESOURCE.add("AssignShipperController");
+        MANAGER_RESOURCE.add("CreateSizeController");
+
+        SHIPPER_RESOURCE = new ArrayList<>();
         SHIPPER_RESOURCE.add("shipperPage.jsp");
+        SHIPPER_RESOURCE.add("shipList.jsp");
         SHIPPER_RESOURCE.add("shipList.jsp");
 
         NON_AUTHEN_RESOURCE = new ArrayList<>();
@@ -80,11 +104,12 @@ public class AuthenFilter implements Filter {
         NON_AUTHEN_RESOURCE.add("myAccount.jsp");
         NON_AUTHEN_RESOURCE.add("product.jsp");
         NON_AUTHEN_RESOURCE.add("shop.jsp");
+        NON_AUTHEN_RESOURCE.add("success.jsp");
+        NON_AUTHEN_RESOURCE.add("orderStatus.jsp");
+        NON_AUTHEN_RESOURCE.add("warrantyPage.jsp");
+        NON_AUTHEN_RESOURCE.add("LogoutController");
         NON_AUTHEN_RESOURCE.add("MainController");
         NON_AUTHEN_RESOURCE.add("LoadTopListByCateController");
-        NON_AUTHEN_RESOURCE.add(".png");
-        NON_AUTHEN_RESOURCE.add(".gif");
-        NON_AUTHEN_RESOURCE.add(".jpg");        
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
@@ -149,6 +174,7 @@ public class AuthenFilter implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
@@ -157,41 +183,45 @@ public class AuthenFilter implements Filter {
             HttpServletResponse res = (HttpServletResponse) response;
             String url = req.getRequestURI();
             int index = url.lastIndexOf("/");
-            String resource = url.substring(index+1);
+            String resource = url.substring(index + 1);
             boolean checkContain = false;
-            for(String value : NON_AUTHEN_RESOURCE){
-                if(url.contains(value)){
-                    checkContain=true;
+            for (String value : NON_AUTHEN_RESOURCE) {
+                if (url.contains(value)) {
+                    checkContain = true;
                     break;
                 }
             }
-            if(checkContain){
+            if (checkContain) {
                 chain.doFilter(request, response);
-            }else{
+            } else {
                 HttpSession session = req.getSession();
-                if(session==null || session.getAttribute("LOGIN_USER") == null){
+                if (session.getAttribute("LOGIN_USER") == null) {
                     res.sendRedirect(HOME_PAGE);
-                }else{
+                } else {
                     UserDTO user = (UserDTO) session.getAttribute("LOGIN_USER");
                     String roleID = user.getRoleId();
-                    if(AD.equals(roleID) && ADMIN_RESOURCE.contains(resource)){
+                    if (AD.equals(roleID) && ADMIN_RESOURCE.contains(resource)) {
                         chain.doFilter(request, response);
-                    }else if(CUS.equals(roleID) && USER_RESOURCE.contains(resource)){
+                    } else if (CUS.equals(roleID) && USER_RESOURCE.contains(resource)) {
                         chain.doFilter(request, response);
-                    }else if(MN.equals(roleID) && MANAGER_RESOURCE.contains(resource)){
+                    } else if (MN.equals(roleID) && MANAGER_RESOURCE.contains(resource)) {
                         chain.doFilter(request, response);
-                    }else if(SP.equals(roleID) && SHIPPER_RESOURCE.contains(resource)){
+                    } else if (SP.equals(roleID) && SHIPPER_RESOURCE.contains(resource)) {
                         chain.doFilter(request, response);
-                    }else{
+                    } else {
                         res.sendRedirect(HOME_PAGE);
                     }
                 }
             }
         } catch (IOException | ServletException e) {
-        }    }
+            log(e.toString());
+        }
+    }
 
     /**
      * Return the filter configuration object for this filter.
+     *
+     * @return
      */
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
@@ -209,12 +239,16 @@ public class AuthenFilter implements Filter {
     /**
      * Destroy method for this filter
      */
+    @Override
     public void destroy() {
     }
 
     /**
      * Init method for this filter
+     *
+     * @param filterConfig
      */
+    @Override
     public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
@@ -255,7 +289,7 @@ public class AuthenFilter implements Filter {
                 pw.close();
                 ps.close();
                 response.getOutputStream().close();
-            } catch (Exception ex) {
+            } catch (IOException ex) {
             }
         } else {
             try {
@@ -263,7 +297,7 @@ public class AuthenFilter implements Filter {
                 t.printStackTrace(ps);
                 ps.close();
                 response.getOutputStream().close();
-            } catch (Exception ex) {
+            } catch (IOException ex) {
             }
         }
     }
@@ -277,7 +311,7 @@ public class AuthenFilter implements Filter {
             pw.close();
             sw.close();
             stackTrace = sw.getBuffer().toString();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
         }
         return stackTrace;
     }

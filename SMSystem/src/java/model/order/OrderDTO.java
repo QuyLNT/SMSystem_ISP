@@ -6,47 +6,112 @@
 package model.order;
 
 import java.util.Date;
+import model.user.UserDTO;
 
 /**
  *
  * @author LENOVO
  */
 public class OrderDTO {
+
     private int orderId;
-    private int customerId;
+    private UserDTO customer;
     private String street;
     private String district;
     private String city;
-    private int discountId;
-    private int paymentMethodId;
-    private int shippingMethodId;            
+    private String discountCode;
+    private String paymentMethod;
+    private String shippingMethod;
     private Date createdAt;
     private String orderStatus;
-    
+    private float totalPrice;
+    private  int totalOrder;
+
     public OrderDTO() {
         this.orderId = 0;
-        this.customerId = 0;
+        this.customer = new UserDTO();
         this.street = "";
         this.district = "";
         this.city = "";
-        this.discountId = 0;
-        this.paymentMethodId = 0;
-        this.shippingMethodId = 0;
+        this.discountCode = "";
+        this.paymentMethod = "";
+        this.shippingMethod = "";
         this.createdAt = new Date();
         this.orderStatus = "Waiting for accept";
+        this.totalPrice = 0;
+        this.totalOrder =0;
     }
 
-    public OrderDTO(int orderId, int customerId, String street, String district, String city, int discountId, int paymentMethodId, int shippingMethodId, Date createdAt, String orderStatus) {
+    public OrderDTO(int orderId, int totalOrder) {
         this.orderId = orderId;
-        this.customerId = customerId;
+        this.totalOrder = totalOrder;
+    }
+
+    public OrderDTO(int orderId, UserDTO customer, String street, String district, String city,String discountCode, String paymentMethod, String shippingMethod, Date createdAt, String orderStatus) {
+        this.orderId = orderId;
+        this.customer = customer;
         this.street = street;
         this.district = district;
         this.city = city;
-        this.discountId = discountId;
-        this.paymentMethodId = paymentMethodId;
-        this.shippingMethodId = shippingMethodId;
+        this.discountCode = discountCode;
+        this.paymentMethod = paymentMethod;
+        this.shippingMethod = shippingMethod;
         this.createdAt = createdAt;
         this.orderStatus = orderStatus;
+    }
+    
+    public OrderDTO(int orderId, UserDTO customer, String street, String district, String city,String discountCode, String paymentMethod, String shippingMethod, Date createdAt, String orderStatus,float totalPrice) {
+        this.orderId = orderId;
+        this.customer = customer;
+        this.street = street;
+        this.district = district;
+        this.city = city;
+        this.discountCode = discountCode;
+        this.paymentMethod = paymentMethod;
+        this.shippingMethod = shippingMethod;
+        this.createdAt = createdAt;
+        this.orderStatus = orderStatus;
+        this.totalPrice = totalPrice;
+
+    }
+
+    public int getTotalOrder() {
+        return totalOrder;
+    }
+
+    public void setTotalOrder(int totalOrder) {
+        this.totalOrder = totalOrder;
+    }
+
+    public String getDiscountCode() {
+        return discountCode;
+    }
+
+    public void setDiscountCode(String discountCode) {
+        this.discountCode = discountCode;
+    }
+
+    public float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+public String getShippingMethod() {
+        return shippingMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public void setShippingMethod(String shippingMethod) {
+        this.shippingMethod = shippingMethod;
     }
 
     public int getOrderId() {
@@ -57,12 +122,12 @@ public class OrderDTO {
         this.orderId = orderId;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public UserDTO getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setCustomer(UserDTO customer) {
+        this.customer = customer;
     }
 
     public String getStreet() {
@@ -89,30 +154,6 @@ public class OrderDTO {
         this.city = city;
     }
 
-    public int getDiscountId() {
-        return discountId;
-    }
-
-    public void setDiscountId(int discountId) {
-        this.discountId = discountId;
-    }
-
-    public int getPaymentMethodId() {
-        return paymentMethodId;
-    }
-
-    public void setPaymentMethodId(int paymentMethodId) {
-        this.paymentMethodId = paymentMethodId;
-    }
-
-    public int getShippingMethodId() {
-        return shippingMethodId;
-    }
-
-    public void setShippingMethodId(int shippingMethodId) {
-        this.shippingMethodId = shippingMethodId;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -128,4 +169,9 @@ public class OrderDTO {
     public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
+
+ 
+
+  
+    
 }

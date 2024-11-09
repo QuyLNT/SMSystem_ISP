@@ -63,6 +63,10 @@ public class ProductDAO {
     private static final String GET_PRODUCT_BY_CATE = "SELECT productId,brandId,userObjectId,detail,hot,name,color,price,sale,warrantPeriod,productStatus \n"
             + "FROM products\n"
             + "WHERE userObjectId = ? AND productStatus = 1";
+    private static final String SEARCH_PRODUCT = "SELECT productId,brandId,userObjectId,detail,hot,"
+            + "                                      name,color,price,sale,warrantPeriod,productStatus \n"
+            + "FROM products\n"
+            + "WHERE name LIKE ? AND productStatus = 1";
 
     public List<ProductDTO> getAllProduct() throws ClassNotFoundException, SQLException {
         List<ProductDTO> listProduct = new ArrayList<>();
@@ -599,4 +603,257 @@ public class ProductDAO {
         return listProduct;
     }
 
+    public List<ProductDTO> search(String search) throws SQLException, ClassNotFoundException {
+        List<ProductDTO> products = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = DBUtils.getConnection();
+            if (con != null) {
+                ps = con.prepareStatement(SEARCH_PRODUCT);
+                ps.setString(1, "%" + search + "%");
+                rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    int productId = rs.getInt("productId");
+                    int brandId = rs.getInt("brandId");
+                    int userObjectId = rs.getInt("userObjectId");
+                    String detail = rs.getString("detail");
+                    boolean hot = rs.getBoolean("hot");
+                    String productName = rs.getString("name");
+                    float price = rs.getFloat("price");
+                    String color = rs.getString("color");
+                    float sale = rs.getFloat("sale");
+                    int warrantPeriod = rs.getInt("warrantPeriod");
+                    boolean productStatus = rs.getBoolean("productStatus");
+
+                    ProductDTO product = new ProductDTO(productId, brandId, userObjectId, detail, hot, productName, color, price, sale, warrantPeriod, productStatus);
+                    products.add(product);
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return products;
+    }
+
+    public List<ProductDTO> filter(int[] brands, String minPrice, String maxPrice, String[] colors, int[] uOb) throws SQLException, SQLException, ClassNotFoundException {
+        StringBuilder sql = new StringBuilder("SELECT * FROM products WHERE 1 = 1 AND productStatus = 1");
+        List<ProductDTO> ls = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = DBUtils.getConnection();
+            if (con != null) {
+                // Thêm điều kiện BrandID
+                if (brands != null && brands.length > 0) {
+                    sql.append(" AND brandId IN (");
+                    for (int i = 0; i < brands.length; i++) {
+                        sql.append("?");
+                        if (i < brands.length - 1) {
+                            sql.append(",");
+                        }
+                    }
+                    sql.append(")");
+                }
+
+                // Thêm điều kiện Price
+                if (minPrice != null && !minPrice.isEmpty()) {
+                    sql.append(" AND price >= ?");
+                }
+                if (maxPrice != null && !maxPrice.isEmpty()) {
+                    sql.append(" AND price <= ?");
+                }
+
+                // Thêm điều kiện Color
+                if (colors != null && colors.length > 0) {
+                    StringBuilder colorCondition = new StringBuilder(" AND (");
+                    for (int i = 0; i < colors.length; i++) {
+                        colorCondition.append("color LIKE ?");
+                        if (i < colors.length - 1) {
+                            colorCondition.append(" OR ");
+                        }
+                    }
+                    colorCondition.append(")");
+                    sql.append(colorCondition);
+                }
+
+                // Thêm điều kiện userObjectID
+                if (uOb != null && uOb.length > 0) {
+                    sql.append(" AND userObjectId = ?");
+                }
+
+                // Chuẩn bị câu lệnh SQL
+                ps = con.prepareStatement(sql.toString());
+                int paramIndex = 1;
+
+                // Thiết lập giá trị cho BrandID
+                if (brands != null && brands.length > 0) {
+                    for (int brand : brands) {
+                        ps.setInt(paramIndex++, brand);
+                    }
+                }
+
+                // Thiết lập giá trị cho minPrice và maxPrice
+                if (minPrice != null && !minPrice.isEmpty()) {
+                    ps.setFloat(paramIndex++, Float.parseFloat(minPrice));
+                }
+                if (maxPrice != null && !maxPrice.isEmpty()) {
+                    ps.setFloat(paramIndex++, Float.parseFloat(maxPrice));
+                }
+
+                // Thiết lập giá trị cho Color
+                if (colors != null && colors.length > 0) {
+                    for (String color : colors) {
+                        ps.setString(paramIndex++, "%" + color + "%");
+                    }
+                }
+
+                // Thiết lập giá trị cho userObjectID
+                if (uOb != null && uOb.length > 0) {
+                    for (int u : uOb) {
+                        ps.setInt(paramIndex++, u);
+                    }
+                }
+
+                // Thực thi truy vấn
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    int productId = rs.getInt("productId");
+                    int brandId = rs.getInt("brandId");
+                    int userObjectId = rs.getInt("userObjectId");
+                    String detail = rs.getString("detail");
+                    boolean hot = rs.getBoolean("hot");
+                    String productName = rs.getString("name");
+                    float price = rs.getFloat("price");
+                    String color = rs.getString("color");
+                    float sale = rs.getFloat("sale");
+                    int warrantPeriod = rs.getInt("warrantPeriod");
+                    boolean productStatus = rs.getBoolean("productStatus");
+
+                    ProductDTO product = new ProductDTO(productId, brandId, userObjectId, detail, hot, productName, color, price, sale, warrantPeriod, productStatus);
+                    ls.add(product);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return ls;
+    }
+
+    public List<ProductDTO> getFilterList(int cateFilter, int brandFilter) throws SQLException, ClassNotFoundException {
+        List<ProductDTO> products = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = DBUtils.getConnection();
+            if (con != null) {
+                String query = "SELECT * FROM products WHERE 1=1";
+
+                if (cateFilter != 0) {
+                    query += " AND userObjectId = ?";
+                }
+
+                if (brandFilter != 0) {
+                    query += " AND brandId = ?";
+                }
+
+                ps = con.prepareStatement(query);
+                int paramIndex = 1;
+                if (cateFilter != 0) {
+                    ps.setInt(paramIndex++, cateFilter);
+                }
+                if (brandFilter != 0) {
+                    ps.setInt(paramIndex++, brandFilter);
+                }
+                rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    int productId = rs.getInt("productId");
+                    int brandId = rs.getInt("brandId");
+                    int userObjectId = rs.getInt("userObjectId");
+                    String detail = rs.getString("detail");
+                    boolean hot = rs.getBoolean("hot");
+                    String productName = rs.getString("name");
+                    float price = rs.getFloat("price");
+                    String color = rs.getString("color");
+                    float sale = rs.getFloat("sale");
+                    int warrantPeriod = rs.getInt("warrantPeriod");
+                    boolean productStatus = rs.getBoolean("productStatus");
+
+                    ProductDTO product = new ProductDTO(productId, brandId, userObjectId, detail, hot, productName, color, price, sale, warrantPeriod, productStatus);
+                    products.add(product);
+                }
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return products;
+    }
+
+    public boolean isProductNameExists(String name) throws SQLException, ClassNotFoundException {
+        boolean exists = false;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            if (con != null) {
+                String query = "SELECT COUNT(productId) FROM products WHERE name = ?";
+                ps = con.prepareStatement(query);
+                ps.setString(1, name);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    exists = rs.getInt(1) > 0;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return exists;
+    }
+
+    
 }

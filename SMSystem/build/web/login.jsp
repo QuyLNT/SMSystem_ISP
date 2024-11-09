@@ -27,12 +27,13 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
         <link rel="stylesheet" href="css/style.css" type="text/css"> 
         <link rel="stylesheet" href="css/style1.css" type="text/css">
+        <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
     </head>
 
     <body>
         <!-- Start coding here -->
         <!-- Page PreOrder -->
-        
+
         <!-- Header section begin -->
         <header class="header-section">
             <div class="header-top">
@@ -40,7 +41,7 @@ and open the template in the editor.
                     <div class="ht-left">
                         <div class="mail-service">
                             <i class="fa fa-envelope">
-                                smsystem@gmail.con
+                                smsystem@gmail.com
                             </i>
                         </div>
                         <div class="phone-service">
@@ -72,12 +73,11 @@ and open the template in the editor.
         <div class="container1">
             <div class="signin-signup">
                 <div class="signin">
-                    <h2>Sign in</h2>
-
-                    <form action="MainController" method="post" id="form">
+                    <h2>Sign In</h2>
+                    <form action="MainController" method="post" id="form">                      
                         <input type="text" placeholder="User Name or Email" name="usernameOrEmail" required />
                         <input type="password" placeholder="Password" name="pass" required />
-                        <a href="#" class="forgot-password">Forgot your password?</a>
+                        <a href="ForgotPasswordController" class="forgot-password">Forgot your password?</a>
                         <div class="g-recaptcha" data-sitekey="6LdXPwgqAAAAADH4aZqMia8RCAPe-jw1GISS5lHp" style="display: flex;justify-content: center"></div>
                         <input value="Sign In" name="action" hidden="">
                         <input type="submit" class="btn signin-btn" value="Sign In" />                   
@@ -89,6 +89,7 @@ and open the template in the editor.
                     <h2>Hello, Friend!</h2>
                     <p>Enter your personal details and start journey with us</p>
                     <a href="register.jsp"><button class="btn signup-btn">Sign Up</button></a>
+                     <a  href="MainController?action=HomePage"><button class="btn signup-btn">Back to Shop</button></a>
                 </div>
             </div>
         </div>
@@ -111,22 +112,22 @@ and open the template in the editor.
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/main.js"></script>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<!--        <script>
-            window.onload = function () {
-                let isValid = false;
-                const form = document.getElementById("form");
-                const error = document.getElementById("error");
-
-                form.addEventListener("submit", function (event) {
-                    event.preventDefault();
-                    const response = grecaptcha.getResponse();
-                    if (response) {
-                        form.submit();
-                    } else {
-                        error.innerHTML = "Please check";
-                    }
-                });
-            };
-        </script>-->
+        <!--        <script>
+                    window.onload = function () {
+                        let isValid = false;
+                        const form = document.getElementById("form");
+                        const error = document.getElementById("error");
+        
+                        form.addEventListener("submit", function (event) {
+                            event.preventDefault();
+                            const response = grecaptcha.getResponse();
+                            if (response) {
+                                form.submit();
+                            } else {
+                                error.innerHTML = "Please check";
+                            }
+                        });
+                    };
+                </script>-->
     </body>
 </html>

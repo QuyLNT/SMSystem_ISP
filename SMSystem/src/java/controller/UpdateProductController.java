@@ -8,6 +8,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -29,7 +30,7 @@ import model.product.ProductImageDTO;
  */
 public class UpdateProductController extends HttpServlet {
 
-   /**
+    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -38,20 +39,23 @@ public class UpdateProductController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR="productList.jsp";
-    private static final String SUCCESS="productList.jsp";
+    private static final String ERROR = "productList.jsp";
+    private static final String SUCCESS = "productList.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-         try{
+        try {
             int productId = Integer.parseInt(request.getParameter("productId"));
             ProductDAO productDao = new ProductDAO();
             ProductImageDAO imageDAO = new ProductImageDAO();
             ProductDTO currentProduct = productDao.getProductById(productId);
+            StringBuilder errorMessages = new StringBuilder();
 
             String name = request.getParameter("name");
             if (name == null || name.isEmpty()) {
+                errorMessages.append("<br>Product name cannot be empty.");
                 name = currentProduct.getName();
             }
 
@@ -74,14 +78,22 @@ public class UpdateProductController extends HttpServlet {
             float price;
             String priceStr = request.getParameter("price");
             if (priceStr == null || priceStr.isEmpty()) {
+                errorMessages.append("<br>Price cannot be empty.");
                 price = currentProduct.getPrice();
             } else {
                 price = Float.parseFloat(priceStr);
             }
 
+            if (price == 0) {
+                errorMessages.append("<br>Price must be greater than 0. ");
+            } else if (price < 0) {
+                errorMessages.append("<br>Price cannot be negative. ");
+            }
+
             float sale;
             String saleStr = request.getParameter("sale");
             if (saleStr == null || saleStr.isEmpty()) {
+                errorMessages.append("<br>Sale cannot be empty.");
                 sale = currentProduct.getSale();
             } else {
                 sale = Float.parseFloat(saleStr);
@@ -90,41 +102,85 @@ public class UpdateProductController extends HttpServlet {
             String avatar = request.getParameter("avatar");
             if (avatar == null || avatar.isEmpty()) {
                 avatar = currentProduct.getAvatarPath();
+            } else if (!avatar.matches("^https?://.*(jpg|jpeg|png|webp|images?).*")) {
+                errorMessages.append("<br>Avatar image format is invalid! Only jpg, jpeg, png, and webp formats are allowed. ");
             }
 
             String color = request.getParameter("color");
             if (color == null || color.isEmpty()) {
+                errorMessages.append("<br>Color cannot be empty.");
                 color = currentProduct.getColor();
             }
 
             String detail = request.getParameter("detail");
             if (detail == null || detail.isEmpty()) {
+                errorMessages.append("<br>Detail cannot be empty.");
                 detail = currentProduct.getDetail();
             }
-            
+
             int warrantyPeriod;
             String warrantyPeriodStr = request.getParameter("warranty");
-            if(warrantyPeriodStr == null || warrantyPeriodStr.isEmpty()){
+            if (warrantyPeriodStr == null || warrantyPeriodStr.isEmpty()) {
+                errorMessages.append("<br>Warranty Period cannot be empty.");
                 warrantyPeriod = currentProduct.getWarrantyPeriod();
-            }else{
+            } else {
                 warrantyPeriod = Integer.parseInt(warrantyPeriodStr);
             }
-            
 
             boolean hot = currentProduct.isHot();
             boolean status = currentProduct.isProductStatus();
-            
+
+            String[] imageIds = request.getParameterValues("imageId");
+            String[] imageUrls = new String[5];
+            imageUrls[0] = request.getParameter("productImage1");
+            imageUrls[1] = request.getParameter("productImage2");
+            imageUrls[2] = request.getParameter("productImage3");
+            imageUrls[3] = request.getParameter("productImage4");
+            imageUrls[4] = request.getParameter("productImage5");
+            List<ProductImageDTO> images = new ArrayList<>();
+            boolean hasInvalidImages = false;
+            int imageIdIndex = 0;
+
+            for (int i = 0; i < imageUrls.length; i++) {
+                String imageUrl = imageUrls[i];
+                if (imageUrl != null && !imageUrl.isEmpty()) {
+                    if (!imageUrl.matches("^https?://.*(jpg|jpeg|png|webp|images?).*")) {
+                        hasInvalidImages = true;
+                        errorMessages.append("<br>Image ").append(i + 1).append(" is wrong with format! ");
+                    } else {
+                        while (imageIdIndex < imageIds.length) {
+                            int imageId = Integer.parseInt(imageIds[imageIdIndex]);
+                            imageIdIndex++;
+
+                            if (!imageDAO.isAvatar(imageId)) {
+                                ProductImageDTO detailImage = new ProductImageDTO(productId, imageUrl, false);
+                                detailImage.setImageId(imageId);
+                                detailImage.setImagePath(imageUrl);
+                                images.add(detailImage);
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    errorMessages.append("<br>Image ").append(i + 1).append(" cannot be empty! ");
+                }
+            }
+
             ProductDTO updatedProduct = new ProductDTO(productId, brandID, userObjectID, detail, hot, name, color, price, sale, warrantyPeriod, status);
             ProductImageDTO avatarImage = new ProductImageDTO(productId, avatar, true);
-              
+
             HttpSession session = request.getSession();
             List<ProductDTO> productList = (List<ProductDTO>) session.getAttribute("PRODUCT_LIST");
-            
+
             boolean checkProduct = productDao.updateProduct(updatedProduct);
             boolean checkAvatar = imageDAO.updateAvatar(avatarImage);
-            if(checkProduct&&checkAvatar){
-                for(ProductDTO p: productList){
-                    if(p.getProductId() == updatedProduct.getProductId()){
+            boolean check = imageDAO.updateDetailImages(images);
+
+            if (errorMessages.length() > 0) {
+                request.setAttribute("err", errorMessages.toString()); // Gửi thông báo lỗi
+            } else if (checkProduct && checkAvatar && check) {
+                for (ProductDTO p : productList) {
+                    if (p.getProductId() == updatedProduct.getProductId()) {
                         p.setName(updatedProduct.getName());
                         p.setColor(updatedProduct.getColor());
                         p.setHot(updatedProduct.isHot());
@@ -135,28 +191,25 @@ public class UpdateProductController extends HttpServlet {
                         p.setProductStatus(updatedProduct.isProductStatus());
                         p.setSale(updatedProduct.getSale());
                         p.setWarrantyPeriod(updatedProduct.getWarrantyPeriod());
-                        p.setAvatarPath(avatarImage.getImagePath());
+                        p.setListImages(imageDAO.getImageByProduct(p.getProductId()));
                     }
                 }
-                
-                
                 request.setAttribute("LIST_PRODUCT", productList);
                 request.setAttribute("ms", "Update successfully");
                 url = SUCCESS;
-            }else{
+
+            } else {
                 request.setAttribute("err", "Update failed");
             }
-            
-        }catch(SQLException e){
-           log("Error at UpdateProductController: " +e.toString());
-        }finally{           
+        } catch (SQLException e) {
+            log("Error at UpdateProductController: " + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
 
-
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -170,8 +223,10 @@ public class UpdateProductController extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UpdateProductController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateProductController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -188,8 +243,10 @@ public class UpdateProductController extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UpdateProductController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateProductController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -1,47 +1,57 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : Jun 24, 2024, 6:06:06 PM
-    Author     : Luu Minh Quan
-*/
-.header-section .ht-right .user{
+
+/* Điều chỉnh khung chứa menu người dùng */
+.header-section .ht-right .user {
     position: absolute;
-    top: 6vh; right: 2vh;
-    background: #252525;
-    width: 16rem;
-    height: 7rem;
+    top:  6vh;
+    right: 27vh;
+    background: #273c75; /* Màu nền tối */
+    width: 11rem; /* Chiều rộng của menu */
+    height: auto; /* Tự điều chỉnh chiều cao theo nội dung */
+    padding: 0.5rem 0; /* Tạo khoảng cách trên dưới cho nội dung */
     display: flex;
-    align-items: center;
+    flex-direction: column; /* Sắp xếp các mục theo cột */
+    align-items: flex-start; /* Canh trái nội dung */
+    justify-content: center;
     transform: scaleY(0);
-    transition: 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
     transform-origin: top;
+    border-radius: 8px; /* Bo tròn góc */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng */
+    z-index: 1000; /* Hiển thị trên các thành phần khác */
 }
 
-.header-section .ht-right .user a{
+/* Điều chỉnh các mục liên kết bên trong */
+.header-section .ht-right .user a {
     color: #fff;
-} 
+    padding: 0.5rem 1.5rem; /* Khoảng cách giữa các mục */
+    font-size: 14px;
+    width: 100%; /* Đảm bảo các liên kết chiếm hết chiều ngang menu */
+    text-align: left; /* Canh trái cho các liên kết */
+    text-decoration: none; /* Bỏ gạch chân */
+    transition: color 0.2s ease; /* Hiệu ứng mượt khi đổi màu chữ */
+}
 
-.header-section .ht-right .user a:hover{
-    color: #e7ab3c;
-} 
+/* Hiệu ứng khi di chuột qua các mục */
+.header-section .ht-right .user a:hover {
+    color: #eb8014; /* Màu chữ khi di chuột qua */
+    background-color: rgba(255, 255, 255, 0.1); /* Nền khi hover */
+}
 
-.header-section .ht-right .user.active{
-    z-index: 1000;
-    transform: scaleY(1);
-} 
-
+/* Kích hoạt menu với lớp 'active' */
+.header-section .ht-right .user.active {
+    transform: scaleY(1); /* Hiển thị menu bằng cách phóng to theo trục Y */
+}
 
 .header-top .ht-right .login-panel:hover{
-color: #C06B3E;
-cursor: pointer;;
+    color: #273c75;
+    cursor: pointer;;
 }
 
 .wishlist-heading{
     font-size: 2.5rem;
     text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .p-price-wishlist{
@@ -71,7 +81,7 @@ cursor: pointer;;
 
 #UpdateUser:hover{
     background-color: #e7ab3c;
-    
+
 }
 
 #email-exist{
@@ -314,4 +324,279 @@ cursor: pointer;;
 
 #edit-btn-sex .fa-pencil-square-o {
     font-size: 20px;
+}
+
+.step-wizard {
+    height: 130px; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.step-wizard-list {
+    background: #fff;
+    width: 100%;
+    color: #333;
+    list-style-type: none;
+    border-radius: 10px;
+    display: flex;
+    position: relative;
+    z-index: 10;
+}
+
+.step-wizard-item {
+    padding: 0 30px; 
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    min-width: 200px; 
+    position: relative;
+    color: #273c75;
+    cursor: pointer; 
+}
+
+.step-wizard-item.selected {
+    background-color: #e7ab3c;
+    color: #e7ab3c;
+    border-radius: 50px;
+}
+
+.step-wizard-item + .step-wizard-item:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 30px; 
+    background: #273c75;
+    width: 100%;
+    height: 4px; 
+    transform: translateX(-50%);
+    z-index: -10;
+}
+
+.progress-count {
+    height: 60px; 
+    width: 60px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 24px; 
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+    color: #273c75; 
+}
+
+.progress-count:after {
+    content: "";
+    height: 60px; 
+    width: 60px;
+    background: #273c75;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: -10;
+    background: #fff;
+    border: 3px solid; 
+}
+
+.progress-count.selected {
+    background-color: #e7ab3c;
+    color: #e7ab3c;
+    border-radius: 50px;
+}
+
+.order-count {
+    position: absolute;
+    top: -5px;   
+    right: -5px; 
+    background: #e7ab3c;  
+    color: white;     
+    height: 20px;     
+    width: 20px;
+    border-radius: 50%; 
+    font-size: 12px;  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Các trạng thái đã hoàn thành */
+.completed .progress-count {
+    color: #fff; 
+}
+
+.completed .progress-count:after {
+    background: #273c75; 
+    border: 3px solid #273c75; 
+}
+
+.completed .progress-label {
+    color: #273c75; 
+}
+.current-item .progress-count {
+    transform: scale(1.2); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border: 3px solid #273c75; 
+}
+
+.order-item {
+    background-color: #f8f9fa; /* Màu nền nhạt */
+    border-radius: 10px;       /* Bo góc mềm mại */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng */
+    transition: transform 0.3s, box-shadow 0.3s; /* Thêm chuyển động */
+}
+
+.order-item:hover {
+    transform: translateY(-5px); /* Hiệu ứng nâng lên khi hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Bóng đậm hơn khi hover */
+}
+
+.order-item img {
+    border-radius: 5px; /* Bo góc cho hình ảnh */
+}
+
+.order-item-details {
+    font-size: 14px; /* Điều chỉnh kích thước chữ */
+}
+
+.order-item h6 {
+    font-size: 16px; /* Điều chỉnh kích thước tiêu đề */
+    color: #343a40;  /* Màu chữ đậm */
+}
+
+.order-item p {margin-bottom: 0.5rem; /* Khoảng cách giữa các đoạn văn */
+               color: #6c757d;        /* Màu chữ nhẹ hơn */
+}
+
+.order-item .btn {
+    font-size: 13px;
+    padding: 5px 10px; /* Thu nhỏ nút cho gọn gàng hơn */
+}
+
+.order-item .btn-outline-primary {
+    color: #050f1a;
+    border-color: #050f1a;
+    transition: all 0.3s;
+}
+
+.order-item .btn-outline-primary:hover {
+    background-color: #050f1a;
+    color: #fff;
+}
+.card {
+    width: 300px;
+    height: fit-content;
+    background: rgb(255, 255, 255);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px;
+    position: fixed;
+    /* Changed from relative to fixed */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+}
+
+/* Optional: Add a semi-transparent background overlay behind the modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black */
+    z-index: 1100;
+    /* Below the modal itself */
+}
+
+/* Existing styles for the content */
+.card-content {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.card-heading {
+    font-size: 20px;
+    font-weight: 700;
+    color: rgb(27, 27, 27);
+}
+
+.card-description {
+    font-weight: 100;
+    color: rgb(102, 102, 102);
+}
+
+.card-button-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.card-button {
+    width: 50%;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.primary {
+    background-color: #273c75;
+    color: white;
+}
+
+.primary:hover {
+    background-color: #273c75;
+    color: white;
+}
+
+.secondary {
+    background-color: #ddd;
+}
+
+.secondary:hover {
+    background-color: rgb(197, 197, 197);
+}
+
+.exit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.exit-button:hover svg {
+    fill: black;
+}
+
+.exit-button svg {
+    fill: rgb(175, 175, 175);
 }

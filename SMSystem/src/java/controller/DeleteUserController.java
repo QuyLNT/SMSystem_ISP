@@ -7,7 +7,6 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +43,7 @@ public class DeleteUserController extends HttpServlet {
             int userId = Integer.parseInt(userID);
             HttpSession session = request.getSession();
             UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
-            if(userID.equals(loginUser.getUserId())){
+            if(userId == loginUser.getUserId()){
                 request.setAttribute("err", "Can not delete");     
             }else{
                 UserDAO dao = new UserDAO();

@@ -43,6 +43,7 @@ public class SearchCategoriesController extends HttpServlet {
             }
             if (productList != null) {
                 session.setAttribute("PRODUCT_LIST", productList);
+                session.setAttribute("CATE", type);
                 url = SUCCES;
             }
         } catch (ClassNotFoundException | NumberFormatException | SQLException e) {

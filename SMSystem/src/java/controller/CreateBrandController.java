@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -25,6 +24,7 @@ public class CreateBrandController extends HttpServlet {
 
     private static final String ERROR = "brandList.jsp";
     private static final String SUCCESS = "brandList.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -35,22 +35,23 @@ public class CreateBrandController extends HttpServlet {
             String name = request.getParameter("Name");
             BrandDAO brandDao = new BrandDAO();
             BrandDTO brand = brandDao.insertNewBrand(name);
-            if (brand!=null) {
-                
+            if (brand != null) {
                 List<BrandDTO> brandList = (List<BrandDTO>) session.getAttribute("BRAND_LIST");
                 brandList.add(brand);
                 session.setAttribute("BRAND_LIST", brandList);
-                request.setAttribute("ms", "Create Successfully");
+                request.setAttribute("ms_create", "Create Successfully");
                 url = SUCCESS;
-            } else { 
-                request.setAttribute("err", "Create failed");
+            } else {
+                request.setAttribute("err_create", "Create failed");
             }
+        } catch (ClassNotFoundException | SQLException e) {
+
+            log(e.toString());
+
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
-        } catch (IOException | ClassNotFoundException | SQLException | ServletException e) {
-        }finally{
-            request.getRequestDispatcher(url).forward(request, response);
-        }   
-            
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

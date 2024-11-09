@@ -12,9 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.naming.NamingException;
 import utils.DBUtils;
 
@@ -44,6 +41,12 @@ public class UserDAO {
             + "SET roleId = ?\n"
             + "WHERE userId = ?";
     private static final String DELETE = "DELETE users WHERE userId = ?";
+    private static final String GET_USER = "SELECT userId,userName, fullName,phoneNumber,sex,email,isActive, roleId,createdAt FROM users WHERE userId = ? ";
+    private static final String GET_USER_NAME = "SELECT userName FROM users WHERE userId = ? ";
+    private static final String GET_EMAIL = "SELECT email FROM users WHERE email = ?";
+    private static final String UPDATE_PASSWORD = "UPDATE users SET password = ? WHERE email = ?";
+    private static final String GET_SHIPPER = "SELECT userId, fullName, userName, phoneNumber, email, roleId FROM users WHERE roleId = 'SP'";
+    private static final String IS_PHONE_EXISTS = "SELECT * FROM users WHERE phoneNumber = ?";
 
     public UserDTO checkLogin(String userIndentify, String password) throws SQLException, ClassNotFoundException, NamingException {
         UserDTO user = null;
@@ -127,7 +130,7 @@ public class UserDAO {
         return userList;
     }
 
-    public boolean userAfterUpdate(UserDTO user) throws SQLException, ClassNotFoundException{
+    public boolean userAfterUpdate(UserDTO user, String newPassword) throws SQLException, ClassNotFoundException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -135,8 +138,9 @@ public class UserDAO {
         try {
             conn = DBUtils.getConnection();
             if (conn != null) {
+                String passwordToUpdate = (newPassword != null && !newPassword.isEmpty()) ? newPassword : user.getPassword();
                 ptm = conn.prepareStatement(UPDATE);
-                ptm.setString(1, user.getPassword());
+                ptm.setString(1, passwordToUpdate);
                 ptm.setString(2, user.getFullName());
                 ptm.setString(3, user.getPhoneNumber());
                 ptm.setString(4, user.getSex());
@@ -351,6 +355,202 @@ public class UserDAO {
 
         } finally {
             if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return checkExits;
+    }
+
+    public UserDTO getUserById(int userId) throws ClassNotFoundException, SQLException {
+        UserDTO user = null;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_USER);
+                ptm.setInt(1, userId);
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    String fullName = rs.getString("fullName");
+                    String userName = rs.getString("userName");
+                    String password = "***";
+                    String phoneNumber = rs.getString("phoneNumber");
+                    String sex = rs.getString("sex");
+                    String email = rs.getString("email");
+                    boolean isActive = rs.getBoolean("isActive");
+                    String roleId = rs.getString("roleId");
+                    Date createdAt = rs.getDate("createdAt");
+
+                    user = new UserDTO(userId, fullName, userName, password, phoneNumber, sex, email, isActive, roleId, createdAt);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+
+        return user;
+    }
+
+    public UserDTO getUserByName(int userId) throws ClassNotFoundException, SQLException {
+        UserDTO user = null;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_USER_NAME);
+                ptm.setInt(1, userId);
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    String userName = rs.getString("userName"); // Lấy tên người dùng từ ResultSet
+                    user = new UserDTO(userId, userName); // Khởi tạo UserDTO với userId và userName
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return user;
+    }
+
+    public boolean isEmailRegistered(String email) throws SQLException, ClassNotFoundException {
+        boolean isRegistered = false;
+
+        try (Connection conn = DBUtils.getConnection();
+                PreparedStatement ptm = conn != null ? conn.prepareStatement(GET_EMAIL) : null) {
+            if (ptm != null) {
+                ptm.setString(1, email);
+                try (ResultSet rs = ptm.executeQuery()) {
+                    if (rs.next()) {
+                        isRegistered = true;
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return isRegistered;
+    }
+
+    public boolean updatePasswordByEmail(String email, String newPassword) throws ClassNotFoundException, SQLException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        boolean isUpdated = false;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(UPDATE_PASSWORD);
+                ptm.setString(1, newPassword);
+                ptm.setString(2, email);
+                isUpdated = ptm.executeUpdate() > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            return isUpdated;
+        }
+    }
+
+    public String getUserNameByEmail(String email) throws SQLException, ClassNotFoundException {
+        String fullName = null;
+        String query = "SELECT fullName FROM users WHERE email = ?";
+        try (Connection conn = DBUtils.getConnection();
+                PreparedStatement ptm = conn.prepareStatement(query)) {
+            ptm.setString(1, email);
+            ResultSet rs = ptm.executeQuery();
+            if (rs.next()) {
+                fullName = rs.getString("fullName");
+            }
+        }
+        return fullName;
+    }
+
+    public List<UserDTO> getAllShippers() throws ClassNotFoundException, SQLException {
+        List<UserDTO> shippers = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_SHIPPER);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    UserDTO shipper = new UserDTO();
+                    shipper.setUserId(rs.getInt("userId"));
+                    shipper.setFullName(rs.getString("fullName"));
+                    shipper.setUserName(rs.getString("userName"));
+                    shipper.setPhoneNumber(rs.getString("phoneNumber"));
+                    shipper.setEmail(rs.getString("email"));
+                    shipper.setRoleId(rs.getString("roleId"));
+                    shippers.add(shipper);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return shippers;
+    }
+
+    public boolean checkPhoneExists(String phoneNumber) throws ClassNotFoundException, SQLException {
+        boolean checkExits = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(IS_PHONE_EXISTS);
+                ptm.setString(1, phoneNumber);
+                rs = ptm.executeQuery();{
+                if(rs.next()){
+                    checkExits = true;
+                }
+            }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
                 conn.close();
             }
             if (conn != null) {
@@ -359,4 +559,33 @@ public class UserDAO {
         }
         return checkExits;
     }
+
+    public boolean changePassword(String userName, String newPassword) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        boolean changePassword = false;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                String sql = "UPDATE users SET password = ? WHERE userName = ?";
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, newPassword);
+                ptm.setString(2, userName);
+
+                int rowsUpdated = ptm.executeUpdate();
+                if (rowsUpdated > 0) {
+                    changePassword = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (ptm != null) { ptm.close(); }
+            if (conn != null) { conn.close(); }
+        }
+        return changePassword;
+    }
+
 }
