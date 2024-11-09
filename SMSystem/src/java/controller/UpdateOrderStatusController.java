@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.order.OrderDAO;
 import model.order.OrderDTO;
+import model.user.UserDTO;
 
 /**
  *
@@ -43,26 +44,33 @@ public class UpdateOrderStatusController extends HttpServlet {
 
         String url = ERROR;
         try {
+            HttpSession session = request.getSession();
+            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+
             String status = request.getParameter("status");
             int orderId = Integer.parseInt(request.getParameter("orderId"));
             OrderDAO d = new OrderDAO();
             boolean check = d.updateOrderStatus(status, orderId);
-            if (check) {
+            if (check && loginUser.getRoleId().equals("MN")) {
                 if ("Not Completed".equals(status)) {
                     d.returnItemsToStock(orderId);
                 }
-                HttpSession session = request.getSession();
                 List<OrderDTO> orderList = (List<OrderDTO>) session.getAttribute("ORDER_LIST");
-
                 for (OrderDTO o : orderList) {
-                    if(o.getOrderId()==orderId){
+                    if (o.getOrderId() == orderId) {
                         o.setOrderStatus(status);
                     }
                 }
+
                 request.setAttribute("ORDER_LIST", orderList);
                 request.setAttribute("ms", "Update Successfully");
                 request.setAttribute("orderId", orderId);
+
                 url = SUCCESS;
+
+            } else if (check && loginUser.getRoleId().equals("SP")) {
+                request.setAttribute("ms", "Update Order "+ orderId +" Successfully");
+                url = "shipList.jsp";
             } else {
                 request.setAttribute("ms", "Something wrong at sever");
             }

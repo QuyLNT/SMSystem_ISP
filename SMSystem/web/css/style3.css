@@ -359,6 +359,12 @@
     cursor: pointer; 
 }
 
+.step-wizard-item.selected {
+    background-color: #e7ab3c;
+    color: #e7ab3c;
+    border-radius: 50px;
+}
+
 .step-wizard-item + .step-wizard-item:after {
     content: "";
     position: absolute;
@@ -399,6 +405,12 @@
     z-index: -10;
     background: #fff;
     border: 3px solid; 
+}
+
+.progress-count.selected {
+    background-color: #e7ab3c;
+    color: #e7ab3c;
+    border-radius: 50px;
 }
 
 .order-count {

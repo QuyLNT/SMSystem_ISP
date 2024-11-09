@@ -223,9 +223,9 @@
                             <i class="ti-menu"></i>
                             <span>All Departments</span>
                             <ul class="depart-hover">
-                                <li><a href="MainController?action=SearchCategories&type=1">Men's Clothing</a></li>
-                                <li><a href="MainController?action=SearchCategories&type=2">Women's Clothing</a></li>
-                                <li><a href="MainController?action=SearchCategories&type=3">Kid's Clothing</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=1">Men's Shoes</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=2">Women's Shoes</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=3">Kid's Shoes</a></li>
                             </ul>
                         </div>
                     </div>
@@ -265,8 +265,8 @@
         <div id="modalOverlay" class="modal-overlay" style="display: none;">
             <div id="deleteConfirmation" class="card">
                 <div class="card-content">
-                    <p class="card-heading">SMS</p>
-                    <p class="card-description">Please sign in to buy perfume</p>
+                    <p class="card-heading">SMSystem</p>
+                    <p class="card-description">Please sign in to buy</p>
                 </div>
                 <div class="card-button-wrapper">
                     <a href="register.jsp" class="card-button secondary btn">Sign up</a>
@@ -497,8 +497,9 @@
                                         <div class="product-content">
                                             <div class="row" style="display: flex; justify-content: center;">
                                                 <div class="col-lg-8" >
-                                                    <img src="img/size.jpg" alt="" width="500px" height="450px">
+                                                    <img src="img/size.png" alt="" width="500px" height="450px">
                                                 </div>
+                                                <div class="col-lg-4" ></div>
                                             </div>
                                         </div>
                                     </div>

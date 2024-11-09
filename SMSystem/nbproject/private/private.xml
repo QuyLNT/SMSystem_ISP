@@ -3,16 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SMSystem_ISP/SMSystem/web/warrantyPage.jsp</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/UpdateProductController.java</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/DeleteUserController.java</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/CheckWarrantyController.java</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/model/order/OrderDAO.java</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/LoadUserListController.java</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/SearchUserByUserNameController.java</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/web/product.jsp</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/web/userList.jsp</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/web/register.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/model/shipment/ShipmentDTO.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/shipList.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/shipmentDetail.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/FilterShipController.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/UpdateShipmentController.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/LoadShipmentController.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/model/shipment/ShipmentDAO.java</file>
         </group>
     </open-files>
 </project-private>

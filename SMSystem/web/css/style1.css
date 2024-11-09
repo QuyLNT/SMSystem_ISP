@@ -691,10 +691,14 @@ favor-add{
 }
 
 .nav-item {
+    width: 1684px; 
+    margin: 0 auto; 
+    box-sizing: border-box;
     background: #252525;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+
 }
 
 .nav-item .nav-depart {
@@ -1525,6 +1529,9 @@ favor-add{
 -----------------------*/
 
 .partner-logo {
+    width: 1684px; 
+    margin: 0 auto; 
+    box-sizing: border-box;
     background: #303030;
     padding: 38px 0;
 }
@@ -1549,6 +1556,9 @@ favor-add{
 -----------------------*/
 
 .footer-section {
+    width: 1684px; 
+    margin: 0 auto; 
+    box-sizing: border-box;
     background: #191919;
     padding-top: 75px;
 }

@@ -236,9 +236,9 @@
                             <i class="ti-menu"></i>
                             <span>All Departments</span>
                             <ul class="depart-hover">
-                                <li><a href="MainController?action=SearchCategories&type=1">Men's Clothing</a></li>
-                                <li><a href="MainController?action=SearchCategories&type=2">Women's Clothing</a></li>
-                                <li><a href="MainController?action=SearchCategories&type=3">Kid's Clothing</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=1">Men's Shoes</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=2">Women's Shoes</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=3">Kid's Shoes</a></li>
                             </ul>
                         </div>
                     </div>
@@ -323,8 +323,12 @@
                                                                 <dd class="col-sm-8"> <%=ord.getCreatedAt()%></dd>
                                                                 <dt class="col-sm-4">Status</dt>
                                                                 <dd class="col-sm-8"><%=ord.getOrderStatus()%></dd>
+                                                                <dt class="col-sm-9">
+                                                                    <div class="table-tilte">
+                                                                    </div>
+                                                                </dt>
                                                                 <dt class="col-sm-4">Total Price</dt>
-                                                                <dd class="col-sm-8"><%= String.format("%.1f", ord.getTotalPrice())%>$</dd>  
+                                                                <dd class="col-sm-8" style="font-size: 25px"><%= String.format("%.2f", ord.getTotalPrice())%>$</dd>  
                                                             </dl>
                                                         </div>
                                                     </div>

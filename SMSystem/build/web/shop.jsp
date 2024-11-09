@@ -226,9 +226,9 @@
                             <i class="ti-menu"></i>
                             <span>All Departments</span>
                             <ul class="depart-hover">
-                                <li><a href="MainController?action=SearchCategories&type=1">Men's Clothing</a></li>
-                                <li><a href="MainController?action=SearchCategories&type=2">Women's Clothing</a></li>
-                                <li><a href="MainController?action=SearchCategories&type=3">Kid's Clothing</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=1">Men's Shoes</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=2">Women's Shoes</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=3">Kid's Shoes</a></li>
                             </ul>
                         </div>
                     </div>
@@ -237,7 +237,7 @@
                             <li><a href="MainController?action=HomePage">Home</a></li>
                             <li><a href="MainController?action=ShopPage">Shop</a></li>
                             <li><a href="contact.jsp">Contact</a></li>
-                            <li><a href="MainController?action=ViewCart&url=product.jsp">Shopping Cart</a></li>
+                            <li><a href="MainController?action=ViewCart&url=shop.jsp">Shopping Cart</a></li>
                             <li><a href="warrantyPage.jsp">Warranty</a></li>
                         </ul>
                     </nav>
@@ -275,13 +275,15 @@
                                 <div class="fw-brand-check">
                                     <%
                                         List<BrandDTO> brandList = (List<BrandDTO>) session.getAttribute("BRAND_LIST");
+                                        List<Integer> selectedBrands = (List<Integer>) session.getAttribute("SELECTED_BRANDS");
                                         if (brandList != null) {
                                             for (BrandDTO b : brandList) {
+                                                boolean isChecked = selectedBrands != null && selectedBrands.contains(b.getBrandId());
                                     %>
                                     <div class="bc-item">
                                         <label for="bc-<%=b.getBrandId()%>">
                                             <%=b.getBrandName()%>
-                                            <input type="checkbox" id="bc-<%=b.getBrandId()%>" name="brand" value="<%=b.getBrandId()%>"/>
+                                            <input type="checkbox" id="bc-<%=b.getBrandId()%>" name="brand" value="<%=b.getBrandId()%>" <%= isChecked ? "checked" : ""%>/>
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -294,93 +296,32 @@
                                         }
                                     %>
                                 </div>
-
-                                <!--                                <h4 class="fw-title">Color</h4>
-                                                                <div class="dropdown">
-                                                                    <div class="dropdown-header"></div>
-                                                                    <ul class="color-options">
-                                                                        <li>
-                                                                            <span class="color-circle" style="background-color: white;"></span>
-                                                                            Trắng
-                                                                        </li>
-                                                                        <li>
-                                                                            <span class="color-circle" style="background-color: #FFB6C1;"></span>
-                                                                            HỒNG
-                                                                        </li>
-                                                                        <li>
-                                                                            <span class="color-circle rainbow"></span>
-                                                                            NHIỀU MÀU
-                                                                        </li>
-                                                                        <li>
-                                                                            <span class="color-circle" style="background-color: #000;"></span>
-                                                                            Đen
-                                                                        </li>
-                                                                        <li>
-                                                                            <span class="color-circle" style="background-color: #cc2424;"></span>
-                                                                            Đỏ
-                                                                        </li>
-                                                                        <li>
-                                                                            <span class="color-circle" style="background-color: green;"></span>
-                                                                            Xanh lá cây
-                                                                        </li>
-                                                                        <li>
-                                                                            <span class="color-circle" style="background-color: blue;"></span>
-                                                                            Xanh nước biển
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>-->
                                 <h4 class="fw-title">Color</h4>
                                 <div class="fw-brand-check">
+                                    <%
+                                        List<String> selectedColors = (List<String>) session.getAttribute("SELECTED_COLORS");
+                                        String[] colors = {"White", "Black", "Green", "Blue", "Brown", "Pink"};
+                                        for (String color : colors) {
+                                            boolean isChecked = selectedColors != null && selectedColors.contains(color);
+                                    %>
                                     <div class="bc-item">
-                                        <label for="bc-white">
-                                            White
-                                            <input type="checkbox" id="bc-white" name="color" value="White"/>
+                                        <label for="bc-<%=color.toLowerCase()%>">
+                                            <%=color%>
+                                            <input type="checkbox" id="bc-<%=color.toLowerCase()%>" name="color" value="<%=color%>" <%= isChecked ? "checked" : ""%>/>
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
-                                    <div class="bc-item">
-                                        <label for="bc-black">
-                                            Black
-                                            <input type="checkbox" id="bc-black" name="color" value="Black"/>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                    <div class="bc-item">
-                                        <label for="bc-green">
-                                            Green
-                                            <input type="checkbox" id="bc-green" name="color" value="Green"/>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                    <div class="bc-item">
-                                        <label for="bc-blue">
-                                            Blue
-                                            <input type="checkbox" id="bc-blue" name="color" value="Blue"/>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                    <div class="bc-item">
-                                        <label for="bc-yellow">
-                                            Yellow
-                                            <input type="checkbox" id="bc-yellow" name="color" value="Yellows"/>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                    <div class="bc-item">
-                                        <label for="bc-order">
-                                            Order
-                                            <input type="checkbox" id="bc-order" name="color" value="Order"/>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
+                                    <% }%>
                                 </div>
 
                                 <h4 class="fw-title">Price</h4>
                                 <div class="filter-range-wrap">
                                     <div class="range-slider">
                                         <div class="price-input">
-                                            $<input type="text" id="minamount" name="minPrice">
-                                            $<input type="text" id="maxamount" name="maxPrice">
+                                            $<input type="text" id="minamount" name="minPrice" 
+                                                    value="<%= session.getAttribute("MIN_PRICE") != null ? session.getAttribute("MIN_PRICE") : ""%>">
+                                            $<input type="text" id="maxamount" name="maxPrice" 
+                                                    value="<%= session.getAttribute("MAX_PRICE") != null ? session.getAttribute("MAX_PRICE") : ""%>">
                                         </div>
                                     </div>
                                     <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget-content"
@@ -510,8 +451,8 @@
                                 </div>
                             </div>
                             <%
-                                    }
-                                }else{
+                                }
+                            } else {
                             %>
                             <div>
                                 <%= request.getAttribute("NO_RESULTS") != null ? request.getAttribute("NO_RESULTS") : "No products found."%>
@@ -651,23 +592,28 @@
         <script src="js/main.js"></script>
         <script src="js/main2.js"></script>
         <script src="js/main3.js"></script>
-        <script> var rangeSlider = $(".price-range"),
-                                                        minamount = $("#minamount"),
-                                                        maxamount = $("#maxamount"),
-                                                        minPrice = rangeSlider.data('min'),
-                                                        maxPrice = rangeSlider.data('max');
-                                                rangeSlider.slider({
-                                                    range: true,
-                                                    min: minPrice,
-                                                    max: maxPrice,
-                                                    values: [minPrice, maxPrice],
-                                                    slide: function (event, ui) {
-                                                        minamount.val(ui.values[0]);
-                                                        maxamount.val(ui.values[1]);
-                                                    }
+        <script>
+                                                $(document).ready(function () {
+                                                    var rangeSlider = $(".price-range"),
+                                                            minamount = $("#minamount"),
+                                                            maxamount = $("#maxamount"),
+                                                            minPrice = rangeSlider.data('min') || 50, // Giá trị khởi tạo từ data-min
+                                                            maxPrice = rangeSlider.data('max') || 300; // Giá trị khởi tạo từ data-max
+
+                                                    rangeSlider.slider({
+                                                        range: true,
+                                                        min: 50,
+                                                        max: 300,
+                                                        values: [minPrice, maxPrice],
+                                                        slide: function (event, ui) {
+                                                            minamount.val(ui.values[0]);
+                                                            maxamount.val(ui.values[1]);
+                                                        }
+                                                    });
+
+                                                    minamount.val(minPrice);
+                                                    maxamount.val(maxPrice);
                                                 });
-                                                minamount.val(rangeSlider.slider("values", 0));
-                                                maxamount.val(rangeSlider.slider("values", 1));
         </script>
     </body>
 </html>

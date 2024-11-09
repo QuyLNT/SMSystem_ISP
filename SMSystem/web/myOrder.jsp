@@ -102,7 +102,7 @@
                         %>
                         <div class="lan-selector">
                             <a href="MainController?action=Back&role=<%=loginUser.getRoleId()%>" style="color: black;">
-                                <i class="fa fa-home">  Management</i>
+                                <i class="fa fa-home">  </i>Management
                             </a>
                         </div>
                         <%
@@ -237,9 +237,9 @@
                             <i class="ti-menu"></i>
                             <span>All Departments</span>
                             <ul class="depart-hover">
-                                <li><a href="MainController?action=SearchCategories&type=1">Men's Clothing</a></li>
-                                <li><a href="MainController?action=SearchCategories&type=2">Women's Clothing</a></li>
-                                <li><a href="MainController?action=SearchCategories&type=3">Kid's Clothing</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=1">Men's Shoes</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=2">Women's Shoes</a></li>
+                                <li><a href="MainController?action=SearchCategories&type=3">Kid's Shoes</a></li>
                             </ul>
                         </div>
                     </div>
@@ -273,6 +273,7 @@
         </div>
         <!--Breadcrumb Section End-->
         <div class="wishlist-heading">My Order</div>
+
 
         <%
             Map<String, Integer> orderStatusCount = (Map<String, Integer>) session.getAttribute("STATUS_COUNT");
@@ -321,8 +322,8 @@
                     <li class="step-wizard-item" data-status="4">
                         <a href="MainController?action=SearchOrderByStatus&status=Not Completed">
                             <span class="progress-count">
-                                <i class="fa-solid fa-circle-xmark"></i>                                
-                                <span class="order-count"><%= orderStatusCount.get("Not Complete")%></span>
+                                <i class="fa-solid fa-circle-xmark"></i>
+                                <span class="order-count"><%= orderStatusCount.get("Not Completed")%></span>
                             </span>
                             <span class="progress-label" style="color: #273c75;">Not Complete</span>
                         </a>
@@ -333,6 +334,18 @@
         <%
             }
         %>
+        <script>
+            // JavaScript để thay đổi màu nền của progress-count khi chọn mục
+            document.querySelectorAll('.step-wizard-item').forEach(item => {
+                item.addEventListener('click', function () {
+                    // Xóa lớp 'selected' khỏi tất cả các progress-count
+                    document.querySelectorAll('.progress-count').forEach(el => el.classList.remove('selected'));
+
+                    // Thêm lớp 'selected' vào progress-count của mục được nhấp
+                    this.querySelector('.progress-count').classList.add('selected');
+                });
+            });
+        </script>
         <div class="container">
             <section class="showcase">
                 <div class="overlay">

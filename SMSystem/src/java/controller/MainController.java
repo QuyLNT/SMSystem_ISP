@@ -160,6 +160,10 @@ public class MainController extends HttpServlet {
     private final static String SEND_MAIL_CONTROLLER = "SendMailController";
     private final static String DELETE_BRAND = "DeleteBrand";
     private final static String DELETE_BRAND_CONTROLLER = "DeleteBrandController";
+    private final static String LOAD_SHIP = "LoadShipData";
+    private final static String LOAD_SHIP_CONTROLLER = "LoadShipDataController";
+    private final static String Filter_SHIP = "FilterShip";
+    private final static String Filter_SHIP_CONTROLLER = "FilterShipController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -295,6 +299,10 @@ public class MainController extends HttpServlet {
                 url = SEND_MAIL_CONTROLLER;
             } else if (DELETE_BRAND.equals(action)) {
                 url = DELETE_BRAND_CONTROLLER;
+            } else if (LOAD_SHIP.equals(action)) {
+                url = LOAD_SHIP_CONTROLLER;
+            } else if(Filter_SHIP.equals(action)){
+                url = Filter_SHIP_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());

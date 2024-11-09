@@ -15,6 +15,7 @@
             />
         <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style1.css" type="text/css">
     </head>
     <body>
         <main class="main-wrap">
@@ -23,21 +24,23 @@
                     <nav class="navbar">
                         <div class="navbar-nav">
                             <div class="title">
-                                <h3>
-                                    <img src="img/icon-logoweb.png" alt="" width="100%" height="100%"/>
-                                    <span class="title-text">SMS</span>
-                                </h3>
+                                <a href="MainController?action=HomePage">
+                                    <h3>
+                                        <img src="img/icon-logoweb.png" alt="" width="32px" height="32px"/>
+                                        <span class="title-text">SMSystem</span>
+                                    </h3>
+                                </a>
                             </div>
                             <ul class="nav-list">
                                 <li class="nav-list-item">
-                                    <a href="MainController?action=LoadAdminHome" class="nav-link">
+                                    <a href="shipperPage.jsp" class="nav-link">
                                         <i class="fa-solid fa-house"></i>
                                         <span class="link-text">Home</span>
                                     </a>
                                 </li>
                                 <li class="nav-list-item">
                                     <a href="MainController?action=LoadShipment" class="nav-link">
-                                       <i class="fa-solid fa-truck"></i>
+                                        <i class="fa-solid fa-truck"></i>
                                         <span class="link-text">Shipment</span>
                                     </a>
                                 </li>
@@ -63,31 +66,49 @@
 
                     <div class="content">
                         <div class="welcome">
-                            <%
-                                String ms = (String) session.getAttribute("ms");
-                                if (ms != null) {
-                            %>
-                            <div class="alert alert-success" role="alert">
-                                <%= ms%>
-                            </div>
-                            <%
-                                    session.removeAttribute("ms");
-                                }
-                            %>
+
                             <%
                                 String searchUserName = request.getParameter("searchUserName");
                                 if (searchUserName == null) {
                                     searchUserName = "";
                                 }
                             %>
-                            <div class="search-form">
-                                <form action="MainController" method="POST">
-                                    Search Order: <input type="text" name="searchOrder" placeholder="Enter order ID" value="<%= searchUserName%>"/>
-                                    <button type="submit" name="action" value="SearchUserName" class="btn btn-primary">Search</button>
+                            <div class="welcome">
+
+                                <div class="search-form">
+                                    <form action="MainController" method="POST">
+                                        Search Shipment <input type="text" name="searchOrder" placeholder="Enter order ID" value="<%= searchUserName%>"/>
+                                        <button type="submit" name="action" value="SearchUserName" class="btn btn-primary">Search</button>
+                                    </form>
+                                </div></div>
+                                <%
+                                    String dateFilter = request.getParameter("dateFilter");
+                                    if (dateFilter == null) {
+                                        dateFilter = "";
+                                    }
+                                %>
+                            <div class="welcome">
+                                <form action="MainController" class="d-flex row justify-content-around">
+                                    <div class="select-option-province col-lg-2">Filter Shipment</div>
+                                    <div class="select-option-province col-lg-6">
+                                        <select name="dateFilter">
+                                            <option value="" <%= dateFilter.equals("") == true ? "selected" : ""%>>View All</option>                            
+                                            <option value="Today"<%= dateFilter.equals("Today") == true ? "selected" : ""%>>Today</option>
+                                            <option value="This Week"<%= dateFilter.equals("This Week") == true ? "selected" : ""%>>This Week</option>
+                                            <option value="This Month"<%= dateFilter.equals("This Month") == true ? "selected" : ""%>>This Month</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <button type="submit" name="action" value="FilterShip"class="btn btn-primary col-lg-3 ">Filter</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
                         <div class="welcome">
+
+                            <% if (request.getAttribute("ms") != null) {%>
+                            <div class="alert alert-success"><%= request.getAttribute("ms")%></div>
+                            <% }%>
                             <div class="table-title">Shipment Table</div>
                             <table class="table table-hover">
                                 <thead>
@@ -99,6 +120,8 @@
                                         <th>Estimated Arrival</th>
                                         <th>Shipment Status</th>
                                         <th>Update</th>
+                                        <th>Mark Order Status</th>
+                                        <th>View Detail</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -124,7 +147,25 @@
                                         <td>
                                             <form id="updateForm<%= shipment.getShipmentId()%>" action="UpdateShipmentController" method="POST">
                                                 <input type="hidden" name="shipmentId" value="<%= shipment.getShipmentId()%>"/>
-                                                <button type="submit" class="btn btn-primary">Update</button>
+                                                <button type="submit" class="btn btn-primary">Update Shipment</button>
+                                            </form>
+                                        </td>
+
+                                        <td>
+                                            <form action="UpdateOrderStatusController" method="POST" onsubmit="doUpdate(event)">
+                                                <input type="hidden" name="orderId" value="<%= shipment.getOrderId()%>">
+                                                <input type="hidden" name="status" value="Completed">
+                                                <button type="submit" class="btn btn-primary" name="action" value="UpdateStatus">
+                                                    <i class="fa-solid fa-square-check"></i>                                                
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="MainController" method="POST">
+                                                <input type="hidden" name="orderId" value="<%= shipment.getOrderId()%>" />
+                                                <button type="submit" class="btn btn-primary" name="action" value="View-Detail">
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </button>
                                             </form>
                                         </td>
                                     </tr>
@@ -147,13 +188,20 @@
         </main>
 
         <script>
-            // JavaScript để thiết lập giá trị min cho tất cả các trường ngày là ngày hiện tại
             document.addEventListener("DOMContentLoaded", function () {
                 const today = new Date().toISOString().split("T")[0]; // Lấy ngày hiện tại ở định dạng yyyy-mm-dd
                 document.querySelectorAll(".date-picker").forEach(function (dateField) {
                     dateField.min = today; // Đặt thuộc tính min cho các trường có class "date-picker"
                 });
             });
+        </script>
+        <script>
+            function doUpdate(event) {
+                if (confirm("Ensure this order is competed?")) {
+                } else {
+                    event.preventDefault();
+                }
+            }
         </script>
         <script src="js/app.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

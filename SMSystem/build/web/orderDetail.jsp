@@ -135,16 +135,20 @@
                                 </div>
                                 <div class="col">
                                     <dl class="row">
-                                        <dt class="col-sm-3">Payment Method</dt>
-                                        <dd class="col-sm-9"><%=ord.getPaymentMethod()%></dd>
-                                        <dt class="col-sm-3">Shipment Method</dt>
-                                        <dd class="col-sm-9"><%=ord.getShippingMethod()%></dd>
-                                        <dt class="col-sm-3">Date</dt>
-                                        <dd class="col-sm-9"> <%=ord.getCreatedAt()%></dd>
-                                        <dt class="col-sm-3">Status</dt>
-                                        <dd class="col-sm-9"><%=ord.getOrderStatus()%></dd>
-                                        <dt class="col-sm-3">Total Price</dt>
-                                        <dd class="col-sm-9"><%= String.format("%.2f", ord.getTotalPrice())%>$</dd>  
+                                        <dt class="col-sm-4">Payment Method</dt>
+                                        <dd class="col-sm-8"><%=ord.getPaymentMethod()%></dd>
+                                        <dt class="col-sm-4">Shipment Method</dt>
+                                        <dd class="col-sm-8"><%=ord.getShippingMethod()%></dd>
+                                        <dt class="col-sm-4">Date</dt>
+                                        <dd class="col-sm-8"> <%=ord.getCreatedAt()%></dd>
+                                        <dt class="col-sm-4">Status</dt>
+                                        <dd class="col-sm-8"><%=ord.getOrderStatus()%></dd>
+                                        <dt class="col-sm-9">
+                                            <div class="table-tilte">
+                                            </div>
+                                        </dt>
+                                        <dt class="col-sm-4">Total Price</dt>
+                                        <dd class="col-sm-8" style="font-size: 25px"><%= String.format("%.2f", ord.getTotalPrice())%>$</dd>  
                                     </dl>
                                 </div>
                             </div>
@@ -153,7 +157,6 @@
                                 }
                             %>     
                         </div>
-
                         <%
                             ShipmentDTO ship = (ShipmentDTO) request.getAttribute("SHIP_STATUS");
                             if (ship != null) {

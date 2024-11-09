@@ -256,8 +256,6 @@
                                         Search Product: <input type="text" name="searchProductName" placeholder="Enter product name" value="<%= searchProductName%>"/>
                                         <button type="submit" name="action" value="SearchProductName" class="btn btn-primary">Search</button>
                                     </form>
-
-
                                 </div>
                             </div>
                             <%
@@ -312,7 +310,7 @@
                                         <th>Brand</th>
                                         <th>Price</th>
                                         <th>Sale</th>
-                                        <th>Is Hot       </th>
+                                        <th>Is Hot</th>
                                         <th>Stock</th>
                                         <th>Warranty Period</th>
                                         <th>Status</th>
@@ -514,9 +512,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
-
-                                        <td>
+                                      
                                             <!-- Nút Xem Chi Tiết Sản Phẩm -->
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal<%= product.getProductId()%>">
                                                 <i class="fas fa-eye"></i> 

@@ -194,11 +194,8 @@
                                             <td><%=count++%></td>
                                             <td><%=discount.getDiscountCode()%></td>
                                             <td><%=discount.getDetail()%></td>                                       
-                                            <td><%
-                                                double discountAmount = discount.getDiscountAmount() * 100;
-                                                double roundedPercentage = Math.ceil(discountAmount * 100) / 100.0;
-                                                %>
-                                                <%= String.format("%.0f%%", roundedPercentage)%>
+                                            <td>
+                                                <%= discount.getDiscountAmount()%>$
                                             </td>
                                             <td><%=discount.getStartDay()%></td>
                                             <td><%=discount.getEndDay()%></td>
@@ -220,15 +217,6 @@
                                                     <input type="hidden" name="discountId"  value="<%=discount.getDiscountId()%>" />
 
                                                     <button type="submit" class="btn btn-primary" name="action" value="Remove">
-                                                        <i class="fa-solid fa-delete-left"></i>     
-                                                    </button>
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <form action="MainController" method="POST">
-                                                    <input type="hidden" name="discountId"  value="<%=discount.getDiscountId()%>" />
-
-                                                    <button type="submit" class="btn btn-primary" name="action" value="SendMail">
                                                         <i class="fa-solid fa-delete-left"></i>     
                                                     </button>
                                                 </form>

@@ -127,7 +127,7 @@ public class PaymentController extends HttpServlet {
 
             final Map embed_data = new HashMap() {
                 {
-                    put("redirecturl", "https://74a8-27-78-75-19.ngrok-free.app/SMSystem/success.jsp");
+                    put("redirecturl", "https://a104-123-21-145-218.ngrok-free.app/SMSystem/success.jsp");
                 }
             };
 
@@ -147,7 +147,7 @@ public class PaymentController extends HttpServlet {
                     put("amount", (long) amount);
                     put("description", description);
                     put("bank_code", "");
-                    put("callback_url", "https://74a8-27-78-75-19.ngrok-free.app/SMSystem/ZaloPayCallbackController");
+                    put("callback_url", "https://a104-123-21-145-218.ngrok-free.app/SMSystem/ZaloPayCallbackController");
                     put("item", new JSONArray(item).toString());
                     put("embed_data", new JSONObject(embed_data).toString());
                 }

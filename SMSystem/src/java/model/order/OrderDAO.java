@@ -582,7 +582,7 @@ public class OrderDAO {
                 + "     UNION ALL\n"
                 + "     SELECT 'Completed'\n"
                 + "     UNION ALL\n"
-                + "     SELECT 'Not Complete') AS statuses\n"
+                + "     SELECT 'Not Completed') AS statuses\n"
                 + "LEFT JOIN \n"
                 + "    orders o ON statuses.orderStatus = o.orderStatus AND o.customerId = ?\n"
                 + "GROUP BY \n"

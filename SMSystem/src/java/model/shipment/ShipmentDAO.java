@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import utils.DBUtils;
 
@@ -37,6 +38,13 @@ public class ShipmentDAO {
             + "FROM shipments s "
             + "JOIN shippingMethods sm ON s.shippingMethodId = sm.shippingMethodId "
             + "WHERE s.orderId = ?";
+
+    private static final String GET_TODAY_SHIP_BY_SHIPPER
+            = "SELECT s.shipmentId, s.orderId, s.shipperId, s.shippingMethodId, sm.methodName, s.shippedDate, s.estimatedArrival, s.shipmentStatus\n"
+            + "            FROM shipments s\n"
+            + "            JOIN shippingMethods sm ON s.shippingMethodId = sm.shippingMethodId \n"
+            + "            WHERE CONVERT(DATE, shippedDate) = CONVERT(DATE, GETDATE())\n"
+            + "            AND s.shipperId = ?";
 
     public List<ShipmentDTO> getAllShipments() throws SQLException, ClassNotFoundException {
         List<ShipmentDTO> shipments = new ArrayList<>();
@@ -190,5 +198,134 @@ public class ShipmentDAO {
             }
         }
         return ship;
+    }
+
+    public List<ShipmentDTO> getToDayShip(int userId) throws ClassNotFoundException, SQLException {
+        List<ShipmentDTO> shipments = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_TODAY_SHIP_BY_SHIPPER);
+
+                ptm.setInt(1, userId);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    ShipmentDTO ship = new ShipmentDTO();
+                    ship.setShipmentId(rs.getInt("shipmentId"));
+                    ship.setOrderId(rs.getInt("orderId"));
+                    ship.setShipperId(rs.getInt("shipperId"));
+                    ship.setShippingMethodId(rs.getInt("shippingMethodId"));
+                    ship.setMethodName(rs.getString("methodName"));
+                    ship.setShippedDate(rs.getDate("shippedDate"));
+                    ship.setShipmentStatus(rs.getString("shipmentStatus"));
+                    ship.setEstimatedArrival(rs.getDate("estimatedArrival"));
+                    shipments.add(ship);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return shipments;
+    }
+
+    public List<ShipmentDTO> filter(int userid, String dateFilter) throws ClassNotFoundException, SQLException {
+        List<ShipmentDTO> shipments = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+
+        StringBuilder query = new StringBuilder("SELECT s.shipmentId, s.orderId, s.shipperId, s.shippingMethodId, sm.methodName, s.shippedDate, s.estimatedArrival, s.shipmentStatus\n"
+                + "            FROM shipments s\n"
+                + "            JOIN shippingMethods sm ON s.shippingMethodId = sm.shippingMethodId \n"
+                + "            WHERE s.shipperId =? ");
+
+        if (dateFilter != null && !dateFilter.isEmpty()) {
+            switch (dateFilter) {
+                case "Today":
+                    query.append("AND s.shippedDate >= CAST(GETDATE() AS DATE) ");
+                    break;
+                case "This Week":
+                    query.append("AND s.shippedDate >= DATEADD(DAY, -(DATEPART(WEEKDAY, GETDATE()) - 1), CAST(GETDATE() AS DATE)) ");
+                    break;
+                case "This Month":
+                    query.append("AND s.shippedDate >= DATEADD(DAY, -(DAY(GETDATE()) - 1), CAST(GETDATE() AS DATE)) ");
+                    break;
+                default:
+                    break;
+            }
+        }
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(query.toString());
+                ptm.setInt(1, userid);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    ShipmentDTO ship = new ShipmentDTO();
+                    ship.setShipmentId(rs.getInt("shipmentId"));
+                    ship.setOrderId(rs.getInt("orderId"));
+                    ship.setShipperId(rs.getInt("shipperId"));
+                    ship.setShippingMethodId(rs.getInt("shippingMethodId"));
+                    ship.setMethodName(rs.getString("methodName"));
+                    ship.setShippedDate(rs.getDate("shippedDate"));
+                    ship.setShipmentStatus(rs.getString("shipmentStatus"));
+                    ship.setEstimatedArrival(rs.getDate("estimatedArrival"));
+                    shipments.add(ship);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return shipments;
+    }
+
+    public Date getDay(int shipmentId) throws SQLException, ClassNotFoundException {
+        Date date = new Date();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement("SELECT estimatedArrival FROM shipments WHERE shipmentId = ?");
+
+                ptm.setInt(1, shipmentId);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    
+                    date = rs.getDate("estimatedArrival");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return date;
     }
 }

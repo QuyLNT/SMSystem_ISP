@@ -45,14 +45,14 @@ public class LoadOrderDetailController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = "homePage.jsp";
         try {
-            
+
             int orderId = Integer.parseInt(request.getParameter("orderId"));
             OrderDAO orderDao = new OrderDAO();
             DiscountDAO discountDAO = new DiscountDAO();
             OrderDetailDAO orderDetailDao = new OrderDetailDAO();
             ProductImageDAO imageDao = new ProductImageDAO();
             ShipmentDAO shipDao = new ShipmentDAO();
-            
+
             OrderDTO order = orderDao.getOrderById(orderId);
             List<OrderDetailDTO> orderDetails = orderDetailDao.getOrderDetailListByOrderID(orderId);
             ShipmentDTO ship = shipDao.getShipByOrderId(orderId);
@@ -84,6 +84,8 @@ public class LoadOrderDetailController extends HttpServlet {
                 url = "myOrderDetail.jsp";
             } else if (loginUser.getRoleId().equals("MN")) {
                 url = "orderDetail.jsp";
+            } else if (loginUser.getRoleId().equals("SP")) {
+                url = "shipmentDetail.jsp";
             } else {
                 url = "homePage.jsp";
             }

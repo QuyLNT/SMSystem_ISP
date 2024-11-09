@@ -6,12 +6,9 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,56 +17,48 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.shipment.ShipmentDAO;
 import model.shipment.ShipmentDTO;
+import model.user.UserDTO;
 
 /**
  *
- * @author dell
+ * @author LENOVO
  */
-public class UpdateShipmentController extends HttpServlet {
+public class LoadShipDataController extends HttpServlet {
 
-    private static final String ERROR = "shipList.jsp";
-    private static final String SUCCESS = "shipList.jsp";
+    private static final String ERROR = "shipperPage.jsp";
+    private static final String SUCCESS = "shipperPage.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        HttpSession session = request.getSession(false);
+
         try {
-            int shipmentId = Integer.parseInt(request.getParameter("shipmentId"));
-            String newEstimatedArrival = request.getParameter("newEstimatedArrival");
-            String newStatus = request.getParameter("newStatus");
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate localDate = LocalDate.parse(newEstimatedArrival, formatter);
-            Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            HttpSession session = request.getSession();
+            UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
+
             ShipmentDAO dao = new ShipmentDAO();
-            boolean updated = false;
-
-            if (newEstimatedArrival != null && !newEstimatedArrival.isEmpty()) {
-                dao.updateEstimatedArrival(shipmentId, newEstimatedArrival);
-                updated = true;
-            }
-
-            if (newStatus != null && !newStatus.isEmpty()) {
-                dao.updateShipmentStatus(shipmentId, newStatus);
-                updated = true;
-            }
-
-            if (updated && session != null) {
-                List<ShipmentDTO> list = (List<ShipmentDTO>) session.getAttribute("shipments");
-                for (ShipmentDTO s : list) {
-                    if (s.getShipmentId() == shipmentId) {
-                        s.setEstimatedArrival(dao.getDay(shipmentId));
-                        s.setShipmentStatus(newStatus);
+            List<ShipmentDTO> shipList;
+            shipList = dao.getToDayShip(loginUser.getUserId());
+            if (shipList != null) {
+                int today = shipList.size();
+                int delivering = 0;
+                int completed = 0;
+                for (ShipmentDTO s : shipList) {
+                    if (s.getShipmentStatus().contains("completed")) {
+                        delivering++;
+                    } else {
+                        completed++;
                     }
                 }
-                session.setAttribute("shipments", list);
-                request.setAttribute("ms", "Update Shipment "+shipmentId+" Successful");
+                session.setAttribute("shipments", shipList);
+                request.setAttribute("TOTAL", today);
+                request.setAttribute("completed", completed);
+                request.setAttribute("delivering", delivering);
+                url = SUCCESS;
             }
-
-            url = SUCCESS;
-        } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
-            log("Error at UpdateShipmentController: " + e.toString());
+        } catch (ClassNotFoundException | SQLException e) {
+            log("Error at LoadShipDataController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

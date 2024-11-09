@@ -380,6 +380,14 @@
         <servlet-name>DeleteBrandController</servlet-name>
         <servlet-class>controller.DeleteBrandController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadShipDataController</servlet-name>
+        <servlet-class>controller.LoadShipDataController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FilterShipController</servlet-name>
+        <servlet-class>controller.FilterShipController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -651,6 +659,14 @@
     <servlet-mapping>
         <servlet-name>DeleteBrandController</servlet-name>
         <url-pattern>/DeleteBrandController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadShipDataController</servlet-name>
+        <url-pattern>/LoadShipDataController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterShipController</servlet-name>
+        <url-pattern>/FilterShipController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
