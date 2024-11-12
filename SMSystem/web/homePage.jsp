@@ -335,7 +335,7 @@
                         <div class="col-lg-8 offset-lg-1">
                             <div class="filter-control">
                                 <ul>
-                                    <li class="active">Shoes</li>
+                                    <li class="active">Women Shoes</li>
                                 </ul>
                             </div>
                             <div class="product-slider owl-carousel">
@@ -368,7 +368,7 @@
                                         </ul>
                                     </div>
                                     <div class="pi-text">
-                                        <div class="catagory-name">Shoes</div>
+                                        <div class="catagory-name">Women Shoes</div>
                                         <a href="">
                                             <h5><%=ele.getName()%></h5>
                                         </a>
@@ -412,7 +412,7 @@
                         <div class="col-lg-8">
                             <div class="filter-control">
                                 <ul>
-                                    <li class="active">Shoes</li>
+                                    <li class="active">Men Shoes</li>
                                 </ul>
                             </div>
                             <div class="product-slider owl-carousel">
@@ -434,7 +434,7 @@
                                             <form action="MainController" method="post">
                                                 <input type="hidden" name="productId" value="<%=ob.getProductId()%>">
     <!--                                            <li class="w-icon active"><a href="AddToCart?pId=<%/*=ob.getProductId()*/%>&qnt=1&url=homePage.jsp"><i class="icon_bag_alt"></i></a></li>-->
-                                                <li class="quick-view"><a href="product.jsp"><input type="submit" style="background-color: white;
+                                                <li class="quick-view"><input type="submit" style="background-color: white;
                                                                                                     font-weight: bold;
                                                                                                     border: none;" name="action" value="View"></a></li>
 
@@ -442,7 +442,7 @@
                                         </ul>
                                     </div>
                                     <div class="pi-text">
-                                        <div class="catagory-name">SHOES</div>
+                                        <div class="catagory-name">Men Shoes</div>
                                         <a href="">
                                             <h5><%=ob.getName()%></h5>
                                         </a>
@@ -466,14 +466,6 @@
                                 </div>
                                 <%                                  }
                                 %>
-                                <script>
-                                    function doDelete(name, event) {
-                                        if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
-                                        } else {
-                                            event.preventDefault();
-                                        }
-                                    }
-                                </script>
                             </div>
                         </div>
                         <div class="col-lg-3 offset-lg-1">
@@ -502,7 +494,7 @@
                         <div class="col-lg-8 offset-lg-1">
                             <div class="filter-control">
                                 <ul>
-                                    <li class="active">Shoes</li>
+                                    <li class="active">Kids Shoes</li>
                                 </ul>
                             </div>
                             <div class="product-slider owl-carousel">
@@ -533,7 +525,7 @@
                                         </ul>
                                     </div>
                                     <div class="pi-text">
-                                        <div class="catagory-name">Shoes</div>
+                                        <div class="catagory-name">Kids Shoes</div>
                                         <a href="">
                                             <h5><%=ele.getName()%></h5>
                                         </a>

@@ -728,4 +728,57 @@ public class OrderDAO {
         return success;
     }
 
+    public static final String TODAY_ORDER = "SELECT o.orderId, o.customerId, o.street, o.district, o.city, dC.discountCode, sM.methodName, pM.paymentName, o.createdAt, o.orderStatus "
+            + "FROM orders o "
+            + "JOIN paymentMethods pM ON o.paymentMethodId = pM.paymentMethodId "
+            + "JOIN shippingMethods sM ON o.shippingMethodId = sM.shippingMethodId "
+            + "LEFT JOIN discountCodes dC ON o.discountId = dC.discountId "
+            + "WHERE o.createdAt >= CAST(GETDATE() AS DATE) \n"
+            + "AND o.createdAt < DATEADD(day, 1, CAST(GETDATE() AS DATE));";
+
+    public List<OrderDTO> getTodayOrder() throws ClassNotFoundException, SQLException {
+        List<OrderDTO> listOrder = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(TODAY_ORDER);
+                rs = ptm.executeQuery();
+
+                while (rs.next()) {
+                    int orderId = rs.getInt("orderId");
+                    int customerId = rs.getInt("customerId");
+                    String street = rs.getString("street");
+                    String district = rs.getString("district");
+                    String city = rs.getString("city");
+                    String discountCode = rs.getString("discountCode");
+                    String shippingMethod = rs.getString("methodName");
+                    String paymentMethod = rs.getString("paymentName");
+                    Date createdAt = rs.getDate("createdAt");
+                    String orderStatus = rs.getString("orderStatus");
+
+                    // Lấy thông tin khách hàng từ UserDAO
+                    UserDAO userDao = new UserDAO();
+                    UserDTO customer = userDao.getUserByName(customerId);
+
+                    // Tạo đối tượng OrderDTO với thông tin khách hàng là UserDTO
+                    OrderDTO order = new OrderDTO(orderId, customer, street, district, city, discountCode, paymentMethod, shippingMethod, createdAt, orderStatus);
+                    listOrder.add(order);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listOrder;
+    }
 }

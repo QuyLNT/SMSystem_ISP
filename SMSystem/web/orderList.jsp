@@ -197,8 +197,7 @@
                                                 <div class="select-option-province">
                                                     <select name="status" onchange="this.form.submit()" <%= (a.getOrderStatus().equalsIgnoreCase("Completed") || a.getOrderStatus().equalsIgnoreCase("Not Completed")) ? "disabled" : "" %>>
                                                         <option value="Waiting For Accept" <%= a.getOrderStatus().equalsIgnoreCase("Waiting For Accept") ? "selected" : ""%>>Waiting For Accept</option>
-                                                        <option value="Waiting For Pickup" <%= a.getOrderStatus().equalsIgnoreCase("Waiting For Pickup") ? "selected" : ""%>>Waiting For Pickup</option>
-                                                        <option value="Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Delivering") ? "selected" : ""%>>Delivering</option>
+                                                        <option value="Waiting For Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Waiting For Delivering") ? "selected" : ""%>>Waiting For Delivering</option>
                                                         <option value="Completed" <%= a.getOrderStatus().equalsIgnoreCase("Completed") ? "selected" : ""%>>Completed</option>
                                                         <option value="Not Completed" <%= a.getOrderStatus().equalsIgnoreCase("Not Completed") ? "selected" : ""%>>Not Complete</option>
                                                     </select>

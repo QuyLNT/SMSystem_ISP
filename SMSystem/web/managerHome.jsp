@@ -94,6 +94,14 @@
                         </button>
                     </div>
                     <div class=" container">
+                        <div style="font-size: 2.5rem;
+                             text-align: center;
+                             padding-top: 5px;
+                             padding-bottom: 5px;">
+                            Today Report
+                        </div>
+
+
                         <div class="welcome">
                             <div class="container text-center">
                                 <div class="row">
@@ -121,7 +129,7 @@
                                                     %>
                                                     <div class="card-body">
                                                         <h5 class="card-title">Revenue</h5>
-                                                        <p class="card-text"><%=999.9%>$</p>
+                                                        <p class="card-text">${sessionScope.REVENUE}$</p>
                                                     </div>
                                                 </div>
                                             </div>

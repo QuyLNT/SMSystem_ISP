@@ -63,6 +63,12 @@
                         </button>
                     </div>
                     <div class="container">
+                        <div style="font-size: 2.5rem;
+                             text-align: center;
+                             padding-top: 5px;
+                             padding-bottom: 5px;">
+                            Today Report
+                        </div>
                         <div class="welcome">
                             <div class="container text-center">
                                 <div class="row">

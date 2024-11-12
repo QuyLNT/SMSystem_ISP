@@ -691,14 +691,10 @@ favor-add{
 }
 
 .nav-item {
-    width: 1684px; 
-    margin: 0 auto; 
-    box-sizing: border-box;
     background: #252525;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-
 }
 
 .nav-item .nav-depart {
@@ -1229,7 +1225,7 @@ favor-add{
 .product-item .pi-pic .sale {
     color: #ffffff;
     font-size: 10px;
-    background: #76BC42;
+    background: #273c75;
     position: absolute;
     left: 0;
     top: 20px;
@@ -1529,9 +1525,6 @@ favor-add{
 -----------------------*/
 
 .partner-logo {
-    width: 1684px; 
-    margin: 0 auto; 
-    box-sizing: border-box;
     background: #303030;
     padding: 38px 0;
 }
@@ -1556,9 +1549,6 @@ favor-add{
 -----------------------*/
 
 .footer-section {
-    width: 1684px; 
-    margin: 0 auto; 
-    box-sizing: border-box;
     background: #191919;
     padding-top: 75px;
 }
@@ -1869,13 +1859,13 @@ favor-add{
 }
 
 .filter-widget .filter-range-wrap .range-slider .price-input:after {
-    position: absolute;
-    left: 58px;
-    top: 13px;
-    height: 1px;
-    width: 17px;
-    background: #ebebeb;
-    content: "";
+        position: absolute;
+        left: 71px;
+        top: 27px;
+        height: 2px;
+        width: 17px;
+        background: #273c75;
+        content: "";
 }
 
 .filter-widget .filter-range-wrap .range-slider .price-input input {

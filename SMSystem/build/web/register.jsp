@@ -39,13 +39,13 @@
                     <div class="ht-left">
                         <div class="mail-service">
                             <i class="fa fa-envelope">
-                                smsystem@gmail.con
-                            </i>
+                            </i>smsystem8386@gmail.com
+
                         </div>
                         <div class="phone-service">
                             <i class="fa fa-phone">
-                                +84 123456789
-                            </i>
+
+                            </i>+84 123456789
                         </div>
                     </div>
                     <div class="ht-right">
@@ -99,9 +99,10 @@
 
             <div class="overlay">
                 <div class="overlay-content">
-                    <h2>Hello, Friend!</h2>
+                    <h2 style="color: #2196F3">Hello, Friend!</h2>
                     <p>Enter your personal details and start journey with us</p>
                     <a href="login.jsp"><button class="btn signup-btn">Sign In</button></a>
+                    <a  href="MainController?action=HomePage"><button class="btn signup-btn">Back to Shop</button></a>
                 </div>
             </div>
         </div>

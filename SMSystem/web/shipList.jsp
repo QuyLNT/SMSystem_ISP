@@ -55,7 +55,6 @@
                     </nav>
                 </div>
             </header>
-
             <section class="showcase">
                 <div class="overlay">
                     <div class="head">
@@ -63,10 +62,8 @@
                             <i class="fa-solid fa-bars"></i>
                         </button>
                     </div>
-
-                    <div class="content">
+                    <div class="container">
                         <div class="welcome">
-
                             <%
                                 String searchUserName = request.getParameter("searchUserName");
                                 if (searchUserName == null) {
@@ -80,13 +77,14 @@
                                         Search Shipment <input type="text" name="searchOrder" placeholder="Enter order ID" value="<%= searchUserName%>"/>
                                         <button type="submit" name="action" value="SearchUserName" class="btn btn-primary">Search</button>
                                     </form>
-                                </div></div>
-                                <%
-                                    String dateFilter = request.getParameter("dateFilter");
-                                    if (dateFilter == null) {
-                                        dateFilter = "";
-                                    }
-                                %>
+                                </div>
+                            </div>
+                            <%
+                                String dateFilter = request.getParameter("dateFilter");
+                                if (dateFilter == null) {
+                                    dateFilter = "";
+                                }
+                            %>
                             <div class="welcome">
                                 <form action="MainController" class="d-flex row justify-content-around">
                                     <div class="select-option-province col-lg-2">Filter Shipment</div>
@@ -120,8 +118,8 @@
                                         <th>Estimated Arrival</th>
                                         <th>Shipment Status</th>
                                         <th>Update</th>
-                                        <th>Mark Order Status</th>
                                         <th>View Detail</th>
+                                        <th>Mark Completed</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -147,17 +145,7 @@
                                         <td>
                                             <form id="updateForm<%= shipment.getShipmentId()%>" action="UpdateShipmentController" method="POST">
                                                 <input type="hidden" name="shipmentId" value="<%= shipment.getShipmentId()%>"/>
-                                                <button type="submit" class="btn btn-primary">Update Shipment</button>
-                                            </form>
-                                        </td>
-
-                                        <td>
-                                            <form action="UpdateOrderStatusController" method="POST" onsubmit="doUpdate(event)">
-                                                <input type="hidden" name="orderId" value="<%= shipment.getOrderId()%>">
-                                                <input type="hidden" name="status" value="Completed">
-                                                <button type="submit" class="btn btn-primary" name="action" value="UpdateStatus">
-                                                    <i class="fa-solid fa-square-check"></i>                                                
-                                                </button>
+                                                <button type="submit" class="btn btn-primary">Update</button>
                                             </form>
                                         </td>
                                         <td>
@@ -165,6 +153,15 @@
                                                 <input type="hidden" name="orderId" value="<%= shipment.getOrderId()%>" />
                                                 <button type="submit" class="btn btn-primary" name="action" value="View-Detail">
                                                     <i class="fa-solid fa-eye"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="UpdateOrderStatusController" method="POST" onsubmit="doUpdate(event)">
+                                                <input type="hidden" name="orderId" value="<%= shipment.getOrderId()%>">
+                                                <input type="hidden" name="status" value="Completed">
+                                                <button type="submit" class="btn btn-primary" name="action" value="UpdateStatus">
+                                                    <i class="fa-solid fa-square-check"></i>                                                
                                                 </button>
                                             </form>
                                         </td>
@@ -180,6 +177,22 @@
                                         }
                                     %>
                                 </tbody>
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        const today = new Date().toISOString().split("T")[0]; // Lấy ngày hiện tại ở định dạng yyyy-mm-dd
+                                        document.querySelectorAll(".date-picker").forEach(function (dateField) {
+                                            dateField.min = today; // Đặt thuộc tính min cho các trường có class "date-picker"
+                                        });
+                                    });
+                                </script>
+                                <script>
+                                    function doUpdate(event) {
+                                        if (confirm("Ensure this order is competed?")) {
+                                        } else {
+                                            event.preventDefault();
+                                        }
+                                    }
+                                </script>
                             </table>
                         </div>
                     </div>
@@ -187,22 +200,6 @@
             </section>
         </main>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const today = new Date().toISOString().split("T")[0]; // Lấy ngày hiện tại ở định dạng yyyy-mm-dd
-                document.querySelectorAll(".date-picker").forEach(function (dateField) {
-                    dateField.min = today; // Đặt thuộc tính min cho các trường có class "date-picker"
-                });
-            });
-        </script>
-        <script>
-            function doUpdate(event) {
-                if (confirm("Ensure this order is competed?")) {
-                } else {
-                    event.preventDefault();
-                }
-            }
-        </script>
         <script src="js/app.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>

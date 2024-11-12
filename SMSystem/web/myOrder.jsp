@@ -292,22 +292,13 @@
                             <span class="progress-label" style="color: #273c75;">Waiting For Accept</span>
                         </a>
                     </li>
-                    <li class="step-wizard-item" data-status="2">
-                        <a href="MainController?action=SearchOrderByStatus&status=Waiting For Pickup">
-                            <span class="progress-count">
-                                <i class="fa fa-box"></i>
-                                <span class="order-count"><%= orderStatusCount.get("Waiting For Pickup")%></span>
-                            </span>
-                            <span class="progress-label" style="color: #273c75;">Waiting For Pickup</span>
-                        </a>
-                    </li>
                     <li class="step-wizard-item" data-status="1">
                         <a href="MainController?action=SearchOrderByStatus&status=Delivering">
                             <span class="progress-count">
                                 <i class="fa fa-truck"></i>
-                                <span class="order-count"><%= orderStatusCount.get("Delivering")%></span>
+                                <span class="order-count"><%= orderStatusCount.get("Waiting For Delivering")%></span>
                             </span>
-                            <span class="progress-label" style="color: #273c75;">Delivering</span>
+                            <span class="progress-label" style="color: #273c75;">Waiting For Delivering</span>
                         </a>
                     </li>
                     <li class="step-wizard-item" data-status="3">

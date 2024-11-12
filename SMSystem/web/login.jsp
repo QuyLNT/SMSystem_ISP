@@ -41,13 +41,13 @@ and open the template in the editor.
                     <div class="ht-left">
                         <div class="mail-service">
                             <i class="fa fa-envelope">
-                                smsystem@gmail.com
-                            </i>
+
+                            </i>smsystem8386@gmail.com
                         </div>
                         <div class="phone-service">
                             <i class="fa fa-phone">
-                                +84 123456789
-                            </i>
+
+                            </i>+84 123456789
                         </div>
                     </div>
                     <div class="ht-right">
@@ -80,16 +80,19 @@ and open the template in the editor.
                         <a href="ForgotPasswordController" class="forgot-password">Forgot your password?</a>
                         <div class="g-recaptcha" data-sitekey="6LdXPwgqAAAAADH4aZqMia8RCAPe-jw1GISS5lHp" style="display: flex;justify-content: center"></div>
                         <input value="Sign In" name="action" hidden="">
+                        <div id="error" style="color: red; text-align: center"></div>
+                        
                         <input type="submit" class="btn signin-btn" value="Sign In" />                   
                     </form>
                 </div>
+
             </div>
             <div class="overlay">
                 <div class="overlay-content">
-                    <h2>Hello, Friend!</h2>
+                    <h2 style="color: #2196F3">Hello, Friend!</h2>
                     <p>Enter your personal details and start journey with us</p>
                     <a href="register.jsp"><button class="btn signup-btn">Sign Up</button></a>
-                     <a  href="MainController?action=HomePage"><button class="btn signup-btn">Back to Shop</button></a>
+                    <a  href="MainController?action=HomePage"><button class="btn signup-btn">Back to Shop</button></a>
                 </div>
             </div>
         </div>
@@ -112,22 +115,22 @@ and open the template in the editor.
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/main.js"></script>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-        <!--        <script>
-                    window.onload = function () {
-                        let isValid = false;
-                        const form = document.getElementById("form");
-                        const error = document.getElementById("error");
-        
-                        form.addEventListener("submit", function (event) {
-                            event.preventDefault();
-                            const response = grecaptcha.getResponse();
-                            if (response) {
-                                form.submit();
-                            } else {
-                                error.innerHTML = "Please check";
-                            }
-                        });
-                    };
-                </script>-->
+        <script>
+            window.onload = function () {
+                let isValid = false;
+                const form = document.getElementById("form");
+                const error = document.getElementById("error");
+
+                form.addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    const response = grecaptcha.getResponse();
+                    if (response) {
+                        form.submit();
+                    } else {
+                        error.innerHTML = "You are missing RECAPCHA";
+                    }
+                });
+            };
+        </script>
     </body>
 </html>

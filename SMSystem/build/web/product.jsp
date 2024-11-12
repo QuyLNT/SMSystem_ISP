@@ -634,9 +634,6 @@
                             <%
                                 }
                             %>
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
                             <ul>
                                 <form action="MainController" method="post">
                                     <input type="hidden" name="productId" value="<%=ele.getProductId()%>">

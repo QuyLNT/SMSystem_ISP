@@ -3,13 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/model/shipment/ShipmentDTO.java</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/web/shipList.jsp</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/web/shipmentDetail.jsp</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/FilterShipController.java</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/UpdateShipmentController.java</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/controller/LoadShipmentController.java</file>
-            <file>file:/D:/SMSystem_ISP/SMSystem/src/java/model/shipment/ShipmentDAO.java</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/contact.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/homePage.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/myOrder.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/productList.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/success.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/shopping-cart.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/check-out.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/product.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/orderDetail.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/orderList.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/shop.jsp</file>
+            <file>file:/D:/SMSystem_ISP/SMSystem/web/myAccount.jsp</file>
         </group>
     </open-files>
 </project-private>

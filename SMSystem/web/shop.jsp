@@ -405,10 +405,9 @@
                                     <ul>
                                         <form action="MainController" method="post">
                                             <input type="hidden" name="productId" value="<%=p.getProductId()%>">
-                                            <!--<li class="w-icon active"><a href="AddToCart?pId=<%=p.getProductId()%>&qnt=1&url=shop.jsp"><i class="icon_bag_alt"></i></a></li>-->
-                                            <li class="quick-view"><!--<a href="product.jsp">--><input type="submit" style="background-color: white;
-                                                                                                       font-weight: bold;
-                                                                                                       border: none;" name="action" value="View"></a></li>
+                                            <li class="quick-view"><input type="submit" style="background-color: white;
+                                                                          font-weight: bold;
+                                                                          border: none;" name="action" value="View"></a></li>
                                         </form>
                                     </ul>
                                 </div>

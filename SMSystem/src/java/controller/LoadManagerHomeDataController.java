@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.category.UserObjectDAO;
 import model.category.UserObjectDTO;
+import model.discount.DiscountDAO;
+import model.discount.DiscountDTO;
 import model.order.OrderDAO;
 import model.order.OrderDTO;
+import model.order.OrderDetailDAO;
+import model.order.OrderDetailDTO;
 import model.product.ProductDAO;
 import model.product.ProductDTO;
 import model.product.ProductVariantDAO;
@@ -48,6 +53,8 @@ public class LoadManagerHomeDataController extends HttpServlet {
             ProductVariantDAO variantDao = new ProductVariantDAO();
             UserObjectDAO uObDao = new UserObjectDAO();
             OrderDAO ordDAO = new OrderDAO();
+            OrderDetailDAO detailDao = new OrderDetailDAO();
+            DiscountDAO discountDao = new DiscountDAO();
             List<ProductDTO> stockOfProduct;
             List<UserObjectDTO> uObList;
             List<OrderDTO> ordList;
@@ -55,10 +62,12 @@ public class LoadManagerHomeDataController extends HttpServlet {
             stockOfProduct = variantDao.getStockByProduct();
             uObList = uObDao.getAllUserObject();
 
-            ordList = ordDAO.getAllOrder();
+            ordList = ordDAO.getTodayOrder();
             int allOrder = ordList.size();
             int compelteCount = 0;
             int notCompleteCount = 0;
+            float total = 0;
+            float revenue = 0;
             for (OrderDTO o : ordList) {
                 if (o.getOrderStatus().equalsIgnoreCase("Completed")) {
                     compelteCount++;
@@ -66,6 +75,20 @@ public class LoadManagerHomeDataController extends HttpServlet {
                 if (o.getOrderStatus().equalsIgnoreCase("Not Completed")) {
                     notCompleteCount++;
                 }
+                List<OrderDetailDTO> orderDetails = detailDao.getOrderDetailListByOrderID(o.getOrderId());
+                for (OrderDetailDTO detail : orderDetails) {
+                    if (detail.getProduct() != null) {
+                        float salePrice = detail.getQuantity() * (detail.getProduct().getPrice() * (1 - detail.getProduct().getSale()));
+                        total += salePrice;
+                    }
+                }
+                if (o.getDiscountCode() != null) {
+                    DiscountDTO dc = discountDao.getDiscountByCode(o.getDiscountCode());
+                    if (dc != null) {
+                        total = total - dc.getDiscountAmount();
+                    }
+                }
+                revenue += total;
             }
 
             int allStock = 0;
@@ -74,6 +97,7 @@ public class LoadManagerHomeDataController extends HttpServlet {
             }
             HttpSession session = request.getSession();
             session.setAttribute("TOTAL_ORDER", allOrder);
+            session.setAttribute("REVENUE", revenue);
             session.setAttribute("COMP_ORDER", compelteCount);
             session.setAttribute("NOT_COMP_ORDER", notCompleteCount);
             session.setAttribute("ALL_QUANTITY", allStock);
