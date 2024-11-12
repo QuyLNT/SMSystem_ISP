@@ -293,7 +293,7 @@
                         </a>
                     </li>
                     <li class="step-wizard-item" data-status="1">
-                        <a href="MainController?action=SearchOrderByStatus&status=Delivering">
+                        <a href="MainController?action=SearchOrderByStatus&status=Waiting For Delivering">
                             <span class="progress-count">
                                 <i class="fa fa-truck"></i>
                                 <span class="order-count"><%= orderStatusCount.get("Waiting For Delivering")%></span>
