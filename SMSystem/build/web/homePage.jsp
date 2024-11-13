@@ -224,6 +224,7 @@
                         <div class="depart-btn">
                             <i class="ti-menu"></i>
                             <span>All Departments</span>
+
                             <ul class="depart-hover">
                                 <li><a href="MainController?action=SearchCategories&type=1">Men's Shoes</a></li>
                                 <li><a href="MainController?action=SearchCategories&type=2">Women's Shoes</a></li>

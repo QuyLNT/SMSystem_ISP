@@ -183,7 +183,6 @@
                                                                 <h6><%= ele.getProduct().getName()%></h6>
                                                                 <h6>Size <%= ele.getSize()%></h6>
                                                                 <p>$<%= String.format("%.1f", ele.getProduct().getPrice() * (1 - ele.getProduct().getSale()))%> x <%= ele.getQuantity()%></p>
-
                                                             </div>
                                                         </td>
                                                         <td class="si-close">
@@ -275,7 +274,7 @@
                                 <div class="fw-brand-check">
                                     <%
                                         List<BrandDTO> brandList = (List<BrandDTO>) session.getAttribute("BRAND_LIST");
-                                        List<Integer> selectedBrands = (List<Integer>) session.getAttribute("SELECTED_BRANDS");
+                                        List<Integer> selectedBrands = (List<Integer>) request.getAttribute("SELECTED_BRANDS");
                                         if (brandList != null) {
                                             for (BrandDTO b : brandList) {
                                                 boolean isChecked = selectedBrands != null && selectedBrands.contains(b.getBrandId());
@@ -299,7 +298,7 @@
                                 <h4 class="fw-title">Color</h4>
                                 <div class="fw-brand-check">
                                     <%
-                                        List<String> selectedColors = (List<String>) session.getAttribute("SELECTED_COLORS");
+                                        List<String> selectedColors = (List<String>) request.getAttribute("SELECTED_COLORS");
                                         String[] colors = {"White", "Black", "Green", "Blue", "Brown", "Pink"};
                                         for (String color : colors) {
                                             boolean isChecked = selectedColors != null && selectedColors.contains(color);
@@ -318,19 +317,17 @@
                                 <div class="filter-range-wrap">
                                     <div class="range-slider">
                                         <div class="price-input">
-                                            $<input type="text" id="minamount" name="minPrice" 
-                                                    value="<%= session.getAttribute("MIN_PRICE") != null ? session.getAttribute("MIN_PRICE") : ""%>">
-                                            $<input type="text" id="maxamount" name="maxPrice" 
-                                                    value="<%= session.getAttribute("MAX_PRICE") != null ? session.getAttribute("MAX_PRICE") : ""%>">
+                                            $<input type="text" id="minamount" name="minPrice">
+                                            $<input type="text" id="maxamount" name="maxPrice">
                                         </div>
                                     </div>
                                     <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget-content"
-                                         data-min="50" data-max="300">
+                                        data-min="50" data-max="300">
                                         <div class="ui-slider-range ui-corner-all ui-widget-header"></div> 
                                         <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>  
                                         <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>  
                                     </div>
-                                </div>
+                                </div>  
                                 <%
                                     Integer cate = (Integer) session.getAttribute("CATE");
                                     if (cate != null && cate > 0) {
@@ -591,28 +588,23 @@
         <script src="js/main.js"></script>
         <script src="js/main2.js"></script>
         <script src="js/main3.js"></script>
-        <script>
-                                                $(document).ready(function () {
-                                                    var rangeSlider = $(".price-range"),
+        <script> var rangeSlider = $(".price-range"),
                                                             minamount = $("#minamount"),
                                                             maxamount = $("#maxamount"),
-                                                            minPrice = rangeSlider.data('min') || 50, // Giá trị khởi tạo từ data-min
-                                                            maxPrice = rangeSlider.data('max') || 300; // Giá trị khởi tạo từ data-max
-
+                                                        minPrice = rangeSlider.data('min'),
+                                                        maxPrice = rangeSlider.data('max');
                                                     rangeSlider.slider({
                                                         range: true,
-                                                        min: 50,
-                                                        max: 300,
+                                                    min: minPrice,
+                                                    max: maxPrice,
                                                         values: [minPrice, maxPrice],
                                                         slide: function (event, ui) {
                                                             minamount.val(ui.values[0]);
                                                             maxamount.val(ui.values[1]);
                                                         }
                                                     });
-
-                                                    minamount.val(minPrice);
-                                                    maxamount.val(maxPrice);
-                                                });
+                                                minamount.val(rangeSlider.slider("values", 0));
+                                                maxamount.val(rangeSlider.slider("values", 1));
         </script>
     </body>
 </html>

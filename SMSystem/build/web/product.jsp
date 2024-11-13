@@ -208,14 +208,6 @@
                     </div>
                 </div>
             </div>
-            <script>
-                function doDelete(name, event) {
-                    if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
-                    } else {
-                        event.preventDefault();
-                    }
-                }
-            </script>
             <div class="nav-item">
                 <div class="container">
                     <div class="nav-depart">

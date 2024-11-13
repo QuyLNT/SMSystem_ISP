@@ -305,18 +305,6 @@
                                             %>
                                         </select>
                                     </td>
-                                    <script>
-                                        function updateSize(size, cartItemId, action) {
-                                            var url = "MainController?action=" + action + "&cartItemId=" + cartItemId + "&size=" + size;
-                                            window.location.href = url;
-                                        }
-                                        function doDelete(name, event) {
-                                            if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
-                                            } else {
-                                                event.preventDefault();
-                                            }
-                                        }
-                                    </script>
                                     <td class="close-td first-row"><a href="MainController?cartItemId=<%= ele.getCartItemId()%>&action=doDelete&url=shopping-cart.jsp" onclick="doDelete('<%=ele.getProduct().getName()%>', event)">
                                             <i class="ti-close"></i>
                                         </a>
@@ -329,11 +317,23 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <script>
+                                function updateSize(size, cartItemId, action) {
+                                    var url = "MainController?action=" + action + "&cartItemId=" + cartItemId + "&size=" + size;
+                                    window.location.href = url;
+                                }
+                                function doDelete(name, event) {
+                                    if (confirm("Are you sure you want to remove " + name + " from the cart?")) {
+                                    } else {
+                                        event.preventDefault();
+                                    }
+                                }
+                            </script>
                             <%
                                 String err = (String) request.getAttribute("err");
                                 if (err != null) {
                             %>
-                                <div class="alert alert-danger"><%= err%></div>
+                            <div class="alert alert-danger"><%= err%></div>
 
                             <%
                                 }

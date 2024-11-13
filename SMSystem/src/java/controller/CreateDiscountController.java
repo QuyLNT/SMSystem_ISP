@@ -64,8 +64,8 @@ public class CreateDiscountController extends HttpServlet {
             if (code == null || code.isEmpty()) {
                 request.setAttribute("err", "Code can't be blank!");
                 checkValidation = true;
-            } else if (code.length() < 10 || code.length() > 50) {
-                request.setAttribute("err", "Code name must be between 10 and 50 characters.");
+            } else if (code.length() < 5 || code.length() > 15) {
+                request.setAttribute("err", "Code name must be between 5 and 15 characters.");
                 checkValidation = true;
             }
 
@@ -82,10 +82,6 @@ public class CreateDiscountController extends HttpServlet {
                 checkValidation = true;
             } else {
                 amount = Float.parseFloat(amountStr);
-                if (amount < 0.1 || amount > 1.0) {
-                    request.setAttribute("err", "Amount must be between 0.1 and 1.0");
-                    checkValidation = true;
-                }
             }
 
             if (endDay.before(startDay)) {

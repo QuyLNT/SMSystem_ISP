@@ -116,7 +116,6 @@
                                     <select name="statusFilter">
                                         <option value="" <%= statusFilter.equals("") == true ? "selected" : ""%>>All Statuses</option>
                                         <option value="Waiting For Accept"<%= statusFilter.equals("Waiting For Accept") == true ? "selected" : ""%>>Waiting For Accept</option>
-                                        <option value="Waiting For Pickup"<%= statusFilter.equals("Waiting For Pickup") == true ? "selected" : ""%>>Waiting For Pickup</option>
                                         <option value="Delivering" <%= statusFilter.equals("Delivering") == true ? "selected" : ""%>>Delivering</option>
                                         <option value="Completed" <%= statusFilter.equals("Completed") == true ? "selected" : ""%>>Completed</option>
                                         <option value="Not Completed" <%= statusFilter.equals("Not Completed") == true ? "selected" : ""%>>Not Completed</option>
@@ -170,8 +169,8 @@
                                         <th>Payment Method</th>
                                         <th>Shipment Method</th>
                                         <th>Create At</th>
-                                        <th>Order Status</th>
                                         <th>Assign Shipper</th>
+                                        <th>Order Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -192,22 +191,7 @@
                                         <td><%= a.getShippingMethod()%></td>
                                         <td><%= a.getCreatedAt()%></td>
                                         <td>
-                                            <form action="UpdateOrderStatusController" method="POST" >
-                                                <input type="hidden" name="orderId" value="<%= a.getOrderId()%>">
-                                                <div class="select-option-province">
-                                                    <select name="status" onchange="this.form.submit()" <%= (a.getOrderStatus().equalsIgnoreCase("Completed") || a.getOrderStatus().equalsIgnoreCase("Not Completed")) ? "disabled" : "" %>>
-                                                        <option value="Waiting For Accept" <%= a.getOrderStatus().equalsIgnoreCase("Waiting For Accept") ? "selected" : ""%>>Waiting For Accept</option>
-                                                        <option value="Waiting For Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Waiting For Delivering") ? "selected" : ""%>>Waiting For Delivering</option>
-                                                        <option value="Completed" <%= a.getOrderStatus().equalsIgnoreCase("Completed") ? "selected" : ""%>>Completed</option>
-                                                        <option value="Not Completed" <%= a.getOrderStatus().equalsIgnoreCase("Not Completed") ? "selected" : ""%>>Not Complete</option>
-                                                    </select>
-                                                </div>
-                                                <input type="hidden" name="action" value="UpdateStatus"/>
-                                            </form>
-
-
-                                        <td>
-                                            <form action="AssignShipperController" method="POST">
+                                            <form action="<%= request.getContextPath() %>/MainController" method="POST">
                                                 <input type="hidden" name="orderId" value="<%= a.getOrderId()%>">
                                                 <input type="hidden" name="ship" value="<%= a.getShippingMethod()%>">
                                                 <div class="select-option-province">
@@ -225,8 +209,28 @@
                                                         <% }%>
                                                     </select>
                                                 </div>
+                                                <input type="hidden" name="action" value="AssignShipper"/>
                                             </form>
                                         </td>
+                                        <td>
+                                            <form action="MainController" method="POST" >
+                                                <input type="hidden" name="orderId" value="<%= a.getOrderId()%>">
+                                                <div class="select-option-province">
+                                                    <select name="status" onchange="this.form.submit()" <%= (a.getOrderStatus().equalsIgnoreCase("Completed")
+                                                            || a.getOrderStatus().equalsIgnoreCase("Not Completed")
+                                                            || selectedShipperId == -1) ? "disabled" : ""%>>
+                                                        <option value="Waiting For Accept" <%= a.getOrderStatus().equalsIgnoreCase("Waiting For Accept") ? "selected" : ""%>>Waiting For Accept</option>
+                                                        <option value="Waiting For Delivering" <%= a.getOrderStatus().equalsIgnoreCase("Waiting For Delivering") ? "selected" : ""%>>Waiting For Delivering</option>
+                                                        <option value="Completed" <%= a.getOrderStatus().equalsIgnoreCase("Completed") ? "selected" : ""%>>Completed</option>
+                                                        <option value="Not Completed" <%= a.getOrderStatus().equalsIgnoreCase("Not Completed") ? "selected" : ""%>>Not Complete</option>
+                                                    </select>
+                                                </div>
+                                                <input type="hidden" name="action" value="UpdateStatus"/>
+                                            </form>
+                                        </td>
+
+
+
                                         <td>
                                             <form action="MainController" method="POST">
                                                 <input type="hidden" name="orderId" value="<%= a.getOrderId()%>" />

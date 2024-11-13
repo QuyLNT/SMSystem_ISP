@@ -43,7 +43,7 @@
                                 </li>
                                 <li class="nav-list-item">
                                     <a href="MainController?action=LoadUserList" class="nav-link">
-                                        <i class="fa-solid fa-truck"></i>
+                                        <i class="fa-solid fa-user"></i>
                                         <span class="link-text">Accounts</span>
                                     </a>
                                 </li>
@@ -81,7 +81,7 @@
                                 </form>
                             </div>
                             <% if (request.getAttribute("ms") != null) {%>
-                            <div class="alert alert-danger"><%= request.getAttribute("ms")%></div>
+                            <div class="alert alert-success"><%= request.getAttribute("ms")%></div>
                             <% }%>
                             <% if (request.getAttribute("err") != null) {%>
                             <div class="alert alert-danger"><%= request.getAttribute("err")%></div>
@@ -90,7 +90,7 @@
 
                         <div class="welcome">
                             <%
-                                List<UserDTO> userList = (List<UserDTO>) request.getAttribute("USER_LIST");
+                                List<UserDTO> userList = (List<UserDTO>) session.getAttribute("USER_LIST");
                             %>
                             <div class="table-tilte">User Table</div>
                             <table class="table table-hover">
@@ -117,17 +117,7 @@
                                         <td><%= user.getUserName()%></td>
                                         <td><%= user.getFullName()%></td>
                                         <td><%= user.getEmail()%></td>
-                                        <td>
-                                            <!--                                            <form action="MainController" method="POST">
-                                                                                            <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
-                                                                                            <input type="hidden" name="action" value="toggleUserStatus"/>
-                                                                                            <select name="isActive" onchange="this.form.submit()">
-                                                                                                <option value="1" <%= user.isIsActive() ? "selected" : ""%>>Active</option>
-                                                                                                <option value="0" <%= !user.isIsActive() ? "selected" : ""%>>Inactive</option>
-                                                                                            </select>
-                                                                                        </form>-->
-                                            <%= user.getPhoneNumber()%>
-                                        </td>
+                                        <td><%= user.getPhoneNumber()%></td>
                                         <td>
                                             <form action="MainController" method="POST">
                                                 <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
@@ -242,19 +232,13 @@
                                             }
                                         }
                                     %>
-
                                 </tbody>
-
                             </table>
                         </div>
                     </div>
                 </div>
-
             </section>
-
-
         </main>
-
         <script src="js/app.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>

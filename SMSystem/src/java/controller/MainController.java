@@ -137,7 +137,7 @@ public class MainController extends HttpServlet {
     private final static String GET_STATUS = "GetStatus";
     private final static String GET_STATUS_CONTROLLER = "GetPaymentStatusController";
     private final static String ASSIGN_SHIPPER = "AssignShipper";
-    private final static String ASSIGN_SHIPPER_CONTROLLER = "AssignShipperController ";
+    private final static String ASSIGN_SHIPPER_CONTROLLER = "AssignShipperController";
     private final static String FILTER = "Filter";
     private final static String FILTER_CONTROLLER = "FilterController";
     private final static String CHECK_WARRANTY = "CheckWarranty";

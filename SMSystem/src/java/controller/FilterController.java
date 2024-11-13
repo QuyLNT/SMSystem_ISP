@@ -78,13 +78,13 @@ public class FilterController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("PRODUCT_LIST", list);
 
-            session.setAttribute("SELECTED_BRANDS", brandList);
-            session.setAttribute("SELECTED_COLORS", Arrays.asList(colors));
+            request.setAttribute("SELECTED_BRANDS", brandList);
+            request.setAttribute("SELECTED_COLORS", Arrays.asList(colors));
             if (minPrice_raw != null) {
-                session.setAttribute("MIN_PRICE", minPrice_raw);
+                request.setAttribute("MIN_PRICE", minPrice_raw);
             }
             if (maxPrice_raw != null) {
-                session.setAttribute("MAX_PRICE", maxPrice_raw);
+                request.setAttribute("MAX_PRICE", maxPrice_raw);
             }
         } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
         } finally {

@@ -192,11 +192,11 @@
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Price</span>
-                                                    <input name="price" type="number" step="0.01" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
+                                                    <input name="price" type="number" min="0" step="10" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Sale</span>
-                                                    <input name="sale" type="number" step="0.01" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                                    <input name="sale" type="number" min="0" max="1" step="0.01" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Avatar(URL)</span>
@@ -212,27 +212,27 @@
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">   
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Detail</span>
-                                                    <textarea name="detail" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" ></textarea>
+                                                    <textarea name="detail" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required=""></textarea>
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 1 (URL)</span>
-                                                    <input name="productImage1" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
+                                                    <input name="productImage1" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 2 (URL)</span>
-                                                    <input name="productImage2" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
+                                                    <input name="productImage2" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 3 (URL)</span>
-                                                    <input name="productImage3" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
+                                                    <input name="productImage3" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 4 (URL)</span>
-                                                    <input name="productImage4" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
+                                                    <input name="productImage4" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
                                                 </div>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 5 (URL)</span>
-                                                    <input name="productImage5" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" >
+                                                    <input name="productImage5" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required="">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -457,7 +457,7 @@
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Price</span>
-                                                                    <input name="price" type="number" step="0.01" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= product.getPrice()%>">
+                                                                    <input name="price" type="number" min="0" step="10" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= product.getPrice()%>">
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Color</span>
@@ -465,11 +465,11 @@
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Sale</span>
-                                                                    <input name="sale" type="number" step="0.01" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= product.getSale()%>">
+                                                                    <input name="sale" type="number" min="0" max="1" step="0.01" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= product.getSale()%>">
                                                                 </div>
-                                                                <div class="input-group input-group-sm mb-3">
+                                                                <div class="input-group input-group-sm mb-3">   
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Warranty Period</span>
-                                                                    <input name="warranty" type="number" step="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= product.getWarrantyPeriod()%>">
+                                                                    <input name="warranty" type="number" min="0" step="1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%= product.getWarrantyPeriod()%>">
                                                                 </div>
                                                                 <% List<ProductImageDTO> imageList = product.getDetailImage();
                                                                     if (imageList != null) {
@@ -482,23 +482,23 @@
                                                                 <% }%>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 1 (URL)</span>
-                                                                    <input name="productImage1" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(0).getImagePath()%>" >
+                                                                    <input name="productImage1" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(0).getImagePath()%>" required="" >
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 2 (URL)</span>
-                                                                    <input name="productImage2" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(1).getImagePath()%>">
+                                                                    <input name="productImage2" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(1).getImagePath()%>" required="">
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 3 (URL)</span>
-                                                                    <input name="productImage3" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(2).getImagePath()%>">
+                                                                    <input name="productImage3" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(2).getImagePath()%>" required="">
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 4 (URL)</span>
-                                                                    <input name="productImage4" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(3).getImagePath()%>">
+                                                                    <input name="productImage4" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(3).getImagePath()%>" required="">
                                                                 </div>
                                                                 <div class="input-group input-group-sm mb-3">
                                                                     <span class="input-group-text" id="inputGroup-sizing-sm">Product Image 5 (URL)</span>
-                                                                    <input name="productImage5" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(4).getImagePath()%>">
+                                                                    <input name="productImage5" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="<%=imageList.get(4).getImagePath()%>" required="">
                                                                 </div>
                                                             </div>
                                                             <%

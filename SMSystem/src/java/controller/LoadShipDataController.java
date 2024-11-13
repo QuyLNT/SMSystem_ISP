@@ -45,10 +45,13 @@ public class LoadShipDataController extends HttpServlet {
                 int delivering = 0;
                 int completed = 0;
                 for (ShipmentDTO s : shipList) {
-                    if (s.getShipmentStatus().contains("completed")) {
-                        delivering++;
-                    } else {
+                    if (s.getShipmentStatus().contains("Successfully")
+                            || s.getShipmentStatus().contains("hoàn thành")
+                            || s.getShipmentStatus().contains("đã đến")
+                            || s.getShipmentStatus().contains("completed")) {
                         completed++;
+                    } else {
+                        delivering++;
                     }
                 }
                 session.setAttribute("shipments", shipList);
