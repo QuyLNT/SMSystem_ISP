@@ -3,7 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/LENOVO/OneDrive/Máy%20tính/SMSystem_ISP/SMSystem/src/java/controller/FilterController.java</file>
+            <file>file:/C:/Users/LENOVO/OneDrive/Máy%20tính/SMSystem_ISP/SMSystem/web/userList.jsp</file>
+            <file>file:/C:/Users/LENOVO/OneDrive/Máy%20tính/SMSystem_ISP/SMSystem/web/productList.jsp</file>
+            <file>file:/C:/Users/LENOVO/OneDrive/Máy%20tính/SMSystem_ISP/SMSystem/src/java/model/user/UserDAO.java</file>
+            <file>file:/C:/Users/LENOVO/OneDrive/Máy%20tính/SMSystem_ISP/SMSystem/src/java/controller/LoginController.java</file>
+            <file>file:/C:/Users/LENOVO/OneDrive/Máy%20tính/SMSystem_ISP/SMSystem/src/java/controller/MainController.java</file>
         </group>
     </open-files>
 </project-private>

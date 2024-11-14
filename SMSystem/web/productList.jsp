@@ -512,7 +512,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                      
+
                                             <!-- Nút Xem Chi Tiết Sản Phẩm -->
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal<%= product.getProductId()%>">
                                                 <i class="fas fa-eye"></i> 
@@ -545,6 +545,7 @@
                                                                         <tr>
                                                                             <td><%= variant.getSize()%></td>
                                                                             <td>
+                                                                                <input type="hidden" name="sizes"  value="<%=variant.getSize()%>" />
                                                                                 <input type="hidden" name="variantId"  value="<%=variant.getVariantId()%>" />
                                                                                 <input type="number" name="stock" value="<%= variant.getStock()%>" min="0" required=""
                                                                                        style="border: none; outline: none;"/>
@@ -605,11 +606,11 @@
 
 
                                             <!-- Nút Xóa -->
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= product.getProductId()%>">
+<!--                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= product.getProductId()%>">
                                                 <i class="fas fa-trash"></i>
                                             </button>
 
-                                            <!-- Modal Xóa -->
+                                             Modal Xóa 
                                             <div class="modal fade" id="deleteModal<%= product.getProductId()%>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
@@ -633,7 +634,7 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                         </td>
                                     </tr>
                                     <%

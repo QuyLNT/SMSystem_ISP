@@ -18,6 +18,7 @@
             />
         <link rel="icon" href="img/icon-logoweb.png" type="img/x-icon" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style1.css" type="text/css">
 
     </head>
     <body>
@@ -103,6 +104,7 @@
                                         <th>Phone Number</th>                                        
                                         <th>Role</th>
                                         <th>Created Date</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -122,15 +124,29 @@
                                             <form action="MainController" method="POST">
                                                 <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
                                                 <input type="hidden" name="action" value="toggleUserRole"/>
-                                                <select name="roleId" onchange="this.form.submit()">
-                                                    <option value="AD" <%= user.getRoleId().equalsIgnoreCase("AD") ? "selected" : ""%>>Admin</option>
-                                                    <option value="CUS" <%= user.getRoleId().equalsIgnoreCase("CUS") ? "selected" : ""%>>Customer</option>
-                                                    <option value="MN" <%= user.getRoleId().equalsIgnoreCase("MN") ? "selected" : ""%>>Manager</option>
-                                                    <option value="SP" <%= user.getRoleId().equalsIgnoreCase("SP") ? "selected" : ""%>>Shipper</option>
-                                                </select>
+                                                <div class="select-option-province">
+                                                    <select name="roleId" onchange="this.form.submit()">
+                                                        <option value="AD" <%= user.getRoleId().equalsIgnoreCase("AD") ? "selected" : ""%>>Admin</option>
+                                                        <option value="CUS" <%= user.getRoleId().equalsIgnoreCase("CUS") ? "selected" : ""%>>Customer</option>
+                                                        <option value="MN" <%= user.getRoleId().equalsIgnoreCase("MN") ? "selected" : ""%>>Manager</option>
+                                                        <option value="SP" <%= user.getRoleId().equalsIgnoreCase("SP") ? "selected" : ""%>>Shipper</option>
+                                                    </select>
+                                                </div>
                                             </form>
                                         </td>
                                         <td><%= user.getCreatedAt()%></td>
+                                        <td>
+                                            <form action="MainController" method="POST">
+                                                <input type="hidden" name="userId" value="<%= user.getUserId()%>"/>
+                                                <input type="hidden" name="action" value="toggleUserStatus"/>
+                                                <div class="select-option-province">
+                                                    <select name="User_Status" onchange="this.form.submit()">
+                                                        <option value="1" <%= user.isActive() == true ? "selected" : ""%>>Active</option>
+                                                        <option value="0" <%= user.isActive() == false ? "selected" : ""%>>Inactive</option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </td>
                                         <td>
                                             <input type="hidden" name="userId"  value="<%=user.getUserId()%>" />
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal<%=user.getUserId()%>">
@@ -198,11 +214,11 @@
                                             </div>
 
                                             <!-- Nút Xóa -->
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= user.getUserId()%>">
+<!--                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= user.getUserId()%>">
                                                 <i class="fas fa-trash"></i>
                                             </button>
 
-                                            <!-- Modal Xóa -->
+                                             Modal Xóa 
                                             <div class="modal fade" id="deleteModal<%= user.getUserId()%>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
@@ -225,7 +241,7 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                         </td>
                                     </tr>
                                     <%

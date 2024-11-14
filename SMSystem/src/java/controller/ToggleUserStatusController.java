@@ -8,23 +8,20 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.category.UserObjectDTO;
-import model.product.ProductDTO;
-import model.product.ProductVariantDAO;
-import model.product.ProductVariantDTO;
+import model.user.UserDAO;
+import model.user.UserDTO;
 
 /**
  *
- * @author CHAU DUYEN
+ * @author LENOVO
  */
-public class UpdateSizeStockController extends HttpServlet {
+public class ToggleUserStatusController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,58 +32,39 @@ public class UpdateSizeStockController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "productList.jsp";
-    private static final String SUCCESS = "productList.jsp";
+    private static final String ERROR = "userList.jsp";
+    private static final String SUCCES = "userList.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String[] variantIds = request.getParameterValues("variantId");
-            String[] stocks = request.getParameterValues("stock");
-            String[] sizes = request.getParameterValues("sizes");
-            String productId = request.getParameter("productId");
-            int pId = 0;
-            if (productId != null) {
-                pId = Integer.parseInt(productId);
-            }
-            ProductVariantDAO variantDAO = new ProductVariantDAO();
-            List<ProductVariantDTO> variants = new ArrayList<>();
-            for (int i = 0; i < variantIds.length; i++) {
-                int variantId = Integer.parseInt(variantIds[i]);
-                int stock = Integer.parseInt(stocks[i]);
-                float size = Float.parseFloat(sizes[i]);
-                
-                ProductVariantDTO variant = new ProductVariantDTO();
-                variant.setVariantId(variantId);
-                variant.setSize(size);
-                variant.setStock(stock);
-                variants.add(variant);
-            }
-
-            HttpSession session = request.getSession();
-            List<ProductDTO> stockOfProduct = (List<ProductDTO>) session.getAttribute("STOCK_OF_PRODUCT");
-            List<ProductDTO> productList = (List<ProductDTO>) session.getAttribute("PRODUCT_LIST");
-
-            for (ProductVariantDTO variant : variants) {
-                variantDAO.updateStock(variants);
-                for (ProductDTO p : stockOfProduct) {
-                    if (p.getProductId() == pId) {
-                        p.setTotalStock(variantDAO.getStockByProduct(pId));
+            String statusStr = request.getParameter("User_Status");
+            String userIdStr = request.getParameter("userId");
+            
+            if (userIdStr != null) {
+                int userId = Integer.parseInt(userIdStr);
+                UserDAO userDao = new UserDAO();
+                boolean status = Boolean.parseBoolean(statusStr);
+                boolean checkUpdate = userDao.setStatus(userId, status);
+                if (checkUpdate) {
+                    HttpSession session = request.getSession();
+                    List<UserDTO> userList = (List<UserDTO>) session.getAttribute("USER_LIST");
+                    for (UserDTO u : userList) {
+                        if (u.getUserId() == userId) {
+                            u.setActive(status);
+                        }
                     }
-                }
-                request.setAttribute("ms", "Update stock successfully!");
-                url = SUCCESS;
-            }
-            for (ProductDTO p : productList) {
-                if (p.getProductId() == pId) {
-                    p.setListVariants(variants);
-                    break;
+                    session.setAttribute("USER_LIST", userList);
+                    request.setAttribute("ms", "Set user status successfully");
+                } else {
+                    request.setAttribute("err", "Set user status failed");
                 }
             }
+
         } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
-            log("Error at UpdateSizeStockController:" + e.toString());
+            log("Error at ToggleFlashSaleController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

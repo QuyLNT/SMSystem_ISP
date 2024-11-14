@@ -388,6 +388,10 @@
         <servlet-name>FilterShipController</servlet-name>
         <servlet-class>controller.FilterShipController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ToggleUserStatusController</servlet-name>
+        <servlet-class>controller.ToggleUserStatusController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -667,6 +671,10 @@
     <servlet-mapping>
         <servlet-name>FilterShipController</servlet-name>
         <url-pattern>/FilterShipController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToggleUserStatusController</servlet-name>
+        <url-pattern>/ToggleUserStatusController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

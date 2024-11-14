@@ -162,8 +162,10 @@ public class MainController extends HttpServlet {
     private final static String DELETE_BRAND_CONTROLLER = "DeleteBrandController";
     private final static String LOAD_SHIP = "LoadShipData";
     private final static String LOAD_SHIP_CONTROLLER = "LoadShipDataController";
-    private final static String Filter_SHIP = "FilterShip";
-    private final static String Filter_SHIP_CONTROLLER = "FilterShipController";
+    private final static String FILTER_SHIP = "FilterShip";
+    private final static String FILTER_SHIP_CONTROLLER = "FilterShipController";
+    private final static String TOGGLE_USER_STATUS = "toggleUserStatus";
+    private final static String TOGGLE_USER_STATUS_CONTROLLER = "ToggleUserStatusController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -301,8 +303,10 @@ public class MainController extends HttpServlet {
                 url = DELETE_BRAND_CONTROLLER;
             } else if (LOAD_SHIP.equals(action)) {
                 url = LOAD_SHIP_CONTROLLER;
-            } else if(Filter_SHIP.equals(action)){
-                url = Filter_SHIP_CONTROLLER;
+            } else if (FILTER_SHIP.equals(action)) {
+                url = FILTER_SHIP_CONTROLLER;
+            } else if (TOGGLE_USER_STATUS.equals(action)) {
+                url = TOGGLE_USER_STATUS_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController" + e.toString());
