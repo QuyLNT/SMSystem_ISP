@@ -81,7 +81,7 @@
                                                 <div class="col-md-8">
                                                     <div class="card-body">
                                                         <h5 class="card-title">Today shipments</h5>
-                                                        <p class="card-text">${requestScope.TOTAL}</p>
+                                                        <p class="card-text">${sessionScope.TOTAL}</p>
 
                                                     </div>
                                                 </div>
@@ -97,7 +97,7 @@
                                                 <div class="col-md-8">
                                                     <div class="card-body">
                                                         <h5 class="card-title">Shipments in process</h5>   
-                                                        <p class="card-text">${requestScope.delivering}</p>
+                                                        <p class="card-text">${sessionScope.delivering}</p>
                                                         <p></p>
                                                     </div>
                                                 </div>
@@ -113,7 +113,7 @@
                                                 <div class="col-md-8">
                                                     <div class="card-body">
                                                         <h5 class="card-title">Shipments completed</h5>
-                                                        <p class="card-text">${requestScope.completed}</p>
+                                                        <p class="card-text">${sessionScope.completed}</p>
                                                     </div>
                                                 </div>
                                             </div>

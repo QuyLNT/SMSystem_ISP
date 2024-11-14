@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.order.OrderDAO;
 import model.order.OrderDTO;
 import model.user.UserDAO;
@@ -48,11 +49,14 @@ public class AssignShipperController extends HttpServlet {
             if (isAssigned) {
                 request.setAttribute("message", "Shipper " + shipperName + " has been successfully assigned to Order ID " + orderId + ".");
 
-                List<OrderDTO> orderList = orderDAO.getAllOrders();
+                HttpSession session = request.getSession();
+                List<OrderDTO> orderList = (List<OrderDTO>) session.getAttribute("ORDER_LIST");
                 Map<Integer, Integer> shipperMap = orderDAO.getShipperMap();
 
                 List<UserDTO> shippers = userDAO.getAllShippers();
 
+
+                request.setAttribute("ORDER_LIST", orderList);
                 request.setAttribute("SHIPPER_LIST", shippers);
                 request.setAttribute("SHIPPER_MAP", shipperMap);
 

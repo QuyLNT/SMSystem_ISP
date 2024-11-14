@@ -55,9 +55,9 @@ public class LoadShipDataController extends HttpServlet {
                     }
                 }
                 session.setAttribute("shipments", shipList);
-                request.setAttribute("TOTAL", today);
-                request.setAttribute("completed", completed);
-                request.setAttribute("delivering", delivering);
+                session.setAttribute("TOTAL", today);
+                session.setAttribute("completed", completed);
+                session.setAttribute("delivering", delivering);
                 url = SUCCESS;
             }
         } catch (ClassNotFoundException | SQLException e) {

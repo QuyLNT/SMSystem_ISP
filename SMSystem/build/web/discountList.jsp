@@ -182,7 +182,6 @@
                                             <th>Limit</th>
                                             <th>Used</th>
                                             <th>Status</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -212,7 +211,7 @@
                                                         </select>
                                                 </form>
                                             </td>
-                                            <td>
+<!--                                            <td>
                                                 <form action="MainController" method="POST">
                                                     <input type="hidden" name="discountId"  value="<%=discount.getDiscountId()%>" />
 
@@ -220,7 +219,7 @@
                                                         <i class="fa-solid fa-delete-left"></i>     
                                                     </button>
                                                 </form>
-                                            </td>
+                                            </td>-->
                                         </tr> 
                                         <%}%>
                                     </tbody>

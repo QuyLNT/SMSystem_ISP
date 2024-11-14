@@ -196,7 +196,7 @@
                                                 <input type="hidden" name="ship" value="<%= a.getShippingMethod()%>">
                                                 <div class="select-option-province">
                                                     <select name="shipperId" onchange="this.form.submit()" 
-                                                            <%= ("Delivering".equalsIgnoreCase(a.getOrderStatus())
+                                                            <%= ("Waiting For Delivering".equalsIgnoreCase(a.getOrderStatus())
                                                                     || "Completed".equalsIgnoreCase(a.getOrderStatus())
                                                                     || "Not Completed".equalsIgnoreCase(a.getOrderStatus())) ? "disabled" : ""%>>
                                                         <option value="">Select Shipper</option>
